@@ -53,3 +53,10 @@ export enum Role {
   admin = "admin",
   user = "user",
 }
+
+export const allowedRoles = [
+  OrgRole.admin,
+  OrgRole.customer,
+  OrgRole.owner,
+  OrgRole.sales,
+];

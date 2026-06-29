@@ -1,14 +1,24 @@
 "use client";
 
 import { profileMenu } from "@/data/profileMenu";
+import { useSession } from "@/hooks/session";
 import { Avatar, Flex, Icon, Menu, Portal, Text } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export const ProfileDropdown = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  if (!session) return router.push("/signin");
+
   return (
     <Menu.Root>
       <Menu.Trigger rounded="full" focusRing="outside">
-        <ProfileAvatar />
+        <ProfileAvatar
+          name={session.user.name}
+          image={session.user.image ?? undefined}
+        />
       </Menu.Trigger>
       <Portal>
         <Menu.Positioner>
@@ -39,11 +49,11 @@ export const ProfileDropdown = () => {
   );
 };
 
-const ProfileAvatar = () => {
+const ProfileAvatar = ({ image, name }: { name: string; image?: string }) => {
   return (
     <Avatar.Root size={"sm"}>
-      <Avatar.Fallback name="Segun Adebayo" />
-      <Avatar.Image src="https://bit.ly/sage-adebayo" />
+      <Avatar.Fallback name={name} />
+      <Avatar.Image src={image} />
     </Avatar.Root>
   );
 };
