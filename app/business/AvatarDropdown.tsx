@@ -3,14 +3,12 @@
 import { profileMenu } from "@/data/profileMenu";
 import { useSession } from "@/hooks/session";
 import { Avatar, Flex, Icon, Menu, Portal, Text } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import React from "react";
 
-export const ProfileDropdown = () => {
-  const router = useRouter();
+export const AvatarDropdown = () => {
   const { data: session } = useSession();
 
-  if (!session) return router.push("/signin");
+  if (!session) return null;
 
   return (
     <Menu.Root>

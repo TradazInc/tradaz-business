@@ -2,7 +2,7 @@ import { LogoContainer } from "@/app/components/LogoContainer";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { HStack, Icon } from "@chakra-ui/react";
 import { LuBell } from "react-icons/lu";
-import { ProfileDropdown } from "./AvatarDropdown";
+import { AvatarDropdown } from "./AvatarDropdown";
 import { BusinessSelector } from "./BusinessSelector";
 
 export const NavBar = () => {
@@ -25,7 +25,7 @@ export const NavBar = () => {
         <Icon fontSize="20px" color="fg">
           <LuBell strokeWidth="2.5" />
         </Icon>
-        <ProfileDropdown />
+        <AvatarDropdown />
       </HStack>
     </HStack>
   );
