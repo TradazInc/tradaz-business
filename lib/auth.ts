@@ -12,7 +12,7 @@ type ServerAuth = {
 };
 
 export const authClient = createAuthClient({
-  baseURL: process.env.BASE_URL ?? "https://tradaz-ui.vercel.app", // add env later*
+  baseURL: process.env.BASE_URL ?? "https://tradaz-business.vercel.app", // add env later*
   fetchOptions: { credentials: "include" },
   plugins: [
     customSessionClient<ServerAuth>(),
