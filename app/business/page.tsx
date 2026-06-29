@@ -1,5 +1,12 @@
-import React from "react";
+import { Box } from "@chakra-ui/react";
+import { SideBar } from "./SideBar";
+import { PageContainer } from "../components/PageContainer";
 
 export default function page() {
-  return <div>business page</div>;
+  return (
+    <PageContainer>
+      <SideBar />
+      <Box>Business Page</Box>
+    </PageContainer>
+  );
 }

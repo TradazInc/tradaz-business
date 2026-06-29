@@ -1,21 +1,15 @@
-import { ColorModeButton } from "@/components/ui/color-mode";
-import { Flex, HStack, Avatar, Icon } from "@chakra-ui/react";
-import { LuBell } from "react-icons/lu";
 import { LogoContainer } from "@/app/components/LogoContainer";
+import { ColorModeButton } from "@/components/ui/color-mode";
+import { HStack, Icon } from "@chakra-ui/react";
+import { LuBell } from "react-icons/lu";
+import { ProfileDropdown } from "./AvatarDropdown";
 
-const NavBar = () => {
+export const NavBar = () => {
   return (
-    <Flex
-      as="header"
-      h="60px"
+    <HStack
       w="full"
-      align="center"
       justify="space-between"
-      position="fixed"
-      top="0"
-      zIndex={100}
-      flexShrink={0}
-      px={{ base: 4, lg: 8 }}
+      p={4}
       bg="bg.panel"
       borderBottomWidth="1px"
       borderColor="border.muted"
@@ -24,24 +18,11 @@ const NavBar = () => {
 
       <HStack gap="4">
         <ColorModeButton />
-
-        <Icon fontSize="20px" mt={1} color="fg">
+        <Icon fontSize="20px" color="fg">
           <LuBell strokeWidth="2.5" />
         </Icon>
-
-        <ProfileAvatar />
+        <ProfileDropdown />
       </HStack>
-    </Flex>
+    </HStack>
   );
 };
-
-const ProfileAvatar = () => {
-  return (
-    <Avatar.Root>
-      <Avatar.Fallback name="Segun Adebayo" />
-      <Avatar.Image src="https://bit.ly/sage-adebayo" />
-    </Avatar.Root>
-  );
-};
-
-export default NavBar;

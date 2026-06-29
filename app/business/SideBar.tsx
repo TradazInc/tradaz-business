@@ -1,21 +1,18 @@
-"use client";
-
-import { Box } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 
 export function SideBar() {
   return (
-    <Box
-      as="nav"
-      w={{ base: "full", md: "250px" }}
-      pos="fixed"
-      h="100%"
-      borderRightWidth="1px"
+    <VStack
+      p={"5"}
+      w={"4%"}
+      _hover={{ width: "20%" }}
+      h={"full"}
+      borderRightWidth={"1px"}
       borderColor="border.muted"
-      bg="bg.panel"
-      py="6"
-      px="4"
+      bg={"bg.panel"}
+      transition="all"
     >
       side bar
-    </Box>
+    </VStack>
   );
 }
