@@ -1,7 +1,7 @@
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { Flex, HStack, Avatar, Icon } from "@chakra-ui/react";
 import { LuBell } from "react-icons/lu";
-import { LogoContainer } from "./components/LogoContainer";
+import { LogoContainer } from "@/app/components/LogoContainer";
 
 const NavBar = () => {
   return (

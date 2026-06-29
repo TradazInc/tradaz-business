@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Provider } from "../components/ui/provider";
-import NavBar from "./NavBar";
-import { SideBar } from "./SideBar";
-import { Box } from "@chakra-ui/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,14 +28,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable}`}
         suppressHydrationWarning
       >
-        <Provider>
-          <NavBar />
-          <SideBar />
-
-          <Box as="main" pt="60px" pl={{ base: "0", md: "250px" }} minH="100vh">
-            <Box p={{ base: 4, md: 8 }}>{children}</Box>
-          </Box>
-        </Provider>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
