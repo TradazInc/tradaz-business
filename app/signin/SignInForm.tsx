@@ -96,6 +96,7 @@ const SignInForm = () => {
               _hover={{ bg: "gray.200" }}
               borderRadius="7px"
               fontWeight="600"
+              borderColor={"#292929"}
               disabled={isEmailPending}
             >
               {isEmailPending ? "Signing in..." : "Sign in"}
