@@ -8,12 +8,12 @@ import { BusinessSelector } from "./BusinessSelector";
 export const NavBar = () => {
   return (
     <HStack
-      w="full"
-      justify="space-between"
+      justify={"space-between"}
       p={4}
-      bg="bg.panel"
-      borderBottomWidth="1px"
-      borderColor="border.muted"
+      w={"full"}
+      bg={"bg.panel"}
+      borderBottomWidth={"1px"}
+      borderColor={"bg.emphasized"}
     >
       <HStack gap="4">
         <LogoContainer>Tradaz</LogoContainer>

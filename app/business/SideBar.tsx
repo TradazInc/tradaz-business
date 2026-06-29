@@ -7,10 +7,10 @@ export function SideBar() {
       w={"4%"}
       _hover={{ width: "20%" }}
       h={"full"}
-      borderRightWidth={"1px"}
-      borderColor="border.muted"
       bg={"bg.panel"}
-      transition="all"
+      borderRightWidth={"1px"}
+      borderColor={"bg.emphasized"}
+      transition={"all"}
     >
       side bar
     </VStack>
