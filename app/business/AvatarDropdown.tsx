@@ -50,7 +50,7 @@ const ProfileAvatar = () => {
 
 const ProfileMenuButton = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Flex px={4} py={3} align="center" gap={3} w={"full"}>
+    <Flex p={1} align="center" gap={3} w={"full"}>
       {children}
     </Flex>
   );
