@@ -3,6 +3,7 @@ import { ColorModeButton } from "@/components/ui/color-mode";
 import { HStack, Icon } from "@chakra-ui/react";
 import { LuBell } from "react-icons/lu";
 import { ProfileDropdown } from "./AvatarDropdown";
+import { BusinessSelector } from "./BusinessSelector";
 
 export const NavBar = () => {
   return (
@@ -14,7 +15,10 @@ export const NavBar = () => {
       borderBottomWidth="1px"
       borderColor="border.muted"
     >
-      <LogoContainer>Tradaz</LogoContainer>
+      <HStack gap="4">
+        <LogoContainer>Tradaz</LogoContainer>
+        <BusinessSelector />
+      </HStack>
 
       <HStack gap="4">
         <ColorModeButton />
