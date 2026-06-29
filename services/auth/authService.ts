@@ -1,6 +1,6 @@
 import { toaster } from "@/components/ui/toaster";
 import { OrgRole, Role } from "@/entities/Session";
-import { auth, AuthClient } from "@/lib/auth";
+import { authClient, AuthClient } from "@/lib/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { forbidden, unauthorized } from "next/navigation";
 import { emailSignInSchema, emailSignUpSchema } from "./authSchema";
@@ -115,4 +115,4 @@ class AuthService {
   }
 }
 
-export const authService = new AuthService(auth);
+export const authService = new AuthService(authClient);

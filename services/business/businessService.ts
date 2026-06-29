@@ -1,5 +1,5 @@
 import { toaster } from "@/components/ui/toaster";
-import { AuthClient, auth } from "@/lib/auth";
+import { AuthClient, authClient } from "@/lib/auth";
 import { businessSchema } from "./businessSchema";
 
 class BusinessService {
@@ -33,4 +33,4 @@ class BusinessService {
   }
 }
 
-export const businessService = new BusinessService(auth);
+export const businessService = new BusinessService(authClient);

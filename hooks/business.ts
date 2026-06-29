@@ -1,5 +1,5 @@
-import { auth } from "@/lib/auth";
+import { authClient } from "@/lib/auth";
 
 export const useBusinesses = () => {
-  return auth.useListOrganizations();
+  return authClient.useListOrganizations();
 };

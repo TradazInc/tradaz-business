@@ -11,7 +11,7 @@ type ServerAuth = {
   };
 };
 
-export const auth = createAuthClient({
+export const authClient = createAuthClient({
   baseURL: process.env.BASE_URL ?? "https://tradaz-ui.vercel.app", // add env later*
   fetchOptions: { credentials: "include" },
   plugins: [
@@ -35,4 +35,4 @@ export const auth = createAuthClient({
   ],
 });
 
-export type AuthClient = typeof auth;
+export type AuthClient = typeof authClient;

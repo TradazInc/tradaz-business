@@ -1,4 +1,4 @@
-import { AuthClient, auth } from "@/lib/auth";
+import { AuthClient, authClient } from "@/lib/auth";
 
 class StoreService {
   constructor(private readonly authClient: AuthClient) {}
@@ -14,4 +14,4 @@ class StoreService {
   }
 }
 
-export const storeService = new StoreService(auth);
+export const storeService = new StoreService(authClient);
