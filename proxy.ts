@@ -12,4 +12,4 @@ export async function proxy(request: NextRequest) {
 }
 
 // Only run the proxy on protected route groups
-export const config = { matcher: ["/business/:path*"] };
+export const config = { matcher: ["/dashboard/:path*"] };
