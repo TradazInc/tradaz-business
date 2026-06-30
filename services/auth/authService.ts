@@ -21,7 +21,10 @@ class AuthService {
       });
 
     return this.authClient.signUp.email(data, {
-      onSuccess: async (ctx) => this.loginSuccess(router),
+      onSuccess: async (ctx) => {
+        const session = await this.isAuthorized();
+        if (session) router.push("/business");
+      },
       onError: ({ error }) => {
         toaster.create({
           title: error.name,
@@ -45,7 +48,10 @@ class AuthService {
       });
 
     return this.authClient.signIn.email(data, {
-      onSuccess: async (ctx) => this.loginSuccess(router),
+      onSuccess: async (ctx) => {
+        const session = await this.isAuthorized();
+        if (session) router.push("/business");
+      },
       onError: ({ error }) => {
         toaster.create({
           title: error.name,
@@ -60,7 +66,10 @@ class AuthService {
     return this.authClient.signIn.social(
       { provider: "google" },
       {
-        onSuccess: async (ctx) => this.loginSuccess(router),
+        onSuccess: async (ctx) => {
+          const session = await this.isAuthorized();
+          if (session) router.push("/business");
+        },
         onError: ({ error }) => {
           toaster.create({
             title: error.name,
@@ -91,11 +100,6 @@ class AuthService {
     } else {
       forbidden();
     }
-  }
-
-  private async loginSuccess(router: AppRouterInstance) {
-    const session = await this.isAuthorized();
-    if (session) router.push("/business");
   }
 }
 
