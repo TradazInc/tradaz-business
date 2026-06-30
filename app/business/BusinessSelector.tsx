@@ -21,6 +21,7 @@ export const BusinessSelector = () => {
   const [isLoadingStores, setisLoadingStores] = useState(false);
 
   const handleBusiness = async (businessId: string) => {
+    setisLoadingStores(true);
     const business = await businessService.setActiveBussienss(businessId);
     if (business.error) {
       return toaster.create({
@@ -31,7 +32,6 @@ export const BusinessSelector = () => {
     }
     setActiveBusiness(business.data.name);
 
-    setisLoadingStores(true);
     const store = await storeService.getStores(business.data?.id);
     if (store.error) {
       return toaster.create({
@@ -55,6 +55,8 @@ export const BusinessSelector = () => {
     }
     setActiveStore(data.name);
   };
+
+  if (error) return null;
 
   return (
     <Breadcrumb.Root>
