@@ -1,5 +1,5 @@
 import { VStack } from "@chakra-ui/react";
-import { PageContainer } from "../components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
 import Header from "./Header";
 import ToolBar from "./ToolBar";
 
