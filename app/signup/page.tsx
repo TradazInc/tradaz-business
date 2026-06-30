@@ -1,0 +1,60 @@
+import { Flex, VStack } from "@chakra-ui/react";
+// import BackToHome from "../components/BackToHome";
+import { LogoContainer } from "../components/LogoContainer";
+import SignUpForm from "./SignUpForm";
+import SignUpHeader from "./SignUpHeader";
+import SignupSidePanel from "./SignUpSidePanel";
+
+const SignupPage = () => {
+  return (
+    <Flex
+      minH="100vh"
+      w="full"
+      bg="bg.subtle"
+      align="center"
+      justify="center"
+      p={4}
+    >
+      <VStack w="full" maxW="1000px" align="flex-start" gap={4}>
+        {/* <BackToHome /> */}
+
+        {/* The Main Split Card */}
+        <Flex
+          w="full"
+          h={{ base: "auto", lg: "min(650px, 85vh)" }}
+          bg="bg.muted"
+          rounded="2xl"
+          overflow="hidden"
+          boxShadow="0 25px 50px -12px rgba(0,0,0,0.5)"
+          border="1px solid"
+          borderColor="whiteAlpha.100"
+          direction={{ base: "column", lg: "row" }}
+        >
+          {/* LEFT SIDE: Your Form */}
+          <Flex
+            flex={1}
+            align="center"
+            justify="center"
+            p={{ base: 6, md: 8 }}
+            overflowY="auto"
+            css={{
+              "&::-webkit-scrollbar": { display: "none" },
+              scrollbarWidth: "none",
+            }}
+          >
+            <VStack w="full" maxW="400px" gap="20px" marginX="auto">
+              <LogoContainer>Tradaz</LogoContainer>
+              <SignUpHeader />
+              <SignUpForm />
+            </VStack>
+          </Flex>
+
+          {/* RIGHT SIDE: The Branded Background Panel */}
+          <SignupSidePanel />
+        </Flex>
+      </VStack>
+    </Flex>
+  );
+};
+
+export default SignupPage;
