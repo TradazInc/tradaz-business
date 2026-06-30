@@ -18,6 +18,7 @@ export const BusinessSelector = () => {
   // data state
   const { data: businesses, error, isPending } = useBusinesses();
   const [stores, setStores] = useState<Store[]>();
+  const [isLoadingStores, setisLoadingStores] = useState(false);
 
   const handleBusiness = async (businessId: string) => {
     const business = await businessService.setActiveBussienss(businessId);
@@ -30,6 +31,7 @@ export const BusinessSelector = () => {
     }
     setActiveBusiness(business.data.name);
 
+    setisLoadingStores(true);
     const store = await storeService.getStores(business.data?.id);
     if (store.error) {
       return toaster.create({
@@ -39,6 +41,7 @@ export const BusinessSelector = () => {
       });
     }
     setStores(store.data);
+    setisLoadingStores(false);
   };
 
   const handleStore = async (storeId: string) => {
@@ -74,7 +77,7 @@ export const BusinessSelector = () => {
           </BreadcrumbMenuItem>
         </>
 
-        {stores && (
+        {(stores || isLoadingStores) && (
           <>
             <Breadcrumb.Separator>
               <LiaSlashSolid />
@@ -84,6 +87,11 @@ export const BusinessSelector = () => {
               <Breadcrumb.Link as="button">
                 <LuStore />
                 {activeStore}
+                {isLoadingStores ? (
+                  <Spinner size="sm" borderWidth="4px" />
+                ) : (
+                  <LuChevronDown />
+                )}
                 <LuChevronDown />
               </Breadcrumb.Link>
             </BreadcrumbMenuItem>
@@ -95,7 +103,7 @@ export const BusinessSelector = () => {
 };
 
 interface BreadcrumbMenuItemProps {
-  data: Array<{ name: string; id: string }> | null;
+  data?: Array<{ name: string; id: string }> | null;
   handleClick: (id: string) => Promise<unknown>;
   children: React.ReactNode;
 }
