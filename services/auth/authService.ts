@@ -23,7 +23,7 @@ class AuthService {
     return this.authClient.signUp.email(data, {
       onSuccess: async (ctx) => {
         const session = await this.isAuthorized();
-        if (session) router.push("/business");
+        if (session) router.push("/dashboard");
       },
       onError: ({ error }) => {
         toaster.create({
@@ -50,7 +50,7 @@ class AuthService {
     return this.authClient.signIn.email(data, {
       onSuccess: async (ctx) => {
         const session = await this.isAuthorized();
-        if (session) router.push("/business");
+        if (session) router.push("/dashboard");
       },
       onError: ({ error }) => {
         toaster.create({
@@ -68,7 +68,7 @@ class AuthService {
       {
         onSuccess: async (ctx) => {
           const session = await this.isAuthorized();
-          if (session) router.push("/business");
+          if (session) router.push("/dashboard");
         },
         onError: ({ error }) => {
           toaster.create({
