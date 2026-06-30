@@ -21,7 +21,7 @@ export const NavBar = () => {
         <BusinessSelector />
       </HStack>
 
-      <HStack gap="4">
+      <HStack gap="2">
         <ColorModeButton rounded={"full"} />
         <IconButton rounded={"full"} variant={"ghost"}>
           <LuBell />
