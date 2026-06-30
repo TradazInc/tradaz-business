@@ -9,7 +9,8 @@ export const NavBar = () => {
   return (
     <HStack
       justify={"space-between"}
-      p={4}
+      px={4}
+      py={2}
       w={"full"}
       bg={"bg.panel"}
       borderBottomWidth={"1px"}

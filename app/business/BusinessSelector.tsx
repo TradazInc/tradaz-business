@@ -7,6 +7,7 @@ import { businessService } from "@/services/business/businessService";
 import { storeService } from "@/services/store/storeService";
 import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
@@ -54,9 +55,12 @@ export const BusinessSelector = () => {
 
   return (
     <Breadcrumb.Root>
-      <Breadcrumb.List gap="4">
+      <Breadcrumb.List>
         <>
-          <Breadcrumb.Separator />
+          <Breadcrumb.Separator>
+            <LiaSlashSolid />
+          </Breadcrumb.Separator>
+
           <BreadcrumbMenuItem data={businesses} handleClick={handleBusiness}>
             <Breadcrumb.Link as="button">
               <LuBuilding2 />
@@ -72,7 +76,10 @@ export const BusinessSelector = () => {
 
         {stores && (
           <>
-            <Breadcrumb.Separator />
+            <Breadcrumb.Separator>
+              <LiaSlashSolid />
+            </Breadcrumb.Separator>
+
             <BreadcrumbMenuItem data={stores} handleClick={handleStore}>
               <Breadcrumb.Link as="button">
                 <LuStore />
