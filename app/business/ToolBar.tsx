@@ -1,6 +1,7 @@
 import { Button, HStack } from "@chakra-ui/react";
-import Search from "../components/Search";
+import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
+import Search from "../components/Search";
 import { SideDrawer } from "./SideDrawer";
 
 const ToolBar = () => {
@@ -8,7 +9,9 @@ const ToolBar = () => {
     <HStack w={"full"} justify={"space-between"}>
       <HStack>
         <SideDrawer />
-        <Search placeholder="Search for a business" query="www" />
+        <Suspense>
+          <Search placeholder="Search for a business" query="www" />
+        </Suspense>
       </HStack>
       <Button size={"xs"}>
         <LuPlus />
