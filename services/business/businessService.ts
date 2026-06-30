@@ -31,6 +31,10 @@ class BusinessService {
   async setActiveBussienss(organizationId: string) {
     return this.authClient.organization.setActive({ organizationId });
   }
+
+  async getBusinesses() {
+    return this.authClient.organization.list();
+  }
 }
 
 export const businessService = new BusinessService(authClient);
