@@ -10,7 +10,7 @@ const ToolBar = () => {
       <HStack>
         <SideDrawer />
         <Suspense>
-          <Search placeholder="Search for a business" query="www" />
+          <Search placeholder="Search for a business" query="business" />
         </Suspense>
       </HStack>
       <Button size={"xs"}>
