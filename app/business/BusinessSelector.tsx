@@ -11,14 +11,14 @@ import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
-  // active state
+  // UI state
   const [activeBusiness, setActiveBusiness] = useState("Businesses");
   const [activeStore, setActiveStore] = useState("Stores");
+  const [isLoadingStores, setisLoadingStores] = useState(false);
 
   // data state
   const { data: businesses, error, isPending } = useBusinesses();
   const [stores, setStores] = useState<Store[]>();
-  const [isLoadingStores, setisLoadingStores] = useState(false);
 
   const handleBusiness = async (businessId: string) => {
     setisLoadingStores(true);
