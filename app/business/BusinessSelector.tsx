@@ -94,7 +94,6 @@ export const BusinessSelector = () => {
                 ) : (
                   <LuChevronDown />
                 )}
-                <LuChevronDown />
               </Breadcrumb.Link>
             </BreadcrumbMenuItem>
           </>
