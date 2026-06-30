@@ -1,7 +1,7 @@
 import { Button, HStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
-import Search from "../components/Search";
+import Search from "@/app/components/Search";
 import { SideDrawer } from "./SideDrawer";
 
 const ToolBar = () => {
