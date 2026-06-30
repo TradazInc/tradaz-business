@@ -1,12 +1,16 @@
-import { Box } from "@chakra-ui/react";
-import { SideBar } from "./SideBar";
+import { VStack } from "@chakra-ui/react";
 import { PageContainer } from "../components/PageContainer";
+import Header from "./Header";
+import ToolBar from "./ToolBar";
 
 export default function page() {
   return (
     <PageContainer>
-      <SideBar />
-      <Box>Business Page</Box>
+      <VStack w={"full"} h={"full"}>
+        <Header />
+        <ToolBar />
+        Business Page
+      </VStack>
     </PageContainer>
   );
 }
