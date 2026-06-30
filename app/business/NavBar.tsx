@@ -1,6 +1,6 @@
 import { LogoContainer } from "@/app/components/LogoContainer";
 import { ColorModeButton } from "@/components/ui/color-mode";
-import { HStack, Icon } from "@chakra-ui/react";
+import { HStack, Icon, IconButton } from "@chakra-ui/react";
 import { LuBell } from "react-icons/lu";
 import { AvatarDropdown } from "./AvatarDropdown";
 import { BusinessSelector } from "./BusinessSelector";
@@ -23,9 +23,9 @@ export const NavBar = () => {
 
       <HStack gap="4">
         <ColorModeButton />
-        <Icon fontSize="20px" color="fg">
+        <IconButton fontSize="20px" color="fg">
           <LuBell strokeWidth="2.5" />
-        </Icon>
+        </IconButton>
         <AvatarDropdown />
       </HStack>
     </HStack>
