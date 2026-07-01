@@ -3,7 +3,7 @@ import React from "react";
 
 export const PageContainer = ({ children }: { children: React.ReactNode }) => {
   return (
-    <HStack w={"dvw"} h={"full"} px={36}>
+    <HStack w={"dvw"} h={"full"} px={{ base: 10, md: 36 }}>
       {children}
     </HStack>
   );
