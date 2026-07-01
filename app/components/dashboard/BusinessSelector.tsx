@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { useBusiness, useBusinesses } from "@/hooks/business";
 import { businessService } from "@/services/business/businessService";
 import { storeService } from "@/services/store/storeService";
-import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
+import { Breadcrumb, Menu, Portal, Skeleton, Spinner } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -72,25 +72,30 @@ export const BusinessSelector = () => {
           </BreadcrumbMenuItem>
         </>
 
-        {!isLoading ||
-          (business?.data && (
-            <>
-              <Breadcrumb.Separator>
-                <LiaSlashSolid />
-              </Breadcrumb.Separator>
+        {business?.data && (
+          <>
+            <Breadcrumb.Separator>
+              <LiaSlashSolid />
+            </Breadcrumb.Separator>
 
-              <BreadcrumbMenuItem
-                data={business.data.teams}
-                handleClick={handleStore}
-              >
-                <Breadcrumb.Link as="button">
-                  <LuStore />
-                  {activeStore}
-                  <LuChevronDown />
-                </Breadcrumb.Link>
-              </BreadcrumbMenuItem>
-            </>
-          ))}
+            <BreadcrumbMenuItem
+              data={business.data.teams}
+              handleClick={handleStore}
+            >
+              <Breadcrumb.Link as="button">
+                <LuStore />
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  <>
+                    {activeStore}
+                    <LuChevronDown />
+                  </>
+                )}
+              </Breadcrumb.Link>
+            </BreadcrumbMenuItem>
+          </>
+        )}
       </Breadcrumb.List>
     </Breadcrumb.Root>
   );
