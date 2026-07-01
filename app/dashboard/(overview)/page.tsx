@@ -1,10 +1,13 @@
 import GridCard from "@/app/components/GridCard";
 import GridContainer from "@/app/components/GridContainer";
-import { getBusinesses } from "@/server/business";
-import { VStack } from "@chakra-ui/react";
-import { PageContainer } from "@/app/components/PageContainer";
 import Header from "@/app/components/Header";
-import ToolBar from "@/app/components/ToolBar";
+import { PageContainer } from "@/app/components/PageContainer";
+import Search from "@/app/components/Search";
+import { SideDrawer } from "@/app/components/SideDrawer";
+import { getBusinesses } from "@/server/business";
+import { Button, HStack, VStack } from "@chakra-ui/react";
+import { Suspense } from "react";
+import { LuPlus } from "react-icons/lu";
 
 interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -19,8 +22,8 @@ export default async function page({ searchParams }: Props) {
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <Header />
-        <ToolBar />
+        <Header text="Your Businesses"/>
+        <DashboardToolbar />
         <GridContainer>
           {data.map((business) => (
             <GridCard
@@ -39,3 +42,20 @@ export default async function page({ searchParams }: Props) {
     </PageContainer>
   );
 }
+
+const DashboardToolbar = () => {
+  return (
+    <HStack w={"full"} justify={"space-between"}>
+      <HStack>
+        <SideDrawer />
+        <Suspense>
+          <Search placeholder="Search for a business" query="business" />
+        </Suspense>
+      </HStack>
+      <Button size={"xs"}>
+        <LuPlus />
+        New Business
+      </Button>
+    </HStack>
+  );
+};
