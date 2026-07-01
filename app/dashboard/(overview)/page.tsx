@@ -6,8 +6,13 @@ import { PageContainer } from "@/app/components/PageContainer";
 import Header from "@/app/components/Header";
 import ToolBar from "@/app/components/ToolBar";
 
-export default async function page() {
-  const { data, error } = await getBusinesses();
+interface Props {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function page({ searchParams }: Props) {
+  const name = (await searchParams).business as string;
+  const { data, error } = await getBusinesses(name);
 
   if (error) return null;
 
