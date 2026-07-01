@@ -8,7 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { LuBoxes } from "react-icons/lu";
-import { Link } from "./Link";
+import NextLink from "next/link";
 
 interface Props {
   id: string;
@@ -59,7 +59,7 @@ const GridCard = ({
       </Card.Body>
 
       <LinkOverlay asChild>
-        <Link href={href} />
+        <NextLink href={href} />
       </LinkOverlay>
     </Card.Root>
   );

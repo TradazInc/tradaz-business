@@ -5,17 +5,11 @@ import { Store } from "@/entities/Store";
 import { useBusinesses } from "@/hooks/business";
 import { businessService } from "@/services/business/businessService";
 import { storeService } from "@/services/store/storeService";
-import {
-  Breadcrumb,
-  LinkOverlay,
-  Menu,
-  Portal,
-  Spinner,
-} from "@chakra-ui/react";
+import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
+import NextLink from "next/link";
 import React, { useState } from "react";
 import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
-import { Link } from "../components/Link";
 
 export const BusinessSelector = () => {
   // UI state
@@ -130,15 +124,16 @@ const BreadcrumbMenuItem = ({
             <Menu.Content>
               {data && data.length > 0 ? (
                 data.map((item) => (
-                  <Link href={`/dashboard/business/${item.id}`}>
-                    <Menu.Item
-                      key={item.id}
-                      value={item.id}
-                      onClick={() => handleClick(item.id)}
-                    >
+                  <Menu.Item
+                    key={item.id}
+                    value={item.id}
+                    onClick={() => handleClick(item.id)}
+                    asChild
+                  >
+                    <NextLink href={`/dashboard/business/${item.id}`}>
                       {item.name}
-                    </Menu.Item>
-                  </Link>
+                    </NextLink>
+                  </Menu.Item>
                 ))
               ) : (
                 <Menu.Item value="">Nothing found</Menu.Item>
