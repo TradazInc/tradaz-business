@@ -7,5 +7,5 @@ const businessCategoryService = new ApiClient<BusinessCategory>(
 );
 
 export const useBusinessCategories = () => {
-  return useSWR(() => businessCategoryService.getAll());
+  return useSWR("categories", () => businessCategoryService.getAll());
 };

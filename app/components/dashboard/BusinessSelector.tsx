@@ -1,8 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { Store } from "@/entities/Store";
-import { useBusinesses } from "@/hooks/business";
+import { useBusiness, useBusinesses } from "@/hooks/business";
 import { businessService } from "@/services/business/businessService";
 import { storeService } from "@/services/store/storeService";
 import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
@@ -13,17 +12,11 @@ import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
-  // UI state
-  const [activeBusiness, setActiveBusiness] = useState("Businesses");
-  const [activeStore, setActiveStore] = useState("Stores");
-  const [isLoadingStores, setisLoadingStores] = useState(false);
-
-  // data state
   const { data: businesses, error, isPending } = useBusinesses();
-  const [stores, setStores] = useState<Store[]>();
+  const { data: business, error: Error, mutate } = useBusiness();
+  const [activeStore, setActiveStore] = useState("Stores");
 
   const handleBusiness = async (businessId: string) => {
-    setisLoadingStores(true);
     const business = await businessService.setActiveBussienss(businessId);
     if (business.error) {
       return toaster.create({
@@ -32,18 +25,7 @@ export const BusinessSelector = () => {
         type: "error",
       });
     }
-    setActiveBusiness(business.data.name);
-
-    const store = await storeService.getStores(business.data?.id);
-    if (store.error) {
-      return toaster.create({
-        title: store.error.code,
-        description: store.error.message,
-        type: "error",
-      });
-    }
-    setStores(store.data);
-    setisLoadingStores(false);
+    mutate();
   };
 
   const handleStore = async (storeId: string) => {
@@ -67,7 +49,7 @@ export const BusinessSelector = () => {
     setActiveBusiness();
   }, [businessId]);
 
-  if (error) return null;
+  if (error || Error) return null;
 
   return (
     <Breadcrumb.Root>
@@ -80,7 +62,7 @@ export const BusinessSelector = () => {
           <BreadcrumbMenuItem data={businesses} handleClick={handleBusiness}>
             <Breadcrumb.Link as="button">
               <LuBuilding2 />
-              {activeBusiness}
+              {business?.data?.name ?? "Business"}
               {isPending ? (
                 <Spinner size="sm" borderWidth="4px" />
               ) : (
@@ -90,21 +72,20 @@ export const BusinessSelector = () => {
           </BreadcrumbMenuItem>
         </>
 
-        {(stores || isLoadingStores) && (
+        {business?.data && (
           <>
             <Breadcrumb.Separator>
               <LiaSlashSolid />
             </Breadcrumb.Separator>
 
-            <BreadcrumbMenuItem data={stores} handleClick={handleStore}>
+            <BreadcrumbMenuItem
+              data={business.data.teams}
+              handleClick={handleStore}
+            >
               <Breadcrumb.Link as="button">
                 <LuStore />
                 {activeStore}
-                {isLoadingStores ? (
-                  <Spinner size="sm" borderWidth="4px" />
-                ) : (
-                  <LuChevronDown />
-                )}
+                <LuChevronDown />
               </Breadcrumb.Link>
             </BreadcrumbMenuItem>
           </>
