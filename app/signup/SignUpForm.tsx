@@ -14,7 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { PasswordInput } from "../../components/ui/password-input";
-import { GoogleIcon } from "./GoogleIcon";
+import { GoogleIcon } from "@/app/components/GoogleIcon";
 import LinkText from "./LinkText";
 import SeparatorText from "./SeparatorText";
 
