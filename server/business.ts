@@ -14,5 +14,8 @@ export async function getBusinesses(name?: string) {
 export async function getBusiness(organizationId?: string) {
   return authClient.organization.getFullOrganization({
     query: { organizationId, membersLimit: 100 },
+    fetchOptions: {
+      headers: { cookie: (await headers()).get("cookie") ?? "" },
+    },
   });
 }
