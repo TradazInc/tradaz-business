@@ -23,6 +23,8 @@ export default async function page() {
               name={business.name}
               address={business.metadata.address}
               logo={business.logo}
+              createdAt={new Date(business.createdAt).toDateString()}
+              description={business.metadata.description}
             />
           ))}
         </GridContainer>
