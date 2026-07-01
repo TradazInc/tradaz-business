@@ -130,16 +130,15 @@ const BreadcrumbMenuItem = ({
             <Menu.Content>
               {data && data.length > 0 ? (
                 data.map((item) => (
-                  <Menu.Item
-                    key={item.id}
-                    value={item.id}
-                    onClick={() => handleClick(item.id)}
-                  >
-                    {item.name}
-                    <LinkOverlay asChild>
-                      <Link href={`/dashboard/business/${item.id}`} />
-                    </LinkOverlay>
-                  </Menu.Item>
+                  <Link href={`/dashboard/business/${item.id}`}>
+                    <Menu.Item
+                      key={item.id}
+                      value={item.id}
+                      onClick={() => handleClick(item.id)}
+                    >
+                      {item.name}
+                    </Menu.Item>
+                  </Link>
                 ))
               ) : (
                 <Menu.Item value="">Nothing found</Menu.Item>
