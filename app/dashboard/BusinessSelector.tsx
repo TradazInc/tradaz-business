@@ -129,7 +129,7 @@ const BreadcrumbMenuItem = ({
                     value={item.id}
                     onClick={() => handleClick(item.id)}
                   >
-                    <Link href={`/business/${item.id}`}>{item.name}</Link>
+                    <Link href={`/dashboard/business/${item.id}`}>{item.name}</Link>
                   </Menu.Item>
                 ))
               ) : (

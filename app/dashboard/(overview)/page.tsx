@@ -26,7 +26,7 @@ export default async function page() {
               logo={business.logo}
               createdAt={new Date(business.createdAt).toDateString()}
               description={business.metadata.description}
-              href={`/business/${business.id}`}
+              href={`/dashboard/business/${business.id}`}
             />
           ))}
         </GridContainer>
