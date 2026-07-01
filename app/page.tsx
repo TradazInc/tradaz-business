@@ -1,10 +1,11 @@
 import React from "react";
-import SigninPage from "./signin/page";
+
+import LandingPage from "./landingPage";
 
 const page = () => {
   return (
     <div>
-      <SigninPage />
+      <LandingPage />
     </div>
   );
 };
