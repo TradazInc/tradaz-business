@@ -1,7 +1,7 @@
 import { Flex, VStack } from "@chakra-ui/react";
 import { LogoContainer } from "../components/LogoContainer";
-import SignInHeader from "../components/SignInHeader";
-import SigninSidePanel from "../components/SigninSidePanel";
+import SignInHeader from "../components/auth/SignInHeader";
+import SigninSidePanel from "../components/auth/SigninSidePanel";
 import SignUpForm from "./SignUpForm";
 
 const SignupPage = () => {

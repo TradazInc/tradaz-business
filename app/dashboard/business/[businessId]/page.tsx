@@ -1,5 +1,5 @@
-import GridCard from "@/app/components/GridCard";
-import GridContainer from "@/app/components/GridContainer";
+import GridCard from "@/app/components/dashboard/GridCard";
+import GridContainer from "@/app/components/dashboard/GridContainer";
 import Header from "@/app/components/Header";
 import { PageContainer } from "@/app/components/PageContainer";
 import Search from "@/app/components/Search";

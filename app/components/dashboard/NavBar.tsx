@@ -2,8 +2,8 @@ import { LogoContainer } from "@/app/components/LogoContainer";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { HStack, IconButton } from "@chakra-ui/react";
 import { LuBell } from "react-icons/lu";
-import { AvatarDropdown } from "./AvatarDropdown";
-import { BusinessSelector } from "./BusinessSelector";
+import { AvatarDropdown } from "../components/dashboard/AvatarDropdown";
+import { BusinessSelector } from "../components/dashboard/BusinessSelector";
 
 export const NavBar = () => {
   return (
