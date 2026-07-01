@@ -14,9 +14,10 @@ import {
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { PasswordInput } from "../../components/ui/password-input";
-import { GoogleIcon } from "@/app/components/GoogleIcon";
 import LinkText from "./LinkText";
-import SeparatorText from "./SeparatorText";
+
+import { GoogleIcon } from "../components/GoogleIcon";
+import SeparatorText from "../components/SeparatorText";
 
 const SignUpForm = () => {
   const router = useRouter();

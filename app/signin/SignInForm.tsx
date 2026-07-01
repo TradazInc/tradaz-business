@@ -16,7 +16,7 @@ import { useTransition } from "react";
 import { PasswordInput } from "@/components/ui/password-input";
 import { GoogleIcon } from "@/app/components/GoogleIcon";
 import LinkText from "./LinkText";
-import SeparatorText from "./SeparatorText";
+import SeparatorText from "../components/SeparatorText";
 
 const SignInForm = () => {
   const router = useRouter();
