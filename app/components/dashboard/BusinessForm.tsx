@@ -1,3 +1,5 @@
+"use client";
+
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import {
   Button,
