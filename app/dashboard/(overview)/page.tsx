@@ -1,13 +1,13 @@
 import GridCard from "@/app/components/GridCard";
 import GridContainer from "@/app/components/GridContainer";
-import { businessService } from "@/services/business/businessService";
+import { getBusinesses } from "@/server/business";
 import { VStack } from "@chakra-ui/react";
 import { PageContainer } from "@/app/components/PageContainer";
 import Header from "./Header";
 import ToolBar from "./ToolBar";
 
 export default async function page() {
-  const { data, error } = await businessService.getBusinesses();
+  const { data, error } = await getBusinesses();
 
   if (error) return null;
 

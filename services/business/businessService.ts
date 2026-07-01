@@ -1,6 +1,5 @@
 import { toaster } from "@/components/ui/toaster";
 import { AuthClient, authClient } from "@/lib/auth";
-import { headers } from "next/headers";
 import { businessSchema } from "./businessSchema";
 
 class BusinessService {
@@ -31,14 +30,6 @@ class BusinessService {
 
   async setActiveBussienss(organizationId: string) {
     return this.authClient.organization.setActive({ organizationId });
-  }
-
-  async getBusinesses() {
-    return this.authClient.organization.list({
-      fetchOptions: {
-        headers: { cookie: (await headers()).get("cookie") ?? "" },
-      },
-    });
   }
 }
 
