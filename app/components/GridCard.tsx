@@ -17,7 +17,7 @@ const GridCard = ({ logo, name, address, description, createdAt }: Props) => {
           <Icon
             size={"xl"}
             rounded={"full"}
-            bg={"black"}
+            bg={"bg"}
             contain={"content"}
             p={1}
           >
