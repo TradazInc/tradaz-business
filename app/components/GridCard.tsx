@@ -1,15 +1,34 @@
-import { Card, HStack, Icon, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  Card,
+  HStack,
+  Icon,
+  Image,
+  LinkOverlay,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { LuBoxes } from "react-icons/lu";
+import { Link } from "./Link";
 
 interface Props {
+  id: string;
   logo?: string | null;
   name: string;
   description?: string;
   address?: string;
   createdAt?: string;
+  href: string;
 }
 
-const GridCard = ({ logo, name, address, description, createdAt }: Props) => {
+const GridCard = ({
+  id,
+  logo,
+  name,
+  address,
+  description,
+  createdAt,
+  href,
+}: Props) => {
   return (
     <Card.Root size={"sm"}>
       <Card.Body>
@@ -38,6 +57,10 @@ const GridCard = ({ logo, name, address, description, createdAt }: Props) => {
         </HStack>
         <Card.Description>{description}</Card.Description>
       </Card.Body>
+
+      <LinkOverlay asChild>
+        <Link href={href} />
+      </LinkOverlay>
     </Card.Root>
   );
 };

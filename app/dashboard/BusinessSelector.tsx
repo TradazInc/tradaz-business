@@ -9,6 +9,7 @@ import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
+import { Link } from "../components/Link";
 
 export const BusinessSelector = () => {
   // UI state
@@ -128,7 +129,7 @@ const BreadcrumbMenuItem = ({
                     value={item.id}
                     onClick={() => handleClick(item.id)}
                   >
-                    {item.name}
+                    <Link href={`/business/${item.id}`}>{item.name}</Link>
                   </Menu.Item>
                 ))
               ) : (
