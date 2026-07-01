@@ -1,6 +1,12 @@
 import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
 
-const SigninSidePanel = () => {
+interface Props {
+  heading: string;
+  prompt: string;
+  action: string;
+}
+
+const SigninSidePanel = ({ heading, action, prompt }: Props) => {
   return (
     <Flex
       flex={1}
@@ -46,7 +52,7 @@ const SigninSidePanel = () => {
 
       <Flex direction="column" gap={6} zIndex={1} align="center">
         <Heading fontSize="4xl" fontWeight="bold">
-          Hello, Friend!
+          {heading}
         </Heading>
         <Text
           fontSize="lg"
@@ -54,7 +60,7 @@ const SigninSidePanel = () => {
           lineHeight="tall"
           color="whiteAlpha.900"
         >
-          Enter your personal details and start your journey with us
+          {prompt}
         </Text>
 
         {/* Sign Up Redirect Button */}
@@ -73,7 +79,7 @@ const SigninSidePanel = () => {
           _active={{ transform: "scale(0.98)" }}
           transition="all 0.3s ease"
         >
-          <Link href="/signup"> SIGN UP</Link>
+          <Link href="/signup">{action}</Link>
         </Flex>
       </Flex>
     </Flex>

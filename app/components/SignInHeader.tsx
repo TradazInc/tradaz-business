@@ -1,6 +1,11 @@
 import { Text, VStack } from "@chakra-ui/react";
 
-const SignInHeader = () => {
+interface Props {
+  heading: string;
+  prompt: string;
+}
+
+const SignInHeader = ({ heading, prompt }: Props) => {
   return (
     <VStack w="full" textAlign="center">
       <Text
@@ -10,10 +15,10 @@ const SignInHeader = () => {
         letterSpacing="-2%"
         color="bg.inverted"
       >
-        Sign In
+        {heading}
       </Text>
       <Text fontWeight={"400"} fontSize="14px" color="#8E9BAE">
-        Enter your credentials to access your account.
+        {prompt}
       </Text>
     </VStack>
   );

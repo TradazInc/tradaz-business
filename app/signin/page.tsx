@@ -1,9 +1,8 @@
 import { Flex, VStack } from "@chakra-ui/react";
-// import BackToHome from "../components/BackToHome";
 import { LogoContainer } from "../components/LogoContainer";
 import SignInForm from "./SignInForm";
-import SignInHeader from "./SignInHeader";
-import SigninSidePanel from "./SigninSidePanel";
+import SignInHeader from "../components/SignInHeader";
+import SigninSidePanel from "../components/SigninSidePanel";
 
 const SigninPage = () => {
   return (
@@ -16,8 +15,6 @@ const SigninPage = () => {
       p={4}
     >
       <VStack w="full" maxW="1000px" align="flex-start" gap={4}>
-        {/* <BackToHome /> */}
-
         <Flex
           w="full"
           h={{ base: "auto", lg: "min(650px, 85vh)" }}
@@ -29,7 +26,13 @@ const SigninPage = () => {
           borderColor="whiteAlpha.100"
           direction={{ base: "column", lg: "row" }}
         >
-          <SigninSidePanel />
+          <SigninSidePanel
+            heading={"Hello, Friend!"}
+            action={"SIGN IN"}
+            prompt={
+              "Enter your personal details and start your journey with us"
+            }
+          />
           <Flex
             flex={1}
             align="center"
@@ -43,7 +46,10 @@ const SigninPage = () => {
           >
             <VStack w="full" maxW="400px" gap="20px" marginX="auto">
               <LogoContainer>Tradaz</LogoContainer>
-              <SignInHeader />
+              <SignInHeader
+                heading="Sign In"
+                prompt="Enter your credentials to access your account."
+              />
               <SignInForm />
             </VStack>
           </Flex>

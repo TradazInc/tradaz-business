@@ -1,9 +1,8 @@
 import { Flex, VStack } from "@chakra-ui/react";
-// import BackToHome from "../components/BackToHome";
 import { LogoContainer } from "../components/LogoContainer";
+import SignInHeader from "../components/SignInHeader";
+import SigninSidePanel from "../components/SigninSidePanel";
 import SignUpForm from "./SignUpForm";
-import SignUpHeader from "./SignUpHeader";
-import SignupSidePanel from "./SignUpSidePanel";
 
 const SignupPage = () => {
   return (
@@ -44,13 +43,20 @@ const SignupPage = () => {
           >
             <VStack w="full" maxW="400px" gap="20px" marginX="auto">
               <LogoContainer>Tradaz</LogoContainer>
-              <SignUpHeader />
+              <SignInHeader
+                heading="Sign Up"
+                prompt="Enter your credentials to create your account."
+              />
               <SignUpForm />
             </VStack>
           </Flex>
 
           {/* RIGHT SIDE: The Branded Background Panel */}
-          <SignupSidePanel />
+          <SigninSidePanel
+            heading="Hello, Friend!"
+            action="Enter your personal details and start your journey with us"
+            prompt="SIGN IN"
+          />
         </Flex>
       </VStack>
     </Flex>
