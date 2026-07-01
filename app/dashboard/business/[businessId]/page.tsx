@@ -7,12 +7,12 @@ import { getStores } from "@/server/store";
 import { VStack } from "@chakra-ui/react";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ businessId: string }>;
 }
 
 export default async function page({ params }: Props) {
-  const { id } = await params;
-  const { data, error } = await getStores(id);
+  const { businessId } = await params;
+  const { data, error } = await getStores(businessId);
 
   if (error) return null;
 

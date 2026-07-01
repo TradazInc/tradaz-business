@@ -7,7 +7,8 @@ import { businessService } from "@/services/business/businessService";
 import { storeService } from "@/services/store/storeService";
 import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
 import NextLink from "next/link";
-import React, { useState } from "react";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
@@ -56,6 +57,15 @@ export const BusinessSelector = () => {
     }
     setActiveStore(data.name);
   };
+
+  const businessId = useParams().businessId as string;
+  useEffect(() => {
+    const setActiveBusiness = async () => {
+      if (businessId) await handleBusiness(businessId);
+    };
+
+    setActiveBusiness();
+  }, [businessId]);
 
   if (error) return null;
 
