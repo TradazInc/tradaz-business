@@ -32,7 +32,7 @@ export default async function page({ params }: Props) {
               name={store.name}
               address={store.address}
               createdAt={new Date(store.createdAt).toDateString()}
-              href={`/dashboard/business/${store.id}`}
+              href={`/dashboard/store/${store.id}`}
             />
           ))}
         </GridContainer>
