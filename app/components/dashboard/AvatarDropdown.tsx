@@ -4,11 +4,12 @@ import { profileMenu } from "@/data/profileMenu";
 import { useSession } from "@/hooks/session";
 import { Avatar, HStack, Icon, Menu, Portal, Text } from "@chakra-ui/react";
 import React from "react";
+import { BsPersonCircle } from "react-icons/bs";
 
 export const AvatarDropdown = () => {
   const { data: session } = useSession();
 
-  if (!session) return null;
+  if (!session) return <BsPersonCircle />;
 
   return (
     <Menu.Root>
