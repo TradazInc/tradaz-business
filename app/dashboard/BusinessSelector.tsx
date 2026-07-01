@@ -5,7 +5,13 @@ import { Store } from "@/entities/Store";
 import { useBusinesses } from "@/hooks/business";
 import { businessService } from "@/services/business/businessService";
 import { storeService } from "@/services/store/storeService";
-import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
+import {
+  Breadcrumb,
+  LinkOverlay,
+  Menu,
+  Portal,
+  Spinner,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
@@ -129,7 +135,10 @@ const BreadcrumbMenuItem = ({
                     value={item.id}
                     onClick={() => handleClick(item.id)}
                   >
-                    <Link href={`/dashboard/business/${item.id}`}>{item.name}</Link>
+                    {item.name}
+                    <LinkOverlay asChild>
+                      <Link href={`/dashboard/business/${item.id}`} />
+                    </LinkOverlay>
                   </Menu.Item>
                 ))
               ) : (
