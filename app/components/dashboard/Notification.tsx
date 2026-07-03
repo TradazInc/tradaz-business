@@ -5,13 +5,10 @@ import {
   Box,
   Circle,
   Float,
-  Heading,
-  HStack,
   Icon,
   IconButton,
   Menu,
   Portal,
-  Span,
   Text,
   VStack,
 } from "@chakra-ui/react";
