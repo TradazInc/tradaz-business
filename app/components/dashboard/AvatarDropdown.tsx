@@ -2,16 +2,7 @@
 
 import { profileMenu } from "@/data/profileMenu";
 import { useSession } from "@/hooks/session";
-import {
-  Avatar,
-  Circle,
-  Float,
-  HStack,
-  Icon,
-  Menu,
-  Portal,
-  Text,
-} from "@chakra-ui/react";
+import { Avatar, HStack, Icon, Menu, Portal, Text } from "@chakra-ui/react";
 import React from "react";
 
 export const AvatarDropdown = () => {
@@ -59,9 +50,6 @@ const ProfileAvatar = ({ image, name }: { name?: string; image?: string }) => {
     <Avatar.Root size={"sm"}>
       <Avatar.Fallback name={name} />
       <Avatar.Image src={image} />
-      <Float offsetX="1" offsetY="1">
-        <Circle bg="red" size="8px" outline="0.2em solid" outlineColor="bg" />
-      </Float>
     </Avatar.Root>
   );
 };
