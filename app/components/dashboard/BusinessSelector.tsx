@@ -59,17 +59,19 @@ export const BusinessSelector = () => {
             <LiaSlashSolid />
           </Breadcrumb.Separator>
 
-          <BreadcrumbMenuItem data={businesses} handleClick={handleBusiness}>
-            <Breadcrumb.Link as="button">
-              <LuBuilding2 />
-              {business?.data?.name ?? "Business"}
-              {isPending ? (
-                <Spinner size="sm" borderWidth="4px" />
-              ) : (
-                <LuChevronDown />
-              )}
-            </Breadcrumb.Link>
-          </BreadcrumbMenuItem>
+          <Breadcrumb.Item>
+            <MenuItem data={businesses} handleClick={handleBusiness}>
+              <Breadcrumb.Link as="button">
+                <LuBuilding2 />
+                {business?.data?.name ?? "Business"}
+                {isPending ? (
+                  <Spinner size="sm" borderWidth="4px" />
+                ) : (
+                  <LuChevronDown />
+                )}
+              </Breadcrumb.Link>
+            </MenuItem>
+          </Breadcrumb.Item>
         </>
 
         {business?.data && (
@@ -78,16 +80,15 @@ export const BusinessSelector = () => {
               <LiaSlashSolid />
             </Breadcrumb.Separator>
 
-            <BreadcrumbMenuItem
-              data={business.data.teams}
-              handleClick={handleStore}
-            >
-              <Breadcrumb.Link as="button">
-                <LuStore />
-                {activeStore}
-                <LuChevronDown />
-              </Breadcrumb.Link>
-            </BreadcrumbMenuItem>
+            <Breadcrumb.Item>
+              <MenuItem data={business.data.teams} handleClick={handleStore}>
+                <Breadcrumb.Link as="button">
+                  <LuStore />
+                  {activeStore}
+                  <LuChevronDown />
+                </Breadcrumb.Link>
+              </MenuItem>
+            </Breadcrumb.Item>
           </>
         )}
       </Breadcrumb.List>
@@ -101,38 +102,32 @@ interface BreadcrumbMenuItemProps {
   children: React.ReactNode;
 }
 
-const BreadcrumbMenuItem = ({
-  data,
-  handleClick,
-  children,
-}: BreadcrumbMenuItemProps) => {
+const MenuItem = ({ data, handleClick, children }: BreadcrumbMenuItemProps) => {
   return (
-    <Breadcrumb.Item>
-      <Menu.Root>
-        <Menu.Trigger asChild>{children}</Menu.Trigger>
-        <Portal>
-          <Menu.Positioner>
-            <Menu.Content>
-              {data && data.length > 0 ? (
-                data.map((item) => (
-                  <Menu.Item
-                    key={item.id}
-                    value={item.id}
-                    onClick={() => handleClick(item.id)}
-                    asChild
-                  >
-                    <NextLink href={`/dashboard/business/${item.id}`}>
-                      {item.name}
-                    </NextLink>
-                  </Menu.Item>
-                ))
-              ) : (
-                <Menu.Item value="">Nothing found</Menu.Item>
-              )}
-            </Menu.Content>
-          </Menu.Positioner>
-        </Portal>
-      </Menu.Root>
-    </Breadcrumb.Item>
+    <Menu.Root>
+      <Menu.Trigger asChild>{children}</Menu.Trigger>
+      <Portal>
+        <Menu.Positioner>
+          <Menu.Content>
+            {data && data.length > 0 ? (
+              data.map((item) => (
+                <Menu.Item
+                  key={item.id}
+                  value={item.id}
+                  onClick={() => handleClick(item.id)}
+                  asChild
+                >
+                  <NextLink href={`/dashboard/business/${item.id}`}>
+                    {item.name}
+                  </NextLink>
+                </Menu.Item>
+              ))
+            ) : (
+              <Menu.Item value="">Nothing found</Menu.Item>
+            )}
+          </Menu.Content>
+        </Menu.Positioner>
+      </Portal>
+    </Menu.Root>
   );
 };
