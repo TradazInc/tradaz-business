@@ -13,7 +13,7 @@ import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
   const { data: businesses, error, isPending } = useBusinesses();
-  const { data: business, error: Error, isLoading, mutate } = useBusiness();
+  const { data: business, error: Error, mutate } = useBusiness();
   const [activeStore, setActiveStore] = useState("Stores");
 
   const handleBusiness = async (businessId: string) => {
@@ -84,14 +84,8 @@ export const BusinessSelector = () => {
             >
               <Breadcrumb.Link as="button">
                 <LuStore />
-                {isLoading ? (
-                  <Skeleton />
-                ) : (
-                  <>
-                    {activeStore}
-                    <LuChevronDown />
-                  </>
-                )}
+                {activeStore}
+                <LuChevronDown />
               </Breadcrumb.Link>
             </BreadcrumbMenuItem>
           </>
