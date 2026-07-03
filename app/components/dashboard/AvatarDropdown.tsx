@@ -2,8 +2,7 @@
 
 import { profileMenu } from "@/data/profileMenu";
 import { useSession } from "@/hooks/session";
-import { Avatar, HStack, Icon, Menu, Portal, Text } from "@chakra-ui/react";
-import React from "react";
+import { Avatar, Box, Icon, Menu, Portal } from "@chakra-ui/react";
 
 export const AvatarDropdown = () => {
   const { data: session } = useSession();
@@ -32,10 +31,8 @@ export const AvatarDropdown = () => {
                     : undefined
                 }
               >
-                <ProfileMenuButton>
-                  <Icon as={option.icon} />
-                  <Text>{option.label}</Text>
-                </ProfileMenuButton>
+                <Icon as={option.icon} />
+                <Box flex="1">{option.label}</Box>
               </Menu.Item>
             ))}
           </Menu.Content>
@@ -51,13 +48,5 @@ const ProfileAvatar = ({ image, name }: { name?: string; image?: string }) => {
       <Avatar.Fallback name={name} />
       <Avatar.Image src={image} />
     </Avatar.Root>
-  );
-};
-
-const ProfileMenuButton = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <HStack p={1} align={"center"} w={"full"}>
-      {children}
-    </HStack>
   );
 };

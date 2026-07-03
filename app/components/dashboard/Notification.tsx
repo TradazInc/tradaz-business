@@ -11,9 +11,11 @@ import {
   IconButton,
   Menu,
   Portal,
+  Span,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { IoTimeSharp } from "react-icons/io5";
 import { LuBell, LuShoppingBag } from "react-icons/lu";
 
 const Notification = () => {
@@ -35,13 +37,15 @@ const Notification = () => {
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            {notifications.map((content, index) => (
-              <Menu.Item value={content.id}>
-                <NotificationContent
-                  key={index}
-                  createdAt={content.createdAt}
-                  title={content.title}
-                />
+            {notifications.map((content) => (
+              <Menu.Item value={content.id} key={content.id}>
+                <Icon as={LuShoppingBag} />
+                <Box flex="1">
+                  <NotificationContent
+                    title={content.title}
+                    createdAt={content.createdAt}
+                  />
+                </Box>
               </Menu.Item>
             ))}
           </Menu.Content>
@@ -61,18 +65,12 @@ const NotificationContent = ({
   createdAt: string;
 }) => {
   return (
-    <HStack gap={4} cursor="pointer">
-      <Box>
-        <Icon as={LuShoppingBag} size={"md"} />
-      </Box>
-      <VStack gap={0} textJustify={"flex-start"}>
-        <Heading textStyle={"xs"} justifyContent={"flex-start"}>
-          {title}
-        </Heading>
-        <Text textStyle={"2xs"} mt={1} color="fg.muted">
-          {createdAt}
-        </Text>
-      </VStack>
-    </HStack>
+    <VStack>
+      <Text textStyle={"xs"}>{title}</Text>
+      <Text textStyle={"xs"} color="fg.muted">
+        <IoTimeSharp />
+        {createdAt}
+      </Text>
+    </VStack>
   );
 };
