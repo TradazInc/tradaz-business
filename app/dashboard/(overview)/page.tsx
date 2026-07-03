@@ -28,7 +28,6 @@ export default async function page({ searchParams }: Props) {
           {data.map((business) => (
             <GridCard
               key={business.id}
-              id={business.id}
               name={business.name}
               address={business.metadata.address}
               logo={business.logo}

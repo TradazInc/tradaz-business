@@ -11,7 +11,6 @@ import { LuBoxes } from "react-icons/lu";
 import NextLink from "next/link";
 
 interface Props {
-  id: string;
   logo?: string | null;
   name: string;
   description?: string;
@@ -21,7 +20,6 @@ interface Props {
 }
 
 const GridCard = ({
-  id,
   logo,
   name,
   address,
