@@ -1,9 +1,10 @@
 import GridCard from "@/app/components/dashboard/GridCard";
 import GridContainer from "@/app/components/dashboard/GridContainer";
-import PageHeader from "@/app/components/PageHeader";
 import { PageContainer } from "@/app/components/PageContainer";
+import PageHeader from "@/app/components/PageHeader";
 import Search from "@/app/components/Search";
 import { SideDrawer } from "@/app/components/SideDrawer";
+import ToolBarContainer from "@/app/components/ToolBarContainer";
 import { getBusiness } from "@/server/business";
 import { Button, HStack, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -28,7 +29,6 @@ export default async function page({ params }: Props) {
           {data.teams.map((store) => (
             <GridCard
               key={store.id}
-              id={store.id}
               name={store.name}
               address={store.address}
               createdAt={new Date(store.createdAt).toDateString()}
@@ -43,7 +43,7 @@ export default async function page({ params }: Props) {
 
 const BusinessToolbar = () => {
   return (
-    <HStack w={"full"} justify={"space-between"}>
+    <ToolBarContainer>
       <HStack>
         <SideDrawer />
         <Suspense>
@@ -54,6 +54,6 @@ const BusinessToolbar = () => {
         <LuPlus />
         New Store
       </Button>
-    </HStack>
+    </ToolBarContainer>
   );
 };

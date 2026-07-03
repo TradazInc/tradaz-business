@@ -1,9 +1,10 @@
 import GridCard from "@/app/components/dashboard/GridCard";
 import GridContainer from "@/app/components/dashboard/GridContainer";
-import PageHeader from "@/app/components/PageHeader";
 import { PageContainer } from "@/app/components/PageContainer";
+import PageHeader from "@/app/components/PageHeader";
 import Search from "@/app/components/Search";
 import { SideDrawer } from "@/app/components/SideDrawer";
+import ToolBarContainer from "@/app/components/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
 import { Button, HStack, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -44,7 +45,7 @@ export default async function page({ searchParams }: Props) {
 
 const DashboardToolbar = () => {
   return (
-    <HStack w={"full"} justify={"space-between"}>
+    <ToolBarContainer>
       <HStack>
         <SideDrawer />
         <Suspense>
@@ -55,6 +56,6 @@ const DashboardToolbar = () => {
         <LuPlus />
         New Business
       </Button>
-    </HStack>
+    </ToolBarContainer>
   );
 };
