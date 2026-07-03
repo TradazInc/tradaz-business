@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { useBusiness, useBusinesses } from "@/hooks/business";
 import { businessService } from "@/services/business/businessService";
 import { storeService } from "@/services/store/storeService";
-import { Breadcrumb, Menu, Portal, Skeleton, Spinner } from "@chakra-ui/react";
+import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
