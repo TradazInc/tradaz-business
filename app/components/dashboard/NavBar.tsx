@@ -23,14 +23,9 @@ export const NavBar = () => {
 
       <HStack gap="2">
         <ColorModeButton rounded={"full"} />
-        <IconButton rounded={"full"} variant={"ghost"} position={"relative"}>
+        {/* <IconButton rounded={"full"} variant={"ghost"}>
           <LuBell />
-          <Float offset={"5"}>
-            <Status.Root colorPalette="red">
-              <Status.Indicator />
-            </Status.Root>
-          </Float>
-        </IconButton>
+        </IconButton> */}
         <AvatarDropdown />
       </HStack>
     </HStack>

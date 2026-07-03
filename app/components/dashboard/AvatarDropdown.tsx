@@ -4,19 +4,20 @@ import { profileMenu } from "@/data/profileMenu";
 import { useSession } from "@/hooks/session";
 import {
   Avatar,
+  Circle,
+  Float,
   HStack,
   Icon,
   Menu,
   Portal,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { BsPersonCircle } from "react-icons/bs";
 
 export const AvatarDropdown = () => {
   const { data: session } = useSession();
 
-  if (!session) return <BsPersonCircle />;
+  if (!session) return <ProfileAvatar />;
 
   return (
     <Menu.Root>
@@ -53,11 +54,14 @@ export const AvatarDropdown = () => {
   );
 };
 
-const ProfileAvatar = ({ image, name }: { name: string; image?: string }) => {
+const ProfileAvatar = ({ image, name }: { name?: string; image?: string }) => {
   return (
     <Avatar.Root size={"sm"}>
       <Avatar.Fallback name={name} />
       <Avatar.Image src={image} />
+      <Float offsetX="1" offsetY="1">
+        <Circle bg="red" size="8px" outline="0.2em solid" outlineColor="bg" />
+      </Float>
     </Avatar.Root>
   );
 };
