@@ -2,7 +2,14 @@
 
 import { profileMenu } from "@/data/profileMenu";
 import { useSession } from "@/hooks/session";
-import { Avatar, HStack, Icon, Menu, Portal, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  HStack,
+  Icon,
+  Menu,
+  Portal,
+  Text
+} from "@chakra-ui/react";
 import React from "react";
 import { BsPersonCircle } from "react-icons/bs";
 
