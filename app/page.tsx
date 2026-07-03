@@ -8,9 +8,11 @@ import {
   Flex,
   HStack,
   Heading,
+  Image,
   SimpleGrid,
   Text,
   VStack,
+  Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -23,6 +25,8 @@ const page = () => {
         bg="bg.panel"
         borderBottomWidth="1px"
         borderColor="bg.emphasized"
+        position="fixed"
+        zIndex={2}
       >
         <Flex
           maxW="container.lg"
@@ -66,38 +70,61 @@ const page = () => {
       </Box>
 
       <Container maxW="container.lg" pt={32} pb={20}>
-        <VStack gap="6" textAlign="center" mb={24}>
-          <Heading
-            as="h1"
-            size="3xl"
-            fontWeight="extrabold"
-            letterSpacing="tight"
+        <SimpleGrid
+          columns={{ base: 1, md: 2 }}
+          gap={10}
+          alignItems="center"
+          mb={24}
+        >
+          <VStack
+            gap="6"
+            alignItems={{ base: "center", md: "flex-start" }}
+            textAlign={{ base: "center", md: "left" }}
           >
-            Welcome to{" "}
-            <Text as="span" color="green.500">
-              Tradaz
-            </Text>
-          </Heading>
-
-          <Text fontSize="xl" color="fg.muted" maxW="2xl">
-            A tailored e-commerce platform for business owners. Streamline your
-            operations, manage your brand, track sales and inventory and scale
-            your growth seamlessly.
-          </Text>
-
-          <Link href="/signup">
-            <Button
-              size="sm"
-              rounded="full"
-              fontWeight="bold"
-              px={10}
-              py={5}
-              fontSize="md"
+            <Heading
+              as="h1"
+              size="3xl"
+              fontWeight="extrabold"
+              letterSpacing="tight"
             >
-              Join
-            </Button>
-          </Link>
-        </VStack>
+              Welcome to{" "}
+              <Text as="span" color="green.500">
+                Tradaz
+              </Text>
+            </Heading>
+
+            <Text fontSize="xl" color="fg.muted">
+              A tailored e-commerce platform for business owners. Streamline
+              your operations, manage your brand, track sales and inventory and
+              scale your growth seamlessly.
+            </Text>
+
+            <Link href="/signup">
+              <Center w="full" mt={2}>
+                <Button
+                  size="sm"
+                  rounded="full"
+                  fontWeight="bold"
+                  px={10}
+                  py={5}
+                  fontSize="md"
+                >
+                  Join
+                </Button>
+              </Center>
+            </Link>
+          </VStack>
+
+          <Box w="full" display="flex" justifyContent="center">
+            <Image
+              src="/hero.png"
+              alt="Tradaz hero image"
+              objectFit="cover"
+              maxH="450px"
+              w="full"
+            />
+          </Box>
+        </SimpleGrid>
 
         <Box as="section">
           <VStack gap="3" textAlign="center" mb={16}>
@@ -148,6 +175,50 @@ const page = () => {
           </SimpleGrid>
         </Box>
       </Container>
+
+      <Box
+        as="footer"
+        borderTopWidth="1px"
+        borderColor="bg.emphasized"
+        py={8}
+        mt="auto"
+      >
+        <Container maxW="container.lg">
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            justify="space-between"
+            align="center"
+            gap={4}
+          >
+            <LogoContainer>Tradaz</LogoContainer>
+
+            <Text color="fg.muted" fontSize="sm">
+              © {new Date().getFullYear()} Tradaz. All rights reserved.
+            </Text>
+
+            <HStack gap={6}>
+              <Link href="/terms">
+                <Text
+                  color="fg.muted"
+                  fontSize="sm"
+                  _hover={{ color: "green.500" }}
+                >
+                  Terms
+                </Text>
+              </Link>
+              <Link href="/privacy">
+                <Text
+                  color="fg.muted"
+                  fontSize="sm"
+                  _hover={{ color: "green.500" }}
+                >
+                  Privacy
+                </Text>
+              </Link>
+            </HStack>
+          </Flex>
+        </Container>
+      </Box>
     </Box>
   );
 };
