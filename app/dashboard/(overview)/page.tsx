@@ -1,6 +1,6 @@
 import GridCard from "@/app/components/dashboard/GridCard";
 import GridContainer from "@/app/components/dashboard/GridContainer";
-import Header from "@/app/components/Header";
+import PageHeader from "@/app/components/PageHeader";
 import { PageContainer } from "@/app/components/PageContainer";
 import Search from "@/app/components/Search";
 import { SideDrawer } from "@/app/components/SideDrawer";
@@ -22,7 +22,7 @@ export default async function page({ searchParams }: Props) {
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <Header text="Your Businesses" />
+        <PageHeader>Your Businesses</PageHeader>
         <DashboardToolbar />
         <GridContainer>
           {data.map((business) => (
