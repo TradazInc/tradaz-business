@@ -25,7 +25,7 @@ export const NavBar = () => {
         <ColorModeButton rounded={"full"} />
         <IconButton rounded={"full"} variant={"ghost"} position={"relative"}>
           <LuBell />
-          <Float>
+          <Float offset={"5"}>
             <Status.Root colorPalette="red">
               <Status.Indicator />
             </Status.Root>
