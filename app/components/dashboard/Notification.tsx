@@ -11,8 +11,7 @@ import {
   IconButton,
   Menu,
   Portal,
-  Text,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { IoTimeSharp } from "react-icons/io5";
 import { LuBell, LuShoppingBag } from "react-icons/lu";
