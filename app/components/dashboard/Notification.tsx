@@ -5,6 +5,8 @@ import {
   Box,
   Circle,
   Float,
+  Heading,
+  HStack,
   Icon,
   IconButton,
   Menu,
@@ -63,11 +65,11 @@ const NotificationContent = ({
 }) => {
   return (
     <VStack>
-      <Text textStyle={"xs"}>{title}</Text>
-      <Text textStyle={"xs"} color="fg.muted">
+      <Heading textStyle={"xs"}>{title}</Heading>
+      <HStack textStyle={"xs"} color="fg.muted">
         <IoTimeSharp />
         {createdAt}
-      </Text>
+      </HStack>
     </VStack>
   );
 };
