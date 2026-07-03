@@ -1,6 +1,6 @@
 import { LogoContainer } from "@/app/components/LogoContainer";
 import { ColorModeButton } from "@/components/ui/color-mode";
-import { Badge, Float, HStack, IconButton } from "@chakra-ui/react";
+import { Circle, Float, HStack, IconButton } from "@chakra-ui/react";
 import { LuBell } from "react-icons/lu";
 import { AvatarDropdown } from "./AvatarDropdown";
 import { BusinessSelector } from "./BusinessSelector";
@@ -25,10 +25,10 @@ export const NavBar = () => {
         <ColorModeButton rounded={"full"} />
         <IconButton rounded={"full"} variant={"ghost"} position={"relative"}>
           <LuBell />
-          <Float placement="bottom-end">
-            <Badge size="sm" variant="solid" colorPalette="red">
+          <Float>
+            <Circle size="5" bg="red" color="white">
               3
-            </Badge>
+            </Circle>
           </Float>
         </IconButton>
         <AvatarDropdown />
