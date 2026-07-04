@@ -37,7 +37,7 @@ const Notification = () => {
           <Menu.Content>
             {notifications.map((content) => (
               <Menu.Item value={content.id} key={content.id}>
-                <Icon as={LuShoppingBag} />
+                <Icon as={LuShoppingBag} size={"md"} />
                 <Box flex="1">
                   <NotificationContent
                     title={content.title}
@@ -64,8 +64,16 @@ const NotificationContent = ({
 }) => {
   return (
     <VStack gap={0}>
-      <Heading textStyle={"xs"}>{title}</Heading>
-      <HStack textStyle={"xs"} color="fg.muted" gap={0}>
+      <Heading textStyle={"xs"} w={"full"}>
+        {title}
+      </Heading>
+      <HStack
+        gap={0}
+        w={"full"}
+        textStyle={"xs"}
+        color={"fg.muted"}
+        justify={"flex-start"}
+      >
         <IoTimeSharp />
         {createdAt}
       </HStack>
