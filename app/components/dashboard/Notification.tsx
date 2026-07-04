@@ -11,7 +11,7 @@ import {
   IconButton,
   Menu,
   Portal,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { IoTimeSharp } from "react-icons/io5";
 import { LuBell, LuShoppingBag } from "react-icons/lu";
@@ -63,9 +63,9 @@ const NotificationContent = ({
   createdAt: string;
 }) => {
   return (
-    <VStack>
+    <VStack gap={0}>
       <Heading textStyle={"xs"}>{title}</Heading>
-      <HStack textStyle={"xs"} color="fg.muted">
+      <HStack textStyle={"xs"} color="fg.muted" gap={0}>
         <IoTimeSharp />
         {createdAt}
       </HStack>
