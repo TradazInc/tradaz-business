@@ -1,6 +1,16 @@
+import { authService } from "@/services/auth/authService";
+import { IconType } from "react-icons";
 import { LuLogOut, LuSettings } from "react-icons/lu";
 
-export const profileMenu = [
+interface ProfileMenu {
+  label: string;
+  value: string;
+  icon: IconType;
+  danger?: boolean;
+  handler?: (...args: any[]) => Promise<any>;
+}
+
+export const profileMenu: ProfileMenu[] = [
   {
     label: "Account Settings",
     value: "settings",
@@ -11,5 +21,6 @@ export const profileMenu = [
     value: "logout",
     icon: LuLogOut,
     danger: true,
+    handler: authService.logout,
   },
 ];

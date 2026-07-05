@@ -81,6 +81,16 @@ class AuthService {
     );
   }
 
+  logout = async (router: AppRouterInstance) => {
+    return authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/sigin"); // redirect to login page
+        },
+      },
+    });
+  };
+
   async isAuthorized() {
     const { data: session, error } = await this.authClient.getSession();
 

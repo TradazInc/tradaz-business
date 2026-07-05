@@ -3,9 +3,11 @@
 import { profileMenu } from "@/data/profileMenu";
 import { useSession } from "@/hooks/session";
 import { Avatar, Box, Icon, Menu, Portal } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 export const AvatarDropdown = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   if (!session) return <ProfileAvatar />;
 
@@ -29,6 +31,9 @@ export const AvatarDropdown = () => {
                   option?.danger
                     ? { bg: "bg.error", color: "fg.error" }
                     : undefined
+                }
+                onClick={() =>
+                  option.handler ? option.handler(router) : undefined
                 }
               >
                 <Icon as={option.icon} />
