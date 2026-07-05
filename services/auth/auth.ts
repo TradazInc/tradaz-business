@@ -5,6 +5,27 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { forbidden, unauthorized } from "next/navigation";
 import { emailSignInSchema, emailSignUpSchema } from "./authSchema";
 
+export async function isAuthorized() {
+  const { data: session, error } = await authClient.getSession();
+
+  if (error) {
+    toaster.create({
+      title: error.code,
+      description: error.message,
+      type: "error",
+    });
+    return;
+  }
+
+  if (!session) unauthorized();
+
+  if (session.member?.role && allowedRoles.includes(session.member?.role)) {
+    return session;
+  } else {
+    forbidden();
+  }
+}
+
 export async function emailSignUp(
   formData: FormData,
   router: AppRouterInstance,
@@ -92,25 +113,4 @@ export async function logout(router: AppRouterInstance) {
       },
     },
   });
-}
-
-export async function isAuthorized() {
-  const { data: session, error } = await authClient.getSession();
-
-  if (error) {
-    toaster.create({
-      title: error.code,
-      description: error.message,
-      type: "error",
-    });
-    return;
-  }
-
-  if (!session) unauthorized();
-
-  if (session.member?.role && allowedRoles.includes(session.member?.role)) {
-    return session;
-  } else {
-    forbidden();
-  }
 }

@@ -1,4 +1,4 @@
-import { authService } from "@/services/auth/auth";
+import { logout } from "@/services/auth/auth";
 import { IconType } from "react-icons";
 import { LuLogOut, LuSettings } from "react-icons/lu";
 
@@ -21,6 +21,6 @@ export const profileMenu: ProfileMenu[] = [
     value: "logout",
     icon: LuLogOut,
     danger: true,
-    handler: authService.logout,
+    handler: logout,
   },
 ];
