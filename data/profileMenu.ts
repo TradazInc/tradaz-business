@@ -1,4 +1,4 @@
-import { authService } from "@/services/auth/authService";
+import { authService } from "@/services/auth/auth";
 import { IconType } from "react-icons";
 import { LuLogOut, LuSettings } from "react-icons/lu";
 

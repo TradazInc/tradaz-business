@@ -2,8 +2,8 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { useBusiness, useBusinesses } from "@/hooks/business";
-import { businessService } from "@/services/business/businessService";
-import { storeService } from "@/services/store/storeService";
+import { setActiveBussienss } from "@/services/business/business";
+import { setActiveStore } from "@/services/store/store";
 import { Breadcrumb, Menu, Portal, Spinner } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
@@ -14,10 +14,10 @@ import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 export const BusinessSelector = () => {
   const { data: businesses, error, isPending } = useBusinesses();
   const { data: business, error: Error, mutate } = useBusiness();
-  const [activeStore, setActiveStore] = useState("Stores");
+  const [store, setStore] = useState("Stores");
 
   const handleBusiness = async (businessId: string) => {
-    const business = await businessService.setActiveBussienss(businessId);
+    const business = await setActiveBussienss(businessId);
     if (business.error) {
       return toaster.create({
         title: business.error.code,
@@ -29,7 +29,7 @@ export const BusinessSelector = () => {
   };
 
   const handleStore = async (storeId: string) => {
-    const { data, error } = await storeService.setActiveStore(storeId);
+    const { data, error } = await setActiveStore(storeId);
     if (error) {
       return toaster.create({
         title: error.code,
@@ -37,7 +37,7 @@ export const BusinessSelector = () => {
         type: "error",
       });
     }
-    setActiveStore(data.name);
+    setStore(data.name);
   };
 
   const businessId = useParams().businessId as string;
@@ -84,7 +84,7 @@ export const BusinessSelector = () => {
               <MenuItem data={business.data.teams} handleClick={handleStore}>
                 <Breadcrumb.Link as="button">
                   <LuStore />
-                  {activeStore}
+                  {store}
                   <LuChevronDown />
                 </Breadcrumb.Link>
               </MenuItem>

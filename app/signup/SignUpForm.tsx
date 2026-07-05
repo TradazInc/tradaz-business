@@ -1,6 +1,6 @@
 "use client";
 
-import { authService } from "@/services/auth/authService";
+import { emailSignUp, googleSignIn } from "@/services/auth/auth";
 import {
   Box,
   Button,
@@ -13,10 +13,10 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { PasswordInput } from "../../components/ui/password-input";
-import { GoogleIcon } from "../components/auth/GoogleIcon";
-import LinkText from "../components/auth/LinkText";
-import SeparatorText from "../components/auth/SeparatorText";
+import { PasswordInput } from "@/components/ui/password-input";
+import { GoogleIcon } from "@/app/ui/auth/GoogleIcon";
+import LinkText from "@/app/ui/auth/LinkText";
+import SeparatorText from "@/app/ui/auth/SeparatorText";
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -28,13 +28,13 @@ const SignUpForm = () => {
     const formData = new FormData(e.currentTarget);
 
     startEmailTransition(async () => {
-      await authService.emailSignUp(formData, router);
+      await emailSignUp(formData, router);
     });
   };
 
   const handleGoogleSignup = () => {
     startGoogleTransition(async () => {
-      await authService.googleSignIn(router);
+      await googleSignIn(router);
     });
   };
 

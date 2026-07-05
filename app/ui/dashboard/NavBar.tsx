@@ -1,4 +1,4 @@
-import { LogoContainer } from "@/app/components/LogoContainer";
+import { LogoContainer } from "../LogoContainer";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { HStack } from "@chakra-ui/react";
 import { AvatarDropdown } from "./AvatarDropdown";

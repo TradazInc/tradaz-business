@@ -1,10 +1,10 @@
-import GridCard from "@/app/components/dashboard/GridCard";
-import GridContainer from "@/app/components/dashboard/GridContainer";
-import { PageContainer } from "@/app/components/PageContainer";
-import PageHeader from "@/app/components/PageHeader";
-import Search from "@/app/components/Search";
-import { SideDrawer } from "@/app/components/SideDrawer";
-import ToolBarContainer from "@/app/components/ToolBarContainer";
+import GridCard from "@/app/ui/dashboard/GridCard";
+import GridContainer from "@/app/ui/dashboard/GridContainer";
+import { PageContainer } from "@/app/ui/PageContainer";
+import PageHeader from "@/app/ui/PageHeader";
+import Search from "@/app/ui/Search";
+import { SideDrawer } from "@/app/ui/SideDrawer";
+import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
 import { Button, HStack, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";

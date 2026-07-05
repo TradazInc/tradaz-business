@@ -1,6 +1,6 @@
 "use client";
 
-import { authService } from "@/services/auth/authService";
+import { emailSignIn, googleSignIn } from "@/services/auth/auth";
 import {
   Box,
   Button,
@@ -14,9 +14,9 @@ import {
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { PasswordInput } from "@/components/ui/password-input";
-import { GoogleIcon } from "../components/auth/GoogleIcon";
-import LinkText from "../components/auth/LinkText";
-import SeparatorText from "../components/auth/SeparatorText";
+import { GoogleIcon } from "@/app/ui/auth/GoogleIcon";
+import LinkText from "@/app/ui/auth/LinkText";
+import SeparatorText from "@/app/ui/auth/SeparatorText";
 
 const SignInForm = () => {
   const router = useRouter();
@@ -28,13 +28,13 @@ const SignInForm = () => {
     const formData = new FormData(e.currentTarget);
 
     startEmailTransition(async () => {
-      await authService.emailSignIn(formData, router);
+      await emailSignIn(formData, router);
     });
   };
 
   const handleGoogleSignIn = () => {
     startGoogleTransition(async () => {
-      await authService.googleSignIn(router);
+      await googleSignIn(router);
     });
   };
 

@@ -1,4 +1,4 @@
-import { LogoContainer } from "@/app/components/LogoContainer";
+import { LogoContainer } from "@/app/ui/LogoContainer";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { steps } from "@/data/homeSteps";
 import {
