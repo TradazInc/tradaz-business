@@ -39,7 +39,7 @@ const Notification = () => {
                 <Icon
                   as={LuShoppingBag}
                   size={"md"}
-                  color={"green.emphasized"}
+                  color={"green.solid"}
                 />
                 <Box flex="1">
                   <NotificationContent
