@@ -4,16 +4,15 @@ import { notifications } from "@/data/notifications";
 import {
   Box,
   Circle,
+  Flex,
   Float,
   Heading,
-  HStack,
   Icon,
   IconButton,
   Menu,
   Portal,
   VStack,
 } from "@chakra-ui/react";
-import { IoTimeSharp } from "react-icons/io5";
 import { LuBell, LuShoppingBag } from "react-icons/lu";
 
 const Notification = () => {
@@ -67,16 +66,14 @@ const NotificationContent = ({
       <Heading textStyle={"xs"} w={"full"}>
         {title}
       </Heading>
-      <HStack
-        gap={0}
+      <Flex
         w={"full"}
         textStyle={"xs"}
         color={"fg.muted"}
         justify={"flex-start"}
       >
-        <IoTimeSharp />
         {createdAt}
-      </HStack>
+      </Flex>
     </VStack>
   );
 };
