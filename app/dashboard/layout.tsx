@@ -1,5 +1,5 @@
-import { LayoutContainer } from "../components/LayoutContainer";
-import { NavBar } from "../components/dashboard/NavBar";
+import { LayoutContainer } from "../ui/LayoutContainer";
+import { NavBar } from "../ui/dashboard/NavBar";
 
 export default function BusinessLayout({
   children,
