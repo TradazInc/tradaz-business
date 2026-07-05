@@ -1,9 +1,12 @@
-import React from 'react'
+import { StoreForm } from "@/app/ui/store/StoreForm";
+import { Center } from "@chakra-ui/react";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <Center h={"full"} w={"full"}>
+      <StoreForm />
+    </Center>
+  );
+};
 
-export default page
+export default page;

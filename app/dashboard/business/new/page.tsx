@@ -1,4 +1,4 @@
-import { BusinessForm } from "@/app/ui/dashboard/BusinessForm";
+import { BusinessForm } from "@/app/ui/business/BusinessForm";
 import { Center } from "@chakra-ui/react";
 
 const page = () => {
