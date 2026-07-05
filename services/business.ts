@@ -1,6 +1,6 @@
 import { toaster } from "@/components/ui/toaster";
 import { authClient } from "@/lib/auth";
-import { businessSchema } from "./businessSchema";
+import { businessSchema } from "@/schema/business";
 
 export async function createBusiness(formData: FormData) {
   const form = Object.fromEntries(formData.entries());

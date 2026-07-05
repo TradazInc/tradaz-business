@@ -1,4 +1,4 @@
-import { logout } from "@/services/auth/auth";
+import { logout } from "@/services/auth";
 import { IconType } from "react-icons";
 import { LuLogOut, LuSettings } from "react-icons/lu";
 
@@ -7,7 +7,7 @@ interface ProfileMenu {
   value: string;
   icon: IconType;
   danger?: boolean;
-  handler?: (...args: any[]) => Promise<any>;
+  handler?: (arg: any) => Promise<any>;
 }
 
 export const profileMenu: ProfileMenu[] = [

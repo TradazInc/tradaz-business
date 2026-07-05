@@ -1,6 +1,6 @@
 "use client";
 
-import { emailSignIn, googleSignIn } from "@/services/auth/auth";
+import { emailSignIn, googleSignIn } from "@/services/auth";
 import {
   Box,
   Button,

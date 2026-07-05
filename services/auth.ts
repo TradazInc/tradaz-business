@@ -3,7 +3,7 @@ import { allowedRoles } from "@/entities/Session";
 import { authClient } from "@/lib/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { forbidden, unauthorized } from "next/navigation";
-import { emailSignInSchema, emailSignUpSchema } from "./authSchema";
+import { emailSignInSchema, emailSignUpSchema } from "@/schema/auth";
 
 export async function isAuthorized() {
   const { data: session, error } = await authClient.getSession();
