@@ -85,7 +85,7 @@ class AuthService {
     return authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push("/sigin"); // redirect to login page
+          router.push("/signin"); // redirect to login page
         },
       },
     });
