@@ -7,6 +7,7 @@ import { SideDrawer } from "@/app/ui/SideDrawer";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
 import { Button, HStack, VStack } from "@chakra-ui/react";
+import Link from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
@@ -52,9 +53,11 @@ const DashboardToolbar = () => {
           <Search placeholder="Search for a business" query="business" />
         </Suspense>
       </HStack>
-      <Button size={"xs"}>
-        <LuPlus />
-        New Business
+      <Button size={"xs"} asChild>
+        <Link href={'/business/new'}>
+          <LuPlus />
+          New Business
+        </Link>
       </Button>
     </ToolBarContainer>
   );
