@@ -52,7 +52,7 @@ const BusinessToolbar = () => {
         </Suspense>
       </HStack>
       <Button size={"xs"} asChild>
-        <Link href={"/store/new"}>
+        <Link href={"/dashboard/store/new"}>
           <LuPlus />
           New Store
         </Link>

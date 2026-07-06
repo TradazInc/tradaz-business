@@ -54,7 +54,7 @@ const DashboardToolbar = () => {
         </Suspense>
       </HStack>
       <Button size={"xs"} asChild>
-        <Link href={'/business/new'}>
+        <Link href={'/dashboard/business/new'}>
           <LuPlus />
           New Business
         </Link>
