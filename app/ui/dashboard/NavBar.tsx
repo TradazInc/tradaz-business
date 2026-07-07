@@ -19,7 +19,7 @@ export const NavBar = () => {
     >
       <HStack gap="4">
         <Link href={"/dashboard"}>
-          <TradazLogo />
+          <TradazLogo h={{ base: 4, md: 7 }} />
         </Link>
         <BusinessSelector />
       </HStack>
