@@ -38,7 +38,7 @@ const SignInForm = () => {
   };
 
   return (
-    <form onSubmit={handleEmailSignin}>
+    <Fieldset.Root size="lg" maxW="lg" onSubmit={handleEmailSignin}>
       <Fieldset.Root size="lg" maxW="lg">
         <Fieldset.Content>
           <Field.Root>
@@ -84,7 +84,7 @@ const SignInForm = () => {
           <LinkText>Sign Up</LinkText>
         </HStack>
       </Fieldset.Root>
-    </form>
+    </Fieldset.Root>
   );
 };
 
