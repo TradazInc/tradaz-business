@@ -6,7 +6,7 @@ import Search from "@/app/ui/Search";
 import { SideDrawer } from "@/app/ui/SideDrawer";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
-import { Button, For, HStack, VStack } from "@chakra-ui/react";
+import { Box, Button, For, HStack, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -27,7 +27,7 @@ export default async function page({ searchParams }: Props) {
         <PageHeader>Your Businesses</PageHeader>
         <DashboardToolbar />
         <GridContainer>
-          <For each={businesses}>
+          <For each={businesses} fallback={<Box>"No businesses found"</Box>}>
             {(business) => (
               <GridCard
                 key={business.id}

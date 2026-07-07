@@ -6,7 +6,7 @@ import Search from "@/app/ui/Search";
 import { SideDrawer } from "@/app/ui/SideDrawer";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusiness } from "@/server/business";
-import { Button, HStack, VStack } from "@chakra-ui/react";
+import { Box, Button, For, HStack, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -27,15 +27,17 @@ export default async function page({ params }: Props) {
         <PageHeader>{`${data.name} Stores`}</PageHeader>
         <BusinessToolbar />
         <GridContainer>
-          {data.teams.map((store) => (
-            <GridCard
-              key={store.id}
-              name={store.name}
-              address={store.address}
-              createdAt={new Date(store.createdAt).toDateString()}
-              href={`/dashboard/store/${store.id}`}
-            />
-          ))}
+          <For each={data.teams} fallback={<Box>"No stores found"</Box>}>
+            {(store) => (
+              <GridCard
+                key={store.id}
+                name={store.name}
+                address={store.address}
+                createdAt={new Date(store.createdAt).toDateString()}
+                href={`/dashboard/store/${store.id}`}
+              />
+            )}
+          </For>
         </GridContainer>
       </VStack>
     </PageContainer>

@@ -2,6 +2,7 @@
 
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import {
+  Box,
   Button,
   Field,
   Fieldset,
@@ -9,7 +10,6 @@ import {
   For,
   Input,
   NativeSelect,
-  Skeleton,
   Stack,
 } from "@chakra-ui/react";
 
@@ -29,12 +29,16 @@ export const BusinessForm = () => {
 
       <Fieldset.Content>
         <Field.Root>
-          <Field.Label>Name</Field.Label>
+          <Field.Label>
+            Name <Field.RequiredIndicator />
+          </Field.Label>
           <Input name="name" />
         </Field.Root>
 
         <Field.Root>
-          <Field.Label>Slug</Field.Label>
+          <Field.Label>
+            Slug <Field.RequiredIndicator />
+          </Field.Label>
           <Input name="slug" />
         </Field.Root>
 
@@ -67,7 +71,10 @@ export const BusinessForm = () => {
           <Field.Label>Category</Field.Label>
           <NativeSelect.Root>
             <NativeSelect.Field name="category">
-              <For each={categories} fallback={<Skeleton />}>
+              <For
+                each={categories}
+                fallback={<Box>"No categories found"</Box>}
+              >
                 {(category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
