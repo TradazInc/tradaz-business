@@ -63,14 +63,10 @@ export const BusinessSelector = () => {
             <MenuItem data={businesses} handleClick={handleBusiness}>
               <Breadcrumb.Link as="button">
                 <LuBuilding2 />
-                {isPending ? (
-                  <Skeleton />
-                ) : (
-                  <>
-                    {business?.data?.name ?? "Business"}
-                    <LuChevronDown />
-                  </>
-                )}
+                <Skeleton height={"5"} loading={isPending}>
+                  {business?.data?.name ?? "Business"}
+                  <LuChevronDown />
+                </Skeleton>
               </Breadcrumb.Link>
             </MenuItem>
           </Breadcrumb.Item>
