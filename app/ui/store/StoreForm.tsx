@@ -1,12 +1,4 @@
-import {
-  Button,
-  Field,
-  Fieldset,
-  For,
-  Input,
-  NativeSelect,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 
 export const StoreForm = () => {
   return (
@@ -19,30 +11,19 @@ export const StoreForm = () => {
       </Stack>
 
       <Fieldset.Content>
-        <Field.Root>
-          <Field.Label>Name</Field.Label>
+        <Field.Root required>
+          <Field.Label>
+            Name <Field.RequiredIndicator />
+          </Field.Label>
           <Input name="name" />
         </Field.Root>
 
-        <Field.Root>
-          <Field.Label>Email address</Field.Label>
-          <Input name="email" type="email" />
-        </Field.Root>
-
-        <Field.Root>
-          <Field.Label>Country</Field.Label>
-          <NativeSelect.Root>
-            <NativeSelect.Field name="country">
-              <For each={["United Kingdom", "Canada", "United States"]}>
-                {(item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                )}
-              </For>
-            </NativeSelect.Field>
-            <NativeSelect.Indicator />
-          </NativeSelect.Root>
+        <Field.Root required>
+          <Field.Label>
+            Address
+            <Field.RequiredIndicator />
+          </Field.Label>
+          <Input name="address" />
         </Field.Root>
       </Fieldset.Content>
 

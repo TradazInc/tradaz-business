@@ -28,14 +28,14 @@ export const BusinessForm = () => {
       </Stack>
 
       <Fieldset.Content>
-        <Field.Root>
+        <Field.Root required>
           <Field.Label>
             Name <Field.RequiredIndicator />
           </Field.Label>
           <Input name="name" />
         </Field.Root>
 
-        <Field.Root>
+        <Field.Root required>
           <Field.Label>
             Slug <Field.RequiredIndicator />
           </Field.Label>
