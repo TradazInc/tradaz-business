@@ -5,9 +5,9 @@ import { Button, HStack, Input, Text, Field, Fieldset } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { PasswordInput } from "@/components/ui/password-input";
-import { GoogleIcon } from "@/app/ui/auth/GoogleIcon";
-import LinkText from "@/app/ui/auth/LinkText";
-import SeparatorText from "@/app/ui/auth/SeparatorText";
+import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
+import LinkText from "@/app/ui/signin/LinkText";
+import SeparatorText from "@/app/ui/signin/SeparatorText";
 
 const SignUpForm = () => {
   const router = useRouter();

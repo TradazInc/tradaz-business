@@ -1,61 +1,25 @@
-import { Flex, VStack } from "@chakra-ui/react";
-import { LogoContainer } from "@/app/ui/LogoContainer";
-import SignInForm from "./SignInForm";
-import SignInHeader from "@/app/ui/auth/SignInHeader";
-import SigninSidePanel from "@/app/ui/auth/SigninSidePanel";
+import { Tabs } from "@chakra-ui/react";
+import SignUpForm from "../ui/signin/SignUpForm";
+import SignInForm from "../ui/signin/SignInForm";
 
 const SigninPage = () => {
   return (
-    <Flex
-      minH="100vh"
-      w="full"
-      bg="bg.subtle"
-      align="center"
-      justify="center"
-      p={4}
-    >
-      <VStack w="full" maxW="1000px" align="flex-start" gap={4}>
-        <Flex
-          w="full"
-          h={{ base: "auto", lg: "min(650px, 85vh)" }}
-          bg="bg.muted"
-          rounded="2xl"
-          overflow="hidden"
-          boxShadow="0 25px 50px -12px rgba(0,0,0,0.5)"
-          border="1px solid"
-          borderColor="whiteAlpha.100"
-          direction={{ base: "column", lg: "row" }}
-        >
-          <SigninSidePanel
-            heading={"Hello, Friend!"}
-            action={"SIGN IN"}
-            prompt={
-              "Enter your personal details and start your journey with us"
-            }
-          />
-          <Flex
-            flex={1}
-            align="center"
-            justify="center"
-            p={{ base: 6, md: 8 }}
-            overflowY="auto"
-            css={{
-              "&::-webkit-scrollbar": { display: "none" },
-              scrollbarWidth: "none",
-            }}
-          >
-            <VStack w="full" maxW="400px" gap="20px" marginX="auto">
-              <LogoContainer>Tradaz</LogoContainer>
-              <SignInHeader
-                heading="Sign In"
-                prompt="Enter your credentials to access your account."
-              />
-              <SignInForm />
-            </VStack>
-          </Flex>
-        </Flex>
-      </VStack>
-    </Flex>
+    <Tabs.Root defaultValue="signin">
+      <Tabs.List>
+        <Tabs.Trigger value="signin" asChild>
+          Sign In
+        </Tabs.Trigger>
+        <Tabs.Trigger value="signup" asChild>
+          Sign Up
+        </Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content value="signin">
+        <SignInForm />
+      </Tabs.Content>
+      <Tabs.Content value="signup">
+        <SignUpForm />
+      </Tabs.Content>
+    </Tabs.Root>
   );
 };
 

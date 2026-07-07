@@ -12,7 +12,6 @@ import {
   SimpleGrid,
   Text,
   VStack,
-  Center,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -52,18 +51,6 @@ const page = () => {
                   Login
                 </Button>
               </Link>
-
-              <Link href="/signup">
-                <Button
-                  colorScheme="blue"
-                  size="sm"
-                  px={6}
-                  rounded="full"
-                  fontWeight="bold"
-                >
-                  Join
-                </Button>
-              </Link>
             </HStack>
           </HStack>
         </Flex>
@@ -98,21 +85,6 @@ const page = () => {
               your operations, manage your brand, track sales and inventory and
               scale your growth seamlessly.
             </Text>
-
-            <Link href="/signup">
-              <Center w="full" mt={2}>
-                <Button
-                  size="sm"
-                  rounded="full"
-                  fontWeight="bold"
-                  px={10}
-                  py={5}
-                  fontSize="md"
-                >
-                  Join
-                </Button>
-              </Center>
-            </Link>
           </VStack>
 
           <Box w="full" display="flex" justifyContent="center">

@@ -1,8 +1,8 @@
 "use client";
 
-import { GoogleIcon } from "@/app/ui/auth/GoogleIcon";
-import LinkText from "@/app/ui/auth/LinkText";
-import SeparatorText from "@/app/ui/auth/SeparatorText";
+import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
+import LinkText from "@/app/ui/signin/LinkText";
+import SeparatorText from "@/app/ui/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { emailSignIn, googleSignIn } from "@/services/auth";
 import { Box, Button, Field, HStack, Input, Text } from "@chakra-ui/react";
