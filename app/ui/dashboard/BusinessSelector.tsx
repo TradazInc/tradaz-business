@@ -14,7 +14,7 @@ import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 export const BusinessSelector = () => {
   const { data: businesses, error, isPending } = useBusinesses();
   const { data: business, error: Error, mutate } = useBusiness();
-  const [store, setStore] = useState("Stores");
+  const [store, setStore] = useState<string>();
 
   const handleBusiness = async (businessId: string) => {
     const business = await setActiveBussienss(businessId);
@@ -26,6 +26,7 @@ export const BusinessSelector = () => {
       });
     }
     mutate();
+    setStore("Stores");
   };
 
   const handleStore = async (storeId: string) => {
@@ -74,14 +75,14 @@ export const BusinessSelector = () => {
           </Breadcrumb.Item>
         </>
 
-        {business && (
+        {store && (
           <>
             <Breadcrumb.Separator>
               <LiaSlashSolid />
             </Breadcrumb.Separator>
 
             <Breadcrumb.Item>
-              <MenuItem data={business.data?.teams} handleClick={handleStore}>
+              <MenuItem data={business?.data?.teams} handleClick={handleStore}>
                 <Breadcrumb.Link as="button">
                   <LuStore />
                   {store}
