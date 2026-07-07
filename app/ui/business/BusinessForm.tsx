@@ -71,9 +71,7 @@ export const BusinessForm = () => {
 
           <Field.Root>
             <Field.Label>Phone</Field.Label>
-            <InputGroup startAddon="+234">
-              <Input name="phone" placeholder="8012345678" />
-            </InputGroup>
+            <Input name="phone" placeholder="+234-XXX-XXXX-XXX" />
           </Field.Root>
 
           <Field.Root>
