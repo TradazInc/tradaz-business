@@ -8,7 +8,7 @@ import { Image, ImageProps } from "@chakra-ui/react";
 const TradazLogo = (props: ImageProps) => {
   const logo = useColorModeValue(tradazLight, tradazDark);
 
-  return <Image src={logo.src} maxW={{ base: 100, md: 200 }} marginX={1} {...props} />;
+  return <Image src={logo.src} maxW={{ base: 100, md: 150 }} {...props} />;
 };
 
 export default TradazLogo;
