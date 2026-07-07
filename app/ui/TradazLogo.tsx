@@ -1,3 +1,5 @@
+"use client";
+
 import { useColorModeValue } from "@/components/ui/color-mode";
 import tradazDark from "@/public/tradazDark.png";
 import tradazLight from "@/public/tradazLight.png";
