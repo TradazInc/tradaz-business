@@ -1,21 +1,13 @@
 "use client";
 
-import { emailSignIn, googleSignIn } from "@/services/auth";
-import {
-  Box,
-  Button,
-  Field,
-  Fieldset,
-  HStack,
-  Input,
-  Text,
-} from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { PasswordInput } from "@/components/ui/password-input";
 import { GoogleIcon } from "@/app/ui/auth/GoogleIcon";
 import LinkText from "@/app/ui/auth/LinkText";
 import SeparatorText from "@/app/ui/auth/SeparatorText";
+import { PasswordInput } from "@/components/ui/password-input";
+import { emailSignIn, googleSignIn } from "@/services/auth";
+import { Box, Button, Field, HStack, Input, Text } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 const SignInForm = () => {
   const router = useRouter();
