@@ -104,6 +104,7 @@ export const BusinessForm = () => {
           type={"submit"}
           alignSelf={"flex-start"}
           disabled={isSubmitting}
+          loading={isSubmitting}
         >
           Submit
         </Button>
