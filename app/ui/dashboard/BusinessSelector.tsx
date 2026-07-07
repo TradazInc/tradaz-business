@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { useBusiness, useBusinesses } from "@/hooks/business";
 import { setActiveBussienss } from "@/services/business";
 import { setActiveStore } from "@/services/store";
-import { Breadcrumb, Menu, Portal, Skeleton } from "@chakra-ui/react";
+import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -63,13 +63,11 @@ export const BusinessSelector = () => {
             <MenuItem data={businesses} handleClick={handleBusiness}>
               <Breadcrumb.Link as="button">
                 <LuBuilding2 />
-                <Skeleton
-                  height={"5"}
-                  loading={isPending}
-                  flexDirection={"row"}
-                >
-                  {business?.data?.name ?? "Business"}
-                  <LuChevronDown />
+                <Skeleton height={"5"} loading={isPending}>
+                  <HStack>
+                    {business?.data?.name ?? "Business"}
+                    <LuChevronDown />
+                  </HStack>
                 </Skeleton>
               </Breadcrumb.Link>
             </MenuItem>
