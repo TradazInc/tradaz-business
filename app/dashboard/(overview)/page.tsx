@@ -6,7 +6,7 @@ import Search from "@/app/ui/Search";
 import { SideDrawer } from "@/app/ui/SideDrawer";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
-import { Button, HStack, VStack } from "@chakra-ui/react";
+import { Button, For, HStack, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -17,7 +17,7 @@ interface Props {
 
 export default async function page({ searchParams }: Props) {
   const name = (await searchParams).business as string;
-  const { data, error } = await getBusinesses(name);
+  const { data: businesses, error } = await getBusinesses(name);
 
   if (error) return null;
 
@@ -27,17 +27,19 @@ export default async function page({ searchParams }: Props) {
         <PageHeader>Your Businesses</PageHeader>
         <DashboardToolbar />
         <GridContainer>
-          {data.map((business) => (
-            <GridCard
-              key={business.id}
-              name={business.name}
-              address={business.metadata.address}
-              logo={business.logo}
-              createdAt={new Date(business.createdAt).toDateString()}
-              description={business.metadata.description}
-              href={`/dashboard/business/${business.id}`}
-            />
-          ))}
+          <For each={businesses}>
+            {(business) => (
+              <GridCard
+                key={business.id}
+                name={business.name}
+                address={business.metadata.address}
+                logo={business.logo}
+                createdAt={new Date(business.createdAt).toDateString()}
+                description={business.metadata.description}
+                href={`/dashboard/business/${business.id}`}
+              />
+            )}
+          </For>
         </GridContainer>
       </VStack>
     </PageContainer>
@@ -54,7 +56,7 @@ const DashboardToolbar = () => {
         </Suspense>
       </HStack>
       <Button size={"xs"} asChild>
-        <Link href={'/dashboard/business/new'}>
+        <Link href={"/dashboard/business/new"}>
           <LuPlus />
           New Business
         </Link>

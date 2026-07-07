@@ -5,6 +5,7 @@ import {
   Button,
   Field,
   Fieldset,
+  FileUpload,
   For,
   Input,
   NativeSelect,
@@ -12,14 +13,16 @@ import {
 } from "@chakra-ui/react";
 
 export const BusinessForm = () => {
-  const { data, error, isLoading } = useBusinessCategories();
+  const { data: categories, error, isLoading } = useBusinessCategories();
+
+  if (error) return null;
 
   return (
-    <Fieldset.Root size="lg" maxW="md">
+    <Fieldset.Root size="lg" maxW="lg">
       <Stack>
-        <Fieldset.Legend>Contact details</Fieldset.Legend>
+        <Fieldset.Legend>Business details</Fieldset.Legend>
         <Fieldset.HelperText>
-          Please provide your contact details below.
+          Please provide your business details below.
         </Fieldset.HelperText>
       </Stack>
 
@@ -30,18 +33,47 @@ export const BusinessForm = () => {
         </Field.Root>
 
         <Field.Root>
-          <Field.Label>Email address</Field.Label>
-          <Input name="email" type="email" />
+          <Field.Label>Slug</Field.Label>
+          <Input name="slug" />
         </Field.Root>
 
         <Field.Root>
-          <Field.Label>Country</Field.Label>
+          <Field.Label>Description</Field.Label>
+          <Input name="description" />
+        </Field.Root>
+
+        <Field.Root>
+          <Field.Label>Phone</Field.Label>
+          <Input name="phone" />
+        </Field.Root>
+
+        <Field.Root>
+          <Field.Label>Address</Field.Label>
+          <Input name="address" />
+        </Field.Root>
+
+        <FileUpload.Root
+          gap="1"
+          maxFiles={1}
+          accept={["image/png"]}
+        >
+          <FileUpload.HiddenInput />
+          <FileUpload.Label>Upload logo</FileUpload.Label>
+          <Input asChild>
+            <FileUpload.Trigger>
+              <FileUpload.FileText />
+            </FileUpload.Trigger>
+          </Input>
+        </FileUpload.Root>
+
+        <Field.Root>
+          <Field.Label>Category</Field.Label>
           <NativeSelect.Root>
-            <NativeSelect.Field name="country">
-              <For each={["United Kingdom", "Canada", "United States"]}>
-                {(item) => (
-                  <option key={item} value={item}>
-                    {item}
+            <NativeSelect.Field name="category">
+              <For each={categories}>
+                {(category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
                   </option>
                 )}
               </For>
