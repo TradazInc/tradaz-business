@@ -38,53 +38,49 @@ const SignInForm = () => {
   };
 
   return (
-    <Fieldset.Root size="lg" maxW="lg" onSubmit={handleEmailSignin}>
-      <Fieldset.Root size="lg" maxW="lg">
-        <Fieldset.Content>
-          <Field.Root>
-            <Field.Label>Email Address</Field.Label>
-            <Input name="email" type="email" />
-          </Field.Root>
+    <form onSubmit={handleEmailSignin}>
+      <Field.Root>
+        <Field.Label>Email Address</Field.Label>
+        <Input name="email" type="email" />
+      </Field.Root>
 
-          <Field.Root>
-            <Field.Label>Password</Field.Label>
-            <PasswordInput name="password" />
-          </Field.Root>
+      <Field.Root>
+        <Field.Label>Password</Field.Label>
+        <PasswordInput name="password" />
+      </Field.Root>
 
-          <Box textAlign="right" w="full">
-            <LinkText>Forgot Password?</LinkText>
-          </Box>
-        </Fieldset.Content>
+      <Box textAlign="right" w="full">
+        <LinkText>Forgot Password?</LinkText>
+      </Box>
 
-        <Button
-          type="submit"
-          alignSelf="flex-start"
-          loading={isEmailPending}
-          loadingText="Signing in..."
-          disabled={isEmailPending}
-        >
-          Sign in
-        </Button>
+      <Button
+        type="submit"
+        alignSelf="flex-start"
+        loading={isEmailPending}
+        loadingText="Signing in..."
+        disabled={isEmailPending}
+      >
+        Sign in
+      </Button>
 
-        <SeparatorText />
+      <SeparatorText />
 
-        <Button
-          type="button"
-          alignSelf="flex-start"
-          onClick={handleGoogleSignIn}
-          loading={isGooglePending}
-          disabled={isGooglePending}
-        >
-          <GoogleIcon />
-          <Text>Sign In With Google</Text>
-        </Button>
+      <Button
+        type="button"
+        alignSelf="flex-start"
+        onClick={handleGoogleSignIn}
+        loading={isGooglePending}
+        disabled={isGooglePending}
+      >
+        <GoogleIcon />
+        <Text>Sign In With Google</Text>
+      </Button>
 
-        <HStack alignItems="center">
-          <Text>Don’t have an account?</Text>
-          <LinkText>Sign Up</LinkText>
-        </HStack>
-      </Fieldset.Root>
-    </Fieldset.Root>
+      <HStack alignItems="center">
+        <Text>Don’t have an account?</Text>
+        <LinkText>Sign Up</LinkText>
+      </HStack>
+    </form>
   );
 };
 
