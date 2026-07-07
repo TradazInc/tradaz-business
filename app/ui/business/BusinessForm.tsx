@@ -9,6 +9,7 @@ import {
   For,
   Input,
   NativeSelect,
+  Skeleton,
   Stack,
 } from "@chakra-ui/react";
 
@@ -52,11 +53,7 @@ export const BusinessForm = () => {
           <Input name="address" />
         </Field.Root>
 
-        <FileUpload.Root
-          gap="1"
-          maxFiles={1}
-          accept={["image/png"]}
-        >
+        <FileUpload.Root gap="1" maxFiles={1} accept={["image/png"]}>
           <FileUpload.HiddenInput />
           <FileUpload.Label>Upload logo</FileUpload.Label>
           <Input asChild>
@@ -70,7 +67,7 @@ export const BusinessForm = () => {
           <Field.Label>Category</Field.Label>
           <NativeSelect.Root>
             <NativeSelect.Field name="category">
-              <For each={categories}>
+              <For each={categories} fallback={<Skeleton />}>
                 {(category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}

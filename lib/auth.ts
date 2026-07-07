@@ -1,8 +1,12 @@
+import { baseURL } from "@/data/baseUrl";
 import { Session } from "@/entities/Session";
-import { createAuthClient } from "better-auth/react";
-import { organizationClient, adminClient } from "better-auth/client/plugins";
-import { customSessionClient } from "better-auth/client/plugins";
+import {
+  adminClient,
+  customSessionClient,
+  organizationClient,
+} from "better-auth/client/plugins";
 import { customSession } from "better-auth/plugins";
+import { createAuthClient } from "better-auth/react";
 
 // Mirror the server's auth shape for type inference.
 type ServerAuth = {
@@ -12,7 +16,7 @@ type ServerAuth = {
 };
 
 export const authClient = createAuthClient({
-  baseURL: process.env.BASE_URL ?? "https://tradaz-business.vercel.app", // add env later*
+  baseURL: process.env.BASE_URL ?? baseURL,
   fetchOptions: { credentials: "include" },
   plugins: [
     customSessionClient<ServerAuth>(),

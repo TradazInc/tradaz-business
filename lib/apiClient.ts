@@ -1,65 +1,39 @@
-import { authClient } from "./auth";
+import { baseURL } from "@/data/baseUrl";
+import axios, { AxiosRequestConfig } from "axios";
 
-enum HttpMethod {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  DELETE = "DELETE",
-}
+const axiosInstance = axios.create({
+  baseURL: process.env.BASE_URL ?? baseURL,
+  withCredentials: true,
+});
 
 export class ApiClient<T> {
   constructor(private readonly endpoint: string) {}
 
-  getAll = (query?: Record<string, string | number>) => {
-    return authClient
-      .$fetch<T[]>(this.endpoint, { query })
-      .then(({ data, error }) => {
-        if (error) throw error;
-        return data;
-      });
+  getAll = (config?: AxiosRequestConfig) => {
+    return axiosInstance
+      .get<T[]>(this.endpoint, config)
+      .then((res) => res.data);
   };
 
   get = (id: number | string) => {
-    return authClient
-      .$fetch<T>(`${this.endpoint}/${id}`)
-      .then(({ data, error }) => {
-        if (error) throw error;
-        return data;
-      });
+    return axiosInstance
+      .get<T>(`${this.endpoint}/${id}`)
+      .then((res) => res.data);
   };
 
-  post = (body: BodyInit) => {
-    return authClient
-      .$fetch<T>(this.endpoint, {
-        method: HttpMethod.POST,
-        body,
-      })
-      .then(({ data, error }) => {
-        if (error) throw error;
-        return data;
-      });
+  post = (data: unknown) => {
+    return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
   };
 
-  update = (id: number | string, body: BodyInit) => {
-    return authClient
-      .$fetch<T>(`${this.endpoint}/${id}`, {
-        method: HttpMethod.PUT,
-        body,
-      })
-      .then(({ data, error }) => {
-        if (error) throw error;
-        return data;
-      });
+  update = (id: number | string, data: unknown) => {
+    return axiosInstance
+      .put<T>(`${this.endpoint}/${id}`, data)
+      .then((res) => res.data);
   };
 
   delete = (id: number | string) => {
-    return authClient
-      .$fetch<void>(`${this.endpoint}/${id}`, {
-        method: HttpMethod.DELETE,
-      })
-      .then(({ data, error }) => {
-        if (error) throw error;
-        return data;
-      });
+    return axiosInstance
+      .delete<void>(`${this.endpoint}/${id}`)
+      .then((res) => res.data);
   };
 }
