@@ -7,12 +7,17 @@ export async function createBusiness(formData: FormData) {
   const { data, error } = businessSchema.safeParse(form);
 
   // validate form
-  if (error)
+  if (error) {
+    console.log(
+      `title: ${error.issues[0].path}, description: ${error.issues[0].message},`,
+    );
+
     return toaster.create({
       title: error.issues[0].path,
       description: error.issues[0].message,
       type: "error",
     });
+  }
 
   return authClient.organization.create({
     ...data,

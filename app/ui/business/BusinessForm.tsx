@@ -83,7 +83,7 @@ export const BusinessForm = () => {
           <Field.Root>
             <Field.Label>Category</Field.Label>
             <NativeSelect.Root>
-              <NativeSelect.Field name="category">
+              <NativeSelect.Field name="categoryId">
                 <For
                   each={categories}
                   fallback={<Box>"No categories found"</Box>}

@@ -34,12 +34,17 @@ export async function emailSignUp(
   const { data, error } = emailSignUpSchema.safeParse(form);
 
   // validate form
-  if (error)
+  if (error) {
+    console.log(
+      `title: ${error.issues[0].path}, description: ${error.issues[0].message},`,
+    );
+
     return toaster.create({
       title: error.issues[0].path,
       description: error.issues[0].message,
       type: "error",
     });
+  }
 
   return authClient.signUp.email(data, {
     onSuccess: async (ctx) => {
@@ -64,12 +69,17 @@ export async function emailSignIn(
   const { data, error } = emailSignInSchema.safeParse(form);
 
   // validate form
-  if (error)
+  if (error) {
+    console.log(
+      `title: ${error.issues[0].path}, description: ${error.issues[0].message},`,
+    );
+
     return toaster.create({
       title: error.issues[0].path,
       description: error.issues[0].message,
       type: "error",
     });
+  }
 
   return authClient.signIn.email(data, {
     onSuccess: async (ctx) => {
