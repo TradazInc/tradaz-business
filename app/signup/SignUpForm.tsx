@@ -1,16 +1,7 @@
 "use client";
 
 import { emailSignUp, googleSignIn } from "@/services/auth";
-import {
-  Box,
-  Button,
-  Field,
-  HStack,
-  Input,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, HStack, Input, Text, Field, Fieldset } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { PasswordInput } from "@/components/ui/password-input";
@@ -39,120 +30,54 @@ const SignUpForm = () => {
   };
 
   return (
-    <Box w={"full"}>
-      <form onSubmit={handleEmailSignup} style={{ width: "100%" }}>
-        <Stack gap={4} w={"full"}>
-          {/* Full Name Field */}
-          <Field.Root w={"full"}>
-            <Field.Label fontWeight={"400"} fontSize={"14px"}>
-              Full Name *
-            </Field.Label>
-            <Input
-              name="name"
-              placeholder="Enter your full name"
-              maxH={"45px"}
-              borderRadius={"7px"}
-              borderWidth={"2px"}
-              borderColor="#292929"
-              bg="white"
-              color="black"
-              _placeholder={{ color: "gray.500" }}
-            />
+    <form onSubmit={handleEmailSignup}>
+      <Fieldset.Root size="lg" maxW="lg">
+        <Fieldset.Content>
+          <Field.Root>
+            <Field.Label>Full Name</Field.Label>
+            <Input name="name" />
           </Field.Root>
 
-          {/* Email Field */}
-          <Field.Root w={"full"}>
-            <Field.Label fontWeight={"400"} fontSize={"14px"}>
-              Email Address *
-            </Field.Label>
-            <Input
-              name="email"
-              placeholder="Enter email address"
-              type="email"
-              maxH={"45px"}
-              borderRadius={"7px"}
-              borderWidth={"2px"}
-              borderColor="#292929"
-              bg="white"
-              color="black"
-              _placeholder={{ color: "gray.500" }}
-            />
+          <Field.Root>
+            <Field.Label>Email Address</Field.Label>
+            <Input name="email" type="email" />
           </Field.Root>
 
-          {/* Password Field */}
-          <Field.Root w={"full"}>
-            <Field.Label fontWeight={"400"} fontSize={"14px"}>
-              Password *
-            </Field.Label>
-            <PasswordInput
-              name="password"
-              placeholder="Enter password"
-              maxH={"45px"}
-              borderRadius={"7px"}
-              borderWidth={"2px"}
-              color="black"
-              bg="white"
-              borderColor={"#292929"}
-              _placeholder={{ color: "gray.500" }}
-            />
+          <Field.Root>
+            <Field.Label>Password</Field.Label>
+            <PasswordInput name="password" />
           </Field.Root>
+        </Fieldset.Content>
 
-          {/* Buttons */}
-          <VStack w={"full"}>
-            <Button
-              type="submit"
-              loading={isEmailPending}
-              loadingText="Signing up..."
-              w="full"
-              h="45px"
-              bg="bg.inverted"
-              color="black"
-              _hover={{ bg: "gray.200" }}
-              borderRadius="7px"
-              fontWeight="600"
-              disabled={isEmailPending}
-            >
-              Sign Up
-            </Button>
+        <Button
+          type="submit"
+          alignSelf="flex-start"
+          loading={isEmailPending}
+          loadingText="Signing up..."
+          disabled={isEmailPending}
+        >
+          Sign Up
+        </Button>
 
-            <SeparatorText />
+        <SeparatorText />
 
-            <Button
-              type="button"
-              onClick={handleGoogleSignup}
-              loading={isGooglePending}
-              variant="outline"
-              w="full"
-              h="45px"
-              borderRadius="7px"
-              borderWidth="2px"
-              borderColor="bg.subtle"
-              color="bg.inverted"
-              bg="transparent"
-              _hover={{ bg: "whiteAlpha.50" }}
-              disabled={isGooglePending}
-            >
-              <GoogleIcon maxW={"20px"} maxH={"20px"} />
-              <Text fontSize={"14px"} fontWeight={"600"} ml={2}>
-                Sign Up With Google
-              </Text>
-            </Button>
+        <Button
+          type="button"
+          alignSelf="flex-start"
+          onClick={handleGoogleSignup}
+          loading={isGooglePending}
+          disabled={isGooglePending}
+        >
+          <GoogleIcon />
+          <Text>Sign Up With Google</Text>
+        </Button>
 
-            <HStack alignItems={"center"} maxW={"288px"}>
-              <Text
-                fontSize={"16px"}
-                color="#8E9BAE"
-                flex={2}
-                textAlign={"right"}
-              >
-                Already have an account?
-              </Text>
-              <LinkText>Sign In</LinkText>
-            </HStack>
-          </VStack>
-        </Stack>
-      </form>
-    </Box>
+        <HStack alignItems="center">
+          <Text>Already have an account?</Text>
+          <LinkText>Sign In</LinkText>
+        </HStack>
+      </Fieldset.Root>
+    </form>
   );
 };
 

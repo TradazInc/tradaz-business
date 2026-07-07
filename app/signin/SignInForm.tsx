@@ -5,11 +5,10 @@ import {
   Box,
   Button,
   Field,
+  Fieldset,
   HStack,
   Input,
-  Stack,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
@@ -39,107 +38,53 @@ const SignInForm = () => {
   };
 
   return (
-    <Box w={"full"}>
-      <form onSubmit={handleEmailSignin} style={{ width: "100%" }}>
-        <Stack gap={4} w={"full"}>
-          {/* Full Name Field */}
-          <Field.Root w={"full"}>
-            <Field.Label fontWeight={"400"} fontSize={"14px"}>
-              Email <Field.RequiredIndicator />
-            </Field.Label>
-            <Input
-              name="email"
-              placeholder="Enter email address"
-              type="email"
-              maxH={"45px"}
-              borderRadius={"7px"}
-              borderWidth={"2px"}
-              borderColor="#292929"
-              bg="white"
-              color="black"
-              _placeholder={{ color: "gray.500" }}
-            />
+    <form onSubmit={handleEmailSignin}>
+      <Fieldset.Root size="lg" maxW="lg">
+        <Fieldset.Content>
+          <Field.Root>
+            <Field.Label>Email Address</Field.Label>
+            <Input name="email" type="email" />
           </Field.Root>
 
-          {/* Password Field */}
-          <Field.Root w={"full"}>
-            <Field.Label fontWeight={"400"} fontSize={"14px"}>
-              Password <Field.RequiredIndicator />
-            </Field.Label>
-            <PasswordInput
-              name="password"
-              placeholder="Enter password"
-              maxH={"45px"}
-              borderRadius={"7px"}
-              borderWidth={"2px"}
-              borderColor={"#292929"}
-              bg="white"
-              color="black"
-              _placeholder={{ color: "gray.500" }}
-            />
+          <Field.Root>
+            <Field.Label>Password</Field.Label>
+            <PasswordInput name="password" />
           </Field.Root>
 
-          {/* Buttons */}
-          <VStack w={"full"}>
-            <Box w={"full"} textAlign={"right"}>
-              <LinkText>Forgot Password?</LinkText>
-            </Box>
+          <Box textAlign="right" w="full">
+            <LinkText>Forgot Password?</LinkText>
+          </Box>
+        </Fieldset.Content>
 
-            <Button
-              type="submit"
-              loading={isEmailPending}
-              loadingText="Signing in..."
-              w="full"
-              h="45px"
-              bg="bg.subtle"
-              color="bg.inverted"
-              _hover={{ bg: "gray.200" }}
-              borderRadius="7px"
-              fontWeight="600"
-              borderColor={"#292929"}
-              disabled={isEmailPending}
-            >
-              {isEmailPending ? "Signing in..." : "Sign in"}
-            </Button>
+        <Button
+          type="submit"
+          alignSelf="flex-start"
+          loading={isEmailPending}
+          loadingText="Signing in..."
+          disabled={isEmailPending}
+        >
+          Sign in
+        </Button>
 
-            <SeparatorText />
+        <SeparatorText />
 
-            <Button
-              type="button"
-              onClick={handleGoogleSignIn}
-              loading={isGooglePending}
-              variant="outline"
-              w="full"
-              h="45px"
-              borderRadius="7px"
-              borderWidth="2px"
-              borderColor="bg.subtle"
-              color="bg.inverted"
-              bg="transparent"
-              _hover={{ bg: "whiteAlpha.50" }}
-              disabled={isGooglePending}
-            >
-              <GoogleIcon maxW={"20px"} maxH={"20px"} />
-              <Text fontSize={"14px"} fontWeight={"600"} ml={2}>
-                Sign In With Google
-              </Text>
-            </Button>
+        <Button
+          type="button"
+          alignSelf="flex-start"
+          onClick={handleGoogleSignIn}
+          loading={isGooglePending}
+          disabled={isGooglePending}
+        >
+          <GoogleIcon />
+          <Text>Sign In With Google</Text>
+        </Button>
 
-            <HStack alignItems={"center"} maxW={"288px"}>
-              <Text
-                fontSize={"16px"}
-                color="#8E9BAE"
-                flex={2}
-                textAlign={"right"}
-              >
-                Don’t have an account?
-              </Text>
-              <LinkText>Sign Up</LinkText>
-            </HStack>
-          </VStack>
-        </Stack>
-      </form>
-    </Box>
+        <HStack alignItems="center">
+          <Text>Don’t have an account?</Text>
+          <LinkText>Sign Up</LinkText>
+        </HStack>
+      </Fieldset.Root>
+    </form>
   );
 };
 
