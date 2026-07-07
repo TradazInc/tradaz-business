@@ -1,11 +1,11 @@
 "use client";
 
 import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
-import LinkText from "@/app/ui/signin/LinkText";
 import SeparatorText from "@/app/ui/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { emailSignIn, googleSignIn } from "@/services/auth";
-import { Box, Button, Field, HStack, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
@@ -31,47 +31,39 @@ const SignInForm = () => {
 
   return (
     <form onSubmit={handleEmailSignin}>
-      <Field.Root>
-        <Field.Label>Email Address</Field.Label>
-        <Input name="email" type="email" />
-      </Field.Root>
-
-      <Field.Root>
-        <Field.Label>Password</Field.Label>
-        <PasswordInput name="password" />
-      </Field.Root>
-
-      <Box textAlign="right" w="full">
-        <LinkText>Forgot Password?</LinkText>
-      </Box>
-
-      <Button
-        type="submit"
-        alignSelf="flex-start"
-        loading={isEmailPending}
-        loadingText="Signing in..."
-        disabled={isEmailPending}
-      >
-        Sign in
-      </Button>
-
-      <SeparatorText />
-
-      <Button
-        type="button"
-        alignSelf="flex-start"
-        onClick={handleGoogleSignIn}
-        loading={isGooglePending}
-        disabled={isGooglePending}
-      >
-        <GoogleIcon />
-        <Text>Sign In With Google</Text>
-      </Button>
-
-      <HStack alignItems="center">
-        <Text>Don’t have an account?</Text>
-        <LinkText>Sign Up</LinkText>
-      </HStack>
+      <Fieldset.Root size="lg" maxW="lg">
+        <Fieldset.Content>
+          <Field.Root>
+            <Field.Label>Email Address</Field.Label>
+            <Input name="email" type="email" />
+          </Field.Root>
+          <Field.Root>
+            <Field.Label>Password</Field.Label>
+            <PasswordInput name="password" />
+          </Field.Root>
+        </Fieldset.Content>
+        <Box textAlign="right" w="full">
+          <Link href={"#"}>Forgot Password?</Link>
+        </Box>
+        <Button
+          type={"submit"}
+          loading={isEmailPending}
+          disabled={isEmailPending}
+          w={"full"}
+        >
+          Sign in
+        </Button>
+        <SeparatorText />
+        <Button
+          onClick={handleGoogleSignIn}
+          loading={isGooglePending}
+          disabled={isGooglePending}
+          w={"full"}
+        >
+          <GoogleIcon />
+          <Text>Sign In With Google</Text>
+        </Button>{" "}
+      </Fieldset.Root>
     </form>
   );
 };

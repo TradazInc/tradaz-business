@@ -1,13 +1,12 @@
 "use client";
 
+import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
+import SeparatorText from "@/app/ui/signin/SeparatorText";
+import { PasswordInput } from "@/components/ui/password-input";
 import { emailSignUp, googleSignIn } from "@/services/auth";
-import { Button, HStack, Input, Text, Field, Fieldset } from "@chakra-ui/react";
+import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { PasswordInput } from "@/components/ui/password-input";
-import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
-import LinkText from "@/app/ui/signin/LinkText";
-import SeparatorText from "@/app/ui/signin/SeparatorText";
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -50,11 +49,10 @@ const SignUpForm = () => {
         </Fieldset.Content>
 
         <Button
-          type="submit"
-          alignSelf="flex-start"
+          type={"submit"}
           loading={isEmailPending}
-          loadingText="Signing up..."
           disabled={isEmailPending}
+          w={"full"}
         >
           Sign Up
         </Button>
@@ -62,20 +60,14 @@ const SignUpForm = () => {
         <SeparatorText />
 
         <Button
-          type="button"
-          alignSelf="flex-start"
           onClick={handleGoogleSignup}
           loading={isGooglePending}
           disabled={isGooglePending}
+          w={"full"}
         >
           <GoogleIcon />
           <Text>Sign Up With Google</Text>
         </Button>
-
-        <HStack alignItems="center">
-          <Text>Already have an account?</Text>
-          <LinkText>Sign In</LinkText>
-        </HStack>
       </Fieldset.Root>
     </form>
   );
