@@ -8,10 +8,6 @@ export async function createBusiness(formData: FormData) {
 
   // validate form
   if (error) {
-    console.log(
-      `title: ${error.issues[0].path}, description: ${error.issues[0].message},`,
-    );
-
     return toaster.create({
       title: error.issues[0].path,
       description: error.issues[0].message,
