@@ -1,9 +1,10 @@
-import { LogoContainer } from "../LogoContainer";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { HStack } from "@chakra-ui/react";
+import TradazLogo from "../TradazLogo";
 import { AvatarDropdown } from "./AvatarDropdown";
 import { BusinessSelector } from "./BusinessSelector";
 import Notification from "./Notification";
+import Link from "next/link";
 
 export const NavBar = () => {
   return (
@@ -17,7 +18,9 @@ export const NavBar = () => {
       borderColor={"bg.emphasized"}
     >
       <HStack gap="4">
-        <LogoContainer>Tradaz</LogoContainer>
+        <Link href={"/dashboard"}>
+          <TradazLogo />
+        </Link>
         <BusinessSelector />
       </HStack>
 

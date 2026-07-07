@@ -1,13 +1,13 @@
 import { Center, Tabs, VStack } from "@chakra-ui/react";
-import { LogoContainer } from "../ui/LogoContainer";
 import SignInForm from "../ui/signin/SignInForm";
 import SignUpForm from "../ui/signin/SignUpForm";
+import TradazLogo from "../ui/TradazLogo";
 
 const SigninPage = () => {
   return (
     <Center h={"dvh"} w={"full"}>
       <VStack gap={8}>
-        <LogoContainer>Tradaz</LogoContainer>
+        <TradazLogo />
         <Tabs.Root
           w={"lg"}
           fitted

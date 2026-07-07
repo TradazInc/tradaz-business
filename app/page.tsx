@@ -1,4 +1,3 @@
-import { LogoContainer } from "@/app/ui/LogoContainer";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { steps } from "@/data/homeSteps";
 import {
@@ -14,6 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import TradazLogo from "./ui/TradazLogo";
 
 const page = () => {
   return (
@@ -35,7 +35,7 @@ const page = () => {
           align="center"
           justify="space-between"
         >
-          <LogoContainer>Tradaz</LogoContainer>
+          <TradazLogo />
 
           <HStack gap="4">
             <ColorModeButton rounded="full" />
@@ -162,7 +162,7 @@ const page = () => {
             align="center"
             gap={4}
           >
-            <LogoContainer>Tradaz</LogoContainer>
+            <TradazLogo />
 
             <Text color="fg.muted" fontSize="sm">
               © {new Date().getFullYear()} Tradaz. All rights reserved.
