@@ -1,9 +1,12 @@
-import { Card, Skeleton } from "@chakra-ui/react";
+import { Card, HStack, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 const GridCardSkeleton = () => {
   return (
-    <Card.Root size={"sm"}>
-      <Skeleton w={"full"} h={"full"} />
+    <Card.Root h={14} w={80}>
+      <HStack width={"full"} gap={"3"}>
+        <SkeletonCircle size={"10"} />
+        <SkeletonText noOfLines={2} />
+      </HStack>
     </Card.Root>
   );
 };
