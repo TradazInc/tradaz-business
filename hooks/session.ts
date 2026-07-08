@@ -1,4 +1,4 @@
-import { sessionEndpoint } from "@/data/sessionEndpoint";
+import { sessionEndpoint } from "@/data/swrEndpoints";
 import { authClient } from "@/lib/auth";
 import useSWR from "swr";
 

@@ -1,6 +1,6 @@
+import { organizationsEndpoint } from "@/data/swrEndpoints";
 import { authClient } from "@/lib/auth";
 import useSWR from "swr";
-import { organizationsEndpoint } from "../data/businessEndpoint";
 
 export const useBusinesses = () => {
   return useSWR(organizationsEndpoint, () =>
