@@ -31,8 +31,8 @@ export default async function page({ params }: Props) {
             each={data.teams}
             fallback={
               <Center
-                h={"full"}
-                w={"full"}
+                h={{ base: 100, md: 200 }}
+                w={{ base: 100, md: 200 }}
                 color={"fg.subtle"}
                 fontWeight={"bolder"}
               >
