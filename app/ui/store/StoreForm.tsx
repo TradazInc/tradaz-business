@@ -1,35 +1,62 @@
+"use client";
+
+import { createStore } from "@/services/store";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
+import { useTransition } from "react";
 
 export const StoreForm = () => {
+  const [isSubmitting, startSubmission] = useTransition();
+
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    startSubmission(async () => {
+      await createStore(formData);
+    });
+  };
+
   return (
-    <Fieldset.Root size="lg" maxW="md">
-      <Stack>
-        <Fieldset.Legend>Contact details</Fieldset.Legend>
-        <Fieldset.HelperText>
-          Please provide your contact details below.
-        </Fieldset.HelperText>
-      </Stack>
+    <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+      <Fieldset.Root
+        size="lg"
+        w="full"
+        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+        mx="auto"
+        px={{ base: 4, md: 0 }}
+      >
+        <Stack>
+          <Fieldset.Legend>Store details</Fieldset.Legend>
+          <Fieldset.HelperText>
+            Please provide your store details below.
+          </Fieldset.HelperText>
+        </Stack>
 
-      <Fieldset.Content>
-        <Field.Root required>
-          <Field.Label>
-            Name <Field.RequiredIndicator />
-          </Field.Label>
-          <Input name="name" />
-        </Field.Root>
+        <Fieldset.Content>
+          <Field.Root required>
+            <Field.Label>
+              Name <Field.RequiredIndicator />
+            </Field.Label>
+            <Input name="name" />
+          </Field.Root>
 
-        <Field.Root required>
-          <Field.Label>
-            Address
-            <Field.RequiredIndicator />
-          </Field.Label>
-          <Input name="address" />
-        </Field.Root>
-      </Fieldset.Content>
+          <Field.Root required>
+            <Field.Label>
+              Address <Field.RequiredIndicator />
+            </Field.Label>
+            <Input name="address" />
+          </Field.Root>
+        </Fieldset.Content>
 
-      <Button type="submit" alignSelf="flex-start">
-        Submit
-      </Button>
-    </Fieldset.Root>
+        <Button
+          type={"submit"}
+          alignSelf={"flex-start"}
+          disabled={isSubmitting}
+          loading={isSubmitting}
+        >
+          Submit
+        </Button>
+      </Fieldset.Root>
+    </form>
   );
 };
