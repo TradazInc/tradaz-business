@@ -26,10 +26,7 @@ export async function isAuthorized() {
   }
 }
 
-export async function emailSignUp(
-  formData: FormData,
-  router: AppRouterInstance,
-) {
+export async function emailSignUp(formData: FormData) {
   const form = Object.fromEntries(formData.entries());
   const { data, error } = emailSignUpSchema.safeParse(form);
 
@@ -43,11 +40,7 @@ export async function emailSignUp(
     return;
   }
 
-  return authClient.signUp.email(data, {
-    onSuccess: async (ctx) => {
-      const session = await isAuthorized();
-      if (session) router.push("/dashboard");
-    },
+  const res = await authClient.signUp.email(data, {
     onError: ({ error }) => {
       toaster.create({
         title: error.name,
@@ -56,12 +49,20 @@ export async function emailSignUp(
       });
     },
   });
+
+  if (res.error) {
+    toaster.create({
+      title: res.error.code,
+      description: res.error.message,
+      type: "error",
+    });
+    return;
+  }
+
+  return res.data;
 }
 
-export async function emailSignIn(
-  formData: FormData,
-  router: AppRouterInstance,
-) {
+export async function emailSignIn(formData: FormData) {
   const form = Object.fromEntries(formData.entries());
   const { data, error } = emailSignInSchema.safeParse(form);
 
@@ -75,11 +76,7 @@ export async function emailSignIn(
     return;
   }
 
-  return authClient.signIn.email(data, {
-    onSuccess: async (ctx) => {
-      const session = await isAuthorized();
-      if (session) router.push("/dashboard");
-    },
+  const res = await authClient.signIn.email(data, {
     onError: ({ error }) => {
       toaster.create({
         title: error.name,
@@ -88,16 +85,23 @@ export async function emailSignIn(
       });
     },
   });
+
+  if (res.error) {
+    toaster.create({
+      title: res.error.code,
+      description: res.error.message,
+      type: "error",
+    });
+    return;
+  }
+
+  return res.data;
 }
 
-export async function googleSignIn(router: AppRouterInstance) {
-  return authClient.signIn.social(
+export async function googleSignIn() {
+  const res = await authClient.signIn.social(
     { provider: "google" },
     {
-      onSuccess: async (ctx) => {
-        const session = await isAuthorized();
-        if (session) router.push("/dashboard");
-      },
       onError: ({ error }) => {
         toaster.create({
           title: error.name,
@@ -107,14 +111,23 @@ export async function googleSignIn(router: AppRouterInstance) {
       },
     },
   );
+
+  if (res.error) {
+    toaster.create({
+      title: res.error.code,
+      description: res.error.message,
+      type: "error",
+    });
+    return;
+  }
+
+  return res.data;
 }
 
 export async function logout(router: AppRouterInstance) {
   return authClient.signOut({
     fetchOptions: {
-      onSuccess: () => {
-        router.push("/signin"); // redirect to login page
-      },
+      onSuccess: () => router.push("/signin"),
     },
   });
 }
