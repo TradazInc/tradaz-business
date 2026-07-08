@@ -10,16 +10,16 @@ export default async function BusinessLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getAuthorizedSession();
-  const businesses = await getBusinesses();
+  const sessionPromise = getAuthorizedSession();
+  const businessPromise = getBusinesses();
 
   return (
     <LayoutContainer>
       <SWRConfig
         value={{
           fallback: {
-            [sessionEndpoint]: session,
-            [organizationsEndpoint]: businesses,
+            [sessionEndpoint]: sessionPromise,
+            [organizationsEndpoint]: businessPromise,
           },
         }}
       >
