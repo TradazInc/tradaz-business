@@ -1,12 +1,13 @@
 import GridCard from "@/app/ui/dashboard/GridCard";
 import GridContainer from "@/app/ui/dashboard/GridContainer";
+import EmptyPage from "@/app/ui/EmptyPage";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import Search from "@/app/ui/Search";
 import { SideDrawer } from "@/app/ui/SideDrawer";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusiness } from "@/server/business";
-import { Button, Center, For, HStack, VStack } from "@chakra-ui/react";
+import { Button, For, HStack, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -30,14 +31,10 @@ export default async function page({ params }: Props) {
           <For
             each={data.teams}
             fallback={
-              <Center
-                h={{ base: 100, md: 200 }}
-                w={{ base: 100, md: 200 }}
-                color={"fg.subtle"}
-                fontWeight={"bolder"}
-              >
-                No stores found
-              </Center>
+              <EmptyPage
+                title="No stores found"
+                description="Create a new store for your business"
+              />
             }
           >
             {(store) => (
