@@ -17,7 +17,7 @@ interface Props {
 
 export default async function page({ searchParams }: Props) {
   const name = (await searchParams).business as string;
-  const { data: businesses, error } = await getBusinesses(name);
+  const { data: businesses, error } = await getBusinesses(name); // deduplicated (fetched in layout)
 
   if (error) return null;
 

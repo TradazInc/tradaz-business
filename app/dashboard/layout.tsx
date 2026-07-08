@@ -1,15 +1,26 @@
-import { LayoutContainer } from "../ui/LayoutContainer";
-import { NavBar } from "../ui/dashboard/NavBar";
+import { NavBar } from "@/app/ui/dashboard/NavBar";
+import { LayoutContainer } from "@/app/ui/LayoutContainer";
+import { organizationsEndpoint } from "@/hooks/business";
+import { getBusinesses } from "@/server/business";
+import { SWRConfig } from "swr";
 
-export default function BusinessLayout({
+export default async function BusinessLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const businessesPromise = getBusinesses();
+
   return (
     <LayoutContainer>
-      <NavBar />
-      {children}
+      <SWRConfig
+        value={{
+          fallback: { [organizationsEndpoint]: businessesPromise }, // Pass the promises to client components.
+        }}
+      >
+        <NavBar />
+        {children}
+      </SWRConfig>
     </LayoutContainer>
   );
 }

@@ -12,7 +12,7 @@ import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
-  const { data: businesses, error, isPending } = useBusinesses();
+  const { data: businesses, error, isLoading } = useBusinesses();
   const { data: business, error: Error, mutate } = useBusiness();
   const [store, setStore] = useState<string>();
 
@@ -41,6 +41,7 @@ export const BusinessSelector = () => {
     setStore(data.name);
   };
 
+  // Tracks url changes
   const businessId = useParams().businessId as string;
   useEffect(() => {
     const setActiveBusiness = async () => {
@@ -64,9 +65,9 @@ export const BusinessSelector = () => {
             <MenuItem data={businesses} handleClick={handleBusiness}>
               <Breadcrumb.Link as="button">
                 <LuBuilding2 />
-                <Skeleton height={"5"} loading={isPending}>
+                <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
-                    {business?.data?.name ?? "Business"}
+                    {business?.name ?? "Business"}
                     <LuChevronDown />
                   </HStack>
                 </Skeleton>
@@ -82,7 +83,7 @@ export const BusinessSelector = () => {
             </Breadcrumb.Separator>
 
             <Breadcrumb.Item>
-              <MenuItem data={business?.data?.teams} handleClick={handleStore}>
+              <MenuItem data={business?.teams} handleClick={handleStore}>
                 <Breadcrumb.Link as="button">
                   <LuStore />
                   {store}
