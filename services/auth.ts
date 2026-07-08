@@ -35,11 +35,12 @@ export async function emailSignUp(
 
   // validate form
   if (error) {
-    return toaster.create({
+    toaster.create({
       title: error.issues[0].path,
       description: error.issues[0].message,
       type: "error",
     });
+    return;
   }
 
   return authClient.signUp.email(data, {
@@ -66,11 +67,12 @@ export async function emailSignIn(
 
   // validate form
   if (error) {
-    return toaster.create({
+    toaster.create({
       title: error.issues[0].path,
       description: error.issues[0].message,
       type: "error",
     });
+    return;
   }
 
   return authClient.signIn.email(data, {

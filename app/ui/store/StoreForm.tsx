@@ -2,17 +2,20 @@
 
 import { createStore } from "@/services/store";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 export const StoreForm = () => {
   const [isSubmitting, startSubmission] = useTransition();
+  const router = useRouter();
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
     startSubmission(async () => {
-      await createStore(formData);
+      const store = await createStore(formData);
+      if (store) router.push(`/dashboard/store/${store.id}`);
     });
   };
 

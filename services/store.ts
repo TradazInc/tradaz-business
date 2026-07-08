@@ -12,12 +12,24 @@ export async function createStore(formData: FormData) {
 
   // validate form
   if (error) {
-    return toaster.create({
-      title: error.issues[0].path,
+    toaster.create({
+      title: error.issues[0].path[0],
       description: error.issues[0].message,
       type: "error",
     });
+    return;
   }
 
-  return authClient.organization.createTeam({ ...data });
+  const res = await authClient.organization.createTeam({ ...data });
+
+  if (res.error) {
+    toaster.create({
+      title: res.error.code,
+      description: res.error.message,
+      type: "error",
+    });
+    return;
+  }
+
+  return res.data;
 }

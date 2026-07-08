@@ -14,18 +14,21 @@ import {
   NativeSelect,
   Stack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 export const BusinessForm = () => {
   const { data: categories, error } = useBusinessCategories();
   const [isSubmitting, startSubmission] = useTransition();
+  const router = useRouter();
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
     startSubmission(async () => {
-      await createBusiness(formData);
+      const business = await createBusiness(formData);
+      if (business) router.push(`/dashboard/business/${business.id}`);
     });
   };
 

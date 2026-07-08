@@ -8,14 +8,15 @@ export async function createBusiness(formData: FormData) {
 
   // validate form
   if (error) {
-    return toaster.create({
+    toaster.create({
       title: error.issues[0].path,
       description: error.issues[0].message,
       type: "error",
     });
+    return;
   }
 
-  return authClient.organization.create({
+  const res = await authClient.organization.create({
     ...data,
     metadata: {
       description: data.description,
@@ -24,6 +25,17 @@ export async function createBusiness(formData: FormData) {
     },
     keepCurrentActiveOrganization: false,
   });
+
+  if (res.error) {
+    toaster.create({
+      title: res.error.code,
+      description: res.error.message,
+      type: "error",
+    });
+    return;
+  }
+
+  return res.data;
 }
 
 export async function setActiveBussienss(organizationId: string) {
