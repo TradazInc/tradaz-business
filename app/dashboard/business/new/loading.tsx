@@ -12,7 +12,7 @@ const loading = () => {
         px={{ base: 4, md: 0 }}
         gap={10}
       >
-        <Skeleton w={"160px"} h={10} />
+        <Skeleton w={"160px"} h={10} alignSelf={"flex-start"} />
         <For each={skeletons}>
           {() => <SkeletonText noOfLines={2} gap={"4"} />}
         </For>
