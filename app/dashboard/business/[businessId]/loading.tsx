@@ -2,7 +2,7 @@ import GridCardSkeleton from "@/app/ui/dashboard/GridCardSkeleton";
 import GridContainer from "@/app/ui/dashboard/GridContainer";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
-import { For, VStack } from "@chakra-ui/react";
+import { For, Skeleton, VStack } from "@chakra-ui/react";
 
 const loading = () => {
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -10,7 +10,9 @@ const loading = () => {
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>Stores</PageHeader>
+        <PageHeader>
+          <Skeleton w={30} h={10} />
+        </PageHeader>
         <GridContainer>
           <For each={skeletons}>{() => <GridCardSkeleton />}</For>
         </GridContainer>
