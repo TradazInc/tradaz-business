@@ -3,7 +3,11 @@
 import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
 import SeparatorText from "@/app/ui/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
-import { emailSignIn, googleSignIn, isAuthorized } from "@/services/auth";
+import {
+  emailSignIn,
+  getAuthorizedSession,
+  googleSignIn,
+} from "@/services/auth";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,16 +24,16 @@ const SignInForm = () => {
 
     startEmailTransition(async () => {
       const data = await emailSignIn(formData);
-      const session = await isAuthorized();
-      if (session && data) router.push("/dashboard"); // successful authentication and authorization
+      if (!data) return;
+      
+      const session = await getAuthorizedSession();
+      if (session) router.push("/dashboard");
     });
   };
 
   const handleGoogleSignIn = () => {
     startGoogleTransition(async () => {
-      const data = await googleSignIn();
-      const session = await isAuthorized();
-      if (session && data) router.push("/dashboard"); // successful authentication and authorization
+      await googleSignIn();
     });
   };
 

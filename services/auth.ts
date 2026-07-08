@@ -2,10 +2,9 @@ import { toaster } from "@/components/ui/toaster";
 import { allowedRoles } from "@/entities/Session";
 import { authClient } from "@/lib/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { forbidden, unauthorized } from "next/navigation";
 import { emailSignInSchema, emailSignUpSchema } from "@/schema/auth";
 
-export async function isAuthorized() {
+export async function getAuthorizedSession() {
   const { data: session, error } = await authClient.getSession();
 
   if (error) {
@@ -14,16 +13,14 @@ export async function isAuthorized() {
       description: error.message,
       type: "error",
     });
-    return;
+    return null;
   }
 
-  if (!session) unauthorized();
+  if (!session) return null;
 
-  if (session.member?.role && allowedRoles.includes(session.member?.role)) {
-    return session;
-  } else {
-    forbidden();
-  }
+  return session.member?.role && allowedRoles.includes(session.member?.role)
+    ? session
+    : null;
 }
 
 export async function emailSignUp(formData: FormData) {
