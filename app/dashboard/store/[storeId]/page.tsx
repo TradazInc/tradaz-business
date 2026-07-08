@@ -1,9 +1,13 @@
-import React from 'react'
+import { Box } from "@chakra-ui/react";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+interface Props {
+  params: Promise<{ storeId: string }>;
 }
 
-export default page
+const page = async ({ params }: Props) => {
+  const { storeId } = await params;
+
+  return <Box>Store {storeId}</Box>;
+};
+
+export default page;
