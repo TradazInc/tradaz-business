@@ -1,9 +1,9 @@
-import { organizationsEndpoint } from "@/data/swrEndpoints";
+import { organizationsKey } from "@/data/cacheKeys";
 import { authClient } from "@/lib/auth";
 import useSWR from "swr";
 
 export const useBusinesses = () => {
-  return useSWR(organizationsEndpoint, () =>
+  return useSWR(organizationsKey, () =>
     authClient.organization.list().then((res) => res.data),
   );
 };

@@ -1,9 +1,9 @@
-import { sessionEndpoint } from "@/data/swrEndpoints";
+import { sessionKey } from "@/data/cacheKeys";
 import { authClient } from "@/lib/auth";
 import useSWR from "swr";
 
 export const useSession = () => {
-  return useSWR(sessionEndpoint, () =>
+  return useSWR(sessionKey, () =>
     authClient.getSession().then((res) => res.data),
   );
 };
