@@ -9,7 +9,7 @@ export default function EmptyPage({
   description: string;
 }) {
   return (
-    <EmptyState.Root w={"full"} h={"full"}>
+    <EmptyState.Root flex="1" w="full">
       <EmptyState.Content>
         <EmptyState.Indicator>
           <HiColorSwatch />

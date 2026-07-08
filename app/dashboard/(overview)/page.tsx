@@ -27,29 +27,28 @@ export default async function page({ searchParams }: Props) {
       <VStack w={"full"} h={"full"}>
         <PageHeader>Your Businesses</PageHeader>
         <DashboardToolbar />
-        <GridContainer>
-          <For
-            each={businesses}
-            fallback={
-              <EmptyPage
-                title="No businesses found"
-                description="Create a new business"
-              />
-            }
-          >
-            {(business) => (
-              <GridCard
-                key={business.id}
-                name={business.name}
-                address={business.metadata.address}
-                logo={business.logo}
-                createdAt={new Date(business.createdAt).toDateString()}
-                description={business.metadata.description}
-                href={`/dashboard/business/${business.id}`}
-              />
-            )}
-          </For>
-        </GridContainer>
+        {businesses?.length ? (
+          <GridContainer>
+            <For each={businesses}>
+              {(business) => (
+                <GridCard
+                  key={business.id}
+                  name={business.name}
+                  address={business.metadata.address}
+                  logo={business.logo}
+                  createdAt={new Date(business.createdAt).toDateString()}
+                  description={business.metadata.description}
+                  href={`/dashboard/business/${business.id}`}
+                />
+              )}
+            </For>
+          </GridContainer>
+        ) : (
+          <EmptyPage
+            title="No businesses found"
+            description="Create a new business"
+          />
+        )}
       </VStack>
     </PageContainer>
   );

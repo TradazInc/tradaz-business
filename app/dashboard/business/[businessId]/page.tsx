@@ -27,27 +27,26 @@ export default async function page({ params }: Props) {
       <VStack w={"full"} h={"full"}>
         <PageHeader>{`${data.name} Stores`}</PageHeader>
         <BusinessToolbar />
-        <GridContainer>
-          <For
-            each={data.teams}
-            fallback={
-              <EmptyPage
-                title="No stores found"
-                description="Create a new store for your business"
-              />
-            }
-          >
-            {(store) => (
-              <GridCard
-                key={store.id}
-                name={store.name}
-                address={store.address}
-                createdAt={new Date(store.createdAt).toDateString()}
-                href={`/dashboard/store/${store.id}`}
-              />
-            )}
-          </For>
-        </GridContainer>
+        {data.teams.length ? (
+          <GridContainer>
+            <For each={data.teams}>
+              {(store) => (
+                <GridCard
+                  key={store.id}
+                  name={store.name}
+                  address={store.address}
+                  createdAt={new Date(store.createdAt).toDateString()}
+                  href={`/dashboard/store/${store.id}`}
+                />
+              )}
+            </For>
+          </GridContainer>
+        ) : (
+          <EmptyPage
+            title="No stores found"
+            description="Create a new store for your business"
+          />
+        )}
       </VStack>
     </PageContainer>
   );
