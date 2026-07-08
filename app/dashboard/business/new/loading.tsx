@@ -1,4 +1,4 @@
-import { Center, For, SkeletonText, VStack } from "@chakra-ui/react";
+import { Center, For, Skeleton, SkeletonText, VStack } from "@chakra-ui/react";
 
 const loading = () => {
   const skeletons = [1, 2, 3, 4];
@@ -12,6 +12,7 @@ const loading = () => {
         px={{ base: 4, md: 0 }}
         gap={10}
       >
+        <Skeleton w={"160px"} h={10} />
         <For each={skeletons}>
           {() => <SkeletonText noOfLines={2} gap={"4"} />}
         </For>
