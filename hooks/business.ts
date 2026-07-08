@@ -1,7 +1,6 @@
 import { authClient } from "@/lib/auth";
 import useSWR from "swr";
-
-export const organizationsEndpoint = "/api/organizations"; // used for prefetching in layout
+import { organizationsEndpoint } from "./business-constants";
 
 export const useBusinesses = () => {
   return useSWR(organizationsEndpoint, () =>

@@ -1,6 +1,6 @@
 import { NavBar } from "@/app/ui/dashboard/NavBar";
 import { LayoutContainer } from "@/app/ui/LayoutContainer";
-import { organizationsEndpoint } from "@/hooks/business";
+import { organizationsEndpoint } from "@/hooks/business-constants";
 import { getBusinesses } from "@/server/business";
 import { SWRConfig } from "swr";
 
