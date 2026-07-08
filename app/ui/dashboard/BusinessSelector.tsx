@@ -43,13 +43,14 @@ export const BusinessSelector = () => {
 
   // Tracks url changes
   const businessId = useParams().businessId as string;
+  const storeId = useParams().storeId as string;
   useEffect(() => {
     const setActiveBusiness = async () => {
       if (businessId) await handleBusiness(businessId);
+      if (storeId) await handleStore(storeId);
     };
-
     setActiveBusiness();
-  }, [businessId]);
+  }, [businessId, storeId]);
 
   if (error || Error) return null;
 
@@ -62,7 +63,11 @@ export const BusinessSelector = () => {
           </Breadcrumb.Separator>
 
           <Breadcrumb.Item>
-            <MenuItem data={businesses} handleClick={handleBusiness}>
+            <MenuItem
+              data={businesses}
+              dataType={DataType.business}
+              handleClick={handleBusiness}
+            >
               <Breadcrumb.Link as="button">
                 <LuBuilding2 />
                 <Skeleton height={"5"} loading={isLoading}>
@@ -83,7 +88,11 @@ export const BusinessSelector = () => {
             </Breadcrumb.Separator>
 
             <Breadcrumb.Item>
-              <MenuItem data={business?.teams} handleClick={handleStore}>
+              <MenuItem
+                data={business?.teams}
+                dataType={DataType.store}
+                handleClick={handleStore}
+              >
                 <Breadcrumb.Link as="button">
                   <LuStore />
                   {store}
@@ -98,13 +107,24 @@ export const BusinessSelector = () => {
   );
 };
 
+enum DataType {
+  business = "business",
+  store = "store",
+}
+
 interface BreadcrumbMenuItemProps {
   data?: Array<{ name: string; id: string }> | null;
+  dataType: DataType;
   handleClick: (id: string) => Promise<unknown>;
   children: React.ReactNode;
 }
 
-const MenuItem = ({ data, handleClick, children }: BreadcrumbMenuItemProps) => {
+const MenuItem = ({
+  data,
+  dataType,
+  handleClick,
+  children,
+}: BreadcrumbMenuItemProps) => {
   return (
     <Menu.Root>
       <Menu.Trigger asChild>{children}</Menu.Trigger>
@@ -119,7 +139,7 @@ const MenuItem = ({ data, handleClick, children }: BreadcrumbMenuItemProps) => {
                   onClick={() => handleClick(item.id)}
                   asChild
                 >
-                  <NextLink href={`/dashboard/business/${item.id}`}>
+                  <NextLink href={`/dashboard/${dataType}/${item.id}`}>
                     {item.name}
                   </NextLink>
                 </Menu.Item>
