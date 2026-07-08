@@ -1,27 +1,7 @@
 import { toaster } from "@/components/ui/toaster";
-import { allowedRoles } from "@/entities/Session";
 import { authClient } from "@/lib/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { emailSignInSchema, emailSignUpSchema } from "@/schema/auth";
-
-export async function getAuthorizedSession() {
-  const { data: session, error } = await authClient.getSession();
-
-  if (error) {
-    toaster.create({
-      title: error.code,
-      description: error.message,
-      type: "error",
-    });
-    return null;
-  }
-
-  if (!session) return null;
-
-  return session.member?.role && allowedRoles.includes(session.member?.role)
-    ? session
-    : null;
-}
 
 export async function emailSignUp(formData: FormData) {
   const form = Object.fromEntries(formData.entries());

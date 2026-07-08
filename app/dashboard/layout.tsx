@@ -1,6 +1,8 @@
 import { NavBar } from "@/app/ui/dashboard/NavBar";
 import { LayoutContainer } from "@/app/ui/LayoutContainer";
 import { organizationsEndpoint } from "@/data/businessEndpoint";
+import { sessionEndpoint } from "@/data/sessionEndpoint";
+import { requireAuthorizedSession } from "@/server/auth";
 import { getBusinesses } from "@/server/business";
 import { SWRConfig } from "swr";
 
@@ -9,13 +11,17 @@ export default async function BusinessLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const businessesPromise = getBusinesses();
+  const session = await requireAuthorizedSession();
+  const businesses = await getBusinesses();
 
   return (
     <LayoutContainer>
       <SWRConfig
         value={{
-          fallback: { [organizationsEndpoint]: businessesPromise }, // Pass the promises to client components.
+          fallback: {
+            [sessionEndpoint]: session,
+            [organizationsEndpoint]: businesses,
+          },
         }}
       >
         <NavBar />
