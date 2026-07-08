@@ -11,7 +11,7 @@ const loading = () => {
     <PageContainer>
       <VStack w={"full"} h={"full"}>
         <PageHeader>
-          <Skeleton w={30} h={10} />
+          <Skeleton w={"160px"} h={10} />
         </PageHeader>
         <GridContainer>
           <For each={skeletons}>{() => <GridCardSkeleton />}</For>
