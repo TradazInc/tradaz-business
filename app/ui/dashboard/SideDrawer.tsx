@@ -9,7 +9,7 @@ import {
   CloseButton,
   Drawer,
   Icon,
-  Portal
+  Portal,
 } from "@chakra-ui/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -85,6 +85,8 @@ export const SideBarItems = () => {
               <Accordion.ItemContent key={index}>
                 <Accordion.ItemBody pl={5}>
                   <Button
+                    w={"full"}
+                    variant={"plain"}
                     color={child?.danger ? "fg.error" : undefined}
                     _hover={
                       child?.danger
