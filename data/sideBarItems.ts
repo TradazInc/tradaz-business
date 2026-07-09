@@ -1,3 +1,4 @@
+import { logout } from "@/services/auth";
 import {
   LuBox,
   LuCalculator,
@@ -10,6 +11,7 @@ import {
   LuLandmark,
   LuLayoutGrid,
   LuList,
+  LuLogOut,
   LuMegaphone,
   LuMessageSquare,
   LuPackage,
@@ -48,7 +50,15 @@ export const dashboardItems = [
   {
     label: "Account",
     icon: LuUser,
-    children: [{ label: "Profile", icon: LuUserPlus }],
+    children: [
+      { label: "Profile", icon: LuUserPlus },
+      {
+        label: "Log Out",
+        icon: LuLogOut,
+        danger: true,
+        handler: logout,
+      },
+    ],
   },
   {
     label: "Security",
