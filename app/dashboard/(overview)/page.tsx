@@ -4,10 +4,9 @@ import EmptyPage from "@/app/ui/EmptyPage";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import Search from "@/app/ui/Search";
-import { SideDrawer } from "@/app/ui/SideDrawer";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
-import { Button, For, HStack, VStack } from "@chakra-ui/react";
+import { Button, For, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -57,12 +56,9 @@ export default async function page({ searchParams }: Props) {
 const DashboardToolbar = () => {
   return (
     <ToolBarContainer>
-      <HStack>
-        <SideDrawer />
-        <Suspense>
-          <Search placeholder="Search for a business" query="business" />
-        </Suspense>
-      </HStack>
+      <Suspense>
+        <Search placeholder="Search for a business" query="business" />
+      </Suspense>
       <Button size={"xs"} asChild>
         <Link href={"/dashboard/business/new"}>
           <LuPlus />

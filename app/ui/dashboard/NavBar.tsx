@@ -1,10 +1,11 @@
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { HStack } from "@chakra-ui/react";
 import TradazLogo from "../TradazLogo";
-import { AvatarDropdown } from "./AvatarDropdown";
+import { ProfileDropdown } from "./ProfileDropdown";
 import { BusinessSelector } from "./BusinessSelector";
 import Notification from "./Notification";
 import Link from "next/link";
+import { SideDrawer } from "../SideDrawer";
 
 export const NavBar = () => {
   return (
@@ -27,7 +28,8 @@ export const NavBar = () => {
       <HStack gap="2">
         <ColorModeButton rounded={"full"} variant={"outline"} />
         <Notification />
-        <AvatarDropdown />
+        <ProfileDropdown />
+        <SideDrawer />
       </HStack>
     </HStack>
   );

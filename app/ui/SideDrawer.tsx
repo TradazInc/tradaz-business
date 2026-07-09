@@ -3,11 +3,11 @@
 import { sideBarItems } from "@/data/sideBarItems";
 import {
   Accordion,
-  Button,
   CloseButton,
   Drawer,
   HStack,
   Icon,
+  IconButton,
   Portal,
 } from "@chakra-ui/react";
 import { LuMenu } from "react-icons/lu";
@@ -16,9 +16,9 @@ export const SideDrawer = () => {
   return (
     <Drawer.Root>
       <Drawer.Trigger asChild>
-        <Button variant="outline" size="sm">
+        <IconButton rounded={"full"} variant={"outline"}>
           <LuMenu />
-        </Button>
+        </IconButton>
       </Drawer.Trigger>
       <Portal>
         <Drawer.Backdrop />

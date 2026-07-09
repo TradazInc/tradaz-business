@@ -12,11 +12,6 @@ interface ProfileMenu {
 
 export const profileMenu: ProfileMenu[] = [
   {
-    label: "Account Settings",
-    value: "settings",
-    icon: LuSettings,
-  },
-  {
     label: "Log Out",
     value: "logout",
     icon: LuLogOut,

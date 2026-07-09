@@ -5,7 +5,7 @@ import { useSession } from "@/hooks/session";
 import { Avatar, Box, Icon, Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 
-export const AvatarDropdown = () => {
+export const ProfileDropdown = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
