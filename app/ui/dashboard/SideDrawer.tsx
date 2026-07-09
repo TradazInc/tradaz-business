@@ -21,7 +21,7 @@ export const SideDrawer = () => {
 
   return (
     <Drawer.Root>
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger cursor="pointer">
         <ProfileAvatar
           name={session.user.name}
           image={session.user.image ?? undefined}
