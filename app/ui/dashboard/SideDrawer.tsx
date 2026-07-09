@@ -21,7 +21,7 @@ export const SideDrawer = () => {
 
   return (
     <Drawer.Root>
-      <Drawer.Trigger cursor="pointer">
+      <Drawer.Trigger cursor={"pointer"}>
         <ProfileAvatar
           name={session.user.name}
           image={session.user.image ?? undefined}
@@ -85,6 +85,8 @@ export const SideBarItems = () => {
               <Accordion.ItemContent key={index}>
                 <Accordion.ItemBody>
                   <HStack
+                    pl={2}
+                    cursor={"pointer"}
                     color={child?.danger ? "fg.error" : undefined}
                     _hover={
                       child?.danger
