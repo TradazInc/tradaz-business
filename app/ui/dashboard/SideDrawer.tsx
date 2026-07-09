@@ -86,6 +86,8 @@ export const SideBarItems = () => {
                 <Accordion.ItemBody>
                   <HStack
                     pl={2}
+                    w={"full"}
+                    h={"full"}
                     cursor={"pointer"}
                     color={child?.danger ? "fg.error" : undefined}
                     _hover={
