@@ -5,9 +5,9 @@ import { useSession } from "@/hooks/session";
 import {
   Accordion,
   Avatar,
-  Button,
   CloseButton,
   Drawer,
+  HStack,
   Icon,
   Portal,
 } from "@chakra-ui/react";
@@ -72,22 +72,19 @@ export const SideBarItems = () => {
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label} my={2}>
           <Accordion.ItemTrigger justifyContent={"space-between"}>
-            <Button w={"full"} variant={"plain"} justifyItems={"flex-start"}>
+            <HStack>
               <Icon fontSize="lg" color="fg.subtle">
                 <Icon as={item.icon} />
               </Icon>
               {item.label}
-            </Button>
+            </HStack>
             <Accordion.ItemIndicator />
           </Accordion.ItemTrigger>
           {item.children &&
             item.children.map((child, index) => (
               <Accordion.ItemContent key={index}>
                 <Accordion.ItemBody>
-                  <Button
-                    w={"full"}
-                    variant={"plain"}
-                    justifyItems={"flex-start"}
+                  <HStack
                     color={child?.danger ? "fg.error" : undefined}
                     _hover={
                       child?.danger
@@ -102,7 +99,7 @@ export const SideBarItems = () => {
                       <Icon as={child.icon} />
                     </Icon>
                     {child.label}
-                  </Button>
+                  </HStack>
                 </Accordion.ItemBody>
               </Accordion.ItemContent>
             ))}
