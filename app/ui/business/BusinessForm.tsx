@@ -97,8 +97,8 @@ export const BusinessForm = () => {
             <NativeSelect.Root>
               <NativeSelect.Field name="categoryId">
                 <For
-                  each={categories}
-                  fallback={<Box>"No categories found"</Box>}
+                  each={categories ?? []}
+                  fallback={<Box>No categories found</Box>}
                 >
                   {(category) => (
                     <option key={category.id} value={category.id}>
