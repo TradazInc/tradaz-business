@@ -1,7 +1,7 @@
 import { Center, For, Skeleton, SkeletonText, VStack } from "@chakra-ui/react";
 
 const loading = () => {
-  const skeletons = [1, 2, 3, 4, 5];
+  const skeletons = [1, 2, 3, 4, 5, 6];
 
   return (
     <Center h={"full"} w={"full"}>
