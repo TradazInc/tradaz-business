@@ -4,7 +4,7 @@ import { allowedRoles } from "@/entities/Session";
 import { headers } from "next/headers";
 import { forbidden, unauthorized } from "next/navigation";
 
-export async function getAuthorizedSession() {
+export async function getSession() {
   const { data: session } = await authClient.getSession({
     fetchOptions: {
       headers: { cookie: (await headers()).get("cookie") ?? "" },

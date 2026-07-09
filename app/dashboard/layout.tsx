@@ -1,7 +1,7 @@
 import { NavBar } from "@/app/ui/dashboard/NavBar";
 import { LayoutContainer } from "@/app/ui/LayoutContainer";
 import { organizationsKey, sessionKey } from "@/data/cacheKeys";
-import { getAuthorizedSession } from "@/server/auth";
+import { getSession } from "@/server/auth";
 import { getBusinesses } from "@/server/business";
 import { SWRConfig } from "swr";
 
@@ -10,7 +10,7 @@ export default async function BusinessLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const sessionPromise = getAuthorizedSession();
+  const sessionPromise = getSession();
   const businessPromise = getBusinesses();
 
   return (
