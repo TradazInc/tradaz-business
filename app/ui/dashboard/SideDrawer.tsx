@@ -7,7 +7,6 @@ import {
   Avatar,
   CloseButton,
   Drawer,
-  HStack,
   Icon,
   Portal,
 } from "@chakra-ui/react";
@@ -68,42 +67,35 @@ export const SideBarItems = () => {
   }, [businessId, storeId]);
 
   return (
-    <Accordion.Root collapsible w={"full"} variant={"enclosed"}>
+    <Accordion.Root collapsible w={"full"} variant={"outline"}>
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label} my={2}>
-          <Accordion.ItemTrigger justifyContent={"space-between"}>
-            <HStack>
-              <Icon fontSize="lg" color="fg.subtle">
-                <Icon as={item.icon} />
-              </Icon>
-              {item.label}
-            </HStack>
+          <Accordion.ItemTrigger>
+            <Icon fontSize="lg" color="fg.subtle">
+              <Icon as={item.icon} />
+            </Icon>
+            {item.label}
             <Accordion.ItemIndicator />
           </Accordion.ItemTrigger>
           {item.children &&
             item.children.map((child, index) => (
               <Accordion.ItemContent key={index}>
-                <Accordion.ItemBody>
-                  <HStack
-                    pl={2}
-                    w={"full"}
-                    h={"full"}
-                    cursor={"pointer"}
-                    color={child?.danger ? "fg.error" : undefined}
-                    _hover={
-                      child?.danger
-                        ? { bg: "bg.error", color: "fg.error" }
-                        : undefined
-                    }
-                    onClick={() =>
-                      child.handler ? child.handler(router) : undefined
-                    }
-                  >
-                    <Icon fontSize="lg" color="fg.subtle">
-                      <Icon as={child.icon} />
-                    </Icon>
-                    {child.label}
-                  </HStack>
+                <Accordion.ItemBody
+                  cursor={"pointer"}
+                  color={child?.danger ? "fg.error" : undefined}
+                  _hover={
+                    child?.danger
+                      ? { bg: "bg.error", color: "fg.error" }
+                      : undefined
+                  }
+                  onClick={() =>
+                    child.handler ? child.handler(router) : undefined
+                  }
+                >
+                  <Icon fontSize="lg" color="fg.subtle">
+                    <Icon as={child.icon} />
+                  </Icon>
+                  {child.label}
                 </Accordion.ItemBody>
               </Accordion.ItemContent>
             ))}
