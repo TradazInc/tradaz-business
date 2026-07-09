@@ -67,7 +67,7 @@ export const SideBarItems = () => {
   }, [businessId, storeId]);
 
   return (
-    <Accordion.Root collapsible w={"full"} variant={"outline"}>
+    <Accordion.Root collapsible w={"full"} variant={"enclosed"}>
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label} my={2}>
           <Accordion.ItemTrigger>
@@ -81,6 +81,7 @@ export const SideBarItems = () => {
             item.children.map((child, index) => (
               <Accordion.ItemContent key={index}>
                 <Accordion.ItemBody
+                  pl={2}
                   cursor={"pointer"}
                   color={child?.danger ? "fg.error" : undefined}
                   _hover={
