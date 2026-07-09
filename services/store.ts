@@ -1,5 +1,5 @@
 import { toaster } from "@/components/ui/toaster";
-import { authClient } from "@/lib/auth";
+import { authClient } from "@/lib/authClient";
 import { storeSchema } from "@/schema/store";
 
 export async function setActiveStore(teamId: string) {

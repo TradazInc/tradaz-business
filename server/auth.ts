@@ -1,5 +1,5 @@
 import "server-only";
-import { authClient } from "@/lib/auth";
+import { authClient } from "@/lib/authClient";
 import { allowedRoles } from "@/entities/Session";
 import { headers } from "next/headers";
 import { forbidden, unauthorized } from "next/navigation";

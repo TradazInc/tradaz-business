@@ -1,5 +1,5 @@
 import "server-only";
-import { authClient } from "@/lib/auth";
+import { authClient } from "@/lib/authClient";
 import { headers } from "next/headers";
 
 export async function getBusinesses(name?: string) {

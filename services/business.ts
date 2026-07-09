@@ -1,5 +1,5 @@
 import { toaster } from "@/components/ui/toaster";
-import { authClient } from "@/lib/auth";
+import { authClient } from "@/lib/authClient";
 import { businessSchema } from "@/schema/business";
 
 export async function createBusiness(formData: FormData) {

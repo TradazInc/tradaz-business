@@ -1,5 +1,5 @@
 import { toaster } from "@/components/ui/toaster";
-import { authClient } from "@/lib/auth";
+import { authClient } from "@/lib/authClient";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { emailSignInSchema, emailSignUpSchema } from "@/schema/auth";
 

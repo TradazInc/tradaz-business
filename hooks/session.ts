@@ -1,5 +1,5 @@
 import { sessionKey } from "@/data/cacheKeys";
-import { authClient } from "@/lib/auth";
+import { authClient } from "@/lib/authClient";
 import useSWR from "swr";
 
 export const useSession = () => {
