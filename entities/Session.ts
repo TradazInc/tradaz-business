@@ -8,7 +8,7 @@ export interface Session {
     name: string;
     image?: string | null | undefined;
     banned: boolean | null | undefined;
-    role?: string | null | undefined;
+    role?: Role;
     banReason?: string | null | undefined;
     banExpires?: Date | null | undefined;
   };
@@ -53,10 +53,3 @@ export enum Role {
   admin = "admin",
   user = "user",
 }
-
-export const allowedRoles = [
-  OrgRole.admin,
-  OrgRole.customer,
-  OrgRole.owner,
-  OrgRole.sales,
-];

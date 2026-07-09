@@ -1,8 +1,7 @@
-import "server-only";
 import { authClient } from "@/lib/authClient";
-import { allowedRoles } from "@/entities/Session";
 import { headers } from "next/headers";
-import { forbidden, unauthorized } from "next/navigation";
+import { unauthorized } from "next/navigation";
+import "server-only";
 
 export async function getSession() {
   const { data: session } = await authClient.getSession({
@@ -12,9 +11,6 @@ export async function getSession() {
   });
 
   if (!session) unauthorized();
-
-  // if (!session.member?.role || !allowedRoles.includes(session.member?.role))
-  //   forbidden();
 
   return session;
 }
