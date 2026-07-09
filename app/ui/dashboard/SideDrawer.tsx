@@ -72,7 +72,7 @@ export const SideBarItems = () => {
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label} my={2}>
           <Accordion.ItemTrigger justifyContent={"space-between"}>
-            <Button>
+            <Button w={"full"} variant={"plain"} justifyItems={"flex-start"}>
               <Icon fontSize="lg" color="fg.subtle">
                 <Icon as={item.icon} />
               </Icon>
@@ -83,10 +83,11 @@ export const SideBarItems = () => {
           {item.children &&
             item.children.map((child, index) => (
               <Accordion.ItemContent key={index}>
-                <Accordion.ItemBody pl={5}>
+                <Accordion.ItemBody>
                   <Button
                     w={"full"}
                     variant={"plain"}
+                    justifyItems={"flex-start"}
                     color={child?.danger ? "fg.error" : undefined}
                     _hover={
                       child?.danger
