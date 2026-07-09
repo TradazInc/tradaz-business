@@ -13,8 +13,8 @@ export async function getSession() {
 
   if (!session) unauthorized();
 
-  if (!session.member?.role || !allowedRoles.includes(session.member?.role))
-    forbidden();
+  // if (!session.member?.role || !allowedRoles.includes(session.member?.role))
+  //   forbidden();
 
   return session;
 }
