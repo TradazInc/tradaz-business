@@ -44,11 +44,14 @@ export const BusinessSelector = () => {
   // Tracks url changes
   const businessId = useParams().businessId as string;
   const storeId = useParams().storeId as string;
+  
   useEffect(() => {
     const setActiveBusiness = async () => {
       if (businessId) await handleBusiness(businessId);
       if (storeId) await handleStore(storeId);
+      if (!storeId) setStore(undefined);
     };
+
     setActiveBusiness();
   }, [businessId, storeId]);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { sideBarItems } from "@/data/sideBarItems";
+import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
 import {
   Accordion,
   CloseButton,
@@ -10,6 +10,8 @@ import {
   IconButton,
   Portal,
 } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { LuMenu } from "react-icons/lu";
 
 export const SideDrawer = () => {
@@ -38,14 +40,21 @@ export const SideDrawer = () => {
 };
 
 export const SideBarItems = () => {
+  const [sideItems, setSideItems] = useState(dashboardItems);
+
+  // Tracks url changes
+  const businessId = useParams().businessId as string;
+  const storeId = useParams().storeId as string;
+
+  useEffect(() => {
+    if (!businessId && !storeId) setSideItems(dashboardItems);
+    if (businessId) setSideItems(businessItems);
+    if (storeId) setSideItems(storeItems);
+  }, [businessId, storeId]);
+
   return (
-    <Accordion.Root
-      collapsible
-      defaultValue={["b"]}
-      w={"full"}
-      variant={"enclosed"}
-    >
-      {sideBarItems.map((item, index) => (
+    <Accordion.Root collapsible w={"full"} variant={"enclosed"}>
+      {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label} my={2}>
           <Accordion.ItemTrigger justifyContent={"space-between"}>
             <SideBarButton>

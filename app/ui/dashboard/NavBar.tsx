@@ -5,7 +5,7 @@ import { ProfileDropdown } from "./ProfileDropdown";
 import { BusinessSelector } from "./BusinessSelector";
 import Notification from "./Notification";
 import Link from "next/link";
-import { SideDrawer } from "../SideDrawer";
+import { SideDrawer } from "./SideDrawer";
 
 export const NavBar = () => {
   return (

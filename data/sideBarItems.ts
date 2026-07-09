@@ -38,12 +38,45 @@ import {
   LuUsers,
   LuWallet,
 } from "react-icons/lu";
+import {
+  MdDevices,
+  MdOutlinePassword,
+  MdOutlineRoomPreferences,
+} from "react-icons/md";
 
-export const sideBarItems = [
+export const dashboardItems = [
   {
-    label: "Point of Sale",
-    icon: LuScanLine,
-    children: [{ label: "POS", icon: LuTerminal }],
+    label: "Account",
+    icon: LuUser,
+    children: [{ label: "Profile", icon: LuUserPlus }],
+  },
+  {
+    label: "Security",
+    icon: LuShield,
+    children: [
+      { label: "Password", icon: MdOutlinePassword },
+      { label: "Devices", icon: MdDevices },
+    ],
+  },
+  {
+    label: "Settings",
+    icon: LuSettings,
+    children: [
+      { label: "Preferences", icon: MdOutlineRoomPreferences },
+      { label: "Terms", icon: LuFileText },
+      { label: "Conditions & Policies", icon: LuShield },
+    ],
+  },
+];
+
+export const businessItems = [
+  {
+    label: "Customers",
+    icon: LuUsers,
+    children: [
+      { label: "Customer List", icon: LuUsers },
+      { label: "Reviews", icon: LuStar },
+    ],
   },
   {
     label: "Products",
@@ -56,15 +89,6 @@ export const sideBarItems = [
       { label: "Sizes", icon: LuRuler },
     ],
   },
-  {
-    label: "Customers",
-    icon: LuUsers,
-    children: [
-      { label: "Customer List", icon: LuUsers },
-      { label: "Reviews", icon: LuStar },
-    ],
-  },
-
   {
     label: "Vendors",
     icon: LuStore,
@@ -121,6 +145,41 @@ export const sideBarItems = [
       { label: "Loyalty", icon: LuHeart },
       { label: "Vouchers", icon: LuTicket },
       { label: "Set Coupon", icon: LuTag },
+    ],
+  },
+  {
+    label: "Staff",
+    icon: LuUserPlus,
+    children: [{ label: "Staff List", icon: LuUser }],
+  },
+  {
+    label: "Settings",
+    icon: LuSettings,
+    children: [
+      { label: "Logistics", icon: LuTruck },
+      { label: "VAT", icon: LuPercent },
+      { label: "Terms", icon: LuFileText },
+      { label: "Conditions & Policies", icon: LuShield },
+      { label: "UI config", icon: LuPalette },
+    ],
+  },
+];
+
+export const storeItems = [
+  {
+    label: "Point of Sale",
+    icon: LuScanLine,
+    children: [{ label: "POS", icon: LuTerminal }],
+  },
+  {
+    label: "Finance",
+    icon: LuLandmark,
+    children: [
+      { label: "Sales Record", icon: LuFileText },
+      { label: "Staff Salary", icon: LuWallet },
+      { label: "Expenses", icon: LuTrendingDown },
+      { label: "Revenue", icon: LuTrendingUp },
+      { label: "Tax Calculation", icon: LuCalculator },
     ],
   },
   {
