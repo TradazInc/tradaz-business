@@ -62,7 +62,7 @@ export const BusinessForm = () => {
             <Field.Label>
               Slug <Field.RequiredIndicator />
             </Field.Label>
-            <InputGroup endAddon=".com">
+            <InputGroup startAddon="www." endAddon=".tradaz.com">
               <Input name="slug" placeholder="yoursite" />
             </InputGroup>
           </Field.Root>
