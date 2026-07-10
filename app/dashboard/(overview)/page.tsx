@@ -1,15 +1,15 @@
+import { BusinessForm } from "@/app/ui/business/BusinessForm";
 import GridCard from "@/app/ui/dashboard/GridCard";
 import GridContainer from "@/app/ui/dashboard/GridContainer";
+import { DialogBox } from "@/app/ui/DialogBox";
 import EmptyPage from "@/app/ui/EmptyPage";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import Search from "@/app/ui/Search";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
-import { Button, For, VStack } from "@chakra-ui/react";
-import Link from "next/link";
+import { For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
-import { LuPlus } from "react-icons/lu";
 
 interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -59,12 +59,9 @@ const DashboardToolbar = () => {
       <Suspense>
         <Search placeholder="Search for a business" query="business" />
       </Suspense>
-      <Button size={"xs"} asChild>
-        <Link href={"/dashboard/business/new"}>
-          <LuPlus />
-          New Business
-        </Link>
-      </Button>
+      <DialogBox prompt="New Business">
+        <BusinessForm />
+      </DialogBox>
     </ToolBarContainer>
   );
 };
