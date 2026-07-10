@@ -5,6 +5,7 @@ import { useSession } from "@/hooks/session";
 import {
   Accordion,
   Avatar,
+  Box,
   CloseButton,
   Drawer,
   Icon,
@@ -70,18 +71,21 @@ export const SideBarItems = () => {
     <Accordion.Root collapsible w={"full"} variant={"enclosed"}>
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label} my={2}>
-          <Accordion.ItemTrigger>
-            <Icon fontSize="lg" color="fg.subtle">
-              <Icon as={item.icon} />
-            </Icon>
-            {item.label}
+          <Accordion.ItemTrigger justifyContent={"space-between"}>
+            <Box>
+              <Icon fontSize="lg" color="fg.subtle">
+                <Icon as={item.icon} />
+              </Icon>
+              {item.label}
+            </Box>
             <Accordion.ItemIndicator />
           </Accordion.ItemTrigger>
           {item.children &&
             item.children.map((child, index) => (
               <Accordion.ItemContent key={index}>
                 <Accordion.ItemBody
-                  pl={2}
+                  pl={5}
+                  gapX={2}
                   cursor={"pointer"}
                   color={child?.danger ? "fg.error" : undefined}
                   _hover={
