@@ -63,12 +63,12 @@ const NotificationContent = ({
 }) => {
   return (
     <VStack gap={0}>
-      <Heading textStyle={"s"} w={"full"}>
+      <Heading textStyle={"sm"} w={"full"}>
         {title}
       </Heading>
       <Flex
         w={"full"}
-        textStyle={"s"}
+        textStyle={"sm"}
         color={"fg.muted"}
         justify={"flex-start"}
       >
