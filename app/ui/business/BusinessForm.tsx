@@ -58,15 +58,6 @@ export const BusinessForm = () => {
             <Input name="name" />
           </Field.Root>
 
-          <Field.Root required>
-            <Field.Label>
-              Slug <Field.RequiredIndicator />
-            </Field.Label>
-            <InputGroup startAddon="www." endAddon=".com">
-              <Input name="slug" placeholder="yoursite" />
-            </InputGroup>
-          </Field.Root>
-
           <Field.Root>
             <Field.Label>Phone</Field.Label>
             <Input name="phone" placeholder="+234-XXX-XXXX-XXX" />
