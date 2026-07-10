@@ -94,20 +94,18 @@ export const SideBarItems = () => {
                 </Accordion.ItemBody>
               </Accordion.ItemContent>
             ))}
-          <Button
-            mx={3}
-            w={"full"}
-            fontSize={"lg"}
-            color={"fg.error"}
-            variant={"outline"}
-            _hover={{ bg: "bg.error", color: "fg.error" }}
-            onClick={() => logout(router)}
-          >
-            <LuLogOut />
-            Log Out
-          </Button>
         </Accordion.Item>
       ))}
+      <Button
+        w={"full"}
+        color={"fg.error"}
+        variant={"outline"}
+        _hover={{ bg: "bg.error", color: "fg.error" }}
+        onClick={() => logout(router)}
+      >
+        <LuLogOut />
+        Log Out
+      </Button>
     </Accordion.Root>
   );
 };
