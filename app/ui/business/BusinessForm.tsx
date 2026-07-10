@@ -68,11 +68,6 @@ export const BusinessForm = () => {
           </Field.Root>
 
           <Field.Root>
-            <Field.Label>Description</Field.Label>
-            <Input name="description" />
-          </Field.Root>
-
-          <Field.Root>
             <Field.Label>Phone</Field.Label>
             <Input name="phone" placeholder="+234-XXX-XXXX-XXX" />
           </Field.Root>

@@ -19,7 +19,6 @@ export async function createBusiness(formData: FormData) {
   const res = await authClient.organization.create({
     ...data,
     metadata: {
-      description: data.description,
       phone: data.phone,
       address: data.address,
     },
