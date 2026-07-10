@@ -90,7 +90,7 @@ export const SideBarItems = () => {
                   pl={5}
                   w={"full"}
                   cursor={"pointer"}
-                  color={"fg.subtle"}
+                  color={"fg.muted"}
                   _hover={{ bg: "bg.emphasized", color: "fg" }}
                 >
                   <Icon fontSize={"lg"} mx={3}>
