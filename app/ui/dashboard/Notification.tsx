@@ -36,11 +36,7 @@ const Notification = () => {
           <Menu.Content>
             {notifications.map((content) => (
               <Menu.Item value={content.id} key={content.id}>
-                <Icon
-                  as={LuShoppingBag}
-                  size={"md"}
-                  color={"green.solid"}
-                />
+                <Icon as={LuShoppingBag} size={"md"} />
                 <Box flex="1">
                   <NotificationContent
                     title={content.title}
