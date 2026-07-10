@@ -17,7 +17,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LuLogOut } from "react-icons/lu";
 
-export const SideDrawer = () => {
+export const ProfileDrawer = () => {
   const { data: session } = useSession();
 
   if (!session) return <ProfileAvatar />;
