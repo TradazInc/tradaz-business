@@ -2,10 +2,12 @@
 
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
 import { useSession } from "@/hooks/session";
+import { logout } from "@/services/auth";
 import {
   Accordion,
   Avatar,
   Box,
+  Button,
   CloseButton,
   Drawer,
   Icon,
@@ -13,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { LuLogOut } from "react-icons/lu";
 
 export const SideDrawer = () => {
   const { data: session } = useSession();
@@ -83,19 +86,7 @@ export const SideBarItems = () => {
           {item.children &&
             item.children.map((child, index) => (
               <Accordion.ItemContent key={index}>
-                <Accordion.ItemBody
-                  pl={5}
-                  cursor={"pointer"}
-                  color={child?.danger ? "fg.error" : undefined}
-                  _hover={
-                    child?.danger
-                      ? { bg: "bg.error", color: "fg.error" }
-                      : undefined
-                  }
-                  onClick={() =>
-                    child.handler ? child.handler(router) : undefined
-                  }
-                >
+                <Accordion.ItemBody pl={5} cursor={"pointer"}>
                   <Icon fontSize={"lg"} color={"fg.subtle"} mx={3}>
                     <Icon as={child.icon} />
                   </Icon>
@@ -103,6 +94,18 @@ export const SideBarItems = () => {
                 </Accordion.ItemBody>
               </Accordion.ItemContent>
             ))}
+          <Button
+            mx={3}
+            w={"full"}
+            fontSize={"lg"}
+            color={"fg.error"}
+            variant={"outline"}
+            _hover={{ bg: "bg.error", color: "fg.error" }}
+            onClick={() => logout(router)}
+          >
+            <LuLogOut />
+            Log Out
+          </Button>
         </Accordion.Item>
       ))}
     </Accordion.Root>
