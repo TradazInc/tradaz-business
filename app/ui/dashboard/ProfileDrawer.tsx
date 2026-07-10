@@ -88,10 +88,9 @@ export const SideBarItems = () => {
               <Accordion.ItemContent key={index}>
                 <Accordion.ItemBody
                   pl={5}
-                  w={"full"}
                   cursor={"pointer"}
                   color={"fg.muted"}
-                  _hover={{ bg: "bg.emphasized", color: "fg" }}
+                  _hover={{ color: "fg" }}
                 >
                   <Icon fontSize={"lg"} mx={3}>
                     <Icon as={child.icon} />
