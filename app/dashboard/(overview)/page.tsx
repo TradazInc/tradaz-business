@@ -10,6 +10,7 @@ import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
 import { For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
+import { LuPlus } from "react-icons/lu";
 
 interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -57,9 +58,9 @@ const DashboardToolbar = () => {
   return (
     <ToolBarContainer>
       <Suspense>
-        <Search placeholder="Search for a business" query="business" />
+        <Search placeholder={"Search for a business"} query={"business"} />
       </Suspense>
-      <DialogBox prompt="New Business">
+      <DialogBox prompt={"New Business"} icon={LuPlus}>
         <BusinessForm />
       </DialogBox>
     </ToolBarContainer>
