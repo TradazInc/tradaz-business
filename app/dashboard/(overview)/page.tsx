@@ -60,7 +60,7 @@ const DashboardToolbar = () => {
       <Suspense>
         <Search placeholder={"Search for a business"} query={"business"} />
       </Suspense>
-      <DialogBox prompt={"New Business"} icon={LuPlus}>
+      <DialogBox prompt={"New Business"} icon={<LuPlus />}>
         <BusinessForm />
       </DialogBox>
     </ToolBarContainer>

@@ -1,15 +1,7 @@
-import {
-  Button,
-  CloseButton,
-  Dialog,
-  HStack,
-  Icon,
-  Portal,
-} from "@chakra-ui/react";
-import { IconType } from "react-icons";
+import { Button, CloseButton, Dialog, HStack, Portal } from "@chakra-ui/react";
 
 interface Props {
-  icon?: IconType;
+  icon?: React.ReactNode;
   children: React.ReactNode;
   prompt: string;
 }
@@ -20,7 +12,7 @@ export const DialogBox = ({ icon, children, prompt }: Props) => {
       <Dialog.Root size={"lg"}>
         <Dialog.Trigger asChild>
           <Button variant={"outline"} size={"xs"}>
-            {icon && <Icon as={icon} />}
+            {icon}
             {prompt}
           </Button>
         </Dialog.Trigger>

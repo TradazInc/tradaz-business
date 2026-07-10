@@ -58,7 +58,7 @@ const BusinessToolbar = () => {
       <Suspense>
         <Search placeholder={"Search for a store"} query={"store"} />
       </Suspense>
-      <DialogBox prompt={"New Store"} icon={LuPlus}>
+      <DialogBox prompt={"New Store"} icon={<LuPlus />}>
         <StoreForm />
       </DialogBox>
     </ToolBarContainer>
