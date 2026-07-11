@@ -6,11 +6,9 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { emailSignIn, googleSignIn } from "@/services/auth";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 const SignInForm = () => {
-  const router = useRouter();
   const [isEmailPending, startEmailTransition] = useTransition();
   const [isGooglePending, startGoogleTransition] = useTransition();
 
