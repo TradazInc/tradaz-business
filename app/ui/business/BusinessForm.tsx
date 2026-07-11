@@ -10,6 +10,7 @@ import {
   FileUpload,
   For,
   Input,
+  InputGroup,
   NativeSelect,
   Stack,
 } from "@chakra-ui/react";
@@ -58,6 +59,15 @@ export const BusinessForm = () => {
               Name <Field.RequiredIndicator />
             </Field.Label>
             <Input name="name" />
+          </Field.Root>
+
+          <Field.Root required>
+            <Field.Label>
+              Slug <Field.RequiredIndicator />
+            </Field.Label>
+            <InputGroup startAddon="www." endAddon=".com">
+              <Input name="slug" placeholder="yoursite" />
+            </InputGroup>
           </Field.Root>
 
           <Field.Root>
