@@ -52,24 +52,21 @@ export const BusinessForm = () => {
         <Fieldset.Content>
           <Field.Root required>
             <Field.Label>
-              Name
-              <Field.RequiredIndicator />
+              Name <Field.RequiredIndicator />
             </Field.Label>
             <Input name="name" />
           </Field.Root>
 
           <Field.Root>
             <Field.Label>
-              Phone
-              <Field.RequiredIndicator />
+              Phone <Field.RequiredIndicator />
             </Field.Label>
             <Input name="phone" placeholder="+234-XXX-XXXX-XXX" />
           </Field.Root>
 
           <Field.Root>
             <Field.Label>
-              Address
-              <Field.RequiredIndicator />
+              Address <Field.RequiredIndicator />
             </Field.Label>
             <Input name="address" />
           </Field.Root>
@@ -86,8 +83,7 @@ export const BusinessForm = () => {
 
           <Field.Root>
             <Field.Label>
-              Category
-              <Field.RequiredIndicator />
+              Category <Field.RequiredIndicator />
             </Field.Label>
             <NativeSelect.Root>
               <NativeSelect.Field name="categoryId">
