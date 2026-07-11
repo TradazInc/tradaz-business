@@ -17,18 +17,15 @@ export async function emailSignUp(formData: FormData) {
     return;
   }
 
-  const res = await authClient.signUp.email(
-    { ...data, callbackURL: "/dashboard?signup=true" },
-    {
-      onError: ({ error }) => {
-        toaster.create({
-          title: error.name,
-          description: error.message,
-          type: "error",
-        });
-      },
+  const res = await authClient.signUp.email(data, {
+    onError: ({ error }) => {
+      toaster.create({
+        title: error.name,
+        description: error.message,
+        type: "error",
+      });
     },
-  );
+  });
 
   if (res.error) {
     toaster.create({
