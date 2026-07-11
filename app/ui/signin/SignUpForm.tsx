@@ -19,13 +19,14 @@ const SignUpForm = () => {
 
     startEmailTransition(async () => {
       const data = await emailSignUp(formData);
-      if (data) router.push("/dashboard");
+      if (data) router.push("/dashboard?signup=true");
     });
   };
 
   const handleGoogleSignup = () => {
     startGoogleTransition(async () => {
-      await googleSignIn();
+      const data = await googleSignIn();
+      if (data) router.push("/dashboard?signup=true"); // review*
     });
   };
 

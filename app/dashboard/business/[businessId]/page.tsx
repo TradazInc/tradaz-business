@@ -26,7 +26,16 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <VStack w={"full"} h={"full"}>
         <PageHeader>{`${data.name} Stores`}</PageHeader>
-        <BusinessToolbar />
+
+        <ToolBarContainer>
+          <Suspense>
+            <Search placeholder={"Search for a store"} query={"store"} />
+          </Suspense>
+          <DialogBox prompt={"New Store"} icon={<LuPlus />}>
+            <StoreForm />
+          </DialogBox>
+        </ToolBarContainer>
+
         {data.teams.length ? (
           <GridContainer>
             <For each={data.teams}>
@@ -51,16 +60,3 @@ export default async function page({ params }: Props) {
     </PageContainer>
   );
 }
-
-const BusinessToolbar = () => {
-  return (
-    <ToolBarContainer>
-      <Suspense>
-        <Search placeholder={"Search for a store"} query={"store"} />
-      </Suspense>
-      <DialogBox prompt={"New Store"} icon={<LuPlus />}>
-        <StoreForm />
-      </DialogBox>
-    </ToolBarContainer>
-  );
-};

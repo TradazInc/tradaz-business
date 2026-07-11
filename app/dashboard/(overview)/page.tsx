@@ -18,6 +18,8 @@ interface Props {
 
 export default async function page({ searchParams }: Props) {
   const name = (await searchParams).business as string;
+  const signup = (await searchParams).signup as string;
+
   const { data: businesses, error } = await getBusinesses(name); // deduplicated (fetched in layout)
 
   if (error) return null;
@@ -26,7 +28,16 @@ export default async function page({ searchParams }: Props) {
     <PageContainer>
       <VStack w={"full"} h={"full"}>
         <PageHeader>Your Businesses</PageHeader>
-        <DashboardToolbar />
+
+        <ToolBarContainer>
+          <Suspense>
+            <Search placeholder={"Search for a business"} query={"business"} />
+          </Suspense>
+          <DialogBox prompt={"New Business"} icon={<LuPlus />} signup={signup}>
+            <BusinessForm />
+          </DialogBox>
+        </ToolBarContainer>
+
         {businesses?.length ? (
           <GridContainer>
             <For each={businesses}>
@@ -53,16 +64,3 @@ export default async function page({ searchParams }: Props) {
     </PageContainer>
   );
 }
-
-const DashboardToolbar = () => {
-  return (
-    <ToolBarContainer>
-      <Suspense>
-        <Search placeholder={"Search for a business"} query={"business"} />
-      </Suspense>
-      <DialogBox prompt={"New Business"} icon={<LuPlus />}>
-        <BusinessForm />
-      </DialogBox>
-    </ToolBarContainer>
-  );
-};
