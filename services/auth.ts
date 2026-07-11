@@ -57,7 +57,7 @@ export async function emailSignIn(formData: FormData) {
   }
 
   const res = await authClient.signIn.email(
-    { ...data, callbackURL: "/dashboard?signup=true" },
+    { ...data, callbackURL: "/dashboard" },
     {
       onError: ({ error }) => {
         toaster.create({
