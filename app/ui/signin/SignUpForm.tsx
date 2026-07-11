@@ -25,7 +25,7 @@ const SignUpForm = () => {
 
   const handleGoogleSignup = () => {
     startGoogleTransition(async () => {
-      await googleSignIn();
+      await googleSignIn("/dashboard?signup=true");
     });
   };
 

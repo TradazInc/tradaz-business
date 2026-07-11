@@ -78,9 +78,9 @@ export async function emailSignIn(formData: FormData) {
   return res.data;
 }
 
-export async function googleSignIn() {
+export async function googleSignIn(callbackURL: string) {
   const res = await authClient.signIn.social(
-    { provider: "google", callbackURL: "/dashboard?signup=true" },
+    { provider: "google", callbackURL },
     {
       onError: ({ error }) => {
         toaster.create({

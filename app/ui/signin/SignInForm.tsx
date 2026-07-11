@@ -23,7 +23,7 @@ const SignInForm = () => {
 
   const handleGoogleSignIn = () => {
     startGoogleTransition(async () => {
-      await googleSignIn();
+      await googleSignIn("/dashboard");
     });
   };
 
