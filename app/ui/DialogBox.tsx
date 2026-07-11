@@ -45,11 +45,6 @@ export const DialogBox = ({ icon, children, prompt, signup }: Props) => {
         <Dialog.Positioner>
           <Dialog.Content>
             <Dialog.Body>{children}</Dialog.Body>
-            <Dialog.Footer>
-              <Dialog.ActionTrigger asChild>
-                <Button variant={"outline"}>Cancel</Button>
-              </Dialog.ActionTrigger>
-            </Dialog.Footer>
             <Dialog.CloseTrigger asChild>
               <CloseButton size="sm" />
             </Dialog.CloseTrigger>
