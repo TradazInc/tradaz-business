@@ -5,11 +5,9 @@ import SeparatorText from "@/app/ui/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { emailSignUp, googleSignIn } from "@/services/auth";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 const SignUpForm = () => {
-  const router = useRouter();
   const [isEmailPending, startEmailTransition] = useTransition();
   const [isGooglePending, startGoogleTransition] = useTransition();
 
@@ -18,15 +16,13 @@ const SignUpForm = () => {
     const formData = new FormData(e.currentTarget);
 
     startEmailTransition(async () => {
-      const data = await emailSignUp(formData);
-      if (data) router.push("/dashboard?signup=true");
+      await emailSignUp(formData);
     });
   };
 
   const handleGoogleSignup = () => {
     startGoogleTransition(async () => {
-      const data = await googleSignIn();
-      if (data) router.push("/dashboard?signup=true"); // review*
+      await googleSignIn();
     });
   };
 

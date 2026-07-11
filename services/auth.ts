@@ -1,7 +1,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { authClient } from "@/lib/authClient";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { emailSignInSchema, emailSignUpSchema } from "@/schema/auth";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export async function emailSignUp(formData: FormData) {
   const form = Object.fromEntries(formData.entries());
@@ -17,15 +17,18 @@ export async function emailSignUp(formData: FormData) {
     return;
   }
 
-  const res = await authClient.signUp.email(data, {
-    onError: ({ error }) => {
-      toaster.create({
-        title: error.name,
-        description: error.message,
-        type: "error",
-      });
+  const res = await authClient.signUp.email(
+    { ...data, callbackURL: "/dashboard?signup=true" },
+    {
+      onError: ({ error }) => {
+        toaster.create({
+          title: error.name,
+          description: error.message,
+          type: "error",
+        });
+      },
     },
-  });
+  );
 
   if (res.error) {
     toaster.create({
@@ -77,7 +80,7 @@ export async function emailSignIn(formData: FormData) {
 
 export async function googleSignIn() {
   const res = await authClient.signIn.social(
-    { provider: "google" },
+    { provider: "google", callbackURL: "/dashboard?signup=true" },
     {
       onError: ({ error }) => {
         toaster.create({

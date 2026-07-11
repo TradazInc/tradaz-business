@@ -19,8 +19,7 @@ const SignInForm = () => {
     const formData = new FormData(e.currentTarget);
 
     startEmailTransition(async () => {
-      const data = await emailSignIn(formData);
-      if (data) router.push("/dashboard");
+      await emailSignIn(formData);
     });
   };
 
