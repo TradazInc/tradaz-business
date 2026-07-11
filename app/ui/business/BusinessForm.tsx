@@ -27,7 +27,10 @@ export const BusinessForm = () => {
 
     startSubmission(async () => {
       const business = await createBusiness(formData);
-      if (business) router.push(`/dashboard/business/${business.id}`);
+      if (business) {
+        router.refresh();
+        router.push(`/dashboard/business/${business.id}`);
+      }
     });
   };
 

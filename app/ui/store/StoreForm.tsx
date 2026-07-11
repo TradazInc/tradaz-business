@@ -15,7 +15,10 @@ export const StoreForm = () => {
 
     startSubmission(async () => {
       const store = await createStore(formData);
-      if (store) router.push(`/dashboard/store/${store.id}`);
+      if (store) {
+        router.refresh();
+        router.push(`/dashboard/store/${store.id}`);
+      }
     });
   };
 
