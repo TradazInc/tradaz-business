@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -11,11 +12,19 @@ interface Props {
 }
 
 export const DialogBox = ({ icon, children, prompt, signup }: Props) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [open, setOpen] = useState(false);
 
   // Track url changes
   useEffect(() => {
     if (signup) setOpen(true);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("signup");
+    router.replace(`${pathname}?${params.toString()}`);
   });
 
   return (

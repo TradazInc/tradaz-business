@@ -11,9 +11,9 @@ interface Props {
 }
 
 export default function Search({ query, placeholder }: Props) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
