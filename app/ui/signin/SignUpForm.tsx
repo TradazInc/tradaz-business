@@ -19,7 +19,7 @@ const SignUpForm = () => {
 
     startEmailTransition(async () => {
       const data = await emailSignUp(formData);
-      if (data) router.push("/dashboard?signup=true");
+      if (data) router.push("/dashboard?signup=true"); // review after emailVerification
     });
   };
 
