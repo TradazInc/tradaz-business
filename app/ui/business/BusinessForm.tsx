@@ -3,16 +3,13 @@
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import { createBusiness } from "@/services/business";
 import {
-  Box,
   Button,
   createListCollection,
   Field,
   Fieldset,
   FileUpload,
-  For,
   Input,
   InputGroup,
-  NativeSelect,
   Portal,
   Select,
   Stack,
