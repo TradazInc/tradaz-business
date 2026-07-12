@@ -7,7 +7,7 @@ export const businessSchema = z.object({
   phone: z.e164({ error: "phone number is required" }),
   slug: z.string({ error: "slug is required" }).trim().slugify(),
 });
-export type BusinessDraft = z.infer<typeof businessSchema>
+export type BusinessData = z.infer<typeof businessSchema>
 
 export const businessInfoSchema = businessSchema.pick({
   name: true,

@@ -3,7 +3,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import {
-  BusinessDraft,
+  BusinessData,
   businessInfoSchema,
   contactInfoSchema,
 } from "@/schema/business";
@@ -24,15 +24,13 @@ import {
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 
-type Step = "business" | "contact";
-
 export const BusinessForm = () => {
   const { data, error } = useBusinessCategories();
   const [isSubmitting, startSubmission] = useTransition();
   const router = useRouter();
 
-  const [step, setStep] = useState<Step>("business");
-  const [draft, setDraft] = useState<BusinessDraft>({
+  const [step, setStep] = useState<"business" | "contact">("business");
+  const [businessData, setBusinessData] = useState<BusinessData>({
     name: "",
     categoryId: "",
     slug: "",
@@ -50,12 +48,12 @@ export const BusinessForm = () => {
     [data],
   );
 
-  const handleChange = (field: keyof BusinessDraft, value: string) =>
-    setDraft((prev) => ({ ...prev, [field]: value }));
+  const handleChange = (field: keyof BusinessData, value: string) =>
+    setBusinessData((prev) => ({ ...prev, [field]: value }));
 
   const handleBusinessSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = businessInfoSchema.safeParse(draft);
+    const result = businessInfoSchema.safeParse(businessData);
     if (!result.success) {
       toaster.create({
         description: result.error.issues[0].message,
@@ -68,7 +66,7 @@ export const BusinessForm = () => {
 
   const handleContactSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = contactInfoSchema.safeParse(draft);
+    const result = contactInfoSchema.safeParse(businessData);
     if (!result.success) {
       toaster.create({
         description: result.error.issues[0].message,
@@ -78,7 +76,7 @@ export const BusinessForm = () => {
     }
 
     startSubmission(async () => {
-      const business = await createBusiness(draft);
+      const business = await createBusiness(businessData);
       if (business) {
         router.refresh();
         router.push(`/dashboard/business/${business.id}`);
@@ -119,7 +117,7 @@ export const BusinessForm = () => {
                 </Field.Label>
                 <Input
                   name="name"
-                  value={draft.name}
+                  value={businessData.name}
                   onChange={(e) => handleChange("name", e.target.value)}
                 />
               </Field.Root>
@@ -140,7 +138,9 @@ export const BusinessForm = () => {
                   size={"sm"}
                   name={"categoryId"}
                   collection={categories}
-                  value={draft.categoryId ? [draft.categoryId] : []}
+                  value={
+                    businessData.categoryId ? [businessData.categoryId] : []
+                  }
                   onValueChange={(e) =>
                     handleChange("categoryId", e.value[0] ?? "")
                   }
@@ -203,7 +203,7 @@ export const BusinessForm = () => {
                   <Input
                     name="slug"
                     placeholder="yoursite"
-                    value={draft.slug}
+                    value={businessData.slug}
                     onChange={(e) => handleChange("slug", e.target.value)}
                   />
                 </InputGroup>
@@ -215,7 +215,7 @@ export const BusinessForm = () => {
                 </Field.Label>
                 <Input
                   name="address"
-                  value={draft.address}
+                  value={businessData.address}
                   onChange={(e) => handleChange("address", e.target.value)}
                 />
               </Field.Root>
@@ -227,7 +227,7 @@ export const BusinessForm = () => {
                 <Input
                   name="phone"
                   placeholder="+234-XXX-XXXX-XXX"
-                  value={draft.phone}
+                  value={businessData.phone}
                   onChange={(e) => handleChange("phone", e.target.value)}
                 />
               </Field.Root>
