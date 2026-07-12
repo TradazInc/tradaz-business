@@ -94,7 +94,7 @@ export const BusinessForm = () => {
             <Input name="address" />
           </Field.Root>
 
-          <FileUpload.Root gap="1" maxFiles={1} accept={["image/png"]} required>
+          <FileUpload.Root gap="1" maxFiles={1} accept={["image/png"]}>
             <FileUpload.HiddenInput />
             <FileUpload.Label>Upload logo</FileUpload.Label>
             <Input asChild>
@@ -117,7 +117,7 @@ export const BusinessForm = () => {
               </Select.Label>
               <Select.Control>
                 <Select.Trigger>
-                  <Select.ValueText placeholder="Select category" />
+                  <Select.ValueText placeholder={"Select category"} />
                 </Select.Trigger>
                 <Select.IndicatorGroup>
                   <Select.Indicator />
