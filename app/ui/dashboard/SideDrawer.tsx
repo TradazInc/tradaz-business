@@ -1,36 +1,30 @@
 "use client";
 
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
-import { useSession } from "@/hooks/session";
-import { logout } from "@/services/auth";
 import {
   Accordion,
-  Avatar,
   Box,
-  Button,
   CloseButton,
   Drawer,
   Icon,
+  IconButton,
   Portal,
 } from "@chakra-ui/react";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { LuLogOut } from "react-icons/lu";
+import { useParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { LuMenu } from "react-icons/lu";
 
-export const ProfileDrawer = () => {
-  const { data: session } = useSession();
-
-  if (!session) return <ProfileAvatar />;
+export const SideDrawer = () => {
+  const portalRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <Drawer.Root>
+    <Drawer.Root placement={"start"}>
       <Drawer.Trigger cursor={"pointer"}>
-        <ProfileAvatar
-          name={session.user.name}
-          image={session.user.image ?? undefined}
-        />
+        <IconButton rounded={"full"} variant={"ghost"}>
+          <LuMenu />
+        </IconButton>
       </Drawer.Trigger>
-      <Portal>
+      <Portal container={portalRef}>
         <Drawer.Backdrop />
         <Drawer.Positioner>
           <Drawer.Content>
@@ -47,18 +41,8 @@ export const ProfileDrawer = () => {
   );
 };
 
-const ProfileAvatar = ({ image, name }: { name?: string; image?: string }) => {
-  return (
-    <Avatar.Root size={"sm"}>
-      <Avatar.Fallback name={name} />
-      <Avatar.Image src={image} />
-    </Avatar.Root>
-  );
-};
-
 export const SideBarItems = () => {
   const [sideItems, setSideItems] = useState(dashboardItems);
-  const router = useRouter();
 
   // Tracks url changes
   const businessId = useParams().businessId as string;
@@ -101,16 +85,6 @@ export const SideBarItems = () => {
             ))}
         </Accordion.Item>
       ))}
-      <Button
-        w={"full"}
-        color={"fg.error"}
-        variant={"outline"}
-        _hover={{ bg: "bg.error", color: "fg.error" }}
-        onClick={() => logout(router)}
-      >
-        <LuLogOut />
-        Log Out
-      </Button>
     </Accordion.Root>
   );
 };

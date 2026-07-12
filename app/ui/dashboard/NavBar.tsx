@@ -4,7 +4,8 @@ import Link from "next/link";
 import TradazLogo from "../TradazLogo";
 import { BusinessSelector } from "./BusinessSelector";
 import Notification from "./Notification";
-import { ProfileDrawer } from "./ProfileDrawer";
+import { AvatarDropdown } from "./AvatarDropdown";
+import { SideDrawer } from "./SideDrawer";
 
 export const NavBar = () => {
   return (
@@ -18,6 +19,7 @@ export const NavBar = () => {
       borderColor={"bg.emphasized"}
     >
       <HStack gap="2">
+        <SideDrawer />
         <Link href={"/dashboard"}>
           <TradazLogo h={3} />
         </Link>
@@ -27,7 +29,7 @@ export const NavBar = () => {
       <HStack gap="2">
         <ColorModeButton rounded={"full"} variant={"outline"} />
         <Notification />
-        <ProfileDrawer />
+        <AvatarDropdown />
       </HStack>
     </HStack>
   );
