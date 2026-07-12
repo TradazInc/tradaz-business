@@ -118,7 +118,7 @@ export const BusinessForm = () => {
                 <Select.Positioner>
                   <Select.Content>
                     {categories.items.map((category) => (
-                      <Select.Item item={category} key={category.id}>
+                      <Select.Item item={category.id} key={category.id}>
                         {category.name}
                         <Select.ItemIndicator />
                       </Select.Item>
