@@ -14,7 +14,7 @@ export const AvatarDropdown = () => {
 
   return (
     <Menu.Root>
-      <Menu.Trigger asChild cursor={"pointer"}>
+      <Menu.Trigger cursor={"pointer"}>
         <ProfileAvatar
           name={session.user.name}
           image={session.user.image ?? undefined}
@@ -23,7 +23,7 @@ export const AvatarDropdown = () => {
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            <Menu.Item value="new-txt">
+            <Menu.Item value="logout">
               <Button
                 w={"full"}
                 color={"fg.error"}
