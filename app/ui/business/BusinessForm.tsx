@@ -15,14 +15,22 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useMemo, useTransition } from "react";
 
 export const BusinessForm = () => {
   const { data, error } = useBusinessCategories();
   const [isSubmitting, startSubmission] = useTransition();
   const router = useRouter();
 
-  const categories = createListCollection({ items: data ?? [] });
+  const categories = useMemo(
+    () =>
+      createListCollection({
+        items: data ?? [],
+        itemToValue: (item) => item.id,
+        itemToString: (item) => item.name,
+      }),
+    [data],
+  );
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,21 +80,21 @@ export const BusinessForm = () => {
             </InputGroup>
           </Field.Root>
 
-          <Field.Root>
+          <Field.Root required>
             <Field.Label>
               Phone <Field.RequiredIndicator />
             </Field.Label>
             <Input name="phone" placeholder="+234-XXX-XXXX-XXX" />
           </Field.Root>
 
-          <Field.Root>
+          <Field.Root required>
             <Field.Label>
               Address <Field.RequiredIndicator />
             </Field.Label>
             <Input name="address" />
           </Field.Root>
 
-          <FileUpload.Root gap="1" maxFiles={1} accept={["image/png"]}>
+          <FileUpload.Root gap="1" maxFiles={1} accept={["image/png"]} required>
             <FileUpload.HiddenInput />
             <FileUpload.Label>Upload logo</FileUpload.Label>
             <Input asChild>
@@ -96,8 +104,9 @@ export const BusinessForm = () => {
             </Input>
           </FileUpload.Root>
 
-          <Field.Root>
+          <Field.Root required>
             <Select.Root
+              required
               size={"sm"}
               name={"categoryId"}
               collection={categories}
@@ -118,7 +127,7 @@ export const BusinessForm = () => {
                 <Select.Positioner>
                   <Select.Content>
                     {categories.items.map((category) => (
-                      <Select.Item item={category.id} key={category.id}>
+                      <Select.Item item={category} key={category.id}>
                         {category.name}
                         <Select.ItemIndicator />
                       </Select.Item>
