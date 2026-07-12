@@ -2,21 +2,19 @@
 
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
 import {
-  Accordion,
-  Box,
-  CloseButton,
-  Drawer,
-  Icon,
-  IconButton,
-  Portal,
+    Accordion,
+    Box,
+    CloseButton,
+    Drawer,
+    Icon,
+    IconButton,
+    Portal,
 } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { LuMenu } from "react-icons/lu";
 
 export const SideDrawer = () => {
-  const portalRef = useRef<HTMLDivElement | null>(null);
-
   return (
     <Drawer.Root placement={"start"}>
       <Drawer.Trigger cursor={"pointer"}>
@@ -24,7 +22,7 @@ export const SideDrawer = () => {
           <LuMenu />
         </IconButton>
       </Drawer.Trigger>
-      <Portal container={portalRef}>
+      <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
           <Drawer.Content>

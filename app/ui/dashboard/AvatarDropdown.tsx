@@ -2,7 +2,7 @@
 
 import { useSession } from "@/hooks/session";
 import { logout } from "@/services/auth";
-import { Avatar, Button, Menu, Portal } from "@chakra-ui/react";
+import { Avatar, Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
 
@@ -23,17 +23,15 @@ export const AvatarDropdown = () => {
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            <Menu.Item value="logout">
-              <Button
-                w={"full"}
-                color={"fg.error"}
-                variant={"outline"}
-                _hover={{ bg: "bg.error", color: "fg.error" }}
-                onClick={() => logout(router)}
-              >
-                <LuLogOut />
-                Log Out
-              </Button>
+            <Menu.Item
+              value={"logout"}
+              w={"full"}
+              color={"fg.error"}
+              _hover={{ bg: "bg.error", color: "fg.error" }}
+              onClick={() => logout(router)}
+            >
+              <LuLogOut />
+              Log Out
             </Menu.Item>
           </Menu.Content>
         </Menu.Positioner>
