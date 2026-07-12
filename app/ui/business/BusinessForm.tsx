@@ -95,7 +95,7 @@ export const BusinessForm = () => {
       animationDuration={"moderate"}
       animationTimingFunction={"ease-out"}
     >
-      <Steps.Root step={step} count={steps.length}>
+      <Steps.Root size={"sm"} step={step} count={steps.length}>
         <Steps.List>
           {steps.map((step, index) => (
             <Steps.Item key={index} index={index} title={step.title}>
@@ -105,12 +105,6 @@ export const BusinessForm = () => {
             </Steps.Item>
           ))}
         </Steps.List>
-
-        {steps.map((step, index) => (
-          <Steps.Content key={index} index={index}>
-            {step.description}
-          </Steps.Content>
-        ))}
       </Steps.Root>
 
       {step <= 1 ? (
@@ -122,6 +116,11 @@ export const BusinessForm = () => {
             mx="auto"
             px={{ base: 4, md: 0 }}
           >
+            <Stack>
+              <Fieldset.Legend>{steps[0].title}</Fieldset.Legend>
+              <Fieldset.HelperText>{steps[0].description}</Fieldset.HelperText>
+            </Stack>
+
             <Fieldset.Content>
               <Field.Root required>
                 <Field.Label>
@@ -199,6 +198,11 @@ export const BusinessForm = () => {
             mx="auto"
             px={{ base: 4, md: 0 }}
           >
+            <Stack>
+              <Fieldset.Legend>{steps[1].title}</Fieldset.Legend>
+              <Fieldset.HelperText>{steps[1].description}</Fieldset.HelperText>
+            </Stack>
+
             <Fieldset.Content>
               <Field.Root required>
                 <Field.Label>
