@@ -17,9 +17,9 @@ export const NavBar = () => {
       borderBottomWidth={"1px"}
       borderColor={"bg.emphasized"}
     >
-      <HStack gap="4">
+      <HStack gap="2">
         <Link href={"/dashboard"}>
-          <TradazLogo h={4} />
+          <TradazLogo h={3} />
         </Link>
         <BusinessSelector />
       </HStack>
