@@ -20,6 +20,7 @@ import {
   Portal,
   Select,
   Stack,
+  Steps,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
@@ -29,7 +30,7 @@ export const BusinessForm = () => {
   const [isSubmitting, startSubmission] = useTransition();
   const router = useRouter();
 
-  const [step, setStep] = useState<"business" | "contact">("business");
+  const [step, setStep] = useState<number>(1);
   const [businessData, setBusinessData] = useState<BusinessData>({
     name: "",
     categoryId: "",
@@ -61,7 +62,7 @@ export const BusinessForm = () => {
       });
       return;
     }
-    setStep("contact");
+    setStep((s) => (s <= 1 ? s + 1 : s));
   };
 
   const handleContactSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -94,7 +95,25 @@ export const BusinessForm = () => {
       animationDuration={"moderate"}
       animationTimingFunction={"ease-out"}
     >
-      {step === "business" ? (
+      <Steps.Root step={step} count={steps.length}>
+        <Steps.List>
+          {steps.map((step, index) => (
+            <Steps.Item key={index} index={index} title={step.title}>
+              <Steps.Indicator />
+              <Steps.Title>{step.title}</Steps.Title>
+              <Steps.Separator />
+            </Steps.Item>
+          ))}
+        </Steps.List>
+
+        {steps.map((step, index) => (
+          <Steps.Content key={index} index={index}>
+            {step.description}
+          </Steps.Content>
+        ))}
+      </Steps.Root>
+
+      {step <= 1 ? (
         <form onSubmit={handleBusinessSubmit} style={{ width: "100%" }}>
           <Fieldset.Root
             size="lg"
@@ -103,13 +122,6 @@ export const BusinessForm = () => {
             mx="auto"
             px={{ base: 4, md: 0 }}
           >
-            <Stack>
-              <Fieldset.Legend>Business information</Fieldset.Legend>
-              <Fieldset.HelperText>
-                Tell us about your business. Step 1 of 2.
-              </Fieldset.HelperText>
-            </Stack>
-
             <Fieldset.Content>
               <Field.Root required>
                 <Field.Label>
@@ -187,13 +199,6 @@ export const BusinessForm = () => {
             mx="auto"
             px={{ base: 4, md: 0 }}
           >
-            <Stack>
-              <Fieldset.Legend>Contact information</Fieldset.Legend>
-              <Fieldset.HelperText>
-                How can customers reach you? Step 2 of 2.
-              </Fieldset.HelperText>
-            </Stack>
-
             <Fieldset.Content>
               <Field.Root required>
                 <Field.Label>
@@ -237,7 +242,7 @@ export const BusinessForm = () => {
               <Button
                 type={"button"}
                 variant={"outline"}
-                onClick={() => setStep("business")}
+                onClick={() => setStep((s) => (s > 1 ? s - 1 : s))}
                 disabled={isSubmitting}
               >
                 Back
@@ -256,3 +261,14 @@ export const BusinessForm = () => {
     </Box>
   );
 };
+
+const steps = [
+  {
+    title: "Business information",
+    description: "Tell us about your business. Step 1 of 2.",
+  },
+  {
+    title: "Contact information",
+    description: "How can customers reach you? Step 2 of 2.",
+  },
+];
