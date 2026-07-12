@@ -20,7 +20,6 @@ import {
   Portal,
   Select,
   Stack,
-  Steps,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
@@ -62,7 +61,7 @@ export const BusinessForm = () => {
       });
       return;
     }
-    setStep((s) => (s <= 1 ? s + 1 : s));
+    setStep((s) => s + 1);
   };
 
   const handleContactSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -95,18 +94,6 @@ export const BusinessForm = () => {
       animationDuration={"moderate"}
       animationTimingFunction={"ease-out"}
     >
-      <Steps.Root size={"sm"} step={step} count={steps.length}>
-        <Steps.List>
-          {steps.map((step, index) => (
-            <Steps.Item key={index} index={index} title={step.title}>
-              <Steps.Indicator />
-              <Steps.Title>{step.title}</Steps.Title>
-              <Steps.Separator />
-            </Steps.Item>
-          ))}
-        </Steps.List>
-      </Steps.Root>
-
       {step <= 1 ? (
         <form onSubmit={handleBusinessSubmit} style={{ width: "100%" }}>
           <Fieldset.Root
@@ -117,8 +104,10 @@ export const BusinessForm = () => {
             px={{ base: 4, md: 0 }}
           >
             <Stack>
-              <Fieldset.Legend>{steps[0].title}</Fieldset.Legend>
-              <Fieldset.HelperText>{steps[0].description}</Fieldset.HelperText>
+              <Fieldset.Legend>Business information</Fieldset.Legend>
+              <Fieldset.HelperText>
+                Tell us about your business. Step 1 of 2.
+              </Fieldset.HelperText>
             </Stack>
 
             <Fieldset.Content>
@@ -199,8 +188,10 @@ export const BusinessForm = () => {
             px={{ base: 4, md: 0 }}
           >
             <Stack>
-              <Fieldset.Legend>{steps[1].title}</Fieldset.Legend>
-              <Fieldset.HelperText>{steps[1].description}</Fieldset.HelperText>
+              <Fieldset.Legend>Contact information</Fieldset.Legend>
+              <Fieldset.HelperText>
+                How can customers reach you? Step 2 of 2.
+              </Fieldset.HelperText>
             </Stack>
 
             <Fieldset.Content>
@@ -246,7 +237,7 @@ export const BusinessForm = () => {
               <Button
                 type={"button"}
                 variant={"outline"}
-                onClick={() => setStep((s) => (s > 1 ? s - 1 : s))}
+                onClick={() => setStep((s) => s - 1)}
                 disabled={isSubmitting}
               >
                 Back
@@ -265,14 +256,3 @@ export const BusinessForm = () => {
     </Box>
   );
 };
-
-const steps = [
-  {
-    title: "Business information",
-    description: "Tell us about your business. Step 1 of 2.",
-  },
-  {
-    title: "Contact information",
-    description: "How can customers reach you? Step 2 of 2.",
-  },
-];
