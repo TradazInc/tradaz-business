@@ -1,10 +1,9 @@
 import { toaster } from "@/components/ui/toaster";
 import { authClient } from "@/lib/authClient";
-import { businessSchema } from "@/schema/business";
+import { BusinessDraft, businessSchema } from "@/schema/business";
 
-export async function createBusiness(formData: FormData) {
-  const form = Object.fromEntries(formData.entries());
-  const { data, error } = businessSchema.safeParse(form);
+export async function createBusiness(business: BusinessDraft) {
+  const { data, error } = businessSchema.safeParse(business);
 
   // validate form
   if (error) {
