@@ -5,6 +5,7 @@ import { createBusiness } from "@/services/business";
 import {
   Box,
   Button,
+  createListCollection,
   Field,
   Fieldset,
   FileUpload,
@@ -12,15 +13,19 @@ import {
   Input,
   InputGroup,
   NativeSelect,
+  Portal,
+  Select,
   Stack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 export const BusinessForm = () => {
-  const { data: categories, error } = useBusinessCategories();
+  const { data, error } = useBusinessCategories();
   const [isSubmitting, startSubmission] = useTransition();
   const router = useRouter();
+
+  const categories = createListCollection({ items: data ?? [] });
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -95,24 +100,36 @@ export const BusinessForm = () => {
           </FileUpload.Root>
 
           <Field.Root>
-            <Field.Label>
-              Category <Field.RequiredIndicator />
-            </Field.Label>
-            <NativeSelect.Root>
-              <NativeSelect.Field name="categoryId">
-                <For
-                  each={categories ?? []}
-                  fallback={<Box>No categories found</Box>}
-                >
-                  {(category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  )}
-                </For>
-              </NativeSelect.Field>
-              <NativeSelect.Indicator />
-            </NativeSelect.Root>
+            <Select.Root
+              size={"sm"}
+              name={"categoryId"}
+              collection={categories}
+            >
+              <Select.HiddenSelect />
+              <Select.Label>
+                Select category <Field.RequiredIndicator />
+              </Select.Label>
+              <Select.Control>
+                <Select.Trigger>
+                  <Select.ValueText placeholder="Select category" />
+                </Select.Trigger>
+                <Select.IndicatorGroup>
+                  <Select.Indicator />
+                </Select.IndicatorGroup>
+              </Select.Control>
+              <Portal>
+                <Select.Positioner>
+                  <Select.Content>
+                    {categories.items.map((category) => (
+                      <Select.Item item={category} key={category.id}>
+                        {category.name}
+                        <Select.ItemIndicator />
+                      </Select.Item>
+                    ))}
+                  </Select.Content>
+                </Select.Positioner>
+              </Portal>
+            </Select.Root>
           </Field.Root>
         </Fieldset.Content>
 
