@@ -27,7 +27,7 @@ export const NavBar = () => {
       </HStack>
 
       <HStack gap="2">
-        <ColorModeButton rounded={"full"} variant={"outline"} />
+        <ColorModeButton rounded={"full"} variant={"subtle"} />
         <Notification />
         <AvatarDropdown />
       </HStack>

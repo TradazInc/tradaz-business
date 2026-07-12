@@ -2,13 +2,13 @@
 
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
 import {
-    Accordion,
-    Box,
-    CloseButton,
-    Drawer,
-    Icon,
-    IconButton,
-    Portal,
+  Accordion,
+  Box,
+  CloseButton,
+  Drawer,
+  Icon,
+  IconButton,
+  Portal,
 } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ export const SideDrawer = () => {
   return (
     <Drawer.Root placement={"start"}>
       <Drawer.Trigger cursor={"pointer"}>
-        <IconButton rounded={"full"} variant={"ghost"}>
+        <IconButton rounded={"full"} variant={"subtle"}>
           <LuMenu />
         </IconButton>
       </Drawer.Trigger>
