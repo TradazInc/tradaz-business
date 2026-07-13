@@ -16,8 +16,8 @@ import { LuMenu } from "react-icons/lu";
 
 export const SideDrawer = () => {
   return (
-    <Drawer.Root placement={"start"}>
-      <Drawer.Trigger cursor={"pointer"}>
+    <Drawer.Root placement={"start"} size={"xs"}>
+      <Drawer.Trigger asChild>
         <IconButton rounded={"full"} variant={"subtle"}>
           <LuMenu />
         </IconButton>
@@ -55,7 +55,7 @@ export const SideBarItems = () => {
   return (
     <Accordion.Root collapsible w={"full"} size={"sm"}>
       {sideItems.map((item, index) => (
-        <Accordion.Item key={index} value={item.label} my={2}>
+        <Accordion.Item key={index} value={item.label} my={2} p={3}>
           <Accordion.ItemTrigger justifyContent={"space-between"}>
             <Box>
               <Icon fontSize={"lg"} mx={3}>
