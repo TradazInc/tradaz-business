@@ -53,7 +53,7 @@ export const SideBarItems = () => {
   }, [businessId, storeId]);
 
   return (
-    <Accordion.Root collapsible w={"full"} variant={"enclosed"}>
+    <Accordion.Root collapsible w={"full"} size={"sm"}>
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label} my={2}>
           <Accordion.ItemTrigger justifyContent={"space-between"}>
