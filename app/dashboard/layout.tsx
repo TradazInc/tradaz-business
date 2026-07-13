@@ -34,7 +34,12 @@ export default async function BusinessLayout({
           lg: "235px 1fr",
         }}
       >
-        <GridItem area={"aside"} hideBelow={"lg"}>
+        <GridItem
+          area={"aside"}
+          hideBelow={"lg"}
+          borderRightWidth={"1px"}
+          borderColor={"bg.emphasized"}
+        >
           <SideBarItems />
         </GridItem>
 
