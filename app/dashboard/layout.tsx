@@ -1,10 +1,10 @@
 import { NavBar } from "@/app/ui/dashboard/NavBar";
+import { SideBarItems } from "@/app/ui/dashboard/SideDrawer";
 import { organizationsKey, sessionKey } from "@/data/cacheKeys";
 import { getSession } from "@/server/auth";
 import { getBusinesses } from "@/server/business";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { SWRConfig } from "swr";
-import { SideBarItems } from "../ui/dashboard/SideDrawer";
 
 export default async function BusinessLayout({
   children,
@@ -25,22 +25,10 @@ export default async function BusinessLayout({
     >
       <NavBar />
       <Grid
-        templateAreas={{
-          base: `'main'`,
-          lg: ` 'aside main'`,
-        }}
-        templateColumns={{
-          base: "1fr",
-          lg: "235px 1fr",
-        }}
+        templateAreas={{ base: `'main'`, lg: ` 'aside main'` }}
+        templateColumns={{ base: "1fr", lg: "235px 1fr" }}
       >
-        <GridItem
-          h={"full"}
-          area={"aside"}
-          hideBelow={"lg"}
-          borderRightWidth={"1px"}
-          borderColor={"bg.emphasized"}
-        >
+        <GridItem area={"aside"} hideBelow={"lg"}>
           <SideBarItems />
         </GridItem>
 
