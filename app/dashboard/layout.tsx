@@ -35,6 +35,7 @@ export default async function BusinessLayout({
         }}
       >
         <GridItem
+          h={"full"}
           area={"aside"}
           hideBelow={"lg"}
           borderRightWidth={"1px"}
