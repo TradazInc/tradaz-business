@@ -2,10 +2,10 @@ import { ColorModeButton } from "@/components/ui/color-mode";
 import { HStack } from "@chakra-ui/react";
 import Link from "next/link";
 import TradazLogo from "../TradazLogo";
+import { AvatarDropdown } from "./AvatarDropdown";
 import { BusinessSelector } from "./BusinessSelector";
 import Notification from "./Notification";
-import { AvatarDropdown } from "./AvatarDropdown";
-import { SideDrawer } from "./SideDrawer";
+import { SideBarDrawer } from "./SideBarDrawer";
 
 export const NavBar = () => {
   return (
@@ -19,7 +19,7 @@ export const NavBar = () => {
       borderColor={"bg.emphasized"}
     >
       <HStack gap="2">
-        <SideDrawer />
+        <SideBarDrawer />
         <Link href={"/dashboard"}>
           <TradazLogo h={3} />
         </Link>

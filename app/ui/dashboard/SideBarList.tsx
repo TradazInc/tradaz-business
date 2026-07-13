@@ -1,45 +1,11 @@
 "use client";
 
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
-import {
-  Accordion,
-  Box,
-  CloseButton,
-  Drawer,
-  Icon,
-  IconButton,
-  Portal,
-} from "@chakra-ui/react";
+import { Accordion, Box, Icon } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LuMenu } from "react-icons/lu";
 
-export const SideDrawer = () => {
-  return (
-    <Drawer.Root placement={"start"} size={"xs"}>
-      <Drawer.Trigger asChild>
-        <IconButton rounded={"full"} variant={"subtle"}>
-          <LuMenu />
-        </IconButton>
-      </Drawer.Trigger>
-      <Portal>
-        <Drawer.Backdrop />
-        <Drawer.Positioner>
-          <Drawer.Content>
-            <Drawer.Body py={20} px={0}>
-              <SideBarItems />
-            </Drawer.Body>
-            <Drawer.CloseTrigger asChild>
-              <CloseButton size="sm" />
-            </Drawer.CloseTrigger>
-          </Drawer.Content>
-        </Drawer.Positioner>
-      </Portal>
-    </Drawer.Root>
-  );
-};
-
-export const SideBarItems = () => {
+export const SideBarList = () => {
   const [sideItems, setSideItems] = useState(dashboardItems);
 
   // Tracks url changes
