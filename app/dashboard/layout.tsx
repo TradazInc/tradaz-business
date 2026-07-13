@@ -34,7 +34,7 @@ export default async function BusinessLayout({
           lg: "235px 1fr",
         }}
       >
-        <GridItem area={"aside"} hideBelow={"lg"} paddingX={1}>
+        <GridItem area={"aside"} hideBelow={"lg"}>
           <SideBarItems />
         </GridItem>
 
