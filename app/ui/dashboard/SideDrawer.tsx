@@ -26,7 +26,7 @@ export const SideDrawer = () => {
         <Drawer.Backdrop />
         <Drawer.Positioner>
           <Drawer.Content>
-            <Drawer.Body py={20} px={0}>
+            <Drawer.Body py={20} px={0} bg={"bg"}>
               <SideBarItems />
             </Drawer.Body>
             <Drawer.CloseTrigger asChild>
@@ -53,9 +53,9 @@ export const SideBarItems = () => {
   }, [businessId, storeId]);
 
   return (
-    <Accordion.Root collapsible w={"full"} size={"sm"}>
+    <Accordion.Root collapsible w={"full"} size={"sm"} variant={"subtle"}>
       {sideItems.map((item, index) => (
-        <Accordion.Item key={index} value={item.label} my={2} p={3}>
+        <Accordion.Item key={index} value={item.label} my={2} p={1}>
           <Accordion.ItemTrigger justifyContent={"space-between"}>
             <Box>
               <Icon fontSize={"lg"} mx={3}>
