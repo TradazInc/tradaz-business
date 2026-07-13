@@ -1,8 +1,8 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 
 const PageHeader = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Heading w={"full"} fontSize={"2xl"} fontWeight={"semibold"} py={2}>
+    <Heading w={"full"} fontSize={"2xl"} fontWeight={"semibold"} py={10}>
       {children}
     </Heading>
   );

@@ -1,9 +1,8 @@
 import { NavBar } from "@/app/ui/dashboard/NavBar";
-import { SideBarItems } from "@/app/ui/dashboard/SideDrawer";
+import { LayoutContainer } from "@/app/ui/LayoutContainer";
 import { organizationsKey, sessionKey } from "@/data/cacheKeys";
 import { getSession } from "@/server/auth";
 import { getBusinesses } from "@/server/business";
-import { Grid, GridItem } from "@chakra-ui/react";
 import { SWRConfig } from "swr";
 
 export default async function BusinessLayout({
@@ -15,25 +14,18 @@ export default async function BusinessLayout({
   const businessPromise = getBusinesses();
 
   return (
-    <SWRConfig
-      value={{
-        fallback: {
-          [sessionKey]: sessionPromise,
-          [organizationsKey]: businessPromise,
-        },
-      }}
-    >
-      <NavBar />
-      <Grid
-        templateAreas={{ base: `'main'`, lg: ` 'aside main'` }}
-        templateColumns={{ base: "1fr", lg: "235px 1fr" }}
+    <LayoutContainer>
+      <SWRConfig
+        value={{
+          fallback: {
+            [sessionKey]: sessionPromise,
+            [organizationsKey]: businessPromise,
+          },
+        }}
       >
-        <GridItem area={"aside"} hideBelow={"lg"}>
-          <SideBarItems />
-        </GridItem>
-
-        <GridItem area={"main"}>{children}</GridItem>
-      </Grid>
-    </SWRConfig>
+        <NavBar />
+        {children}
+      </SWRConfig>
+    </LayoutContainer>
   );
 }
