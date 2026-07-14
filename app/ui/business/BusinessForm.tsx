@@ -57,7 +57,10 @@ export const BusinessForm = () => {
     <Steps.Root
       size={"sm"}
       step={step}
-      onStepChange={(e) => setStep(e.step + 1)} // e.step starts from 0
+      onStepChange={(e) => {
+        console.log(e.step);
+        setStep(e.step);
+      }}
       count={steps.length}
       animationName={"fade-in"}
       animationDuration={"moderate"}
