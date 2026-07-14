@@ -57,7 +57,7 @@ export const BusinessForm = () => {
     <Steps.Root
       size={"sm"}
       step={step}
-      onStepChange={(e) => setStep(e.step)}
+      onStepChange={(e) => setStep(e.step + 1)} // e.step starts from 0
       count={steps.length}
       animationName={"fade-in"}
       animationDuration={"moderate"}
@@ -86,7 +86,7 @@ export const BusinessForm = () => {
           maxW={{ base: "full", md: "2xl", xl: "4xl" }}
           px={{ base: 4, md: 0 }}
         >
-          {step <= 1 ? (
+          {step === 1 && (
             <Fieldset.Content>
               <Field.Root required invalid={!!errors.name}>
                 <Field.Label>
@@ -141,7 +141,8 @@ export const BusinessForm = () => {
                 <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
-          ) : (
+          )}
+          {step === 2 && (
             <Fieldset.Content>
               <Field.Root required invalid={!!errors.slug}>
                 <Field.Label>
