@@ -1,6 +1,6 @@
 "use client";
 
-import { steps } from "@/data/businessFormSteps";
+import { lastStep, steps } from "@/data/businessFormSteps";
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
 import { createBusiness } from "@/services/business";
@@ -59,7 +59,7 @@ export const BusinessForm = () => {
       size={"sm"}
       step={step}
       onStepChange={(e) => setStep(e.step)}
-      count={steps.length - 1}
+      count={lastStep}
       animationName={"fade-in"}
       animationDuration={"moderate"}
       animationTimingFunction={"ease-out"}
@@ -182,7 +182,7 @@ export const BusinessForm = () => {
           </Button>
         </Steps.PrevTrigger>
         <Steps.NextTrigger asChild>
-          {step === steps.length - 1 ? (
+          {step === lastStep ? (
             <Button
               form={"business-form"}
               type={"submit"}

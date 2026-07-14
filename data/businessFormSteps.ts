@@ -8,3 +8,5 @@ export const steps = [
     description: "How can customers reach you?",
   },
 ];
+
+export const lastStep = steps.length - 1;
