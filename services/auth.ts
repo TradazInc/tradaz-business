@@ -1,60 +1,14 @@
 import { toaster } from "@/components/ui/toaster";
 import { authClient } from "@/lib/authClient";
-import { emailSignInSchema, emailSignUpSchema } from "@/schema/auth";
+import { EmailSignInData, EmailSignUpData } from "@/schema/auth";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-export async function emailSignUp(formData: FormData) {
-  const form = Object.fromEntries(formData.entries());
-  const { data, error } = emailSignUpSchema.safeParse(form);
-
-  // validate form
-  if (error) {
-    toaster.create({
-      title: error.issues[0].path,
-      description: error.issues[0].message,
-      type: "error",
-    });
-    return;
-  }
-
-  const res = await authClient.signUp.email(data, {
-    onError: ({ error }) => {
-      toaster.create({
-        title: error.name,
-        description: error.message,
-        type: "error",
-      });
-    },
-  });
-
-  if (res.error) {
-    toaster.create({
-      title: res.error.code,
-      description: res.error.message,
-      type: "error",
-    });
-    return;
-  }
-
-  return res.data;
-}
-
-export async function emailSignIn(formData: FormData) {
-  const form = Object.fromEntries(formData.entries());
-  const { data, error } = emailSignInSchema.safeParse(form);
-
-  // validate form
-  if (error) {
-    toaster.create({
-      title: error.issues[0].path,
-      description: error.issues[0].message,
-      type: "error",
-    });
-    return;
-  }
-
-  const res = await authClient.signIn.email(
-    { ...data, callbackURL: "/dashboard" },
+export async function emailSignUp(
+  signUpData: EmailSignUpData,
+  callbackURL?: string,
+) {
+  const { data, error } = await authClient.signUp.email(
+    { ...signUpData, callbackURL },
     {
       onError: ({ error }) => {
         toaster.create({
@@ -66,20 +20,49 @@ export async function emailSignIn(formData: FormData) {
     },
   );
 
-  if (res.error) {
+  if (error) {
     toaster.create({
-      title: res.error.code,
-      description: res.error.message,
+      title: error.code,
+      description: error.message,
       type: "error",
     });
     return;
   }
 
-  return res.data;
+  return data;
 }
 
-export async function googleSignIn(callbackURL: string) {
-  const res = await authClient.signIn.social(
+export async function emailSignIn(
+  signInData: EmailSignInData,
+  callbackURL?: string,
+) {
+  const { data, error } = await authClient.signIn.email(
+    { ...signInData, callbackURL },
+    {
+      onError: ({ error }) => {
+        toaster.create({
+          title: error.name,
+          description: error.message,
+          type: "error",
+        });
+      },
+    },
+  );
+
+  if (error) {
+    toaster.create({
+      title: error.code,
+      description: error.message,
+      type: "error",
+    });
+    return;
+  }
+
+  return data;
+}
+
+export async function googleSignIn(callbackURL?: string) {
+  const { data, error } = await authClient.signIn.social(
     { provider: "google", callbackURL },
     {
       onError: ({ error }) => {
@@ -92,16 +75,16 @@ export async function googleSignIn(callbackURL: string) {
     },
   );
 
-  if (res.error) {
+  if (error) {
     toaster.create({
-      title: res.error.code,
-      description: res.error.message,
+      title: error.code,
+      description: error.message,
       type: "error",
     });
     return;
   }
 
-  return res.data;
+  return data;
 }
 
 export async function logout(router: AppRouterInstance) {

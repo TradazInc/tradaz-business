@@ -3,23 +3,26 @@
 import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
 import SeparatorText from "@/app/ui/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
+import { emailSignInSchema } from "@/schema/auth";
 import { emailSignIn, googleSignIn } from "@/services/auth";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useTransition } from "react";
+import { useForm } from "react-hook-form";
 
 const SignInForm = () => {
-  const [isEmailPending, startEmailTransition] = useTransition();
   const [isGooglePending, startGoogleTransition] = useTransition();
 
-  const handleEmailSignin = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({ resolver: zodResolver(emailSignInSchema), mode: "onBlur" });
 
-    startEmailTransition(async () => {
-      await emailSignIn(formData);
-    });
-  };
+  const onSubmit = handleSubmit(async (signInData) => {
+    await emailSignIn(signInData, "/dashboard");
+  });
 
   const handleGoogleSignIn = () => {
     startGoogleTransition(async () => {
@@ -28,16 +31,19 @@ const SignInForm = () => {
   };
 
   return (
-    <form onSubmit={handleEmailSignin}>
+    <form onSubmit={onSubmit}>
       <Fieldset.Root size="lg" maxW="lg">
         <Fieldset.Content>
-          <Field.Root>
+          <Field.Root required invalid={!!errors.email}>
             <Field.Label>Email Address</Field.Label>
-            <Input name="email" type="email" />
+            <Input type="email" {...register("email")} />
+            <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
           </Field.Root>
-          <Field.Root>
+
+          <Field.Root required invalid={!!errors.password}>
             <Field.Label>Password</Field.Label>
-            <PasswordInput name="password" />
+            <PasswordInput {...register("password")} />
+            <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>
         </Fieldset.Content>
         <Box textAlign="right" w="full">
@@ -45,8 +51,8 @@ const SignInForm = () => {
         </Box>
         <Button
           type={"submit"}
-          loading={isEmailPending}
-          disabled={isEmailPending}
+          loading={isSubmitting}
+          disabled={!isValid || isSubmitting}
           w={"full"}
         >
           Sign in

@@ -3,25 +3,28 @@
 import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
 import SeparatorText from "@/app/ui/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
+import { emailSignUpSchema } from "@/schema/auth";
 import { emailSignUp, googleSignIn } from "@/services/auth";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { useForm } from "react-hook-form";
 
 const SignUpForm = () => {
-  const router = useRouter();
-  const [isEmailPending, startEmailTransition] = useTransition();
+  const { push } = useRouter();
   const [isGooglePending, startGoogleTransition] = useTransition();
 
-  const handleEmailSignup = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({ resolver: zodResolver(emailSignUpSchema), mode: "onBlur" });
 
-    startEmailTransition(async () => {
-      const data = await emailSignUp(formData);
-      if (data) router.push("/dashboard?signup=true"); // review after emailVerification
-    });
-  };
+  const onSubmit = handleSubmit(async (signUpData) => {
+    const data = await emailSignUp(signUpData);
+    if (data) push("/dashboard?signup=true"); // review after emailVerification
+  });
 
   const handleGoogleSignup = () => {
     startGoogleTransition(async () => {
@@ -30,29 +33,32 @@ const SignUpForm = () => {
   };
 
   return (
-    <form onSubmit={handleEmailSignup}>
+    <form onSubmit={onSubmit}>
       <Fieldset.Root size="lg" maxW="lg">
         <Fieldset.Content>
-          <Field.Root>
+          <Field.Root required invalid={!!errors.name}>
             <Field.Label>Full Name</Field.Label>
-            <Input name="name" />
+            <Input {...register("name")} />
+            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root>
+          <Field.Root required invalid={!!errors.email}>
             <Field.Label>Email Address</Field.Label>
-            <Input name="email" type="email" />
+            <Input type="email" {...register("email")} />
+            <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root>
+          <Field.Root required invalid={!!errors.password}>
             <Field.Label>Password</Field.Label>
-            <PasswordInput name="password" />
+            <PasswordInput {...register("password")} />
+            <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>
         </Fieldset.Content>
 
         <Button
           type={"submit"}
-          loading={isEmailPending}
-          disabled={isEmailPending}
+          loading={isSubmitting}
+          disabled={!isValid || isSubmitting}
           w={"full"}
         >
           Sign Up

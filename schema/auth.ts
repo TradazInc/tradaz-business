@@ -5,8 +5,10 @@ export const emailSignUpSchema = z.object({
   email: z.email({ error: "email is required" }),
   password: z.string({ error: "Password is required" }).trim().min(5),
 });
+export type EmailSignUpData = z.infer<typeof emailSignUpSchema>;
 
 export const emailSignInSchema = z.object({
   email: z.email({ error: "email is required" }),
   password: z.string({ error: "password is required" }).trim().min(5),
 });
+export type EmailSignInData = z.infer<typeof emailSignInSchema>;
