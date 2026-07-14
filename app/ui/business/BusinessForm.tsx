@@ -6,6 +6,7 @@ import { createBusiness } from "@/services/business";
 import {
   Box,
   Button,
+  ButtonGroup,
   createListCollection,
   Field,
   Fieldset,
@@ -14,7 +15,7 @@ import {
   InputGroup,
   Portal,
   Select,
-  Stack,
+  Steps,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -23,8 +24,8 @@ import { useForm } from "react-hook-form";
 
 export const BusinessForm = () => {
   const { data, error } = useBusinessCategories();
-  const [step, setStep] = useState<number>(1);
   const { refresh, push } = useRouter();
+  const [step, setStep] = useState(1);
 
   const categories = useMemo(
     () =>
@@ -53,15 +54,32 @@ export const BusinessForm = () => {
   if (error) return null;
 
   return (
-    <Box
-      key={step}
+    <Steps.Root
+      step={step}
+      onStepChange={(e) => setStep(e.step)}
+      count={steps.length}
       w={"full"}
       animationName={"fade-in"}
       animationDuration={"moderate"}
       animationTimingFunction={"ease-out"}
     >
-      {step <= 1 ? (
-        <form onSubmit={() => setStep((s) => s + 1)} style={{ width: "100%" }}>
+      <Steps.List>
+        {steps.map((step, index) => (
+          <Steps.Item key={index} index={index}>
+            <Steps.Trigger>
+              <Steps.Indicator />
+              <Box>
+                <Steps.Title>{step.title}</Steps.Title>
+                <Steps.Description>{step.description}</Steps.Description>
+              </Box>
+            </Steps.Trigger>
+            <Steps.Separator />
+          </Steps.Item>
+        ))}
+      </Steps.List>
+
+      {step === 1 ? (
+        <form style={{ width: "100%" }}>
           <Fieldset.Root
             size="lg"
             w="full"
@@ -69,13 +87,6 @@ export const BusinessForm = () => {
             mx="auto"
             px={{ base: 4, md: 0 }}
           >
-            <Stack>
-              <Fieldset.Legend>Brand information</Fieldset.Legend>
-              <Fieldset.HelperText>
-                Tell us about your brand. Step 1 of 2.
-              </Fieldset.HelperText>
-            </Stack>
-
             <Fieldset.Content>
               <Field.Root required invalid={!!errors.name}>
                 <Field.Label>
@@ -108,9 +119,7 @@ export const BusinessForm = () => {
                   </Select.Label>
                   <Select.Control>
                     <Select.Trigger>
-                      <Select.ValueText
-                        placeholder={"Select brand category"}
-                      />
+                      <Select.ValueText placeholder={"Select brand category"} />
                     </Select.Trigger>
                     <Select.IndicatorGroup>
                       <Select.Indicator />
@@ -132,14 +141,14 @@ export const BusinessForm = () => {
                 <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
-
-            <Button type={"submit"} alignSelf={"flex-start"}>
-              Continue
-            </Button>
           </Fieldset.Root>
         </form>
       ) : (
-        <form onSubmit={onSubmit} style={{ width: "100%" }}>
+        <form
+          id={"business-form"}
+          onSubmit={onSubmit}
+          style={{ width: "100%" }}
+        >
           <Fieldset.Root
             size="lg"
             w="full"
@@ -147,13 +156,6 @@ export const BusinessForm = () => {
             mx="auto"
             px={{ base: 4, md: 0 }}
           >
-            <Stack>
-              <Fieldset.Legend>Contact information</Fieldset.Legend>
-              <Fieldset.HelperText>
-                How can customers reach you? Step 2 of 2.
-              </Fieldset.HelperText>
-            </Stack>
-
             <Fieldset.Content>
               <Field.Root required invalid={!!errors.slug}>
                 <Field.Label>
@@ -181,27 +183,45 @@ export const BusinessForm = () => {
                 <Field.ErrorText>{errors.phone?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
-
-            <Stack direction="row" alignSelf="flex-start">
-              <Button
-                type={"button"}
-                variant={"outline"}
-                onClick={() => setStep((s) => s - 1)}
-                disabled={isSubmitting}
-              >
-                Back
-              </Button>
-              <Button
-                type={"submit"}
-                disabled={isSubmitting}
-                loading={isSubmitting}
-              >
-                Submit
-              </Button>
-            </Stack>
           </Fieldset.Root>
         </form>
       )}
-    </Box>
+      <Steps.CompletedContent>All steps are complete!</Steps.CompletedContent>
+
+      <ButtonGroup size="sm" variant="outline">
+        <Steps.PrevTrigger asChild>
+          <Button variant={"outline"} disabled={isSubmitting}>
+            Prev
+          </Button>
+        </Steps.PrevTrigger>
+        <Steps.NextTrigger asChild>
+          {step === steps.length ? (
+            <Button
+              form={"business-form"}
+              type={"submit"}
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button variant={"outline"} disabled={isSubmitting}>
+              Next
+            </Button>
+          )}
+        </Steps.NextTrigger>
+      </ButtonGroup>
+    </Steps.Root>
   );
 };
+
+const steps = [
+  {
+    title: "Brand information",
+    description: "Tell us about your brand.",
+  },
+  {
+    title: "Contact information",
+    description: "How can customers reach you?",
+  },
+];
