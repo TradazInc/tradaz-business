@@ -60,6 +60,7 @@ export const StoreForm = () => {
 
         <Button
           type={"submit"}
+          variant={"outline"}
           alignSelf={"flex-start"}
           disabled={!isValid || isSubmitting}
           loading={isSubmitting}

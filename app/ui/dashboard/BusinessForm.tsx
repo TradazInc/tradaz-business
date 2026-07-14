@@ -175,26 +175,22 @@ export const BusinessForm = () => {
         </Fieldset.Root>
       </form>
 
-      <ButtonGroup size="sm" variant="outline">
+      <ButtonGroup size={"sm"} variant={"outline"}>
         <Steps.PrevTrigger asChild>
-          <Button variant={"outline"} disabled={isSubmitting}>
-            Prev
-          </Button>
+          <Button disabled={isSubmitting}>Prev</Button>
         </Steps.PrevTrigger>
         <Steps.NextTrigger asChild>
           {step === lastStep ? (
             <Button
-              form={"business-form"}
               type={"submit"}
+              form={"business-form"}
               disabled={!isValid || isSubmitting}
               loading={isSubmitting}
             >
               Submit
             </Button>
           ) : (
-            <Button variant={"outline"} disabled={isSubmitting}>
-              Next
-            </Button>
+            <Button disabled={isSubmitting}>Next</Button>
           )}
         </Steps.NextTrigger>
       </ButtonGroup>
