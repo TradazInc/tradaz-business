@@ -53,7 +53,7 @@ export default async function page({ params }: Props) {
         ) : (
           <EmptyPage
             title="No stores found"
-            description="Create a new store for your business"
+            description="Create a new store for your brand"
           />
         )}
       </VStack>
