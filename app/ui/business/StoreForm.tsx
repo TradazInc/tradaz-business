@@ -13,7 +13,7 @@ export const StoreForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm({ resolver: zodResolver(storeSchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (storeData) => {
@@ -61,7 +61,7 @@ export const StoreForm = () => {
         <Button
           type={"submit"}
           alignSelf={"flex-start"}
-          disabled={isSubmitting}
+          disabled={!isValid || isSubmitting}
           loading={isSubmitting}
         >
           Submit
