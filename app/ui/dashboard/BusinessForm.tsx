@@ -110,7 +110,6 @@ export const BusinessForm = () => {
               <Field.Root required invalid={!!errors.categoryId}>
                 <Select.Root
                   required
-                  size={"sm"}
                   collection={categories}
                   {...register("categoryId")}
                 >
