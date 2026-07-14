@@ -1,4 +1,4 @@
-import { BusinessForm } from "@/app/ui/business/BusinessForm";
+import { BusinessForm } from "@/app/ui/dashboard/BusinessForm";
 import GridCard from "@/app/ui/dashboard/GridCard";
 import GridContainer from "@/app/ui/dashboard/GridContainer";
 import { DialogBox } from "@/app/ui/DialogBox";

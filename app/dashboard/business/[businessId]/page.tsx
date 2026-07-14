@@ -5,7 +5,7 @@ import EmptyPage from "@/app/ui/EmptyPage";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import Search from "@/app/ui/Search";
-import { StoreForm } from "@/app/ui/store/StoreForm";
+import { StoreForm } from "@/app/ui/business/StoreForm";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusiness } from "@/server/business";
 import { For, VStack } from "@chakra-ui/react";

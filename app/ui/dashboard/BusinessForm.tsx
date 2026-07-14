@@ -1,5 +1,6 @@
 "use client";
 
+import { steps } from "@/data/businessFormSteps";
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
 import { createBusiness } from "@/services/business";
@@ -200,14 +201,3 @@ export const BusinessForm = () => {
     </Steps.Root>
   );
 };
-
-const steps = [
-  {
-    title: "Brand information",
-    description: "Tell us about your brand.",
-  },
-  {
-    title: "Contact information",
-    description: "How can customers reach you?",
-  },
-];
