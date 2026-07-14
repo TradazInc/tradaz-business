@@ -1,41 +1,48 @@
 import { toaster } from "@/components/ui/toaster";
 import { authClient } from "@/lib/authClient";
-import { BusinessData, businessSchema } from "@/schema/business";
+import { BusinessData } from "@/schema/business";
 
 export async function createBusiness(business: BusinessData) {
-  const { data, error } = businessSchema.safeParse(business);
-
-  // validate form
-  if (error) {
-    toaster.create({
-      title: error.issues[0].path,
-      description: error.issues[0].message,
-      type: "error",
-    });
-    return;
-  }
-
-  const res = await authClient.organization.create({
-    ...data,
+  const { data, error } = await authClient.organization.create({
+    ...business,
     metadata: {
-      phone: data.phone,
-      address: data.address,
+      phone: business.phone,
+      address: business.address,
+      storeName: business.storeName,
+      storeAddress: business.storeAddress,
     },
     keepCurrentActiveOrganization: false,
   });
 
-  if (res.error) {
+  if (error) {
     toaster.create({
-      title: res.error.code,
-      description: res.error.message,
+      title: error.code,
+      description: error.message,
       type: "error",
     });
     return;
   }
 
-  return res.data;
+  return data;
 }
 
 export async function setActiveBussienss(organizationId: string) {
   return authClient.organization.setActive({ organizationId });
+}
+
+export async function checkBusinessSlug(slug: string) {
+  const { data, error } = await authClient.organization.checkSlug({
+    slug,
+  });
+
+  if (error) {
+    toaster.create({
+      title: error.code,
+      description: error.message,
+      type: "error",
+    });
+    return { status: false }; // return false if error
+  }
+
+  return data;
 }

@@ -1,29 +1,35 @@
 "use client";
 
+import { storeSchema } from "@/schema/store";
 import { createStore } from "@/services/store";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { useForm } from "react-hook-form";
 
 export const StoreForm = () => {
   const [isSubmitting, startSubmission] = useTransition();
-  const router = useRouter();
+  const { refresh, push } = useRouter();
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(storeSchema) });
 
+  const onSubmit = handleSubmit(async (storeData) =>
     startSubmission(async () => {
-      const store = await createStore(formData);
+      const store = await createStore(storeData);
       if (store) {
-        router.refresh();
-        router.push(`/dashboard/store/${store.id}`);
+        refresh();
+        push(`/dashboard/store/${store.id}`);
       }
-    });
-  };
+    }),
+  );
 
   return (
-    <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+    <form onSubmit={onSubmit} style={{ width: "100%" }}>
       <Fieldset.Root
         size="lg"
         w="full"
@@ -39,18 +45,20 @@ export const StoreForm = () => {
         </Stack>
 
         <Fieldset.Content>
-          <Field.Root required>
+          <Field.Root required invalid={!!errors.name}>
             <Field.Label>
               Name <Field.RequiredIndicator />
             </Field.Label>
-            <Input name="name" />
+            <Input {...register("name")} />
+            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root required>
+          <Field.Root required invalid={!!errors.address}>
             <Field.Label>
               Address <Field.RequiredIndicator />
             </Field.Label>
-            <Input name="address" />
+            <Input {...register("address")} />
+            <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
           </Field.Root>
         </Fieldset.Content>
 

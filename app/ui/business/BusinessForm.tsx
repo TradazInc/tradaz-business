@@ -1,12 +1,7 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
 import { useBusinessCategories } from "@/hooks/businessCategory";
-import {
-  BusinessData,
-  businessInfoSchema,
-  contactInfoSchema,
-} from "@/schema/business";
+import { businessSchema } from "@/schema/business";
 import { createBusiness } from "@/services/business";
 import {
   Box,
@@ -21,22 +16,15 @@ import {
   Select,
   Stack,
 } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
 
 export const BusinessForm = () => {
   const { data, error } = useBusinessCategories();
-  const [isSubmitting, startSubmission] = useTransition();
-  const router = useRouter();
-
   const [step, setStep] = useState<number>(1);
-  const [businessData, setBusinessData] = useState<BusinessData>({
-    name: "",
-    categoryId: "",
-    slug: "",
-    address: "",
-    phone: "",
-  });
+  const { refresh, push } = useRouter();
 
   const categories = useMemo(
     () =>
@@ -48,41 +36,19 @@ export const BusinessForm = () => {
     [data],
   );
 
-  const handleChange = (field: keyof BusinessData, value: string) =>
-    setBusinessData((prev) => ({ ...prev, [field]: value }));
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({ resolver: zodResolver(businessSchema), mode: "onBlur" });
 
-  const handleBusinessSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const result = businessInfoSchema.safeParse(businessData);
-    if (!result.success) {
-      toaster.create({
-        description: result.error.issues[0].message,
-        type: "error",
-      });
-      return;
+  const onSubmit = handleSubmit(async (businessData) => {
+    const business = await createBusiness(businessData);
+    if (business) {
+      refresh();
+      push(`/dashboard/business/${business.id}`);
     }
-    setStep((s) => s + 1);
-  };
-
-  const handleContactSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const result = contactInfoSchema.safeParse(businessData);
-    if (!result.success) {
-      toaster.create({
-        description: result.error.issues[0].message,
-        type: "error",
-      });
-      return;
-    }
-
-    startSubmission(async () => {
-      const business = await createBusiness(businessData);
-      if (business) {
-        router.refresh();
-        router.push(`/dashboard/business/${business.id}`);
-      }
-    });
-  };
+  });
 
   if (error) return null;
 
@@ -95,7 +61,7 @@ export const BusinessForm = () => {
       animationTimingFunction={"ease-out"}
     >
       {step <= 1 ? (
-        <form onSubmit={handleBusinessSubmit} style={{ width: "100%" }}>
+        <form onSubmit={() => setStep((s) => s + 1)} style={{ width: "100%" }}>
           <Fieldset.Root
             size="lg"
             w="full"
@@ -111,15 +77,12 @@ export const BusinessForm = () => {
             </Stack>
 
             <Fieldset.Content>
-              <Field.Root required>
+              <Field.Root required invalid={!!errors.name}>
                 <Field.Label>
                   Name <Field.RequiredIndicator />
                 </Field.Label>
-                <Input
-                  name="name"
-                  value={businessData.name}
-                  onChange={(e) => handleChange("name", e.target.value)}
-                />
+                <Input {...register("name")} />
+                <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
               </Field.Root>
 
               <FileUpload.Root gap="1" maxFiles={1} accept={["image/png"]}>
@@ -132,18 +95,12 @@ export const BusinessForm = () => {
                 </Input>
               </FileUpload.Root>
 
-              <Field.Root required>
+              <Field.Root required invalid={!!errors.categoryId}>
                 <Select.Root
                   required
                   size={"sm"}
-                  name={"categoryId"}
                   collection={categories}
-                  value={
-                    businessData.categoryId ? [businessData.categoryId] : []
-                  }
-                  onValueChange={(e) =>
-                    handleChange("categoryId", e.value[0] ?? "")
-                  }
+                  {...register("categoryId")}
                 >
                   <Select.HiddenSelect />
                   <Select.Label>
@@ -151,7 +108,9 @@ export const BusinessForm = () => {
                   </Select.Label>
                   <Select.Control>
                     <Select.Trigger>
-                      <Select.ValueText placeholder={"Select category"} />
+                      <Select.ValueText
+                        placeholder={"Select business category"}
+                      />
                     </Select.Trigger>
                     <Select.IndicatorGroup>
                       <Select.Indicator />
@@ -170,6 +129,7 @@ export const BusinessForm = () => {
                     </Select.Positioner>
                   </Portal>
                 </Select.Root>
+                <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
 
@@ -179,7 +139,7 @@ export const BusinessForm = () => {
           </Fieldset.Root>
         </form>
       ) : (
-        <form onSubmit={handleContactSubmit} style={{ width: "100%" }}>
+        <form onSubmit={onSubmit} style={{ width: "100%" }}>
           <Fieldset.Root
             size="lg"
             w="full"
@@ -195,41 +155,30 @@ export const BusinessForm = () => {
             </Stack>
 
             <Fieldset.Content>
-              <Field.Root required>
+              <Field.Root required invalid={!!errors.slug}>
                 <Field.Label>
                   Slug <Field.RequiredIndicator />
                 </Field.Label>
                 <InputGroup startAddon="www." endAddon=".com">
-                  <Input
-                    name="slug"
-                    placeholder="yoursite"
-                    value={businessData.slug}
-                    onChange={(e) => handleChange("slug", e.target.value)}
-                  />
+                  <Input placeholder="yoursite" {...register("slug")} />
                 </InputGroup>
+                <Field.ErrorText>{errors.slug?.message}</Field.ErrorText>
               </Field.Root>
 
-              <Field.Root required>
+              <Field.Root required invalid={!!errors.address}>
                 <Field.Label>
                   Address <Field.RequiredIndicator />
                 </Field.Label>
-                <Input
-                  name="address"
-                  value={businessData.address}
-                  onChange={(e) => handleChange("address", e.target.value)}
-                />
+                <Input {...register("address")} />
+                <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
               </Field.Root>
 
-              <Field.Root required>
+              <Field.Root required invalid={!!errors.phone}>
                 <Field.Label>
                   Phone <Field.RequiredIndicator />
                 </Field.Label>
-                <Input
-                  name="phone"
-                  placeholder="+234-XXX-XXXX-XXX"
-                  value={businessData.phone}
-                  onChange={(e) => handleChange("phone", e.target.value)}
-                />
+                <Input placeholder="+234-XXX-XXXX-XXX" {...register("phone")} />
+                <Field.ErrorText>{errors.phone?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
 

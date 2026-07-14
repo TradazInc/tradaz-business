@@ -30,9 +30,7 @@ export default function Search({ query, placeholder }: Props) {
       <Input
         size={"xs"}
         placeholder={placeholder}
-        onChange={(e) => {
-          handleSearch(e.target.value);
-        }}
+        onChange={(e) => handleSearch(e.target.value)}
         color={"white"}
         borderRadius={"full"}
         defaultValue={searchParams.get(query)?.toString()}

@@ -27,7 +27,7 @@ export default async function page({ searchParams }: Props) {
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>Your Businesses</PageHeader>
+        <PageHeader>Your Brands</PageHeader>
 
         <ToolBarContainer>
           <Suspense>
