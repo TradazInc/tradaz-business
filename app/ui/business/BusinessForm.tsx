@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 export const BusinessForm = () => {
   const { data, error } = useBusinessCategories();
   const { refresh, push } = useRouter();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const categories = useMemo(
     () =>
@@ -57,11 +57,8 @@ export const BusinessForm = () => {
     <Steps.Root
       size={"sm"}
       step={step}
-      onStepChange={(e) => {
-        console.log(e.step);
-        setStep(e.step);
-      }}
-      count={steps.length}
+      onStepChange={(e) => setStep(e.step)}
+      count={steps.length - 1}
       animationName={"fade-in"}
       animationDuration={"moderate"}
       animationTimingFunction={"ease-out"}
@@ -89,7 +86,7 @@ export const BusinessForm = () => {
           maxW={{ base: "full", md: "2xl", xl: "4xl" }}
           px={{ base: 4, md: 0 }}
         >
-          {step === 1 && (
+          {step === 0 && (
             <Fieldset.Content>
               <Field.Root required invalid={!!errors.name}>
                 <Field.Label>
@@ -145,7 +142,7 @@ export const BusinessForm = () => {
               </Field.Root>
             </Fieldset.Content>
           )}
-          {step === 2 && (
+          {step === 1 && (
             <Fieldset.Content>
               <Field.Root required invalid={!!errors.slug}>
                 <Field.Label>
@@ -176,7 +173,6 @@ export const BusinessForm = () => {
           )}
         </Fieldset.Root>
       </form>
-      <Steps.CompletedContent>All steps are complete!</Steps.CompletedContent>
 
       <ButtonGroup size="sm" variant="outline">
         <Steps.PrevTrigger asChild>
@@ -185,7 +181,7 @@ export const BusinessForm = () => {
           </Button>
         </Steps.PrevTrigger>
         <Steps.NextTrigger asChild>
-          {step === steps.length ? (
+          {step === steps.length - 1 ? (
             <Button
               form={"business-form"}
               type={"submit"}
