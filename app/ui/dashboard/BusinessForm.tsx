@@ -41,7 +41,7 @@ export const BusinessForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm({ resolver: zodResolver(businessSchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (businessData) => {
@@ -186,7 +186,7 @@ export const BusinessForm = () => {
             <Button
               form={"business-form"}
               type={"submit"}
-              disabled={isSubmitting}
+              disabled={!isValid || isSubmitting}
               loading={isSubmitting}
             >
               Submit
