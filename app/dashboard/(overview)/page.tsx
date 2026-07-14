@@ -31,9 +31,9 @@ export default async function page({ searchParams }: Props) {
 
         <ToolBarContainer>
           <Suspense>
-            <Search placeholder={"Search for a business"} query={"business"} />
+            <Search placeholder={"Search for a brand"} query={"business"} />
           </Suspense>
-          <DialogBox prompt={"New Business"} icon={<LuPlus />} signup={signup}>
+          <DialogBox prompt={"New Brand"} icon={<LuPlus />} signup={signup}>
             <BusinessForm />
           </DialogBox>
         </ToolBarContainer>

@@ -70,9 +70,9 @@ export const BusinessForm = () => {
             px={{ base: 4, md: 0 }}
           >
             <Stack>
-              <Fieldset.Legend>Business information</Fieldset.Legend>
+              <Fieldset.Legend>Brand information</Fieldset.Legend>
               <Fieldset.HelperText>
-                Tell us about your business. Step 1 of 2.
+                Tell us about your brand. Step 1 of 2.
               </Fieldset.HelperText>
             </Stack>
 
@@ -104,12 +104,12 @@ export const BusinessForm = () => {
                 >
                   <Select.HiddenSelect />
                   <Select.Label>
-                    Select category <Field.RequiredIndicator />
+                    Brand category <Field.RequiredIndicator />
                   </Select.Label>
                   <Select.Control>
                     <Select.Trigger>
                       <Select.ValueText
-                        placeholder={"Select business category"}
+                        placeholder={"Select brand category"}
                       />
                     </Select.Trigger>
                     <Select.IndicatorGroup>

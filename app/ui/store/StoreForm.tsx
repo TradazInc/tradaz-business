@@ -14,7 +14,7 @@ export const StoreForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm({ resolver: zodResolver(storeSchema) });
+  } = useForm({ resolver: zodResolver(storeSchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (storeData) => {
     const store = await createStore(storeData);

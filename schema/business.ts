@@ -2,10 +2,18 @@ import { checkBusinessSlug } from "@/services/business";
 import { z } from "zod";
 
 export const businessSchema = z.object({
-  name: z.string({ error: "name is required" }).min(3),
-  address: z.string({ error: "address is required" }).min(5),
+  name: z
+    .string({ error: "name is required" })
+    .min(3, { error: "name must be at least 3 letters long" }),
+
+  address: z
+    .string({ error: "address is required" })
+    .min(5, { error: "address must be at least 5 letters long" }),
+
   categoryId: z.cuid2({ error: "select a business category" }),
+
   phone: z.e164({ error: "phone number is required" }),
+
   slug: z
     .string({ error: "slug is required" })
     .trim()
@@ -18,10 +26,15 @@ export const businessSchema = z.object({
       },
       { error: "Slug is taken!" },
     ),
-  storeName: z.string({ error: "store name is required" }).min(3).optional(),
+
+  storeName: z
+    .string({ error: "store name is required" })
+    .min(3, { error: "store name must be at least 3 letters long" })
+    .optional(),
+
   storeAddress: z
     .string({ error: "store address is required" })
-    .min(5)
+    .min(5, { error: "store address must be at least 5 letters long" })
     .optional(),
 });
 export type BusinessData = z.infer<typeof businessSchema>;
