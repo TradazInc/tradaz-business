@@ -5,28 +5,24 @@ import { createStore } from "@/services/store";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 export const StoreForm = () => {
-  const [isSubmitting, startSubmission] = useTransition();
   const { refresh, push } = useRouter();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(storeSchema) });
 
-  const onSubmit = handleSubmit(async (storeData) =>
-    startSubmission(async () => {
-      const store = await createStore(storeData);
-      if (store) {
-        refresh();
-        push(`/dashboard/store/${store.id}`);
-      }
-    }),
-  );
+  const onSubmit = handleSubmit(async (storeData) => {
+    const store = await createStore(storeData);
+    if (store) {
+      refresh();
+      push(`/dashboard/store/${store.id}`);
+    }
+  });
 
   return (
     <form onSubmit={onSubmit} style={{ width: "100%" }}>
