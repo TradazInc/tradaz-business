@@ -45,9 +45,6 @@ export const DialogBox = ({ icon, children, prompt, signup }: Props) => {
         <Dialog.Positioner>
           <Dialog.Content>
             <Dialog.Body>{children}</Dialog.Body>
-            <Dialog.CloseTrigger asChild>
-              <CloseButton size="sm" />
-            </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>
       </Portal>

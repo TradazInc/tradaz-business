@@ -55,17 +55,17 @@ export const BusinessForm = () => {
 
   return (
     <Steps.Root
+      size={"sm"}
       step={step}
       onStepChange={(e) => setStep(e.step)}
       count={steps.length}
-      w={"full"}
       animationName={"fade-in"}
       animationDuration={"moderate"}
       animationTimingFunction={"ease-out"}
     >
       <Steps.List>
         {steps.map((step, index) => (
-          <Steps.Item key={index} index={index}>
+          <Steps.Item key={index} index={index} py={3}>
             <Steps.Trigger>
               <Steps.Indicator />
               <Box>
@@ -78,15 +78,15 @@ export const BusinessForm = () => {
         ))}
       </Steps.List>
 
-      {step === 1 ? (
-        <form style={{ width: "100%" }}>
-          <Fieldset.Root
-            size="lg"
-            w="full"
-            maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-            mx="auto"
-            px={{ base: 4, md: 0 }}
-          >
+      <form id={"business-form"} onSubmit={onSubmit} style={{ width: "100%" }}>
+        <Fieldset.Root
+          w={"full"}
+          mx={"auto"}
+          size={"lg"}
+          maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+          px={{ base: 4, md: 0 }}
+        >
+          {step <= 1 ? (
             <Fieldset.Content>
               <Field.Root required invalid={!!errors.name}>
                 <Field.Label>
@@ -141,21 +141,7 @@ export const BusinessForm = () => {
                 <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
-          </Fieldset.Root>
-        </form>
-      ) : (
-        <form
-          id={"business-form"}
-          onSubmit={onSubmit}
-          style={{ width: "100%" }}
-        >
-          <Fieldset.Root
-            size="lg"
-            w="full"
-            maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-            mx="auto"
-            px={{ base: 4, md: 0 }}
-          >
+          ) : (
             <Fieldset.Content>
               <Field.Root required invalid={!!errors.slug}>
                 <Field.Label>
@@ -183,9 +169,9 @@ export const BusinessForm = () => {
                 <Field.ErrorText>{errors.phone?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
-          </Fieldset.Root>
-        </form>
-      )}
+          )}
+        </Fieldset.Root>
+      </form>
       <Steps.CompletedContent>All steps are complete!</Steps.CompletedContent>
 
       <ButtonGroup size="sm" variant="outline">
