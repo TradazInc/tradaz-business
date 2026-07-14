@@ -3,6 +3,7 @@ import { Session } from "@/entities/Session";
 import {
   adminClient,
   customSessionClient,
+  inferOrgAdditionalFields,
   organizationClient,
 } from "better-auth/client/plugins";
 import { customSession } from "better-auth/plugins";
@@ -23,7 +24,7 @@ export const authClient = createAuthClient({
     adminClient(),
     organizationClient({
       teams: { enabled: true },
-      schema: {
+      schema: inferOrgAdditionalFields({
         organization: {
           additionalFields: {
             categoryId: { type: "string", input: true, required: true },
@@ -34,7 +35,7 @@ export const authClient = createAuthClient({
             address: { type: "string", input: true, required: true },
           },
         },
-      },
+      }),
     }),
   ],
 });
