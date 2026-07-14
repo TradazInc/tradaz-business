@@ -5,12 +5,7 @@ import { BusinessData } from "@/schema/business";
 export async function createBusiness(business: BusinessData) {
   const { data, error } = await authClient.organization.create({
     ...business,
-    metadata: {
-      phone: business.phone,
-      address: business.address,
-      storeName: business.storeName,
-      storeAddress: business.storeAddress,
-    },
+    metadata: { phone: business.phone, address: business.address },
     keepCurrentActiveOrganization: false,
   });
 

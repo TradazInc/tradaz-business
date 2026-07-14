@@ -26,15 +26,5 @@ export const businessSchema = z.object({
       },
       { error: "Slug is taken!" },
     ),
-
-  storeName: z
-    .string({ error: "store name is required" })
-    .min(3, { error: "store name must be at least 3 letters long" })
-    .optional(),
-
-  storeAddress: z
-    .string({ error: "store address is required" })
-    .min(5, { error: "store address must be at least 5 letters long" })
-    .optional(),
 });
 export type BusinessData = z.infer<typeof businessSchema>;
