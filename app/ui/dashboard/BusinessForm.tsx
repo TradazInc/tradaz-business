@@ -2,7 +2,7 @@
 
 import { lastStep, steps } from "@/data/businessFormSteps";
 import { useBusinessCategories } from "@/hooks/businessCategory";
-import { BusinessData, businessSchema } from "@/schema/business";
+import { businessSchema } from "@/schema/business";
 import { createBusiness } from "@/services/business";
 import {
   Box,
@@ -43,7 +43,7 @@ export const BusinessForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm<BusinessData>({
+  } = useForm({
     resolver: standardSchemaResolver(businessSchema),
     mode: "onBlur",
   });
@@ -118,8 +118,8 @@ export const BusinessForm = () => {
                   render={({ field }) => (
                     <Select.Root
                       name={field.name}
-                      value={[field.value]}
-                      onValueChange={({ value }) => field.onChange(value[0])}
+                      value={field.value}
+                      onValueChange={({ value }) => field.onChange(value)}
                       onInteractOutside={() => field.onBlur()}
                       collection={categories}
                     >
