@@ -119,7 +119,10 @@ export const BusinessForm = () => {
                     <Select.Root
                       name={field.name}
                       value={field.value}
-                      onValueChange={({ value }) => field.onChange(value)}
+                      onValueChange={({ value }) => {
+                        field.onChange(value);
+                        field.onBlur();
+                      }}
                       onInteractOutside={() => field.onBlur()}
                       collection={categories}
                     >
@@ -129,6 +132,7 @@ export const BusinessForm = () => {
                           <Select.ValueText placeholder={"Select category"} />
                         </Select.Trigger>
                         <Select.IndicatorGroup>
+                          <Select.ClearTrigger />
                           <Select.Indicator />
                         </Select.IndicatorGroup>
                       </Select.Control>

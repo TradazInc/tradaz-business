@@ -13,7 +13,7 @@ export const businessSchema = z.object({
   categoryId: z
     .cuid2({ error: "select a brand category" })
     .array()
-    .length(1, { error: "select a brand category" })
+    .length(1, { error: "select one brand category" })
     .transform(([id]) => id),
 
   phone: z.e164({ error: "phone number is required" }),
