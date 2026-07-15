@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function page() {
-  return <div>products page</div>;
+  return <div>add product page</div>;
 }
