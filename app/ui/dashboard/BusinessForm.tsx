@@ -118,7 +118,7 @@ export const BusinessForm = () => {
                   render={({ field }) => (
                     <Select.Root
                       name={field.name}
-                      value={field.value ? [field.value] : undefined}
+                      value={[field.value]}
                       onValueChange={({ value }) => field.onChange(value[0])}
                       onInteractOutside={() => field.onBlur()}
                       collection={categories}
