@@ -21,7 +21,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 export const BusinessForm = () => {
   const { data, error } = useBusinessCategories();
@@ -39,6 +39,7 @@ export const BusinessForm = () => {
   );
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
@@ -83,9 +84,6 @@ export const BusinessForm = () => {
           size={"lg"}
           px={{ base: 4, md: 0 }}
           maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-          animationName={"fade-in"}
-          animationDuration={"slow"}
-          animationTimingFunction={"ease-out"}
         >
           {step === 0 && (
             <Fieldset.Content>
@@ -108,36 +106,47 @@ export const BusinessForm = () => {
               </FileUpload.Root>
 
               <Field.Root required invalid={!!errors.categoryId}>
-                <Select.Root
-                  required
-                  collection={categories}
-                  {...register("categoryId")}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Label>
-                    Brand category <Field.RequiredIndicator />
-                  </Select.Label>
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder={"Select brand category"} />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      <Select.Indicator />
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content>
-                        {categories.items.map((category) => (
-                          <Select.Item item={category} key={category.id}>
-                            {category.name}
-                            <Select.ItemIndicator />
-                          </Select.Item>
-                        ))}
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
-                </Select.Root>
+                <Field.Label>
+                  Brand category <Field.RequiredIndicator />
+                </Field.Label>
+                <Controller
+                  control={control}
+                  name={"categoryId"}
+                  render={({ field }) => (
+                    <Select.Root
+                      name={field.name}
+                      value={[field.value]}
+                      onValueChange={({ value }) => field.onChange(value)}
+                      onInteractOutside={() => field.onBlur()}
+                      collection={categories}
+                    >
+                      <Select.HiddenSelect />
+                      <Select.Control>
+                        <Select.Trigger>
+                          <Select.ValueText
+                            placeholder={"Select brand category"}
+                          />
+                        </Select.Trigger>
+                        <Select.IndicatorGroup>
+                          <Select.ClearTrigger />
+                          <Select.Indicator />
+                        </Select.IndicatorGroup>
+                      </Select.Control>
+                      <Portal>
+                        <Select.Positioner>
+                          <Select.Content>
+                            {categories.items.map((category) => (
+                              <Select.Item item={category} key={category.id}>
+                                {category.name}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))}
+                          </Select.Content>
+                        </Select.Positioner>
+                      </Portal>
+                    </Select.Root>
+                  )}
+                />
                 <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
