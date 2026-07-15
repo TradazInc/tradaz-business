@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  CloseButton,
   createListCollection,
   Field,
   Fieldset,
@@ -22,6 +23,7 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { LuFileUp } from "react-icons/lu";
 
 export const BusinessForm = () => {
   const { data, error } = useBusinessCategories();
@@ -98,14 +100,30 @@ export const BusinessForm = () => {
                 <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
               </Field.Root>
 
-              <FileUpload.Root gap="1" maxFiles={1} accept={["image/png"]}>
+              <FileUpload.Root maxFiles={1} accept={["image/png"]}>
                 <FileUpload.HiddenInput />
                 <FileUpload.Label>Upload logo</FileUpload.Label>
-                <Input asChild>
-                  <FileUpload.Trigger>
-                    <FileUpload.FileText />
-                  </FileUpload.Trigger>
-                </Input>
+                <InputGroup
+                  startElement={<LuFileUp />}
+                  endElement={
+                    <FileUpload.ClearTrigger asChild>
+                      <CloseButton
+                        me="-1"
+                        size="xs"
+                        variant="plain"
+                        focusVisibleRing="inside"
+                        focusRingWidth="2px"
+                        pointerEvents="auto"
+                      />
+                    </FileUpload.ClearTrigger>
+                  }
+                >
+                  <Input asChild>
+                    <FileUpload.Trigger>
+                      <FileUpload.FileText lineClamp={1} />
+                    </FileUpload.Trigger>
+                  </Input>
+                </InputGroup>
               </FileUpload.Root>
 
               <Field.Root required invalid={!!errors.categoryId}>
