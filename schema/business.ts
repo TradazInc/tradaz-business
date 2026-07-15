@@ -11,8 +11,7 @@ export const businessSchema = z.object({
     .min(5, { error: "address must be at least 5 letters long" }),
 
   categoryId: z
-    .cuid2({ error: "select a brand category" })
-    .array()
+    .array(z.cuid2(), { error: "select a brand category" })
     .length(1, { error: "select one brand category" })
     .transform(([id]) => id),
 
