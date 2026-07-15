@@ -60,9 +60,6 @@ export const BusinessForm = () => {
       step={step}
       onStepChange={(e) => setStep(e.step)}
       count={lastStep}
-      animationName={"fade-in"}
-      animationDuration={"moderate"}
-      animationTimingFunction={"ease-out"}
     >
       <Steps.List>
         {steps.map((step, index) => (
@@ -84,8 +81,11 @@ export const BusinessForm = () => {
           w={"full"}
           mx={"auto"}
           size={"lg"}
-          maxW={{ base: "full", md: "2xl", xl: "4xl" }}
           px={{ base: 4, md: 0 }}
+          maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+          animationName={"fade-in"}
+          animationDuration={"slow"}
+          animationTimingFunction={"ease-out"}
         >
           {step === 0 && (
             <Fieldset.Content>
