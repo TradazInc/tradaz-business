@@ -2,7 +2,7 @@
 
 import { lastStep, steps } from "@/data/businessFormSteps";
 import { useBusinessCategories } from "@/hooks/businessCategory";
-import { businessSchema } from "@/schema/business";
+import { BusinessData, businessSchema } from "@/schema/business";
 import { createBusiness } from "@/services/business";
 import {
   Box,
@@ -18,7 +18,7 @@ import {
   Select,
   Steps,
 } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -43,7 +43,10 @@ export const BusinessForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm({ resolver: zodResolver(businessSchema), mode: "onBlur" });
+  } = useForm<BusinessData>({
+    resolver: standardSchemaResolver(businessSchema),
+    mode: "onBlur",
+  });
 
   const onSubmit = handleSubmit(async (businessData) => {
     const business = await createBusiness(businessData);
@@ -115,20 +118,17 @@ export const BusinessForm = () => {
                   render={({ field }) => (
                     <Select.Root
                       name={field.name}
-                      value={[field.value]}
-                      onValueChange={({ value }) => field.onChange(value)}
+                      value={field.value ? [field.value] : undefined}
+                      onValueChange={({ value }) => field.onChange(value[0])}
                       onInteractOutside={() => field.onBlur()}
                       collection={categories}
                     >
                       <Select.HiddenSelect />
                       <Select.Control>
                         <Select.Trigger>
-                          <Select.ValueText
-                            placeholder={"Select brand category"}
-                          />
+                          <Select.ValueText placeholder={"Select category"} />
                         </Select.Trigger>
                         <Select.IndicatorGroup>
-                          <Select.ClearTrigger />
                           <Select.Indicator />
                         </Select.IndicatorGroup>
                       </Select.Control>

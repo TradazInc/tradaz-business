@@ -10,7 +10,7 @@ export const businessSchema = z.object({
     .string({ error: "address is required" })
     .min(5, { error: "address must be at least 5 letters long" }),
 
-  categoryId: z.cuid2({ error: "select a business category" }),
+  categoryId: z.cuid2({ error: "select a brand category" }),
 
   phone: z.e164({ error: "phone number is required" }),
 
