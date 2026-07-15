@@ -18,7 +18,7 @@ const SignInForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm({ resolver: zodResolver(emailSignInSchema), mode: "onBlur" });
+  } = useForm({ resolver: zodResolver(emailSignInSchema) });
 
   const onSubmit = handleSubmit(async (signInData) => {
     await emailSignIn(signInData, "/dashboard");

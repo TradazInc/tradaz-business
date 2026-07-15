@@ -19,7 +19,7 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm({ resolver: zodResolver(emailSignUpSchema), mode: "onBlur" });
+  } = useForm({ resolver: zodResolver(emailSignUpSchema) });
 
   const onSubmit = handleSubmit(async (signUpData) => {
     const data = await emailSignUp(signUpData);
