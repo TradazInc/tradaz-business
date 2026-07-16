@@ -17,7 +17,7 @@ export const businessSchema = z.object({
 
   phone: z
     .string({ error: "phone number is required" })
-    .transform((value) => value.replace(/[^\d+]/g, ""))
+    .transform((value) => value.replace(/[^\d+]/g, "")) // keep only 0-9 and +
     .pipe(z.e164({ error: "enter a valid phone number" })),
 
   slug: z
