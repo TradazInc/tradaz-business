@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuFileUp } from "react-icons/lu";
+import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
   const { data, error } = useBusinessCategories();
@@ -49,6 +50,7 @@ export const BusinessForm = () => {
     resolver: standardSchemaResolver(businessSchema),
     mode: "onBlur",
   });
+  const withMask = useHookFormMask(register);
 
   const onSubmit = handleSubmit(async (businessData) => {
     const business = await createBusiness(businessData);
@@ -100,7 +102,7 @@ export const BusinessForm = () => {
                 <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
               </Field.Root>
 
-              <FileUpload.Root maxFiles={1} accept={["image/png"]}>
+              <FileUpload.Root gap={"2"} maxFiles={1} accept={["image/png"]}>
                 <FileUpload.HiddenInput />
                 <FileUpload.Label>Upload logo</FileUpload.Label>
                 <InputGroup
@@ -197,7 +199,10 @@ export const BusinessForm = () => {
                 <Field.Label>
                   Phone <Field.RequiredIndicator />
                 </Field.Label>
-                <Input placeholder="+234-XXX-XXXX-XXX" {...register("phone")} />
+                <Input
+                  placeholder="+(234) 999-999-9999"
+                  {...withMask("phone", "+(234) 999-999-9999")}
+                />
                 <Field.ErrorText>{errors.phone?.message}</Field.ErrorText>
               </Field.Root>
             </Fieldset.Content>
