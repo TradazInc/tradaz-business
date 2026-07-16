@@ -1,5 +1,5 @@
-import React from "react";
+import { PageContainer } from "@/app/ui/PageContainer";
 
 export default function page() {
-  return <div>banner page</div>;
+  return <PageContainer>banner page</PageContainer>;
 }

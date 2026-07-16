@@ -1,5 +1,5 @@
-import React from "react";
+import { PageContainer } from "@/app/ui/PageContainer";
 
 export default function page() {
-  return <div>vendor page</div>;
+  return <PageContainer>vendor page</PageContainer>;
 }

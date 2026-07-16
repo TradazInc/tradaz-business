@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { PageContainer } from "@/app/ui/PageContainer";
 
 interface Props {
   params: Promise<{ storeId: string }>;
@@ -7,7 +7,7 @@ interface Props {
 const page = async ({ params }: Props) => {
   const { storeId } = await params;
 
-  return <Box>Store {storeId}</Box>;
+  return <PageContainer>Store {storeId}</PageContainer>;
 };
 
 export default page;
