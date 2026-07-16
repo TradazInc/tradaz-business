@@ -64,7 +64,7 @@ const SignUpForm = () => {
           Sign Up
         </Button>
 
-        <SeparatorText />
+        <SeparatorText>Or</SeparatorText>
 
         <Button
           onClick={handleGoogleSignup}

@@ -17,6 +17,7 @@ import {
   InputGroup,
   Portal,
   Select,
+  Spinner,
   Steps,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
@@ -27,7 +28,7 @@ import { LuFileUp } from "react-icons/lu";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
-  const { data } = useBusinessCategories();
+  const { data, isLoading } = useBusinessCategories();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
 
@@ -156,7 +157,11 @@ export const BusinessForm = () => {
                           </Select.Trigger>
                           <Select.IndicatorGroup>
                             <Select.ClearTrigger />
-                            <Select.Indicator />
+                            {isLoading ? (
+                              <Spinner size="sm" />
+                            ) : (
+                              <Select.Indicator />
+                            )}
                           </Select.IndicatorGroup>
                         </Select.Control>
                         <Portal>

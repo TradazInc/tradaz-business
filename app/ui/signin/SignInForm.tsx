@@ -57,7 +57,9 @@ const SignInForm = () => {
         >
           Sign in
         </Button>
-        <SeparatorText />
+
+        <SeparatorText>Or</SeparatorText>
+
         <Button
           onClick={handleGoogleSignIn}
           loading={isGooglePending}
@@ -66,7 +68,7 @@ const SignInForm = () => {
         >
           <GoogleIcon />
           <Text>Sign In With Google</Text>
-        </Button>{" "}
+        </Button>
       </Fieldset.Root>
     </form>
   );

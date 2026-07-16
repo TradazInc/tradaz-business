@@ -1,6 +1,6 @@
 import { HStack, Separator, Text } from "@chakra-ui/react";
 
-const SeparatorText = () => {
+const SeparatorText = ({ children }: { children: React.ReactNode }) => {
   return (
     <HStack w={"full"}>
       <Separator flex="1" variant="solid" size="md" />
@@ -12,7 +12,7 @@ const SeparatorText = () => {
         letterSpacing={"-0.11px"}
         color={"bg.inverted"}
       >
-        Or
+        {children}
       </Text>
       <Separator flex="1" variant="solid" size="md" />
     </HStack>
