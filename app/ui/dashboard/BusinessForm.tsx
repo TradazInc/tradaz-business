@@ -102,7 +102,7 @@ export const BusinessForm = () => {
                 <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
               </Field.Root>
 
-              <FileUpload.Root gap={"2"} maxFiles={1} accept={["image/png"]}>
+              <FileUpload.Root gap={"1"} maxFiles={1} accept={["image/png"]}>
                 <FileUpload.HiddenInput />
                 <FileUpload.Label>Upload logo</FileUpload.Label>
                 <InputGroup
