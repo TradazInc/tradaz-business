@@ -27,7 +27,7 @@ import { LuFileUp } from "react-icons/lu";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
-  const { data, error } = useBusinessCategories();
+  const { data } = useBusinessCategories();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
 
@@ -60,8 +60,6 @@ export const BusinessForm = () => {
     }
   });
 
-  if (error) return null;
-
   return (
     <Steps.Root
       size={"sm"}
@@ -92,121 +90,129 @@ export const BusinessForm = () => {
           px={{ base: 4, md: 0 }}
           maxW={{ base: "full", md: "2xl", xl: "4xl" }}
         >
-          {step === 0 && (
-            <Fieldset.Content>
-              <Field.Root required invalid={!!errors.name}>
-                <Field.Label>
-                  Name <Field.RequiredIndicator />
-                </Field.Label>
-                <Input {...register("name")} />
-                <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-              </Field.Root>
+          <Fieldset.Content>
+            {step === 0 && (
+              <>
+                <Field.Root required invalid={!!errors.name}>
+                  <Field.Label>
+                    Name <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Input {...register("name")} />
+                  <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                </Field.Root>
 
-              <FileUpload.Root gap={"1.5"} maxFiles={1} accept={["image/png"]}>
-                <FileUpload.HiddenInput />
-                <FileUpload.Label>Upload logo</FileUpload.Label>
-                <InputGroup
-                  startElement={<LuFileUp />}
-                  endElement={
-                    <FileUpload.ClearTrigger asChild>
-                      <CloseButton
-                        me="-1"
-                        size="xs"
-                        variant="plain"
-                        focusVisibleRing="inside"
-                        focusRingWidth="2px"
-                        pointerEvents="auto"
-                      />
-                    </FileUpload.ClearTrigger>
-                  }
+                <FileUpload.Root
+                  gap={"1.5"}
+                  maxFiles={1}
+                  accept={["image/png"]}
                 >
-                  <Input asChild>
-                    <FileUpload.Trigger>
-                      <FileUpload.FileText lineClamp={1} />
-                    </FileUpload.Trigger>
-                  </Input>
-                </InputGroup>
-              </FileUpload.Root>
+                  <FileUpload.HiddenInput />
+                  <FileUpload.Label>Upload logo</FileUpload.Label>
+                  <InputGroup
+                    startElement={<LuFileUp />}
+                    endElement={
+                      <FileUpload.ClearTrigger asChild>
+                        <CloseButton
+                          me="-1"
+                          size="xs"
+                          variant="plain"
+                          focusVisibleRing="inside"
+                          focusRingWidth="2px"
+                          pointerEvents="auto"
+                        />
+                      </FileUpload.ClearTrigger>
+                    }
+                  >
+                    <Input asChild>
+                      <FileUpload.Trigger>
+                        <FileUpload.FileText lineClamp={1} />
+                      </FileUpload.Trigger>
+                    </Input>
+                  </InputGroup>
+                </FileUpload.Root>
 
-              <Field.Root required invalid={!!errors.categoryId}>
-                <Field.Label>
-                  Brand category <Field.RequiredIndicator />
-                </Field.Label>
-                <Controller
-                  control={control}
-                  name={"categoryId"}
-                  render={({ field }) => (
-                    <Select.Root
-                      name={field.name}
-                      value={field.value}
-                      onValueChange={({ value }) => {
-                        field.onChange(value);
-                        field.onBlur();
-                      }}
-                      onInteractOutside={() => field.onBlur()}
-                      collection={categories}
-                    >
-                      <Select.HiddenSelect />
-                      <Select.Control>
-                        <Select.Trigger>
-                          <Select.ValueText placeholder={"Select category"} />
-                        </Select.Trigger>
-                        <Select.IndicatorGroup>
-                          <Select.ClearTrigger />
-                          <Select.Indicator />
-                        </Select.IndicatorGroup>
-                      </Select.Control>
-                      <Portal>
-                        <Select.Positioner>
-                          <Select.Content>
-                            {categories.items.map((category) => (
-                              <Select.Item item={category} key={category.id}>
-                                {category.name}
-                                <Select.ItemIndicator />
-                              </Select.Item>
-                            ))}
-                          </Select.Content>
-                        </Select.Positioner>
-                      </Portal>
-                    </Select.Root>
-                  )}
-                />
-                <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
-              </Field.Root>
-            </Fieldset.Content>
-          )}
-          {step === 1 && (
-            <Fieldset.Content>
-              <Field.Root required invalid={!!errors.slug}>
-                <Field.Label>
-                  Slug <Field.RequiredIndicator />
-                </Field.Label>
-                <InputGroup startAddon="www." endAddon=".com">
-                  <Input placeholder="yoursite" {...register("slug")} />
-                </InputGroup>
-                <Field.ErrorText>{errors.slug?.message}</Field.ErrorText>
-              </Field.Root>
+                <Field.Root required invalid={!!errors.categoryId}>
+                  <Field.Label>
+                    Brand category <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Controller
+                    control={control}
+                    name={"categoryId"}
+                    render={({ field }) => (
+                      <Select.Root
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={({ value }) => {
+                          field.onChange(value);
+                          field.onBlur();
+                        }}
+                        onInteractOutside={() => field.onBlur()}
+                        collection={categories}
+                      >
+                        <Select.HiddenSelect />
+                        <Select.Control>
+                          <Select.Trigger>
+                            <Select.ValueText placeholder={"Select category"} />
+                          </Select.Trigger>
+                          <Select.IndicatorGroup>
+                            <Select.ClearTrigger />
+                            <Select.Indicator />
+                          </Select.IndicatorGroup>
+                        </Select.Control>
+                        <Portal>
+                          <Select.Positioner>
+                            <Select.Content>
+                              {categories.items.map((category) => (
+                                <Select.Item item={category} key={category.id}>
+                                  {category.name}
+                                  <Select.ItemIndicator />
+                                </Select.Item>
+                              ))}
+                            </Select.Content>
+                          </Select.Positioner>
+                        </Portal>
+                      </Select.Root>
+                    )}
+                  />
+                  <Field.ErrorText>
+                    {errors.categoryId?.message}
+                  </Field.ErrorText>
+                </Field.Root>
+              </>
+            )}
+            {step === 1 && (
+              <>
+                <Field.Root required invalid={!!errors.slug}>
+                  <Field.Label>
+                    Slug <Field.RequiredIndicator />
+                  </Field.Label>
+                  <InputGroup startAddon="www." endAddon=".com">
+                    <Input placeholder="yoursite" {...register("slug")} />
+                  </InputGroup>
+                  <Field.ErrorText>{errors.slug?.message}</Field.ErrorText>
+                </Field.Root>
 
-              <Field.Root required invalid={!!errors.address}>
-                <Field.Label>
-                  Address <Field.RequiredIndicator />
-                </Field.Label>
-                <Input {...register("address")} />
-                <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
-              </Field.Root>
+                <Field.Root required invalid={!!errors.address}>
+                  <Field.Label>
+                    Address <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Input {...register("address")} />
+                  <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
+                </Field.Root>
 
-              <Field.Root required invalid={!!errors.phone}>
-                <Field.Label>
-                  Phone <Field.RequiredIndicator />
-                </Field.Label>
-                <Input
-                  placeholder="+(234)-999-999-9999"
-                  {...withMask("phone", "+(234)-999-999-9999")}
-                />
-                <Field.ErrorText>{errors.phone?.message}</Field.ErrorText>
-              </Field.Root>
-            </Fieldset.Content>
-          )}
+                <Field.Root required invalid={!!errors.phone}>
+                  <Field.Label>
+                    Phone <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Input
+                    placeholder="+(234)-999-999-9999"
+                    {...withMask("phone", "+(234)-999-999-9999")}
+                  />
+                  <Field.ErrorText>{errors.phone?.message}</Field.ErrorText>
+                </Field.Root>
+              </>
+            )}
+          </Fieldset.Content>
         </Fieldset.Root>
       </form>
 
