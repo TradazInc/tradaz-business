@@ -15,7 +15,10 @@ export const businessSchema = z.object({
     .length(1, { error: "select one brand category" })
     .transform(([id]) => id),
 
-  phone: z.e164({ error: "phone number is required" }),
+  phone: z
+    .string({ error: "phone number is required" })
+    .transform((value) => value.replace(/[^\d+]/g, ""))
+    .pipe(z.e164({ error: "enter a valid phone number" })),
 
   slug: z
     .string({ error: "slug is required" })
