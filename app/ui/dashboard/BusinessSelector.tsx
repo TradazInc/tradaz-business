@@ -29,6 +29,7 @@ export const BusinessSelector = () => {
     }
     setBusiness(data.name);
     setStores(data.teams);
+    setStore("Stores");
   };
 
   const handleStore = async (storeId: string) => {
@@ -52,7 +53,6 @@ export const BusinessSelector = () => {
   useEffect(() => {
     const setActiveBusiness = async () => {
       if (businessId) await handleBusiness(businessId);
-      if (!businessId) setBusiness("Business");
       if (storeId) await handleStore(storeId);
       if (!storeId) setStore(undefined);
     };
@@ -73,7 +73,7 @@ export const BusinessSelector = () => {
           <Breadcrumb.Item>
             <MenuItem
               data={businesses}
-              dataType={DataType.business}
+              dataType={"business"}
               handleClick={handleBusiness}
             >
               <Breadcrumb.Link as="button">
@@ -98,7 +98,7 @@ export const BusinessSelector = () => {
             <Breadcrumb.Item>
               <MenuItem
                 data={stores}
-                dataType={DataType.store}
+                dataType={"store"}
                 handleClick={handleStore}
               >
                 <Breadcrumb.Link as="button">
@@ -115,14 +115,9 @@ export const BusinessSelector = () => {
   );
 };
 
-enum DataType {
-  business = "business",
-  store = "store",
-}
-
 interface BreadcrumbMenuItemProps {
   data?: Array<{ name: string; id: string }> | null;
-  dataType: DataType;
+  dataType: "business" | "store";
   handleClick: (id: string) => Promise<unknown>;
   children: React.ReactNode;
 }

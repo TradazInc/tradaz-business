@@ -41,11 +41,21 @@ const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
         </HStack>
       </Card.Header>
       <Card.Footer>
-        <VStack justifyContent={"flex-start"}>
-          <Text color="fg.muted" textStyle={"sm"}>
+        <VStack alignItems={"flex-start"} w={"full"}>
+          <Text
+            color={"fg.muted"}
+            textStyle={"sm"}
+            textAlign={"start"}
+            w={"full"}
+          >
             {address}
           </Text>
-          <Text color="fg.muted" textStyle={"sm"}>
+          <Text
+            color={"fg.muted"}
+            textStyle={"sm"}
+            textAlign={"start"}
+            w={"full"}
+          >
             {createdAt}
           </Text>
         </VStack>
