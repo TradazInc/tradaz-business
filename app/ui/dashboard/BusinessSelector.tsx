@@ -54,7 +54,6 @@ export const BusinessSelector = () => {
     const setActiveBusiness = async () => {
       if (businessId) await handleBusiness(businessId);
       if (storeId) await handleStore(storeId);
-      if (!storeId || !businessId) setStore(undefined);
     };
 
     setActiveBusiness();
