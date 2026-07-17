@@ -1,12 +1,4 @@
-import {
-  Card,
-  HStack,
-  Icon,
-  Image,
-  LinkOverlay,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Card, Icon, Image, LinkOverlay, Stack, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuBoxes } from "react-icons/lu";
 
@@ -29,8 +21,8 @@ const GridCard = ({
 }: Props) => {
   return (
     <Card.Root size={"sm"}>
-      <Card.Body>
-        <Card.Title gap="3">
+      <Card.Header>
+        <Card.Title gap="3" flexDirection={"row"}>
           <Icon
             size={"xl"}
             rounded={"full"}
@@ -48,6 +40,8 @@ const GridCard = ({
             {name}
           </Text>
         </Card.Title>
+      </Card.Header>
+      <Card.Body>
         <Card.Description>{description}</Card.Description>
       </Card.Body>
       <Card.Footer>
