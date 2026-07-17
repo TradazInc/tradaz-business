@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { Store } from "@/entities/Store";
 import { useBusinesses } from "@/hooks/business";
 import { setActiveBusiness } from "@/services/business";
-import { setActiveStore } from "@/services/store";
+import { getStores, setActiveStore } from "@/services/store";
 import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
@@ -19,16 +19,28 @@ export const BusinessSelector = () => {
   const [store, setStore] = useState<string>();
 
   const handleBusiness = async (businessId: string) => {
-    const { data, error } = await setActiveBusiness(businessId);
-    if (error) {
+    const [business, stores] = await Promise.all([
+      setActiveBusiness(businessId),
+      getStores(businessId),
+    ]);
+
+    if (business.error) {
       return toaster.create({
-        title: error.code,
-        description: error.message,
+        title: business.error.code,
+        description: business.error.message,
         type: "error",
       });
     }
-    setBusiness(data.name);
-    setStores(data.teams);
+
+    if (stores.error) {
+      return toaster.create({
+        title: stores.error.code,
+        description: stores.error.message,
+        type: "error",
+      });
+    }
+    setBusiness(business.data.name);
+    setStores(stores.data);
     setStore("Stores");
   };
 
