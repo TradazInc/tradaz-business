@@ -1,5 +1,5 @@
 import { NavBar } from "@/app/ui/dashboard/NavBar";
-import { LayoutContainer } from "@/app/ui/LayoutContainer";
+import { LayoutContainer } from "@/app/ui/dashboard/LayoutContainer";
 import { organizationsKey, sessionKey } from "@/data/cacheKeys";
 import { getSession } from "@/server/auth";
 import { getBusinesses } from "@/server/business";

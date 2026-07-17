@@ -30,7 +30,7 @@ const GridCard = ({
   return (
     <Card.Root size={"sm"}>
       <Card.Body>
-        <HStack gap="3">
+        <Card.Title gap="3">
           <Icon
             size={"xl"}
             rounded={"full"}
@@ -47,19 +47,19 @@ const GridCard = ({
           <Text fontWeight="semibold" textStyle="sm">
             {name}
           </Text>
-        </HStack>
+        </Card.Title>
         <Card.Description>{description}</Card.Description>
-        <Card.Footer>
-          <Stack gap="0">
-            <Text color="fg.muted" textStyle="sm">
-              {address}
-            </Text>
-            <Text color="fg.muted" textStyle="sm">
-              {createdAt}
-            </Text>
-          </Stack>
-        </Card.Footer>
       </Card.Body>
+      <Card.Footer>
+        <Stack gap="0" justifyContent={"flex-start"}>
+          <Text color="fg.muted" textStyle="sm">
+            {address}
+          </Text>
+          <Text color="fg.muted" textStyle="sm">
+            {createdAt}
+          </Text>
+        </Stack>
+      </Card.Footer>
 
       <LinkOverlay asChild>
         <NextLink href={href} />

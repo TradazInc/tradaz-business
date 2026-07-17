@@ -1,5 +1,5 @@
-import GridCardSkeleton from "@/app/ui/dashboard/GridCardSkeleton";
-import GridContainer from "@/app/ui/dashboard/GridContainer";
+import GridCardSkeleton from "@/app/ui/GridCardSkeleton";
+import GridContainer from "@/app/ui/GridContainer";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import { For, Skeleton, VStack } from "@chakra-ui/react";

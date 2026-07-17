@@ -1,5 +1,5 @@
-import GridCard from "@/app/ui/dashboard/GridCard";
-import GridContainer from "@/app/ui/dashboard/GridContainer";
+import GridCard from "@/app/ui/GridCard";
+import GridContainer from "@/app/ui/GridContainer";
 import { DialogBox } from "@/app/ui/DialogBox";
 import EmptyPage from "@/app/ui/EmptyPage";
 import { PageContainer } from "@/app/ui/PageContainer";
