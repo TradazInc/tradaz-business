@@ -1,4 +1,13 @@
-import { Card, Icon, Image, LinkOverlay, Stack, Text } from "@chakra-ui/react";
+import {
+  Card,
+  Heading,
+  HStack,
+  Icon,
+  Image,
+  LinkOverlay,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuBoxes } from "react-icons/lu";
 
@@ -22,13 +31,13 @@ const GridCard = ({
   return (
     <Card.Root size={"sm"}>
       <Card.Header>
-        <Card.Title gap="3" flexDirection={"row"}>
+        <HStack gap={"3"}>
           <Icon
+            p={1}
+            bg={"bg"}
             size={"xl"}
             rounded={"full"}
-            bg={"bg"}
             contain={"content"}
-            p={1}
           >
             {logo ? (
               <Image src={logo} borderRadius={"full"} fit={"cover"} />
@@ -36,20 +45,18 @@ const GridCard = ({
               <LuBoxes />
             )}
           </Icon>
-          <Text fontWeight="semibold" textStyle="sm">
-            {name}
-          </Text>
-        </Card.Title>
+          <Heading size={"sm"}>{name}</Heading>
+        </HStack>
       </Card.Header>
       <Card.Body>
         <Card.Description>{description}</Card.Description>
       </Card.Body>
       <Card.Footer>
-        <Stack gap="0" justifyContent={"flex-start"}>
-          <Text color="fg.muted" textStyle="sm">
+        <Stack justifyContent={"flex-start"}>
+          <Text color="fg.muted" textStyle={"sm"}>
             {address}
           </Text>
-          <Text color="fg.muted" textStyle="sm">
+          <Text color="fg.muted" textStyle={"sm"}>
             {createdAt}
           </Text>
         </Stack>
