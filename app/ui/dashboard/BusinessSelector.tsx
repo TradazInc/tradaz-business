@@ -14,7 +14,7 @@ import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
   const { data: businesses, error, isLoading } = useBusinesses();
-  const [business, setBusiness] = useState<string>();
+  const [business, setBusiness] = useState("Business");
   const [stores, setStores] = useState<Store[]>();
   const [store, setStore] = useState<string>();
 
@@ -29,12 +29,13 @@ export const BusinessSelector = () => {
     }
     setBusiness(data.name);
     setStores(data.teams);
-    setStore("Stores");
   };
 
   const handleStore = async (storeId: string) => {
+    setStore(stores?.find((s) => s.id === storeId)?.name);
     const { data, error } = await setActiveStore(storeId);
     if (error) {
+      setStore(undefined);
       return toaster.create({
         title: error.code,
         description: error.message,
@@ -51,6 +52,7 @@ export const BusinessSelector = () => {
   useEffect(() => {
     const setActiveBusiness = async () => {
       if (businessId) await handleBusiness(businessId);
+      if (!businessId) setBusiness("Business");
       if (storeId) await handleStore(storeId);
       if (!storeId) setStore(undefined);
     };
@@ -78,7 +80,7 @@ export const BusinessSelector = () => {
                 <LuBuilding2 />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
-                    {business ?? "Business"}
+                    {business}
                     <LuChevronDown />
                   </HStack>
                 </Skeleton>
