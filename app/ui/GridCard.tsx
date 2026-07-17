@@ -21,7 +21,7 @@ interface Props {
 
 const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
   return (
-    <Card.Root size={"sm"} gapY={"1"}>
+    <Card.Root size={"sm"}>
       <Card.Header>
         <HStack gap={"1.5"}>
           <Icon

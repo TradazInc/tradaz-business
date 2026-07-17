@@ -1,5 +1,6 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
@@ -28,7 +29,7 @@ import { LuFileUp } from "react-icons/lu";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
-  const { data, isLoading } = useBusinessCategories();
+  const { data, error, isLoading } = useBusinessCategories();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
 
@@ -51,6 +52,7 @@ export const BusinessForm = () => {
     resolver: standardSchemaResolver(businessSchema),
     mode: "onBlur",
   });
+
   const withMask = useHookFormMask(register);
 
   const onSubmit = handleSubmit(async (businessData) => {
@@ -60,6 +62,13 @@ export const BusinessForm = () => {
       push(`/dashboard/business/${business.id}`);
     }
   });
+
+  if (error)
+    toaster.create({
+      title: error.code,
+      description: error.message,
+      type: "error",
+    });
 
   return (
     <Steps.Root
