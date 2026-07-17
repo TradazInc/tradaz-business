@@ -21,7 +21,7 @@ interface Props {
 
 const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
   return (
-    <Card.Root size={"sm"}>
+    <Card.Root size={"sm"} gapY={"1"}>
       <Card.Header>
         <HStack gap={"1.5"}>
           <Icon
@@ -40,7 +40,7 @@ const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
           <Heading size={"sm"}>{name}</Heading>
         </HStack>
       </Card.Header>
-      <Card.Body>
+      <Card.Footer>
         <VStack justifyContent={"flex-start"}>
           <Text color="fg.muted" textStyle={"sm"}>
             {address}
@@ -49,7 +49,7 @@ const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
             {createdAt}
           </Text>
         </VStack>
-      </Card.Body>
+      </Card.Footer>
 
       <LinkOverlay asChild>
         <NextLink href={href} />
