@@ -5,8 +5,8 @@ import {
   Icon,
   Image,
   LinkOverlay,
-  Stack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuBoxes } from "react-icons/lu";
@@ -14,24 +14,16 @@ import { LuBoxes } from "react-icons/lu";
 interface Props {
   logo?: string | null;
   name: string;
-  description?: string;
   address?: string;
   createdAt?: string;
   href: string;
 }
 
-const GridCard = ({
-  logo,
-  name,
-  address,
-  description,
-  createdAt,
-  href,
-}: Props) => {
+const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
   return (
     <Card.Root size={"sm"}>
       <Card.Header>
-        <HStack gap={"3"}>
+        <HStack gap={"1.5"}>
           <Icon
             p={1}
             bg={"bg"}
@@ -49,18 +41,15 @@ const GridCard = ({
         </HStack>
       </Card.Header>
       <Card.Body>
-        <Card.Description>{description}</Card.Description>
-      </Card.Body>
-      <Card.Footer>
-        <Stack justifyContent={"flex-start"}>
+        <VStack justifyContent={"flex-start"}>
           <Text color="fg.muted" textStyle={"sm"}>
             {address}
           </Text>
           <Text color="fg.muted" textStyle={"sm"}>
             {createdAt}
           </Text>
-        </Stack>
-      </Card.Footer>
+        </VStack>
+      </Card.Body>
 
       <LinkOverlay asChild>
         <NextLink href={href} />

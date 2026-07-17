@@ -45,10 +45,9 @@ export default async function page({ searchParams }: Props) {
                 <GridCard
                   key={business.id}
                   name={business.name}
-                  address={business.metadata.address}
                   logo={business.logo}
+                  address={business.metadata.address}
                   createdAt={new Date(business.createdAt).toDateString()}
-                  description={business.metadata.description}
                   href={`/dashboard/business/${business.id}`}
                 />
               )}
