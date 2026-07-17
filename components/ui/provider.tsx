@@ -2,15 +2,11 @@
 
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { ColorModeProvider, type ColorModeProviderProps } from "./color-mode";
-import { Toaster } from "./toaster";
 
-export function Provider({ children, ...props }: ColorModeProviderProps) {
+export function Provider(props: ColorModeProviderProps) {
   return (
-    <ColorModeProvider {...props}>
-      <ChakraProvider value={defaultSystem}>
-        {children}
-        <Toaster />
-      </ChakraProvider>
-    </ColorModeProvider>
+    <ChakraProvider value={defaultSystem}>
+      <ColorModeProvider {...props} />
+    </ChakraProvider>
   );
 }
