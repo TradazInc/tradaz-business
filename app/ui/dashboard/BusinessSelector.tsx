@@ -1,8 +1,9 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { useBusiness, useBusinesses } from "@/hooks/business";
-import { setActiveBussienss } from "@/services/business";
+import { Store } from "@/entities/Store";
+import { useBusinesses } from "@/hooks/business";
+import { setActiveBusiness } from "@/services/business";
 import { setActiveStore } from "@/services/store";
 import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -13,19 +14,21 @@ import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
   const { data: businesses, error, isLoading } = useBusinesses();
-  const { data: business, error: Error, mutate } = useBusiness();
+  const [business, setBusiness] = useState<string>();
+  const [stores, setStores] = useState<Store[]>();
   const [store, setStore] = useState<string>();
 
   const handleBusiness = async (businessId: string) => {
-    const business = await setActiveBussienss(businessId);
-    if (business.error) {
+    const { data, error } = await setActiveBusiness(businessId);
+    if (error) {
       return toaster.create({
-        title: business.error.code,
-        description: business.error.message,
+        title: error.code,
+        description: error.message,
         type: "error",
       });
     }
-    mutate();
+    setBusiness(data.name);
+    setStores(data.teams);
     setStore("Stores");
   };
 
@@ -44,7 +47,7 @@ export const BusinessSelector = () => {
   // Tracks url changes
   const businessId = useParams().businessId as string;
   const storeId = useParams().storeId as string;
-  
+
   useEffect(() => {
     const setActiveBusiness = async () => {
       if (businessId) await handleBusiness(businessId);
@@ -55,7 +58,7 @@ export const BusinessSelector = () => {
     setActiveBusiness();
   }, [businessId, storeId]);
 
-  if (error || Error) return null;
+  if (error) return null;
 
   return (
     <Breadcrumb.Root>
@@ -75,7 +78,7 @@ export const BusinessSelector = () => {
                 <LuBuilding2 />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
-                    {business?.name ?? "Business"}
+                    {business ?? "Business"}
                     <LuChevronDown />
                   </HStack>
                 </Skeleton>
@@ -92,7 +95,7 @@ export const BusinessSelector = () => {
 
             <Breadcrumb.Item>
               <MenuItem
-                data={business?.teams}
+                data={stores}
                 dataType={DataType.store}
                 handleClick={handleStore}
               >

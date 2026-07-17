@@ -21,7 +21,7 @@ export async function createBusiness(business: BusinessData) {
   return data;
 }
 
-export async function setActiveBussienss(organizationId: string) {
+export async function setActiveBusiness(organizationId: string) {
   return authClient.organization.setActive({ organizationId });
 }
 

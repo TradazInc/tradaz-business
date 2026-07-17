@@ -46,7 +46,7 @@ export default async function page({ searchParams }: Props) {
                   key={business.id}
                   name={business.name}
                   logo={business.logo}
-                  address={business.metadata.address}
+                  address={JSON.parse(business.metadata)?.address}
                   createdAt={new Date(business.createdAt).toDateString()}
                   href={`/dashboard/business/${business.id}`}
                 />
