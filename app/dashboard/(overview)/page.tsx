@@ -37,7 +37,7 @@ export default async function page({ searchParams }: Props) {
             trigger={
               <Button variant={"outline"} size={"xs"}>
                 <LuPlus />
-                "New Brand"
+                New Brand
               </Button>
             }
             signup={signup}
@@ -66,10 +66,17 @@ export default async function page({ searchParams }: Props) {
             title="No businesses found"
             description="Create a new business"
           >
-            <Button>
-              <LuPlus />
-              "New Brand"
-            </Button>
+            <DialogBox
+              trigger={
+                <Button>
+                  <LuPlus />
+                  New Brand
+                </Button>
+              }
+              signup={signup}
+            >
+              <BusinessForm />
+            </DialogBox>
           </EmptyPage>
         )}
       </VStack>

@@ -35,7 +35,7 @@ export default async function page({ params }: Props) {
             trigger={
               <Button variant={"outline"} size={"xs"}>
                 <LuPlus />
-                "New Store"
+                New Store
               </Button>
             }
           >
@@ -62,10 +62,16 @@ export default async function page({ params }: Props) {
             title="No stores found"
             description="Create a new store for your brand"
           >
-            <Button>
-              <LuPlus />
-              "New Store"
-            </Button>
+            <DialogBox
+              trigger={
+                <Button>
+                  <LuPlus />
+                  New Store
+                </Button>
+              }
+            >
+              <StoreForm />
+            </DialogBox>
           </EmptyPage>
         )}
       </VStack>
