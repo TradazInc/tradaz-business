@@ -8,7 +8,7 @@ import PageHeader from "@/app/ui/PageHeader";
 import Search from "@/app/ui/Search";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusinesses } from "@/server/business";
-import { For, VStack } from "@chakra-ui/react";
+import { Button, For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
@@ -33,7 +33,15 @@ export default async function page({ searchParams }: Props) {
           <Suspense>
             <Search placeholder={"Search for a brand"} query={"business"} />
           </Suspense>
-          <DialogBox prompt={"New Brand"} icon={<LuPlus />} signup={signup}>
+          <DialogBox
+            trigger={
+              <Button variant={"outline"} size={"xs"}>
+                <LuPlus />
+                "New Brand"
+              </Button>
+            }
+            signup={signup}
+          >
             <BusinessForm />
           </DialogBox>
         </ToolBarContainer>
@@ -57,7 +65,12 @@ export default async function page({ searchParams }: Props) {
           <EmptyPage
             title="No businesses found"
             description="Create a new business"
-          />
+          >
+            <Button>
+              <LuPlus />
+              "New Brand"
+            </Button>
+          </EmptyPage>
         )}
       </VStack>
     </PageContainer>

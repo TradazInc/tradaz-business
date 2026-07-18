@@ -5,13 +5,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Props {
-  icon?: React.ReactNode;
   signup?: string;
   children: React.ReactNode;
-  prompt: string;
+  trigger: React.ReactNode;
 }
 
-export const DialogBox = ({ icon, children, prompt, signup }: Props) => {
+export const DialogBox = ({ children, trigger, signup }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -34,12 +33,7 @@ export const DialogBox = ({ icon, children, prompt, signup }: Props) => {
       open={open}
       onOpenChange={(e) => setOpen(e.open)}
     >
-      <Dialog.Trigger asChild>
-        <Button variant={"outline"} size={"xs"}>
-          {icon}
-          {prompt}
-        </Button>
-      </Dialog.Trigger>
+      <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>

@@ -1,14 +1,14 @@
-import GridCard from "@/app/ui/GridCard";
-import GridContainer from "@/app/ui/GridContainer";
+import { StoreForm } from "@/app/ui/business/StoreForm";
 import { DialogBox } from "@/app/ui/DialogBox";
 import EmptyPage from "@/app/ui/EmptyPage";
+import GridCard from "@/app/ui/GridCard";
+import GridContainer from "@/app/ui/GridContainer";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import Search from "@/app/ui/Search";
-import { StoreForm } from "@/app/ui/business/StoreForm";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getBusiness } from "@/server/business";
-import { For, VStack } from "@chakra-ui/react";
+import { Button, For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
@@ -31,7 +31,14 @@ export default async function page({ params }: Props) {
           <Suspense>
             <Search placeholder={"Search for a store"} query={"store"} />
           </Suspense>
-          <DialogBox prompt={"New Store"} icon={<LuPlus />}>
+          <DialogBox
+            trigger={
+              <Button variant={"outline"} size={"xs"}>
+                <LuPlus />
+                "New Store"
+              </Button>
+            }
+          >
             <StoreForm />
           </DialogBox>
         </ToolBarContainer>
@@ -54,7 +61,12 @@ export default async function page({ params }: Props) {
           <EmptyPage
             title="No stores found"
             description="Create a new store for your brand"
-          />
+          >
+            <Button>
+              <LuPlus />
+              "New Store"
+            </Button>
+          </EmptyPage>
         )}
       </VStack>
     </PageContainer>
