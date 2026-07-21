@@ -2,10 +2,10 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
-import { pageSize } from "@/data/pageSize";
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
 import { createBusiness } from "@/services/business";
+import { parsePagedData } from "@/utilities/parsePagedData";
 import {
   Box,
   Button,
@@ -32,14 +32,10 @@ import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
   const { data, error, isLoading, size, setSize } = useBusinessCategories();
-
-  const pages = data ?? [];
-  const flatData = pages.flatMap((page) => page?.data ?? []);
-  const lastPage = pages[pages.length - 1];
-  const hasMore = lastPage ? lastPage.data.length === pageSize : true;
-
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
+
+  const { flatData, hasMore } = useMemo(() => parsePagedData(data), [data]);
 
   const categories = useMemo(
     () =>
