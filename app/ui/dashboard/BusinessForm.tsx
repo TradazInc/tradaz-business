@@ -26,21 +26,29 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuFileUp } from "react-icons/lu";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
-  const { data, error, isLoading } = useBusinessCategories();
+  const { data, error, isLoading, size, setSize, pageSize } =
+    useBusinessCategories();
+
+  const pages = data ?? [];
+  const flatData = pages.flatMap((page) => page?.data ?? []);
+  const lastPage = pages[pages.length - 1];
+  const hasMore = lastPage ? lastPage.data.length === pageSize : true;
+
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
 
   const categories = useMemo(
     () =>
       createListCollection({
-        items: data ?? [],
-        itemToValue: (item) => item.id,
+        items: flatData,
+        itemToValue: (item) => item?.id,
         itemToString: (item) => item.name,
       }),
-    [data],
+    [flatData],
   );
 
   const {
@@ -175,14 +183,24 @@ export const BusinessForm = () => {
                         </Select.Control>
                         <Portal>
                           <Select.Positioner>
-                            <Select.Content>
-                              {categories.items.map((category) => (
-                                <Select.Item item={category} key={category.id}>
-                                  {category.name}
-                                  <Select.ItemIndicator />
-                                </Select.Item>
-                              ))}
-                            </Select.Content>
+                            <InfiniteScroll
+                              dataLength={flatData.length}
+                              hasMore={hasMore}
+                              next={() => setSize(size + 1)}
+                              loader={<Spinner size={"xs"} />}
+                            >
+                              <Select.Content>
+                                {categories.items.map((category) => (
+                                  <Select.Item
+                                    item={category}
+                                    key={category.id}
+                                  >
+                                    {category.name}
+                                    <Select.ItemIndicator />
+                                  </Select.Item>
+                                ))}
+                              </Select.Content>
+                            </InfiniteScroll>
                           </Select.Positioner>
                         </Portal>
                       </Select.Root>

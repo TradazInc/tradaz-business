@@ -1,8 +1,4 @@
-export interface FetchResponse<T> {
-  data: T[];
-  pagination: {
-    page: 1;
-    pageSize: 0;
-    count: 0;
-  };
+export interface FetchResponse<D> {
+  data: D[];
+  meta: { next?: string; page: number; pageSize: number };
 }
