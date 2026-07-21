@@ -2,6 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
+import { pageSize } from "@/data/pageSize";
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
 import { createBusiness } from "@/services/business";
@@ -30,8 +31,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
-  const { data, error, isLoading, size, setSize, pageSize } =
-    useBusinessCategories();
+  const { data, error, isLoading, size, setSize } = useBusinessCategories();
 
   const pages = data ?? [];
   const flatData = pages.flatMap((page) => page?.data ?? []);
