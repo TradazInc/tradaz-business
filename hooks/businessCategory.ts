@@ -11,12 +11,17 @@ export const useBusinessCategories = () => {
 
   return useSWRInfinite(
     (pageIndex, previousPageData) => {
-      if (previousPageData && !previousPageData?.meta?.next) return null; // reached the end
+      // reached the end
+      if (previousPageData && !previousPageData?.meta?.next) return null;
+      // first page, we don't have `previousPageData`
       if (pageIndex === 0)
-        return { key: "business-categories", query: { pageSize } }; // first page, we don't have `previousPageData`
+        return {
+          key: "business-categories",
+          query: { pageSize },
+        };
       return {
         key: "business-categories",
-        query: { pageSize, cursor: previousPageData?.meta.next },
+        query: { pageSize, cursor: previousPageData?.meta?.next },
       };
     },
     ({ query }) => businessCategoryService.getAll({ query }),
