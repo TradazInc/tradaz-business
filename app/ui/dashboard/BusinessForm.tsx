@@ -179,12 +179,13 @@ export const BusinessForm = () => {
                         </Select.Control>
                         <Portal>
                           <Select.Positioner>
-                            <Select.Content>
+                            <Select.Content id={"category-scroll"}>
                               <InfiniteScroll
                                 dataLength={flatData.length}
                                 hasMore={hasMore}
                                 next={() => setSize(size + 1)}
                                 loader={<Spinner size={"xs"} />}
+                                scrollableTarget={"category-scroll"}
                               >
                                 {categories.items.map((category) => (
                                   <Select.Item
