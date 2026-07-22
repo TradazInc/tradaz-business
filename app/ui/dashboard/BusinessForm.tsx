@@ -17,14 +17,13 @@ import {
   FileUpload,
   Input,
   InputGroup,
-  Portal,
   Select,
   Spinner,
   Steps,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuFileUp } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -34,6 +33,7 @@ export const BusinessForm = () => {
   const { data, error, isLoading, size, setSize } = useBusinessCategories();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
+  const scrollId = useId();
 
   const { flatData, hasMore } = useMemo(() => parsePagedData(data), [data]);
 
@@ -177,29 +177,24 @@ export const BusinessForm = () => {
                             )}
                           </Select.IndicatorGroup>
                         </Select.Control>
-                        <Portal>
-                          <Select.Positioner>
-                            <Select.Content id={"category-scroll"}>
-                              <InfiniteScroll
-                                dataLength={flatData.length}
-                                hasMore={hasMore}
-                                next={() => setSize(size + 1)}
-                                loader={<Spinner size={"xs"} />}
-                                scrollableTarget={"category-scroll"}
-                              >
-                                {categories.items.map((category) => (
-                                  <Select.Item
-                                    item={category}
-                                    key={category.id}
-                                  >
-                                    {category.name}
-                                    <Select.ItemIndicator />
-                                  </Select.Item>
-                                ))}
-                              </InfiniteScroll>
-                            </Select.Content>
-                          </Select.Positioner>
-                        </Portal>
+                        <Select.Positioner>
+                          <Select.Content id={scrollId}>
+                            <InfiniteScroll
+                              dataLength={flatData.length}
+                              hasMore={hasMore}
+                              next={() => setSize(size + 1)}
+                              loader={<Spinner size={"xs"} />}
+                              scrollableTarget={scrollId}
+                            >
+                              {categories.items.map((category) => (
+                                <Select.Item item={category} key={category.id}>
+                                  {category.name}
+                                  <Select.ItemIndicator />
+                                </Select.Item>
+                              ))}
+                            </InfiniteScroll>
+                          </Select.Content>
+                        </Select.Positioner>
                       </Select.Root>
                     )}
                   />
