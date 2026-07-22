@@ -178,7 +178,7 @@ export const BusinessForm = () => {
                           </Select.IndicatorGroup>
                         </Select.Control>
                         <Select.Positioner>
-                          <Select.Content id={scrollId}>
+                          <Select.Content id={scrollId} maxH={"240px"}>
                             <InfiniteScroll
                               dataLength={flatData.length}
                               hasMore={hasMore}
