@@ -179,13 +179,13 @@ export const BusinessForm = () => {
                         </Select.Control>
                         <Portal>
                           <Select.Positioner>
-                            <InfiniteScroll
-                              dataLength={flatData.length}
-                              hasMore={hasMore}
-                              next={() => setSize(size + 1)}
-                              loader={<Spinner size={"xs"} />}
-                            >
-                              <Select.Content>
+                            <Select.Content>
+                              <InfiniteScroll
+                                dataLength={flatData.length}
+                                hasMore={hasMore}
+                                next={() => setSize(size + 1)}
+                                loader={<Spinner size={"xs"} />}
+                              >
                                 {categories.items.map((category) => (
                                   <Select.Item
                                     item={category}
@@ -195,8 +195,8 @@ export const BusinessForm = () => {
                                     <Select.ItemIndicator />
                                   </Select.Item>
                                 ))}
-                              </Select.Content>
-                            </InfiniteScroll>
+                              </InfiniteScroll>
+                            </Select.Content>
                           </Select.Positioner>
                         </Portal>
                       </Select.Root>
