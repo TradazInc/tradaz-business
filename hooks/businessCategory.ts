@@ -10,10 +10,10 @@ const businessCategoryService = new ApiClient<BusinessCategory>(
 export const useBusinessCategories = () => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {
-      if (previousPageData && !previousPageData.data) return null;
-      if (pageIndex === 0) return `/business-categories?pageSize=${pageSize}`;
-      return `/business-categories?cursor=${previousPageData?.meta.next}&pageSize=${pageSize}`;
+      if (previousPageData && !previousPageData?.meta.next) return null; // reached the end
+      if (pageIndex === 0) return { pageSize }; // first page, we don't have `previousPageData`
+      return { pageSize, cursor: previousPageData?.meta.next }; // add the cursor to the API endpoint
     },
-    () => businessCategoryService.getAll(),
+    (query) => businessCategoryService.getAll({ query }),
   );
 };
