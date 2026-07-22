@@ -12,12 +12,13 @@ export const useBusinessCategories = () => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {
       if (previousPageData && !previousPageData?.meta?.next) return null; // reached the end
-      if (pageIndex === 0) return ["business-categories", { pageSize }]; // first page, we don't have `previousPageData`
-      return [
-        "business-categories",
-        { pageSize, cursor: previousPageData?.meta.next },
-      ]; // add the cursor to the API endpoint
+      if (pageIndex === 0)
+        return { key: "business-categories", query: { pageSize } }; // first page, we don't have `previousPageData`
+      return {
+        key: "business-categories",
+        query: { pageSize, cursor: previousPageData?.meta.next },
+      };
     },
-    (key) => businessCategoryService.getAll({ query: key[1] }),
+    ({ query }) => businessCategoryService.getAll({ query }),
   );
 };
