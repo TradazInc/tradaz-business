@@ -2,6 +2,7 @@
 
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
 import { Accordion, Box, Icon } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -46,10 +47,12 @@ export const SideBarList = () => {
                   color={"fg.muted"}
                   _hover={{ color: "fg" }}
                 >
-                  <Icon fontSize={"lg"} mx={3}>
-                    <Icon as={child.icon} />
-                  </Icon>
-                  {child.label}
+                  <NextLink href={child.href}>
+                    <Icon fontSize={"lg"} mx={3}>
+                      <Icon as={child.icon} />
+                    </Icon>
+                    {child.label}
+                  </NextLink>
                 </Accordion.ItemBody>
               </Accordion.ItemContent>
             ))}
