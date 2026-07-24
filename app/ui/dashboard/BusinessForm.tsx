@@ -33,7 +33,7 @@ export const BusinessForm = () => {
   const { data, error, isLoading, size, setSize } = useBusinessCategories();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
-  const scrollId = useId();
+  const categoryScrollId = useId();
 
   const { flatData, hasMore } = useMemo(() => parsePagedData(data), [data]);
 
@@ -178,13 +178,13 @@ export const BusinessForm = () => {
                           </Select.IndicatorGroup>
                         </Select.Control>
                         <Select.Positioner>
-                          <Select.Content id={scrollId}>
+                          <Select.Content id={categoryScrollId}>
                             <InfiniteScroll
                               dataLength={flatData.length}
                               hasMore={hasMore}
                               next={() => setSize(size + 1)}
                               loader={<Spinner size={"xs"} />}
-                              scrollableTarget={scrollId}
+                              scrollableTarget={categoryScrollId}
                             >
                               {categories.items.map((category) => (
                                 <Select.Item item={category} key={category.id}>
