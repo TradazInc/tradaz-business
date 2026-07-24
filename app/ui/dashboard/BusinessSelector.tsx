@@ -14,7 +14,7 @@ import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
   const { data: businesses, error, isLoading } = useBusinesses();
-  const [business, setBusiness] = useState("Business");
+  const [business, setBusiness] = useState("Brands");
   const [stores, setStores] = useState<Store[]>();
   const [store, setStore] = useState<string>();
 
