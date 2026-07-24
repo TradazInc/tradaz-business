@@ -229,7 +229,7 @@ export const BusinessForm = () => {
                     Phone <Field.RequiredIndicator />
                   </Field.Label>
                   <Input
-                    placeholder="081-2345-6789"
+                    placeholder="0812-345-6789"
                     {...withMask("phone", "9999-999-9999", {
                       autoUnmask: true,
                     })}
