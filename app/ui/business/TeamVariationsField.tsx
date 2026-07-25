@@ -73,7 +73,7 @@ const TeamVariationsField = ({
     <Fieldset.Root invalid={!!teamVariationErrors?.root?.message}>
       <Fieldset.Legend>Store Quantity</Fieldset.Legend>
       {fields.map((field, index) => (
-        <HStack key={field.id} alignItems={"center"}>
+        <HStack key={field.id} alignItems={"end"}>
           <Field.Root required invalid={!!teamVariationErrors?.[index]?.teamId}>
             <Field.Label>
               Store <Field.RequiredIndicator />
