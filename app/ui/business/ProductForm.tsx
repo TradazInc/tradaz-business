@@ -313,10 +313,10 @@ const ProductForm = ({ product }: Props) => {
             <Fieldset.Legend>Variations</Fieldset.Legend>
             {fields.map((variation, index) => (
               <Fieldset.Content
-                key={variation.id}
-                borderRadius="md"
-                bg={"bg.panel"}
                 p={4}
+                bg={"bg.panel"}
+                key={variation.id}
+                borderRadius={"md"}
               >
                 <HStack justify="space-between" mb={4}>
                   <Text fontWeight="medium">Variation {index + 1}</Text>
@@ -481,7 +481,7 @@ const ProductForm = ({ product }: Props) => {
             <Button
               size={"sm"}
               type="button"
-              variant="outline"
+              variant="subtle"
               alignSelf="flex-start"
               onClick={() => append(emptyVariation)}
             >
