@@ -75,7 +75,7 @@ const TeamVariationsField = ({
       {fields.map((field, index) => (
         <Fieldset.Content
           p={4}
-          bg={"bg.muted"}
+          bg={"bg.subtle"}
           key={field.id}
           alignItems={"end"}
           borderRadius={"md"}
