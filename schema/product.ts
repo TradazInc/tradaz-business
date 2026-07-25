@@ -18,7 +18,9 @@ const variationSchema = z.object({
     .string({ error: "sku is required" })
     .min(1, { error: "sku is required" }),
 
-  color: z.hex({ error: "color is required" }),
+  color: z
+    .string({ error: "color is required" })
+    .regex(/^#[0-9a-fA-F]{6}$/, { error: "select a valid color" }),
 
   price: z
     .number({ error: "price is required" })

@@ -357,9 +357,9 @@ const ProductForm = ({ product }: Props) => {
                       render={({ field }) => (
                         <ColorPicker.Root
                           name={field.name}
-                          value={parseColor(field.value ?? "#000000")}
-                          onValueChange={({ valueAsString }) =>
-                            field.onChange(valueAsString)
+                          value={parseColor(field.value)}
+                          onValueChange={({ value }) =>
+                            field.onChange(value.toString("hex"))
                           }
                           onInteractOutside={() => field.onBlur()}
                         >
