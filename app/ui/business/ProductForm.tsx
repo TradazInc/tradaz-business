@@ -314,8 +314,8 @@ const ProductForm = ({ product }: Props) => {
             {fields.map((variation, index) => (
               <Fieldset.Content
                 key={variation.id}
-                borderWidth="1px"
                 borderRadius="md"
+                bg={"bg.panel"}
                 p={4}
               >
                 <HStack justify="space-between" mb={4}>
@@ -480,6 +480,7 @@ const ProductForm = ({ product }: Props) => {
             ))}
 
             <Button
+              size={"sm"}
               type="button"
               variant="outline"
               alignSelf="flex-start"
@@ -502,7 +503,7 @@ const ProductForm = ({ product }: Props) => {
           disabled={!isValid || isSubmitting}
           loading={isSubmitting}
         >
-          {product ? "Update Product" : "Create New Product"}
+          {product ? "Update Product" : "Create Product"}
         </Button>
       </Fieldset.Root>
     </form>
