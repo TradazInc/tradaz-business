@@ -218,7 +218,10 @@ export const BusinessForm = () => {
                   <InputGroup startAddon="www." endAddon=".com">
                     <Input placeholder="yoursite" {...register("slug")} />
                   </InputGroup>
-                  <Field.ErrorText>{errors.slug?.message}</Field.ErrorText>
+                  <Field.ErrorText>
+                    <Field.ErrorIcon />
+                    {errors.slug?.message}
+                  </Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root required invalid={!!errors.address}>

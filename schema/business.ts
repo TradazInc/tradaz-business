@@ -30,7 +30,7 @@ export const businessSchema = z.object({
         const result = await checkBusinessSlug(slug);
         return result.status;
       },
-      { error: "Slug is taken!" },
+      { error: "Slug is taken" },
     ),
 });
 export type BusinessData = z.infer<typeof businessSchema>;

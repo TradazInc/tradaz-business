@@ -23,7 +23,6 @@ const variationSchema = z.object({
     .positive({ error: "price can't be negative" }),
 
   sizeId: z
-
     .array(z.cuid2(), { error: "select a size" })
     .length(1, { error: "select one size" })
     .transform(([id]) => id),

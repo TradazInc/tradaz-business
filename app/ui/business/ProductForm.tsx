@@ -123,19 +123,16 @@ const ProductForm = ({ product }: Props) => {
   return (
     <form style={{ width: "100%" }} onSubmit={onSubmit}>
       <Fieldset.Root
-        size="lg"
         w="full"
-        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+        size="lg"
         mx="auto"
         px={{ base: 4, md: 0 }}
+        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
       >
-        <Stack>
-          <Fieldset.Legend>Product details</Fieldset.Legend>
-          <Fieldset.HelperText>
-            Please provide your product details below.
-          </Fieldset.HelperText>
-        </Stack>
-
+        <Fieldset.Legend>Product details</Fieldset.Legend>
+        <Fieldset.HelperText>
+          Please provide your product details below.
+        </Fieldset.HelperText>
         <Fieldset.Content>
           <FileUpload.Root
             alignItems="stretch"
@@ -316,18 +313,21 @@ const ProductForm = ({ product }: Props) => {
             <Field.ErrorText>{errors.sizeTypeId?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Stack gap={6}>
-            <Text fontWeight="medium">Variations</Text>
-
+          <Fieldset.Root invalid={!!errors.variations?.root?.message}>
+            <Fieldset.Legend>Variations</Fieldset.Legend>
             {fields.map((variation, index) => (
-              <Box key={variation.id} borderWidth="1px" borderRadius="md" p={4}>
+              <Fieldset.Content
+                key={variation.id}
+                borderWidth="1px"
+                borderRadius="md"
+                p={4}
+              >
                 <HStack justify="space-between" mb={4}>
                   <Text fontWeight="medium">Variation {index + 1}</Text>
                   <IconButton
                     type="button"
                     size="sm"
                     variant="ghost"
-                    aria-label="Remove variation"
                     onClick={() => remove(index)}
                   >
                     <LuTrash2 />
@@ -472,19 +472,14 @@ const ProductForm = ({ product }: Props) => {
                     </Field.ErrorText>
                   </Field.Root>
 
-                  <Field.Root>
-                    <Field.Label mb={2}>
-                      Store Quantity <Field.RequiredIndicator />
-                    </Field.Label>
-                    <TeamVariationsField
-                      control={control}
-                      register={register}
-                      errors={errors}
-                      variationIndex={index}
-                    />
-                  </Field.Root>
+                  <TeamVariationsField
+                    control={control}
+                    register={register}
+                    errors={errors}
+                    variationIndex={index}
+                  />
                 </Stack>
-              </Box>
+              </Fieldset.Content>
             ))}
 
             <Button
@@ -504,10 +499,10 @@ const ProductForm = ({ product }: Props) => {
               <LuPlus /> Add variation
             </Button>
 
-            <Field.ErrorText>
+            <Fieldset.ErrorText>
               {errors.variations?.root?.message}
-            </Field.ErrorText>
-          </Stack>
+            </Fieldset.ErrorText>
+          </Fieldset.Root>
         </Fieldset.Content>
 
         <TotalQuantity control={control} />

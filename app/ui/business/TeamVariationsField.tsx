@@ -7,21 +7,21 @@ import {
   Button,
   createListCollection,
   Field,
+  Fieldset,
   HStack,
   IconButton,
   Input,
   Portal,
   Select,
   Spinner,
-  Stack,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
 import {
   Control,
   Controller,
   FieldErrors,
-  UseFormRegister,
   useFieldArray,
+  UseFormRegister,
 } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 
@@ -69,19 +69,10 @@ const TeamVariationsField = ({
     });
 
   return (
-    <Stack gap={3}>
+    <Fieldset.Root invalid={!!teamVariationErrors?.root?.message}>
+      <Fieldset.Legend>Store Quantity</Fieldset.Legend>
       {fields.map((field, index) => (
         <HStack key={field.id} align="flex-start">
-          <Field.Root required>
-            <Field.Label>Store</Field.Label>
-            <Input
-              placeholder="Team id"
-              {...register(
-                `variations.${variationIndex}.teamVariations.${index}.teamId`,
-              )}
-            />
-          </Field.Root>
-
           <Field.Root required invalid={!!teamVariationErrors?.[index]?.teamId}>
             <Field.Label>
               Store <Field.RequiredIndicator />
@@ -134,7 +125,9 @@ const TeamVariationsField = ({
             required
             invalid={!!teamVariationErrors?.[index]?.quantity}
           >
-            <Field.Label>Quantity</Field.Label>
+            <Field.Label>
+              Quantity <Field.RequiredIndicator />
+            </Field.Label>
             <Input
               type="number"
               {...register(
@@ -169,8 +162,10 @@ const TeamVariationsField = ({
         <LuPlus /> Add store quantity
       </Button>
 
-      <Field.ErrorText>{teamVariationErrors?.root?.message}</Field.ErrorText>
-    </Stack>
+      <Fieldset.ErrorText>
+        {teamVariationErrors?.root?.message}
+      </Fieldset.ErrorText>
+    </Fieldset.Root>
   );
 };
 
