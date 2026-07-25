@@ -1,14 +1,7 @@
-import { VStack } from "@chakra-ui/react";
-import React from "react";
+import { Grid } from "@chakra-ui/react";
 
-export const LayoutContainer = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  return (
-    <VStack h={"dvh"} gap={0}>
-      {children}
-    </VStack>
-  );
-};
+export const LayoutContainer = ({ children }: { children: React.ReactNode }) => (
+  <Grid h="dvh" templateRows={"auto minmax(0, 1fr)"}>
+    {children}
+  </Grid>
+);

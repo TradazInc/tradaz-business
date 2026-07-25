@@ -1,10 +1,7 @@
-import { HStack } from "@chakra-ui/react";
-import React from "react";
+import { Box } from "@chakra-ui/react";
 
-export const PageContainer = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <HStack w={"dvw"} h={"full"} px={{ base: 10, md: 36 }}>
-      {children}
-    </HStack>
-  );
-};
+export const PageContainer = ({ children }: { children: React.ReactNode }) => (
+  <Box overflowY="auto" px={{ base: 10, md: 36 }} py={6}>
+    {children}
+  </Box>
+);
