@@ -1,5 +1,5 @@
-import { ProductFormValues, ProductData } from "@/schema/product";
-import { Box, FormatNumber, Stat } from "@chakra-ui/react";
+import { ProductData, ProductFormValues } from "@/schema/product";
+import { FormatNumber, Stat } from "@chakra-ui/react";
 import { Control, useWatch } from "react-hook-form";
 
 interface Props {

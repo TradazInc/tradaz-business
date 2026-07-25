@@ -20,11 +20,11 @@ export const emptyVariation: VariationFormValues = {
   sku: "",
   color: "#000000",
   price: 0,
-  sizeId: [""],
+  sizeId: [],
   teamVariations: [],
 };
 
 export const emptyTeamVariation: TeamVariationFormValues = {
-  teamId: [""],
+  teamId: [],
   quantity: 0,
 };
