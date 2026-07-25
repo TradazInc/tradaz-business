@@ -1,5 +1,5 @@
 import { ProductFormValues, ProductData } from "@/schema/product";
-import { Box, FormatNumber } from "@chakra-ui/react";
+import { Box, FormatNumber, Stat } from "@chakra-ui/react";
 import { Control, useWatch } from "react-hook-form";
 
 interface Props {
@@ -19,9 +19,11 @@ export default function TotalQuantity({ control }: Props) {
     0,
   );
   return (
-    <Box>
-      Total Quantity:
-      <FormatNumber value={total} notation="compact" compactDisplay="short" />
-    </Box>
+    <Stat.Root>
+      <Stat.Label>Total Quantity</Stat.Label>
+      <Stat.ValueText>
+        <FormatNumber value={total} style="unit" />
+      </Stat.ValueText>
+    </Stat.Root>
   );
 }

@@ -142,10 +142,10 @@ const TeamVariationsField = ({
           </Field.Root>
 
           <IconButton
+            size="sm"
             type="button"
-            mt={8}
-            variant="ghost"
-            aria-label="Remove store"
+            variant="subtle"
+            colorPalette={"fg.error"}
             onClick={() => remove(index)}
           >
             <LuTrash2 />

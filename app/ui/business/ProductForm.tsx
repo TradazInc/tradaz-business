@@ -321,9 +321,10 @@ const ProductForm = ({ product }: Props) => {
                 <HStack justify="space-between" mb={4}>
                   <Text fontWeight="medium">Variation {index + 1}</Text>
                   <IconButton
-                    type="button"
                     size="sm"
-                    variant="ghost"
+                    type="button"
+                    variant="subtle"
+                    colorPalette={"fg.error"}
                     onClick={() => remove(index)}
                   >
                     <LuTrash2 />
