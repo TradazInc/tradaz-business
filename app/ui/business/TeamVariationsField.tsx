@@ -70,7 +70,7 @@ const TeamVariationsField = ({
 
   return (
     <Fieldset.Root invalid={!!teamVariationErrors?.root?.message}>
-      <Fieldset.Legend>Store Quantity</Fieldset.Legend>
+      <Fieldset.Legend>Quantity</Fieldset.Legend>
       {fields.map((field, index) => (
         <Fieldset.Content
           p={4}
