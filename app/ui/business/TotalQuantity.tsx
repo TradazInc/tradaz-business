@@ -22,7 +22,7 @@ export default function TotalQuantity({ control }: Props) {
     <Stat.Root>
       <Stat.Label>Total Quantity</Stat.Label>
       <Stat.ValueText>
-        <FormatNumber value={total} style="unit" />
+        <FormatNumber value={total} />
       </Stat.ValueText>
     </Stat.Root>
   );
