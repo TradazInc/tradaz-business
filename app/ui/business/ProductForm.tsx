@@ -34,7 +34,7 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { LuPlus, LuTrash2, LuUpload } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import TeamVariationsField from "./TeamVariationsField";
-import { emptyProduct } from "@/data/emptyProduct";
+import { emptyProduct, emptyVariation } from "@/data/productForm";
 import TotalQuantity from "./TotalQuantity";
 import { formProduct } from "@/utilities/formProduct";
 
@@ -170,11 +170,7 @@ const ProductForm = ({ product }: Props) => {
 
           <Field.Root invalid={!!errors.description}>
             <Field.Label>Description</Field.Label>
-            <Textarea
-              autoresize
-              placeholder="The product ..."
-              {...register("description")}
-            />
+            <Textarea autoresize {...register("description")} />
             <Field.HelperText>
               A short description of the product
             </Field.HelperText>
@@ -486,15 +482,7 @@ const ProductForm = ({ product }: Props) => {
               type="button"
               variant="outline"
               alignSelf="flex-start"
-              onClick={() =>
-                append({
-                  sku: "",
-                  color: "",
-                  price: 0,
-                  sizeId: [""],
-                  teamVariations: [],
-                })
-              }
+              onClick={() => append(emptyVariation)}
             >
               <LuPlus /> Add variation
             </Button>

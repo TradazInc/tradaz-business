@@ -1,6 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
+import { emptyTeamVariation } from "@/data/productForm";
 import { useStores } from "@/hooks/stores";
 import { ProductData, ProductFormValues } from "@/schema/product";
 import {
@@ -157,7 +158,7 @@ const TeamVariationsField = ({
         size="sm"
         variant="outline"
         alignSelf="flex-start"
-        onClick={() => append({ teamId: [""], quantity: 0 })}
+        onClick={() => append(emptyTeamVariation)}
       >
         <LuPlus /> Add store quantity
       </Button>

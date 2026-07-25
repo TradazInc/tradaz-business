@@ -10,6 +10,8 @@ const teamVariationSchema = z.object({
     .int({ error: "quantity is required" })
     .positive({ error: "quantity can't be negative" }),
 });
+export type TeamVariationData = z.infer<typeof teamVariationSchema>;
+export type TeamVariationFormValues = z.input<typeof teamVariationSchema>;
 
 const variationSchema = z.object({
   sku: z
@@ -31,6 +33,8 @@ const variationSchema = z.object({
     .array(teamVariationSchema)
     .min(1, { error: "add at least one team" }),
 });
+export type VariationData = z.infer<typeof variationSchema>;
+export type VariationFormValues = z.input<typeof variationSchema>;
 
 const imageSchema = z.object({
   url: z.url({ error: "enter a valid image url" }),
