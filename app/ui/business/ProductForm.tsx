@@ -324,7 +324,6 @@ const ProductForm = ({ product }: Props) => {
                     size="sm"
                     type="button"
                     variant="subtle"
-                    colorPalette={"fg.error"}
                     onClick={() => remove(index)}
                   >
                     <LuTrash2 />

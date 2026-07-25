@@ -73,7 +73,7 @@ const TeamVariationsField = ({
     <Fieldset.Root invalid={!!teamVariationErrors?.root?.message}>
       <Fieldset.Legend>Store Quantity</Fieldset.Legend>
       {fields.map((field, index) => (
-        <HStack key={field.id} align="flex-start">
+        <HStack key={field.id} align="flex-start" alignContent={"baseline"}>
           <Field.Root required invalid={!!teamVariationErrors?.[index]?.teamId}>
             <Field.Label>
               Store <Field.RequiredIndicator />
@@ -145,7 +145,6 @@ const TeamVariationsField = ({
             size="sm"
             type="button"
             variant="subtle"
-            colorPalette={"fg.error"}
             onClick={() => remove(index)}
           >
             <LuTrash2 />
@@ -154,8 +153,8 @@ const TeamVariationsField = ({
       ))}
 
       <Button
-        type="button"
         size="sm"
+        type="button"
         variant="outline"
         alignSelf="flex-start"
         onClick={() => append(emptyTeamVariation)}
