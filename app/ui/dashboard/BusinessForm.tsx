@@ -30,14 +30,17 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
+  // Fetch data
   const { data, error, isLoading, size, setSize } = useBusinessCategories();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
   const categoryScrollId = useId();
 
+  // Parse paged data
   const { flatData, hasMore } = useMemo(() => parsePagedData(data), [data]);
 
-  const categories = useMemo(
+  // Create collection data (chakra)
+  const categoryCollection = useMemo(
     () =>
       createListCollection({
         items: flatData,
@@ -47,6 +50,7 @@ export const BusinessForm = () => {
     [flatData],
   );
 
+  // Initialize hook form
   const {
     control,
     register,
@@ -67,6 +71,7 @@ export const BusinessForm = () => {
     }
   });
 
+  // Handle errors
   if (error)
     toaster.create({
       title: error.code,
@@ -161,7 +166,7 @@ export const BusinessForm = () => {
                           field.onBlur();
                         }}
                         onInteractOutside={() => field.onBlur()}
-                        collection={categories}
+                        collection={categoryCollection}
                       >
                         <Select.HiddenSelect />
                         <Select.Control>
@@ -186,7 +191,7 @@ export const BusinessForm = () => {
                               loader={<Spinner size={"xs"} />}
                               scrollableTarget={categoryScrollId}
                             >
-                              {categories.items.map((category) => (
+                              {categoryCollection.items.map((category) => (
                                 <Select.Item item={category} key={category.id}>
                                   {category.name}
                                   <Select.ItemIndicator />

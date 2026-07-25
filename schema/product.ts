@@ -52,9 +52,15 @@ export const productSchema = z.object({
     .positive({ error: "discount can't be negative" })
     .max(100, { error: "discount can't exceed 100%" }),
 
-  categoryId: z.cuid2({ error: "select a category" }),
+  categoryId: z
+    .array(z.cuid2(), { error: "select a product category" })
+    .length(1, { error: "select one product category" })
+    .transform(([id]) => id),
 
-  sizeTypeId: z.cuid2({ error: "select a size type" }),
+  sizeTypeId: z
+    .array(z.cuid2(), { error: "select a size type" })
+    .length(1, { error: "select one size type" })
+    .transform(([id]) => id),
 
   variations: z
     .array(variationSchema)
@@ -63,3 +69,5 @@ export const productSchema = z.object({
   images: z.array(imageSchema).min(1, { error: "add at least one image" }),
 });
 export type ProductData = z.infer<typeof productSchema>;
+export type ProductFormValues = z.input<typeof productSchema>;
+
