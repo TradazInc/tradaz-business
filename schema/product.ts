@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 const teamVariationSchema = z.object({
-  teamId: z.cuid2({ error: "select a team" }),
+  teamId: z
+    .array(z.cuid2(), { error: "select a team" })
+    .length(1, { error: "select one team" })
+    .transform(([id]) => id),
 
   quantity: z
     .int({ error: "quantity is required" })
@@ -20,8 +23,10 @@ const variationSchema = z.object({
     .positive({ error: "price can't be negative" }),
 
   sizeId: z
-    .string({ error: "select a size" })
-    .min(1, { error: "select a size" }),
+
+    .array(z.cuid2(), { error: "select a size" })
+    .length(1, { error: "select one size" })
+    .transform(([id]) => id),
 
   teamVariations: z
     .array(teamVariationSchema)
@@ -70,4 +75,3 @@ export const productSchema = z.object({
 });
 export type ProductData = z.infer<typeof productSchema>;
 export type ProductFormValues = z.input<typeof productSchema>;
-

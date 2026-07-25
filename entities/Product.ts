@@ -21,6 +21,7 @@ interface Variation {
 }
 
 interface TeamVariation {
+  id: string;
   teamId: string;
   quantity: number;
 }

@@ -36,6 +36,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import TeamVariationsField from "./TeamVariationsField";
 import { emptyProduct } from "@/data/emptyProduct";
 import TotalQuantity from "./TotalQuantity";
+import { formProduct } from "@/utilities/formProduct";
 
 interface Props {
   product?: Product;
@@ -87,13 +88,7 @@ const ProductForm = ({ product }: Props) => {
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: standardSchemaResolver(productSchema),
-    defaultValues: product
-      ? {
-          ...product,
-          categoryId: [product?.categoryId],
-          sizeTypeId: [product?.sizeTypeId],
-        }
-      : emptyProduct,
+    defaultValues: product ? formProduct(product) : emptyProduct,
     mode: "onBlur",
   });
 
@@ -187,6 +182,22 @@ const ProductForm = ({ product }: Props) => {
               A short description of the product
             </Field.HelperText>
             <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root required invalid={!!errors.discountPercentage}>
+            <Field.Label>
+              Discount %<Field.RequiredIndicator />
+            </Field.Label>
+            <Input
+              type="number"
+              step="1"
+              {...register("discountPercentage", {
+                valueAsNumber: true,
+              })}
+            />
+            <Field.ErrorText>
+              {errors.discountPercentage?.message}
+            </Field.ErrorText>
           </Field.Root>
 
           <Field.Root required invalid={!!errors.categoryId}>
@@ -307,6 +318,7 @@ const ProductForm = ({ product }: Props) => {
 
           <Stack gap={6}>
             <Text fontWeight="medium">Variations</Text>
+
             {fields.map((variation, index) => (
               <Box key={variation.id} borderWidth="1px" borderRadius="md" p={4}>
                 <HStack justify="space-between" mb={4}>
@@ -401,7 +413,7 @@ const ProductForm = ({ product }: Props) => {
                     </Field.ErrorText>
                   </Field.Root>
 
-                  {/* TODO(step 5): dependent select on the chosen sizeTypeId */}
+                  {/* TODO(step 5): dependent select on the chosen sizeTypeId (using sizeTypeId for now) */}
                   <Field.Root
                     required
                     invalid={!!errors.variations?.[index]?.sizeId}
@@ -409,9 +421,51 @@ const ProductForm = ({ product }: Props) => {
                     <Field.Label>
                       Size <Field.RequiredIndicator />
                     </Field.Label>
-                    <Input
-                      placeholder="Size (eg XL)"
-                      {...register(`variations.${index}.sizeId`)}
+                    <Controller
+                      control={control}
+                      name={`variations.${index}.sizeId`}
+                      render={({ field }) => (
+                        <Select.Root
+                          name={field.name}
+                          value={field.value}
+                          onValueChange={({ value }) => {
+                            field.onChange(value);
+                            field.onBlur();
+                          }}
+                          onInteractOutside={() => field.onBlur()}
+                          collection={sizeTypeCollection}
+                        >
+                          <Select.HiddenSelect />
+                          <Select.Control>
+                            <Select.Trigger>
+                              <Select.ValueText placeholder={"Select size"} />
+                            </Select.Trigger>
+                            <Select.IndicatorGroup>
+                              <Select.ClearTrigger />
+                              {sizeTypes.isLoading ? (
+                                <Spinner size="sm" />
+                              ) : (
+                                <Select.Indicator />
+                              )}
+                            </Select.IndicatorGroup>
+                          </Select.Control>
+                          <Portal>
+                            <Select.Positioner>
+                              <Select.Content>
+                                {sizeTypeCollection.items.map((sizeType) => (
+                                  <Select.Item
+                                    item={sizeType}
+                                    key={sizeType.id}
+                                  >
+                                    {sizeType.name}
+                                    <Select.ItemIndicator />
+                                  </Select.Item>
+                                ))}
+                              </Select.Content>
+                            </Select.Positioner>
+                          </Portal>
+                        </Select.Root>
+                      )}
                     />
                     <Field.ErrorText>
                       {errors.variations?.[index]?.sizeId?.message}
@@ -442,7 +496,7 @@ const ProductForm = ({ product }: Props) => {
                   sku: "",
                   color: "",
                   price: 0,
-                  sizeId: "",
+                  sizeId: [""],
                   teamVariations: [],
                 })
               }

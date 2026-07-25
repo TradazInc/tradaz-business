@@ -1,16 +1,24 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
+import { useStores } from "@/hooks/stores";
 import { ProductData, ProductFormValues } from "@/schema/product";
 import {
   Button,
+  createListCollection,
   Field,
   HStack,
   IconButton,
   Input,
+  Portal,
+  Select,
+  Spinner,
   Stack,
 } from "@chakra-ui/react";
+import { useMemo } from "react";
 import {
   Control,
+  Controller,
   FieldErrors,
   UseFormRegister,
   useFieldArray,
@@ -30,24 +38,91 @@ const TeamVariationsField = ({
   errors,
   variationIndex,
 }: Props) => {
+  // Fetch data
+  const { data, error, isLoading } = useStores();
+
+  // Create collection data (chakra)
+  const storeCollection = useMemo(
+    () =>
+      createListCollection({
+        items: data ?? [],
+        itemToValue: (item) => item?.id,
+        itemToString: (item) => item.name,
+      }),
+    [data],
+  );
+
+  // Initialize hook form
   const { fields, append, remove } = useFieldArray({
     control,
     name: `variations.${variationIndex}.teamVariations`,
   });
-
   const teamVariationErrors =
     errors.variations?.[variationIndex]?.teamVariations;
+
+  // Handle errors
+  if (error)
+    toaster.create({
+      title: error.code,
+      description: error.message,
+      type: "error",
+    });
 
   return (
     <Stack gap={3}>
       {fields.map((field, index) => (
         <HStack key={field.id} align="flex-start">
-          <Field.Root required invalid={!!teamVariationErrors?.[index]?.teamId}>
+          <Field.Root required>
             <Field.Label>Store</Field.Label>
             <Input
               placeholder="Team id"
               {...register(
                 `variations.${variationIndex}.teamVariations.${index}.teamId`,
+              )}
+            />
+          </Field.Root>
+
+          <Field.Root required invalid={!!teamVariationErrors?.[index]?.teamId}>
+            <Field.Label>
+              Store <Field.RequiredIndicator />
+            </Field.Label>
+            <Controller
+              control={control}
+              name={`variations.${variationIndex}.teamVariations.${index}.teamId`}
+              render={({ field }) => (
+                <Select.Root
+                  name={field.name}
+                  value={field.value}
+                  onValueChange={({ value }) => {
+                    field.onChange(value);
+                    field.onBlur();
+                  }}
+                  onInteractOutside={() => field.onBlur()}
+                  collection={storeCollection}
+                >
+                  <Select.HiddenSelect />
+                  <Select.Control>
+                    <Select.Trigger>
+                      <Select.ValueText placeholder={"Select store"} />
+                    </Select.Trigger>
+                    <Select.IndicatorGroup>
+                      <Select.ClearTrigger />
+                      {isLoading ? <Spinner size="sm" /> : <Select.Indicator />}
+                    </Select.IndicatorGroup>
+                  </Select.Control>
+                  <Portal>
+                    <Select.Positioner>
+                      <Select.Content>
+                        {storeCollection.items.map((store) => (
+                          <Select.Item item={store} key={store.id}>
+                            {store.name}
+                            <Select.ItemIndicator />
+                          </Select.Item>
+                        ))}
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Portal>
+                </Select.Root>
               )}
             />
             <Field.ErrorText>
@@ -89,7 +164,7 @@ const TeamVariationsField = ({
         size="sm"
         variant="outline"
         alignSelf="flex-start"
-        onClick={() => append({ teamId: "", quantity: 1 })}
+        onClick={() => append({ teamId: [""], quantity: 0 })}
       >
         <LuPlus /> Add store quantity
       </Button>
