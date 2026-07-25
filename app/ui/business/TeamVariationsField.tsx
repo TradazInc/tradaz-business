@@ -9,7 +9,6 @@ import {
   createListCollection,
   Field,
   Fieldset,
-  HStack,
   IconButton,
   Input,
   Portal,
@@ -75,7 +74,7 @@ const TeamVariationsField = ({
       {fields.map((field, index) => (
         <Fieldset.Content
           p={4}
-          bg={"bg.subtle"}
+          borderWidth={'thin'}
           key={field.id}
           alignItems={"end"}
           borderRadius={"md"}
