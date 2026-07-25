@@ -165,7 +165,7 @@ const TeamVariationsField = ({
         alignSelf="flex-start"
         onClick={() => append(emptyTeamVariation)}
       >
-        <LuPlus /> Add store quantity
+        <LuPlus /> Add store
       </Button>
 
       <Fieldset.ErrorText>
