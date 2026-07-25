@@ -472,7 +472,7 @@ const ProductForm = ({ product }: Props) => {
                     </Field.ErrorText>
                   </Field.Root>
 
-                  <Box>
+                  <Field.Root>
                     <Field.Label mb={2}>
                       Store Quantity <Field.RequiredIndicator />
                     </Field.Label>
@@ -482,7 +482,7 @@ const ProductForm = ({ product }: Props) => {
                       errors={errors}
                       variationIndex={index}
                     />
-                  </Box>
+                  </Field.Root>
                 </Stack>
               </Box>
             ))}
