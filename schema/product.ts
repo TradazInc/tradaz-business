@@ -33,7 +33,21 @@ const variationSchema = z.object({
 
   teamVariations: z
     .array(teamVariationSchema)
-    .min(1, { error: "add at least one team" }),
+    .min(1, { error: "add at least one team" })
+    .superRefine((tv, ctx) => {
+      const seen = new Set<string>();
+
+      tv.forEach(({ teamId }, index) => {
+        if (seen.has(teamId))
+          ctx.addIssue({
+            code: "custom",
+            path: [index, "teamId"],
+            message: "store is already selected",
+          });
+
+        seen.add(teamId);
+      });
+    }),
 });
 export type VariationData = z.infer<typeof variationSchema>;
 export type VariationFormValues = z.input<typeof variationSchema>;
