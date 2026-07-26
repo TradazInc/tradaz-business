@@ -8,7 +8,7 @@ const teamVariationSchema = z.object({
 
   quantity: z
     .int({ error: "quantity is required" })
-    .positive({ error: "quantity can't be negative" }),
+    .positive({ error: "quantity cannot be negative or zero" }),
 });
 export type TeamVariationData = z.infer<typeof teamVariationSchema>;
 export type TeamVariationFormValues = z.input<typeof teamVariationSchema>;
@@ -24,7 +24,7 @@ const variationSchema = z.object({
 
   price: z
     .number({ error: "price is required" })
-    .positive({ error: "price can't be negative" }),
+    .positive({ error: "price cannot be negative or zero" }),
 
   sizeId: z
     .array(z.cuid2(), { error: "select a size" })
@@ -73,7 +73,7 @@ export const productSchema = z.object({
 
   discountPercentage: z
     .number({ error: "discount is required" })
-    .positive({ error: "discount can't be negative" })
+    .nonnegative({ error: "discount cannot be negative" })
     .max(100, { error: "discount can't exceed 100%" }),
 
   categoryId: z
