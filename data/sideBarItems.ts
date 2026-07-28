@@ -99,9 +99,16 @@ export const businessItems: SideMenuItem[] = [
         icon: LuPackage,
         href: "/dashboard/business/products",
       },
-      { label: "Categories", icon: LuList, href: "" },
-      { label: "Product Type", icon: LuBox, href: "" },
-      { label: "Sizes", icon: LuRuler, href: "" },
+      {
+        label: "Categories",
+        icon: LuList,
+        href: "/dashboard/business/product-categories",
+      },
+      {
+        label: "Sizes",
+        icon: LuRuler,
+        href: "/dashboard/business/product-sizes",
+      },
     ],
   },
   {
