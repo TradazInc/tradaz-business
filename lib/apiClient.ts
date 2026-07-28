@@ -1,5 +1,4 @@
 import { baseURL } from "@/data/baseUrl";
-import { FetchResponse } from "@/entities/FetchResponse";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
 
 export const fetchInstance = createFetch({
@@ -8,6 +7,16 @@ export const fetchInstance = createFetch({
   credentials: "include",
   throw: true,
 });
+
+export interface FetchResponse<D> {
+  data: D[];
+  aggregate?: number;
+  meta: {
+    next?: string;
+    count?: number;
+    totalPages?: number;
+  };
+}
 
 export class ApiClient<T> {
   constructor(private readonly endpoint: string) {}

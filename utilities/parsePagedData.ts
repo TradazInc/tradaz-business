@@ -1,4 +1,4 @@
-import { FetchResponse } from "@/entities/FetchResponse";
+import { FetchResponse } from "@/lib/apiClient";
 
 export function parsePagedData<D>(data?: FetchResponse<D>[]) {
   const pages = data ?? [];

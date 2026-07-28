@@ -1,6 +1,5 @@
 import { BusinessCategory } from "@/entities/BusinessCategory";
-import { FetchResponse } from "@/entities/FetchResponse";
-import { ApiClient } from "@/lib/apiClient";
+import { ApiClient, FetchResponse } from "@/lib/apiClient";
 import { getKey } from "@/utilities/getKey";
 import useSWRInfinite from "swr/infinite";
 
