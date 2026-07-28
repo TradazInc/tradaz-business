@@ -3,21 +3,22 @@
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
 import { Accordion, Box, Icon } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const SideBarList = () => {
   const [sideItems, setSideItems] = useState(dashboardItems);
 
   // Tracks url changes
-  const businessId = useParams().businessId as string;
-  const storeId = useParams().storeId as string;
+  const pathname = usePathname();
+  const isBusinessPath = pathname.includes("business");
+  const isStorePath = pathname.includes("store");
 
   useEffect(() => {
-    if (!businessId && !storeId) setSideItems(dashboardItems);
-    if (businessId) setSideItems(businessItems);
-    if (storeId) setSideItems(storeItems);
-  }, [businessId, storeId]);
+    if (!isBusinessPath && !isStorePath) setSideItems(dashboardItems);
+    if (isBusinessPath) setSideItems(businessItems);
+    if (isStorePath) setSideItems(storeItems);
+  }, [pathname]);
 
   return (
     <Accordion.Root
