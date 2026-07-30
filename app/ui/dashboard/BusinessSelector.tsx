@@ -13,10 +13,13 @@ import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
+  // Data state
   const { data: businesses, error, isLoading } = useBusinesses();
-  const [business, setBusiness] = useState("Brands");
   const [stores, setStores] = useState<Store[]>();
-  const [store, setStore] = useState<string>();
+
+  // UI state
+  const [businessName, setBusinessName] = useState("Brands");
+  const [storeName, setStoreName] = useState<string>();
 
   const handleBusiness = async (businessId: string) => {
     const [business, stores] = await Promise.all([
@@ -39,36 +42,46 @@ export const BusinessSelector = () => {
         type: "error",
       });
     }
-    setBusiness(business.data.name);
+    setBusinessName(business.data.name);
     setStores(stores.data);
-    setStore("Stores");
+    setStoreName("Stores");
   };
 
   const handleStore = async (storeId: string) => {
-    setStore(stores?.find((s) => s.id === storeId)?.name);
+    setStoreName(stores?.find((s) => s.id === storeId)?.name);
     const { data, error } = await setActiveStore(storeId);
     if (error) {
-      setStore(undefined);
+      setStoreName(undefined);
       return toaster.create({
         title: error.code,
         description: error.message,
         type: "error",
       });
     }
-    setStore(data.name);
+    setStoreName(data.name);
   };
 
   // Tracks url changes
-  const businessId = useParams().businessId as string;
-  const storeId = useParams().storeId as string;
+  const { businessId, storeId } = useParams<{
+    businessId: string;
+    storeId: string;
+  }>();
 
   useEffect(() => {
-    const setActiveBusiness = async () => {
+    const updateActiveBusiness = async () => {
       if (businessId) await handleBusiness(businessId);
       if (storeId) await handleStore(storeId);
     };
+    updateActiveBusiness();
 
-    setActiveBusiness();
+    // Unset active business on dashboard page
+    if (!businessId && !storeId) {
+      setActiveBusiness(null);
+      setBusinessName("Brands");
+      setStoreName(undefined);
+    }
+    // Don't show  stores on business page
+    if (businessId) setStoreName(undefined);
   }, [businessId, storeId]);
 
   if (error) return null;
@@ -91,7 +104,7 @@ export const BusinessSelector = () => {
                 <LuBuilding2 />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
-                    {business}
+                    {businessName}
                     <LuChevronDown />
                   </HStack>
                 </Skeleton>
@@ -100,7 +113,7 @@ export const BusinessSelector = () => {
           </Breadcrumb.Item>
         </>
 
-        {store && (
+        {storeName && (
           <>
             <Breadcrumb.Separator>
               <LiaSlashSolid />
@@ -114,7 +127,7 @@ export const BusinessSelector = () => {
               >
                 <Breadcrumb.Link as="button">
                   <LuStore />
-                  {store}
+                  {storeName}
                   <LuChevronDown />
                 </Breadcrumb.Link>
               </MenuItem>
