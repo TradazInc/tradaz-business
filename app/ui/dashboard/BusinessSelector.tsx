@@ -44,7 +44,6 @@ export const BusinessSelector = () => {
     }
     setBusinessName(business.data.name);
     setStores(stores.data);
-    setStoreName("Stores");
   };
 
   const handleStore = async (storeId: string) => {
