@@ -25,6 +25,7 @@ export const BusinessSelector = () => {
     const [business, stores] = await Promise.all([
       setActiveBusiness(businessId),
       getStores(businessId),
+      setActiveStore(null),
     ]);
 
     if (business.error) {
@@ -43,6 +44,7 @@ export const BusinessSelector = () => {
       });
     }
     setBusinessName(business.data.name);
+    setStoreName(undefined);
     setStores(stores.data);
   };
 
@@ -77,11 +79,6 @@ export const BusinessSelector = () => {
     if (!businessId && !storeId) {
       setActiveBusiness(null);
       setBusinessName("Brands");
-      setActiveStore(null);
-      setStoreName(undefined);
-    }
-    // Unset active store on business page
-    if (businessId) {
       setActiveStore(null);
       setStoreName(undefined);
     }
