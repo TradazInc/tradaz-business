@@ -1,24 +1,28 @@
 "use client";
 
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
+import { computeBasePath } from "@/utilities/computeBasePath";
 import { Accordion, Box, Icon } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
 export const SideBarList = () => {
   const [sideItems, setSideItems] = useState(dashboardItems);
 
   // Tracks url changes
-  const pathname = usePathname();
-  const isBusinessPath = pathname.includes("business");
-  const isStorePath = pathname.includes("store");
+  const { businessId, storeId } = useParams();
+
+  const basePath = useMemo(
+    () => computeBasePath({ businessId, storeId }),
+    [businessId, storeId],
+  );
 
   useEffect(() => {
-    if (!isBusinessPath && !isStorePath) setSideItems(dashboardItems);
-    if (isBusinessPath) setSideItems(businessItems);
-    if (isStorePath) setSideItems(storeItems);
-  }, [pathname]);
+    if (!businessId && !storeId) setSideItems(dashboardItems);
+    if (businessId) setSideItems(businessItems);
+    if (storeId) setSideItems(storeItems);
+  }, [businessId, storeId]);
 
   return (
     <Accordion.Root
@@ -48,7 +52,7 @@ export const SideBarList = () => {
                   color={"fg.muted"}
                   _hover={{ color: "fg" }}
                 >
-                  <NextLink href={child.href}>
+                  <NextLink href={`${basePath}${child.path}`}>
                     <Icon fontSize={"lg"} mx={3}>
                       <Icon as={child.icon} />
                     </Icon>
