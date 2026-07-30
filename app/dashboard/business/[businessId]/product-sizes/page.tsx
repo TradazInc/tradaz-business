@@ -21,7 +21,7 @@ export default function page() {
               </Button>
             }
           >
-            <CategoryForm />
+            <SizeForm />
           </DialogBox>
         </ToolBarContainer>
 
@@ -57,7 +57,7 @@ export default function page() {
                 </Button>
               }
             >
-              <CategoryForm />
+              <SizeForm />
             </DialogBox>
           </EmptyPage>
         )}
@@ -66,7 +66,7 @@ export default function page() {
   );
 }
 
-export const CategoryForm = () => {
+const SizeForm = () => {
   return <Box>Size form</Box>;
 };
 

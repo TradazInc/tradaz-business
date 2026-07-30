@@ -66,7 +66,7 @@ export default function page() {
   );
 }
 
-export const CategoryForm = () => {
+const CategoryForm = () => {
   return <Box>Category form</Box>;
 };
 
