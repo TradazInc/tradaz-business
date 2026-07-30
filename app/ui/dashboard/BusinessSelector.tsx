@@ -67,20 +67,24 @@ export const BusinessSelector = () => {
   }>();
 
   useEffect(() => {
-    const updateActiveBusiness = async () => {
+    const updateActiveStatus = async () => {
       if (businessId) await handleBusiness(businessId);
       if (storeId) await handleStore(storeId);
     };
-    updateActiveBusiness();
+    updateActiveStatus();
 
     // Unset active business on dashboard page
     if (!businessId && !storeId) {
       setActiveBusiness(null);
       setBusinessName("Brands");
+      setActiveStore(null);
       setStoreName(undefined);
     }
-    // Don't show  stores on business page
-    if (businessId) setStoreName(undefined);
+    // Unset active store on business page
+    if (businessId) {
+      setActiveStore(null);
+      setStoreName(undefined);
+    }
   }, [businessId, storeId]);
 
   if (error) return null;

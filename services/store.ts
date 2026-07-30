@@ -2,7 +2,7 @@ import { toaster } from "@/components/ui/toaster";
 import { authClient } from "@/lib/authClient";
 import { StoreData } from "@/schema/store";
 
-export async function setActiveStore(teamId: string) {
+export async function setActiveStore(teamId: string | null) {
   return authClient.organization.setActiveTeam({ teamId });
 }
 
