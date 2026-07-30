@@ -13,14 +13,13 @@ import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
 interface Props {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<{ business: string; signup: string }>;
 }
 
 export default async function page({ searchParams }: Props) {
-  const name = (await searchParams).business as string;
-  const signup = (await searchParams).signup as string;
+  const { business, signup } = await searchParams;
 
-  const { data: businesses, error } = await getBusinesses(name); // deduplicated (fetched in layout)
+  const { data: businesses, error } = await getBusinesses(business); // deduplicated (fetched in layout)
 
   if (error) return null;
 
