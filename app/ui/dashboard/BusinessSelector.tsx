@@ -22,10 +22,21 @@ export const BusinessSelector = () => {
   const [storeName, setStoreName] = useState<string>();
 
   const handleBusiness = async (businessId: string) => {
+    if (storeName) {
+      setStoreName(undefined);
+      const activeStore = await setActiveStore(null);
+      if (activeStore.error) {
+        return toaster.create({
+          title: activeStore.error.code,
+          description: activeStore.error.message,
+          type: "error",
+        });
+      }
+    }
+
     const [business, stores] = await Promise.all([
       setActiveBusiness(businessId),
       getStores(businessId),
-      setActiveStore(null),
     ]);
 
     if (business.error) {
@@ -43,8 +54,8 @@ export const BusinessSelector = () => {
         type: "error",
       });
     }
+
     setBusinessName(business.data.name);
-    setStoreName(undefined);
     setStores(stores.data);
   };
 
