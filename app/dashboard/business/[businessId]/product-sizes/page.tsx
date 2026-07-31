@@ -1,12 +1,16 @@
+import { getSizeTypes } from "@/api/server/sizeType";
+import ProductSizeTable from "@/app/ui/business/ProductSizeTable";
 import { DialogBox } from "@/app/ui/DialogBox";
 import EmptyPage from "@/app/ui/EmptyPage";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
-import { Box, Button, Table, VStack } from "@chakra-ui/react";
+import { Box, Button, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
-export default function page() {
+export default async function page() {
+  const sizeTypes = await getSizeTypes();
+
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
@@ -25,25 +29,8 @@ export default function page() {
           </DialogBox>
         </ToolBarContainer>
 
-        {items?.length ? (
-          <Table.Root>
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeader>Product</Table.ColumnHeader>
-                <Table.ColumnHeader>Category</Table.ColumnHeader>
-                <Table.ColumnHeader textAlign="end">Price</Table.ColumnHeader>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {items.map((item) => (
-                <Table.Row key={item.id}>
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.category}</Table.Cell>
-                  <Table.Cell textAlign="end">{item.price}</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Root>
+        {sizeTypes ? (
+          <ProductSizeTable />
         ) : (
           <EmptyPage title="No sizes found" description="Create a product size">
             <DialogBox
@@ -66,11 +53,3 @@ export default function page() {
 const SizeForm = () => {
   return <Box>Size form</Box>;
 };
-
-const items = [
-  { id: 1, name: "Laptop", category: "Electronics", price: 999.99 },
-  { id: 2, name: "Coffee Maker", category: "Home Appliances", price: 49.99 },
-  { id: 3, name: "Desk Chair", category: "Furniture", price: 150.0 },
-  { id: 4, name: "Smartphone", category: "Electronics", price: 799.99 },
-  { id: 5, name: "Headphones", category: "Accessories", price: 199.99 },
-];

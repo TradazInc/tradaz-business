@@ -6,11 +6,10 @@ import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getProductCategories } from "@/api/server/productCategories";
 import { Box, Button, Table, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
+import ProductCategoryTable from "@/app/ui/business/ProductCategoryTable";
 
 export default async function page() {
   const categories = await getProductCategories();
-
-  if (!categories) return null;
 
   return (
     <PageContainer>
@@ -30,25 +29,8 @@ export default async function page() {
           </DialogBox>
         </ToolBarContainer>
 
-        {categories.data?.length ? (
-          <Table.Root>
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeader>Name</Table.ColumnHeader>
-                <Table.ColumnHeader>Code</Table.ColumnHeader>
-                <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {items.map((item) => (
-                <Table.Row key={item.id}>
-                  <Table.Cell>{item.name}</Table.Cell>
-                  <Table.Cell>{item.category}</Table.Cell>
-                  <Table.Cell textAlign="end">{item.price}</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Root>
+        {categories ? (
+          <ProductCategoryTable />
         ) : (
           <EmptyPage
             title="No categories found"
