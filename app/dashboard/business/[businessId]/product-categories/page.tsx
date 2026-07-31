@@ -1,4 +1,4 @@
-import { getProductCategories } from "@/api/server/productCategories";
+import { getProductCategories } from "@/server/server/productCategories";
 import ProductCategoryTable from "@/components/custom/business/ProductCategoryTable";
 import { DialogBox } from "@/components/custom/DialogBox";
 import EmptyPage from "@/components/custom/EmptyPage";

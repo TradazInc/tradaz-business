@@ -1,7 +1,7 @@
 "use client";
 
-import { useSession } from "@/api/hooks/session";
-import { logout } from "@/api/client/auth";
+import { useSession } from "@/server/hooks/session";
+import { logout } from "@/server/client/auth";
 import { Avatar, Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";

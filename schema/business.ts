@@ -1,4 +1,4 @@
-import { checkBusinessSlug } from "@/api/client/business";
+import { checkBusinessSlug } from "@/server/client/business";
 import { z } from "zod";
 
 export const businessSchema = z.object({
