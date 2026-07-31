@@ -1,3 +1,4 @@
+import { Gender } from "@/apis/services/product";
 import { z } from "zod";
 
 const teamVariationSchema = z.object({
@@ -65,7 +66,7 @@ export const productSchema = z.object({
     .string({ error: "brand is required" })
     .min(1, { error: "brand is required" }),
 
-  gender: z.enum(["male", "female", "unisex"], { error: "select a gender" }),
+  gender: z.enum(Gender, { error: "select a gender" }),
 
   description: z
     .string({ error: "description is required" })

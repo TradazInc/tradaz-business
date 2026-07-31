@@ -4,7 +4,7 @@ export interface Product {
   id: string;
   name: string;
   brand: string;
-  gender: "male" | "female" | "unisex";
+  gender: Gender;
   description: string;
   discountPercentage: number;
   categoryId: string;
@@ -33,5 +33,10 @@ interface Image {
   url: string;
 }
 
+export enum Gender {
+  male = "male",
+  female = "female",
+  unisex = "unisex",
+}
 
 export const productService = new ApiClient<Product>("/api/products");
