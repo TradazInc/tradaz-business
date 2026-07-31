@@ -1,5 +1,5 @@
 import { baseURL } from "@/data/baseUrl";
-import { Session } from "@/server/services/Session";
+import { Session } from "@/apis/services/Session";
 import {
   adminClient,
   customSessionClient,

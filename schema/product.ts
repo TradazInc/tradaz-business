@@ -1,4 +1,4 @@
-import { Gender } from "@/server/services/product";
+import { Gender } from "@/apis/services/product";
 import { z } from "zod";
 
 const teamVariationSchema = z.object({

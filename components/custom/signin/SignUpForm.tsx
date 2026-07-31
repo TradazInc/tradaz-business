@@ -4,7 +4,7 @@ import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { emailSignUpSchema } from "@/schema/auth";
-import { emailSignUp, googleSignIn } from "@/server/client/auth";
+import { emailSignUp, googleSignIn } from "@/apis/client/auth";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
