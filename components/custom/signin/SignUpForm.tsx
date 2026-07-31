@@ -1,32 +1,34 @@
 "use client";
 
-import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
-import SeparatorText from "@/app/ui/signin/SeparatorText";
+import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
+import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
-import { emailSignInSchema } from "@/schema/auth";
-import { emailSignIn, googleSignIn } from "@/api/client/auth";
-import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
+import { emailSignUpSchema } from "@/schema/auth";
+import { emailSignUp, googleSignIn } from "@/api/client/auth";
+import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
-const SignInForm = () => {
+const SignUpForm = () => {
+  const { push } = useRouter();
   const [isGooglePending, startGoogleTransition] = useTransition();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm({ resolver: zodResolver(emailSignInSchema) });
+  } = useForm({ resolver: zodResolver(emailSignUpSchema) });
 
-  const onSubmit = handleSubmit(async (signInData) => {
-    await emailSignIn(signInData, "/dashboard");
+  const onSubmit = handleSubmit(async (signUpData) => {
+    const data = await emailSignUp(signUpData);
+    if (data) push("/dashboard?signup=true"); // review after emailVerification
   });
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignup = () => {
     startGoogleTransition(async () => {
-      await googleSignIn("/dashboard");
+      await googleSignIn("/dashboard?signup=true");
     });
   };
 
@@ -34,6 +36,12 @@ const SignInForm = () => {
     <form onSubmit={onSubmit}>
       <Fieldset.Root size="lg" maxW="lg">
         <Fieldset.Content>
+          <Field.Root required invalid={!!errors.name}>
+            <Field.Label>Full Name</Field.Label>
+            <Input {...register("name")} />
+            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+          </Field.Root>
+
           <Field.Root required invalid={!!errors.email}>
             <Field.Label>Email Address</Field.Label>
             <Input type="email" {...register("email")} />
@@ -46,32 +54,30 @@ const SignInForm = () => {
             <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>
         </Fieldset.Content>
-        <Box textAlign="right" w="full">
-          <Link href={"#"}>Forgot Password?</Link>
-        </Box>
+
         <Button
           type={"submit"}
           loading={isSubmitting}
           disabled={!isValid || isSubmitting}
           w={"full"}
         >
-          Sign in
+          Sign Up
         </Button>
 
         <SeparatorText>Or</SeparatorText>
 
         <Button
-          onClick={handleGoogleSignIn}
+          onClick={handleGoogleSignup}
           loading={isGooglePending}
           disabled={isGooglePending}
           w={"full"}
         >
           <GoogleIcon />
-          <Text>Sign In With Google</Text>
+          <Text>Sign Up With Google</Text>
         </Button>
       </Fieldset.Root>
     </form>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

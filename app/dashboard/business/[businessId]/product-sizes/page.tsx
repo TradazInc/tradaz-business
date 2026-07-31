@@ -1,10 +1,10 @@
 import { getSizeTypes } from "@/api/server/sizeType";
-import ProductSizeTable from "@/app/ui/business/ProductSizeTable";
-import { DialogBox } from "@/app/ui/DialogBox";
-import EmptyPage from "@/app/ui/EmptyPage";
-import { PageContainer } from "@/app/ui/PageContainer";
-import PageHeader from "@/app/ui/PageHeader";
-import ToolBarContainer from "@/app/ui/ToolBarContainer";
+import ProductSizeTable from "@/components/custom/business/ProductSizeTable";
+import { DialogBox } from "@/components/custom/DialogBox";
+import EmptyPage from "@/components/custom/EmptyPage";
+import { PageContainer } from "@/components/custom/PageContainer";
+import PageHeader from "@/components/custom/PageHeader";
+import ToolBarContainer from "@/components/custom/ToolBarContainer";
 import { Box, Button, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
