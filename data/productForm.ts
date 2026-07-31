@@ -1,3 +1,4 @@
+import { Gender } from "@/apis/services/product";
 import {
   ProductFormValues,
   TeamVariationFormValues,
@@ -7,7 +8,7 @@ import {
 export const emptyProduct: ProductFormValues = {
   name: "",
   brand: "",
-  gender: "unisex",
+  gender: Gender.unisex,
   description: "",
   discountPercentage: 0,
   categoryId: [],
