@@ -1,4 +1,4 @@
-import { PageContainer } from "@/app/ui/PageContainer";
+import { PageContainer } from "@/components/custom/PageContainer";
 
 export default function page() {
   return <PageContainer>coupon page</PageContainer>;

@@ -1,4 +1,4 @@
-import { PageContainer } from "@/app/ui/PageContainer";
+import { PageContainer } from "@/components/custom/PageContainer";
 
 interface Props {
   params: Promise<{ storeId: string }>;

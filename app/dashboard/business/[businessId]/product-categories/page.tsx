@@ -1,12 +1,12 @@
-import { DialogBox } from "@/app/ui/DialogBox";
-import EmptyPage from "@/app/ui/EmptyPage";
-import { PageContainer } from "@/app/ui/PageContainer";
-import PageHeader from "@/app/ui/PageHeader";
-import ToolBarContainer from "@/app/ui/ToolBarContainer";
 import { getProductCategories } from "@/api/server/productCategories";
-import { Box, Button, Table, VStack } from "@chakra-ui/react";
+import ProductCategoryTable from "@/components/custom/business/ProductCategoryTable";
+import { DialogBox } from "@/components/custom/DialogBox";
+import EmptyPage from "@/components/custom/EmptyPage";
+import { PageContainer } from "@/components/custom/PageContainer";
+import PageHeader from "@/components/custom/PageHeader";
+import ToolBarContainer from "@/components/custom/ToolBarContainer";
+import { Box, Button, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
-import ProductCategoryTable from "@/app/ui/business/ProductCategoryTable";
 
 export default async function page() {
   const categories = await getProductCategories();
