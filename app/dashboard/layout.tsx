@@ -1,8 +1,8 @@
 import { NavBar } from "@/app/ui/dashboard/NavBar";
 import { LayoutContainer } from "@/app/ui/dashboard/LayoutContainer";
 import { organizationsKey, sessionKey } from "@/data/cacheKeys";
-import { getSession } from "@/server/auth";
-import { getBusinesses } from "@/server/business";
+import { getSession } from "@/api/server/auth";
+import { getBusinesses } from "@/api/server/business";
 import { SWRConfig } from "swr";
 
 export default async function BusinessLayout({

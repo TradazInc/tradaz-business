@@ -26,7 +26,7 @@ export default function page() {
         </ToolBarContainer>
 
         {items?.length ? (
-          <Table.Root size="sm">
+          <Table.Root>
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeader>Product</Table.ColumnHeader>
@@ -45,10 +45,7 @@ export default function page() {
             </Table.Body>
           </Table.Root>
         ) : (
-          <EmptyPage
-            title="No sizes found"
-            description="Create a product size"
-          >
+          <EmptyPage title="No sizes found" description="Create a product size">
             <DialogBox
               trigger={
                 <Button>

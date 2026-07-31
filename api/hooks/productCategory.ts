@@ -1,11 +1,6 @@
-import { ProductCategory } from "@/entities/ProductCategory";
-import { ApiClient } from "@/lib/apiClient";
 import { getKey } from "@/utilities/getKey";
 import useSWRInfinite from "swr/infinite";
-
-const productCategoryService = new ApiClient<ProductCategory>(
-  "/api/product-categories",
-);
+import { productCategoryService } from "../services/productCategories";
 
 export const useProductCategories = () => {
   const pageSize = 20;

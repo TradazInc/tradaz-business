@@ -1,7 +1,7 @@
 "use client";
 
 import { storeSchema } from "@/schema/store";
-import { createStore } from "@/services/store";
+import { createStore } from "@/api/client/store";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

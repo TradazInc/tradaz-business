@@ -1,9 +1,6 @@
-import { SizeType } from "@/entities/SizeType";
-import { ApiClient } from "@/lib/apiClient";
 import { getKey } from "@/utilities/getKey";
 import useSWRInfinite from "swr/infinite";
-
-const sizeTypeService = new ApiClient<SizeType>("/api/size-types");
+import { sizeTypeService } from "../services/sizeType";
 
 export const useSizeTypes = () => {
   const pageSize = 20;

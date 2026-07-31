@@ -3,10 +3,15 @@ import EmptyPage from "@/app/ui/EmptyPage";
 import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
+import { getProductCategories } from "@/api/server/productCategories";
 import { Box, Button, Table, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
-export default function page() {
+export default async function page() {
+  const categories = await getProductCategories();
+
+  if (!categories) return null;
+
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
@@ -25,13 +30,13 @@ export default function page() {
           </DialogBox>
         </ToolBarContainer>
 
-        {items?.length ? (
-          <Table.Root size="sm">
+        {categories.data?.length ? (
+          <Table.Root>
             <Table.Header>
               <Table.Row>
-                <Table.ColumnHeader>Product</Table.ColumnHeader>
-                <Table.ColumnHeader>Category</Table.ColumnHeader>
-                <Table.ColumnHeader textAlign="end">Price</Table.ColumnHeader>
+                <Table.ColumnHeader>Name</Table.ColumnHeader>
+                <Table.ColumnHeader>Code</Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
             <Table.Body>

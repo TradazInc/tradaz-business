@@ -7,7 +7,7 @@ import { PageContainer } from "@/app/ui/PageContainer";
 import PageHeader from "@/app/ui/PageHeader";
 import Search from "@/app/ui/Search";
 import ToolBarContainer from "@/app/ui/ToolBarContainer";
-import { getBusinesses } from "@/server/business";
+import { getBusinesses } from "@/api/server/business";
 import { Button, For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";

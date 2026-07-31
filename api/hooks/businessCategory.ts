@@ -1,11 +1,10 @@
-import { BusinessCategory } from "@/entities/BusinessCategory";
-import { ApiClient, FetchResponse } from "@/lib/apiClient";
+import { FetchResponse } from "@/lib/apiClient";
 import { getKey } from "@/utilities/getKey";
 import useSWRInfinite from "swr/infinite";
-
-const businessCategoryService = new ApiClient<BusinessCategory>(
-  "/api/business-categories",
-);
+import {
+  BusinessCategory,
+  businessCategoryService,
+} from "../services/businessCategories";
 
 export const useBusinessCategories = () => {
   const pageSize = 20;

@@ -1,9 +1,6 @@
 import { toaster } from "@/components/ui/toaster";
-import { Product } from "@/entities/Product";
-import { ApiClient } from "@/lib/apiClient";
 import { ProductData } from "@/schema/product";
-
-const productService = new ApiClient<Product>("/api/products");
+import { productService } from "../services/product";
 
 export async function createProduct(product: ProductData) {
   try {

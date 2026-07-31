@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { emptyTeamVariation } from "@/data/productForm";
-import { useStores } from "@/hooks/stores";
+import { useStores } from "@/api/hooks/stores";
 import { ProductData, ProductFormValues } from "@/schema/product";
 import {
   Button,
@@ -74,7 +74,7 @@ const TeamVariationsField = ({
       {fields.map((field, index) => (
         <Fieldset.Content
           p={4}
-          borderWidth={'thin'}
+          borderWidth={"thin"}
           key={field.id}
           alignItems={"end"}
           borderRadius={"md"}

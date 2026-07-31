@@ -1,11 +1,11 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { Product } from "@/entities/Product";
-import { useProductCategories } from "@/hooks/productCategory";
-import { useSizeTypes } from "@/hooks/sizeType";
+import { Product } from "@/api/services/product";
+import { useProductCategories } from "@/api/hooks/productCategory";
+import { useSizeTypes } from "@/api/hooks/sizeType";
 import { productSchema } from "@/schema/product";
-import { createProduct } from "@/services/product";
+import { createProduct } from "@/api/client/product";
 import { parsePagedData } from "@/utilities/parsePagedData";
 import {
   Box,

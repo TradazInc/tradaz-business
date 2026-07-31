@@ -1,3 +1,5 @@
+import { ApiClient } from "@/lib/apiClient";
+
 export interface Product {
   id: string;
   name: string;
@@ -30,3 +32,6 @@ interface Image {
   id: string;
   url: string;
 }
+
+
+export const productService = new ApiClient<Product>("/api/products");
