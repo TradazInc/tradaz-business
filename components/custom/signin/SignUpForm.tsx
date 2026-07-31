@@ -1,7 +1,7 @@
 "use client";
 
-import { GoogleIcon } from "@/app/ui/signin/GoogleIcon";
-import SeparatorText from "@/app/ui/signin/SeparatorText";
+import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
+import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { emailSignUpSchema } from "@/schema/auth";
 import { emailSignUp, googleSignIn } from "@/api/client/auth";
