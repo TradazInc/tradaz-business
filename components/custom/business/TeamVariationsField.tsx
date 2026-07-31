@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { emptyTeamVariation } from "@/data/productForm";
-import { useStores } from "@/api/hooks/stores";
+import { useStores } from "@/server/hooks/stores";
 import { ProductData, ProductFormValues } from "@/schema/product";
 import {
   Button,

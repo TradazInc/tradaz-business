@@ -1,6 +1,6 @@
 import ProductForm from "@/components/custom/business/ProductForm";
 import { PageContainer } from "@/components/custom/PageContainer";
-import { getProduct } from "@/api/client/product";
+import { getProduct } from "@/server/client/product";
 
 interface Props {
   params: Promise<{ productId: string }>;

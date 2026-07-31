@@ -1,4 +1,4 @@
-import { Product } from "@/api/services/product";
+import { Product } from "@/server/services/product";
 
 export function formProduct(product: Product) {
   return {
