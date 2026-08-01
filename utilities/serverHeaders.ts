@@ -1,11 +1,10 @@
-import "server-only";
 import { headers } from "next/headers";
+import "server-only";
 
-export async function getAuthHeaders() {
+export async function serverHeaders() {
   // Extracts the cookie string from the incoming browser request
   const header = await headers();
-  const cookieHeader = header.get("cookie");
+  const cookie = header.get("cookie") ?? "";
 
-  if (cookieHeader) return { cookie: cookieHeader };
-  return {};
+  return { cookie };
 }
