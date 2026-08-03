@@ -64,10 +64,17 @@ export const BusinessForm = () => {
   const withMask = useHookFormMask(register);
 
   const onSubmit = handleSubmit(async (businessData) => {
-    const business = await createBusiness(businessData);
+    const { data: business, error } = await createBusiness(businessData);
+
     if (business) {
       refresh();
       push(`/dashboard/business/${business.id}`);
+    } else {
+      toaster.create({
+        title: error.code,
+        description: error.message,
+        type: "error",
+      });
     }
   });
 

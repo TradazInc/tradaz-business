@@ -1,24 +1,12 @@
-import { toaster } from "@/components/ui/toaster";
 import { authClient } from "@/lib/authClient";
 import { BusinessData } from "@/schema/business";
 
 export async function createBusiness(business: BusinessData) {
-  const { data, error } = await authClient.organization.create({
+  return authClient.organization.create({
     ...business,
     metadata: { phone: business.phone, address: business.address },
     keepCurrentActiveOrganization: false,
   });
-
-  if (error) {
-    toaster.create({
-      title: error.code,
-      description: error.message,
-      type: "error",
-    });
-    return;
-  }
-
-  return data;
 }
 
 export async function setActiveBusiness(organizationId: string | null) {
@@ -26,18 +14,15 @@ export async function setActiveBusiness(organizationId: string | null) {
 }
 
 export async function checkBusinessSlug(slug: string) {
-  const { data, error } = await authClient.organization.checkSlug({
-    slug,
+  return authClient.organization.checkSlug({ slug });
+}
+
+export async function getBusinesses(name?: string) {
+  return authClient.organization.list({ query: { name } });
+}
+
+export async function getBusiness(organizationId?: string) {
+  return authClient.organization.getFullOrganization({
+    query: { organizationId, membersLimit: 100 },
   });
-
-  if (error) {
-    toaster.create({
-      title: error.code,
-      description: error.message,
-      type: "error",
-    });
-    return { status: false }; // return false if error
-  }
-
-  return data;
 }
