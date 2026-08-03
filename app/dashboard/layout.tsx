@@ -2,7 +2,7 @@ import { NavBar } from "@/components/custom/dashboard/NavBar";
 import { LayoutContainer } from "@/components/custom/dashboard/LayoutContainer";
 import { organizationsKey, sessionKey } from "@/data/cacheKeys";
 import { getSession } from "@/server/services/auth";
-import { getBusinesses } from "@/apis/server/business";
+import { getBusinesses } from "@/server/services/business";
 import { SWRConfig } from "swr";
 import { unauthorized } from "next/navigation";
 
