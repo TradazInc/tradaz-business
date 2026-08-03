@@ -1,9 +1,10 @@
 import { NavBar } from "@/components/custom/dashboard/NavBar";
 import { LayoutContainer } from "@/components/custom/dashboard/LayoutContainer";
 import { organizationsKey, sessionKey } from "@/data/cacheKeys";
-import { getSession } from "@/apis/server/auth";
+import { getSession } from "@/apis/client/auth";
 import { getBusinesses } from "@/apis/server/business";
 import { SWRConfig } from "swr";
+import { unauthorized } from "next/navigation";
 
 export default async function BusinessLayout({
   children,
@@ -12,6 +13,9 @@ export default async function BusinessLayout({
 }>) {
   const sessionPromise = getSession();
   const businessPromise = getBusinesses();
+
+  const { data: session } = await sessionPromise;
+  if (!session) unauthorized();
 
   return (
     <LayoutContainer>

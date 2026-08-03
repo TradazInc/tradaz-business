@@ -1,12 +1,6 @@
 import { baseURL } from "@/data/baseUrl";
+import { setServerCookie } from "@/utilities/setServerCookie";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
-
-export const fetchInstance = createFetch({
-  baseURL: process.env.BASE_URL ?? baseURL,
-  retry: { type: "linear", attempts: 3, delay: 1000 },
-  credentials: "include",
-  throw: true,
-});
 
 export interface FetchResponse<D> {
   data: D[];
@@ -17,6 +11,14 @@ export interface FetchResponse<D> {
     totalPages?: number;
   };
 }
+
+export const fetchInstance = createFetch({
+  baseURL: process.env.BASE_URL ?? baseURL,
+  credentials: "include",
+  retry: { type: "linear", attempts: 3, delay: 1000 },
+  throw: true,
+  onRequest: async (context) => setServerCookie(context),
+});
 
 export class ApiClient<T> {
   constructor(private readonly endpoint: string) {}

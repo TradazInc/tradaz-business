@@ -1,10 +1,11 @@
 "use client";
 
+import { emailSignUp, googleSignIn } from "@/apis/client/auth";
 import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
+import { toaster } from "@/components/ui/toaster";
 import { emailSignUpSchema } from "@/schema/auth";
-import { emailSignUp, googleSignIn } from "@/apis/client/auth";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -12,8 +13,8 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 const SignUpForm = () => {
-  const { push } = useRouter();
   const [isGooglePending, startGoogleTransition] = useTransition();
+  const router = useRouter();
 
   const {
     register,
@@ -22,13 +23,30 @@ const SignUpForm = () => {
   } = useForm({ resolver: zodResolver(emailSignUpSchema) });
 
   const onSubmit = handleSubmit(async (signUpData) => {
-    const data = await emailSignUp(signUpData);
-    if (data) push("/dashboard?signup=true"); // review after emailVerification
+    const { data, error } = await emailSignUp(signUpData);
+
+    if (data) {
+      router.push("/dashboard?signup=true"); // review after emailVerification
+    } else {
+      toaster.create({
+        title: error.code,
+        description: error.message,
+        type: "error",
+      });
+    }
   });
 
   const handleGoogleSignup = () => {
     startGoogleTransition(async () => {
-      await googleSignIn("/dashboard?signup=true");
+      const { error } = await googleSignIn("/dashboard?signup=true");
+
+      if (error) {
+        toaster.create({
+          title: error.code,
+          description: error.message,
+          type: "error",
+        });
+      }
     });
   };
 

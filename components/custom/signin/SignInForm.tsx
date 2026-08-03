@@ -1,10 +1,11 @@
 "use client";
 
+import { emailSignIn, googleSignIn } from "@/apis/client/auth";
 import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
+import { toaster } from "@/components/ui/toaster";
 import { emailSignInSchema } from "@/schema/auth";
-import { emailSignIn, googleSignIn } from "@/apis/client/auth";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -21,12 +22,28 @@ const SignInForm = () => {
   } = useForm({ resolver: zodResolver(emailSignInSchema) });
 
   const onSubmit = handleSubmit(async (signInData) => {
-    await emailSignIn(signInData, "/dashboard");
+    const { error } = await emailSignIn(signInData, "/dashboard");
+
+    if (error) {
+      toaster.create({
+        title: error.code,
+        description: error.message,
+        type: "error",
+      });
+    }
   });
 
   const handleGoogleSignIn = () => {
     startGoogleTransition(async () => {
-      await googleSignIn("/dashboard");
+      const { error } = await googleSignIn("/dashboard");
+
+      if (error) {
+        toaster.create({
+          title: error.code,
+          description: error.message,
+          type: "error",
+        });
+      }
     });
   };
 

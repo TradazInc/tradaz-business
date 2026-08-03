@@ -1,5 +1,6 @@
-import { baseURL } from "@/data/baseUrl";
 import { Session } from "@/apis/services/Session";
+import { baseURL } from "@/data/baseUrl";
+import { setServerCookie } from "@/utilities/setServerCookie";
 import {
   adminClient,
   customSessionClient,
@@ -11,14 +12,15 @@ import { createAuthClient } from "better-auth/react";
 
 // Mirror the server's auth shape for type inference.
 type ServerAuth = {
-  options: {
-    plugins: [ReturnType<typeof customSession<Session>>];
-  };
+  options: { plugins: [ReturnType<typeof customSession<Session>>] };
 };
 
 export const authClient = createAuthClient({
   baseURL: process.env.BASE_URL ?? baseURL,
-  fetchOptions: { credentials: "include" },
+  fetchOptions: {
+    credentials: "include",
+    onRequest: async (context) => setServerCookie(context),
+  },
   plugins: [
     customSessionClient<ServerAuth>(),
     adminClient(),
