@@ -1,6 +1,6 @@
 import ProductForm from "@/components/custom/business/ProductForm";
 import { PageContainer } from "@/components/custom/PageContainer";
-import { getProduct } from "@/apis/services/product";
+import { getProduct } from "@/server/services/product";
 import { toaster } from "@/components/ui/toaster";
 
 interface Props {

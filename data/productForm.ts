@@ -1,4 +1,4 @@
-import { Gender } from "@/apis/entities/product";
+import { Gender } from "@/server/entities/product";
 import {
   ProductFormValues,
   TeamVariationFormValues,

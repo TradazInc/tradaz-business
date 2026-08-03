@@ -1,10 +1,10 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { Store } from "@/apis/entities/store";
-import { useBusinesses } from "@/apis/hooks/business";
-import { setActiveBusiness } from "@/apis/services/business";
-import { getStores, setActiveStore } from "@/apis/services/store";
+import { Store } from "@/server/entities/store";
+import { useBusinesses } from "@/server/hooks/business";
+import { setActiveBusiness } from "@/server/services/business";
+import { getStores, setActiveStore } from "@/server/services/store";
 import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";

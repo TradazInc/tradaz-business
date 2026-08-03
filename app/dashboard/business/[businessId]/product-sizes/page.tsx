@@ -1,4 +1,4 @@
-import { getSizeTypes } from "@/apis/services/sizeType";
+import { getSizeTypes } from "@/server/services/sizeType";
 import ProductSizeTable from "@/components/custom/business/ProductSizeTable";
 import { DialogBox } from "@/components/custom/DialogBox";
 import EmptyPage from "@/components/custom/EmptyPage";

@@ -1,6 +1,6 @@
 "use client";
 
-import { emailSignUp, googleSignIn } from "@/apis/services/auth";
+import { emailSignUp, googleSignIn } from "@/server/services/auth";
 import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";

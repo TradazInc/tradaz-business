@@ -1,4 +1,4 @@
-import { checkBusinessSlug } from "@/apis/services/business";
+import { checkBusinessSlug } from "@/server/services/business";
 import { toaster } from "@/components/ui/toaster";
 import { z } from "zod";
 

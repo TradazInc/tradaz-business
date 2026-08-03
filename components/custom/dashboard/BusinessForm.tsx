@@ -2,9 +2,9 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
-import { useBusinessCategories } from "@/apis/hooks/businessCategory";
+import { useBusinessCategories } from "@/server/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
-import { createBusiness } from "@/apis/services/business";
+import { createBusiness } from "@/server/services/business";
 import { parsePagedData } from "@/utilities/parsePagedData";
 import {
   Box,
