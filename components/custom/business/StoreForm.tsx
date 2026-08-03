@@ -1,11 +1,12 @@
 "use client";
 
 import { storeSchema } from "@/schema/store";
-import { createStore } from "@/apis/client/store";
+import { createStore } from "@/apis/services/store";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toaster } from "@/components/ui/toaster";
 
 export const StoreForm = () => {
   const { refresh, push } = useRouter();
@@ -17,10 +18,16 @@ export const StoreForm = () => {
   } = useForm({ resolver: zodResolver(storeSchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (storeData) => {
-    const store = await createStore(storeData);
+    const { data: store, error } = await createStore(storeData);
     if (store) {
       refresh();
       push(`/dashboard/store/${store.id}`);
+    } else {
+      toaster.create({
+        title: error.code,
+        description: error.message,
+        type: "error",
+      });
     }
   });
 

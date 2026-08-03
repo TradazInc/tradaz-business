@@ -1,15 +1,10 @@
-import { ApiClient } from "@/lib/apiClient";
+import { sizeTypeService } from "../entities/sizeType";
 
-export interface SizeType {
-  id: string;
-  name: string;
-  sizes?: Size[];
+export async function getSizeTypes() {
+  try {
+    const data = await sizeTypeService.getAll();
+    return { data };
+  } catch (error) {
+    return { error };
+  }
 }
-
-export interface Size {
-  id: string;
-  name: string;
-  sizeTypeId: string;
-}
-
-export const sizeTypeService = new ApiClient<SizeType>("/api/size-types");

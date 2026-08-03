@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut } from "@/apis/client/auth";
+import { signOut } from "@/apis/services/auth";
 import { useSession } from "@/apis/hooks/session";
 import { toaster } from "@/components/ui/toaster";
 import { Avatar, Menu, Portal } from "@chakra-ui/react";

@@ -1,4 +1,4 @@
-import { Session } from "@/apis/services/Session";
+import { Session } from "@/apis/entities/session";
 import { baseURL } from "@/data/baseUrl";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import {

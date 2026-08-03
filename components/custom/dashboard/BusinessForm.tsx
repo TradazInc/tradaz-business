@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
 import { useBusinessCategories } from "@/apis/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
-import { createBusiness } from "@/apis/client/business";
+import { createBusiness } from "@/apis/services/business";
 import { parsePagedData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -65,7 +65,6 @@ export const BusinessForm = () => {
 
   const onSubmit = handleSubmit(async (businessData) => {
     const { data: business, error } = await createBusiness(businessData);
-
     if (business) {
       refresh();
       push(`/dashboard/business/${business.id}`);

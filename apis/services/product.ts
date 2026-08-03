@@ -1,42 +1,20 @@
-import { ApiClient } from "@/lib/apiClient";
+import { ProductData } from "@/schema/product";
+import { productService } from "../entities/product";
 
-export interface Product {
-  id: string;
-  name: string;
-  brand: string;
-  gender: Gender;
-  description: string;
-  discountPercentage: number;
-  categoryId: string;
-  sizeTypeId: string;
-  images: Image[];
-  variations: Variation[];
+export async function createProduct(product: ProductData) {
+  try {
+    const data = await productService.post({ body: product });
+    return { data };
+  } catch (error) {
+    return { error };
+  }
 }
 
-interface Variation {
-  id: string;
-  sku: string;
-  color: string;
-  price: number;
-  sizeId: string;
-  teamVariations: TeamVariation[];
+export async function getProduct(id: string) {
+  try {
+    const data = await productService.get(id);
+    return { data };
+  } catch (error) {
+    return { error };
+  }
 }
-
-interface TeamVariation {
-  id: string;
-  teamId: string;
-  quantity: number;
-}
-
-interface Image {
-  id: string;
-  url: string;
-}
-
-export enum Gender {
-  male = "male",
-  female = "female",
-  unisex = "unisex",
-}
-
-export const productService = new ApiClient<Product>("/api/products");

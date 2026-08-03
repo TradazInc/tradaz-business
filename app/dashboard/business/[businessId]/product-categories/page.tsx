@@ -1,15 +1,24 @@
-import { getProductCategories } from "@/apis/server/productCategories";
+import { getProductCategories } from "@/apis/services/productCategory";
 import ProductCategoryTable from "@/components/custom/business/ProductCategoryTable";
 import { DialogBox } from "@/components/custom/DialogBox";
 import EmptyPage from "@/components/custom/EmptyPage";
 import { PageContainer } from "@/components/custom/PageContainer";
 import PageHeader from "@/components/custom/PageHeader";
 import ToolBarContainer from "@/components/custom/ToolBarContainer";
+import { toaster } from "@/components/ui/toaster";
 import { Box, Button, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
 export default async function page() {
-  const categories = await getProductCategories();
+  const { data, error } = await getProductCategories();
+
+  if (error) {
+    toaster.create({
+      title: "Failed to fetch product categories",
+      description: error instanceof Error ? error.message : "Please try again.",
+      type: "error",
+    });
+  }
 
   return (
     <PageContainer>
@@ -29,7 +38,7 @@ export default async function page() {
           </DialogBox>
         </ToolBarContainer>
 
-        {categories ? (
+        {data ? (
           <ProductCategoryTable />
         ) : (
           <EmptyPage

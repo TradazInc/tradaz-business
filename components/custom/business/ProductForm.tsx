@@ -1,11 +1,11 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { Product } from "@/apis/services/product";
+import { Product } from "@/apis/entities/product";
 import { useProductCategories } from "@/apis/hooks/productCategory";
 import { useSizeTypes } from "@/apis/hooks/sizeType";
 import { productSchema } from "@/schema/product";
-import { createProduct } from "@/apis/client/product";
+import { createProduct } from "@/apis/services/product";
 import { parsePagedData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -98,10 +98,17 @@ const ProductForm = ({ product }: Props) => {
   });
 
   const onSubmit = handleSubmit(async (productData) => {
-    const product = await createProduct(productData);
+    const { data: product, error } = await createProduct(productData);
     if (product) {
       refresh();
       push(`/dashboard/business/products/${product.id}`);
+    } else {
+      toaster.create({
+        title: "Could not create product",
+        description:
+          error instanceof Error ? error.message : "Please try again.",
+        type: "error",
+      });
     }
   });
 

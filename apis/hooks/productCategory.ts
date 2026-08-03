@@ -1,6 +1,6 @@
 import { getKey } from "@/utilities/getKey";
 import useSWRInfinite from "swr/infinite";
-import { productCategoryService } from "../services/productCategories";
+import { productCategoryService } from "../entities/productCategory";
 
 export const useProductCategories = () => {
   const pageSize = 20;

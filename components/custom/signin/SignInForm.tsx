@@ -1,6 +1,6 @@
 "use client";
 
-import { emailSignIn, googleSignIn } from "@/apis/client/auth";
+import { emailSignIn, googleSignIn } from "@/apis/services/auth";
 import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
@@ -23,7 +23,6 @@ const SignInForm = () => {
 
   const onSubmit = handleSubmit(async (signInData) => {
     const { error } = await emailSignIn(signInData, "/dashboard");
-
     if (error) {
       toaster.create({
         title: error.code,
@@ -36,7 +35,6 @@ const SignInForm = () => {
   const handleGoogleSignIn = () => {
     startGoogleTransition(async () => {
       const { error } = await googleSignIn("/dashboard");
-
       if (error) {
         toaster.create({
           title: error.code,

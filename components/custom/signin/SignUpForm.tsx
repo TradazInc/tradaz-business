@@ -1,6 +1,6 @@
 "use client";
 
-import { emailSignUp, googleSignIn } from "@/apis/client/auth";
+import { emailSignUp, googleSignIn } from "@/apis/services/auth";
 import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
@@ -24,7 +24,6 @@ const SignUpForm = () => {
 
   const onSubmit = handleSubmit(async (signUpData) => {
     const { data, error } = await emailSignUp(signUpData);
-
     if (data) {
       router.push("/dashboard?signup=true"); // review after emailVerification
     } else {
@@ -39,7 +38,6 @@ const SignUpForm = () => {
   const handleGoogleSignup = () => {
     startGoogleTransition(async () => {
       const { error } = await googleSignIn("/dashboard?signup=true");
-
       if (error) {
         toaster.create({
           title: error.code,

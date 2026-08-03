@@ -4,7 +4,7 @@ import useSWRInfinite from "swr/infinite";
 import {
   BusinessCategory,
   businessCategoryService,
-} from "../services/businessCategories";
+} from "../entities/businessCategory";
 
 export const useBusinessCategories = () => {
   const pageSize = 20;

@@ -1,6 +1,6 @@
 import { getKey } from "@/utilities/getKey";
 import useSWRInfinite from "swr/infinite";
-import { sizeTypeService } from "../services/sizeType";
+import { sizeTypeService } from "../entities/sizeType";
 
 export const useSizeTypes = () => {
   const pageSize = 20;
