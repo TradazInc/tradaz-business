@@ -1,19 +1,9 @@
-import { baseURL } from "@/data/baseUrl";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
-
-export interface FetchResponse<D> {
-  data: D[];
-  aggregate?: number;
-  meta: {
-    next?: string;
-    count?: number;
-    totalPages?: number;
-  };
-}
+import { FetchResponse } from "@/server/entities/fetchResponse";
 
 export const fetchInstance = createFetch({
-  baseURL: process.env.BASE_URL ?? baseURL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",
   retry: { type: "linear", attempts: 3, delay: 1000 },
   throw: true,

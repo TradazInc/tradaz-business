@@ -1,3 +1,5 @@
+import { customSession } from "better-auth/plugins";
+
 export interface Session {
   user: {
     id: string;
@@ -53,3 +55,8 @@ export enum Role {
   admin = "admin",
   user = "user",
 }
+
+// Mirror the server's auth shape for type inference.
+export type ServerAuth = {
+  options: { plugins: [ReturnType<typeof customSession<Session>>] };
+};

@@ -1,4 +1,4 @@
-import { FetchResponse } from "@/lib/apiClient";
+import { FetchResponse } from "@/server/entities/fetchResponse";
 
 export function getKey<T>(
   pageIndex: number,

@@ -1,4 +1,4 @@
-import { FetchResponse } from "@/lib/apiClient";
+import { FetchResponse } from "@/server/entities/fetchResponse";
 import { getKey } from "@/utilities/getKey";
 import useSWRInfinite from "swr/infinite";
 import {
