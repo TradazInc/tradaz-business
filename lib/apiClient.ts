@@ -1,6 +1,7 @@
 import { setServerCookie } from "@/utilities/setServerCookie";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
 import { FetchResponse } from "@/server/entities/fetchResponse";
+import { logger } from "@better-fetch/logger";
 
 export const fetchInstance = createFetch({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -8,6 +9,7 @@ export const fetchInstance = createFetch({
   retry: { type: "linear", attempts: 3, delay: 1000 },
   throw: true,
   onRequest: async (context) => setServerCookie(context),
+  plugins: [logger()],
 });
 
 export class ApiClient<T> {
