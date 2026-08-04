@@ -8,7 +8,7 @@ export const useBusinesses = () => {
   );
 };
 
-export const useBusiness = (organizationId?: string) => {
+export const useBusiness = (organizationId: string) => {
   return useSWR(`/api/organization/${organizationId}`, () =>
     authClient.organization.getFullOrganization().then((res) => res.data),
   );

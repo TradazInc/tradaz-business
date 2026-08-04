@@ -2,8 +2,8 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { emptyTeamVariation } from "@/data/productForm";
-import { useStores } from "@/server/hooks/stores";
 import { ProductData, ProductFormValues } from "@/schema/product";
+import { useStores } from "@/server/hooks/stores";
 import {
   Button,
   createListCollection,
@@ -15,6 +15,7 @@ import {
   Select,
   Spinner,
 } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import {
   Control,
@@ -39,7 +40,8 @@ const TeamVariationsField = ({
   variationIndex,
 }: Props) => {
   // Fetch data
-  const { data, error, isLoading } = useStores();
+  const { businessId } = useParams<{ businessId: string }>();
+  const { data, error, isLoading } = useStores(businessId);
 
   // Create collection data (chakra)
   const storeCollection = useMemo(
