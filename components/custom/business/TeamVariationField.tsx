@@ -33,14 +33,14 @@ interface Props {
   variationIndex: number;
 }
 
-const TeamVariationsField = ({
+const TeamVariationField = ({
   control,
   register,
   errors,
   variationIndex,
 }: Props) => {
   // Fetch data
-  const { businessId } = useParams<{ businessId: string }>();
+  const { businessId } = useParams<{ businessId?: string }>();
   const { data, error, isLoading } = useStores(businessId);
 
   // Create collection data (chakra)
@@ -177,4 +177,4 @@ const TeamVariationsField = ({
   );
 };
 
-export default TeamVariationsField;
+export default TeamVariationField;

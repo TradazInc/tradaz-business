@@ -33,7 +33,7 @@ import { useId, useMemo } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { LuPlus, LuTrash2, LuUpload } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
-import TeamVariationsField from "./TeamVariationsField";
+import TeamVariationField from "./TeamVariationField";
 import { emptyProduct, emptyVariation } from "@/data/productForm";
 import TotalQuantity from "./TotalQuantity";
 import { formProduct } from "@/utilities/formProduct";
@@ -474,7 +474,7 @@ const ProductForm = ({ product }: Props) => {
                     </Field.ErrorText>
                   </Field.Root>
 
-                  <TeamVariationsField
+                  <TeamVariationField
                     control={control}
                     register={register}
                     errors={errors}
