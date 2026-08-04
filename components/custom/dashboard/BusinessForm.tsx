@@ -168,12 +168,12 @@ export const BusinessForm = () => {
                       <Select.Root
                         name={field.name}
                         value={field.value}
+                        collection={categoryCollection}
                         onValueChange={({ value }) => {
                           field.onChange(value);
                           field.onBlur();
                         }}
                         onInteractOutside={() => field.onBlur()}
-                        collection={categoryCollection}
                       >
                         <Select.HiddenSelect />
                         <Select.Control>
