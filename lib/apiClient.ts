@@ -13,34 +13,34 @@ export const fetchInstance = createFetch({
 export class ApiClient<T> {
   constructor(private readonly endpoint: string) {}
 
-  getAll = (options?: BetterFetchOption) => {
+  getAll = async (options?: BetterFetchOption) => {
     return fetchInstance<FetchResponse<T>>(this.endpoint, {
       ...options,
       method: "GET",
     }).then((res) => res);
   };
 
-  get = (id: number | string) => {
+  get = async (id: number | string) => {
     return fetchInstance<T>(`${this.endpoint}/${id}`, {
       method: "GET",
     }).then((res) => res);
   };
 
-  post = (options: BetterFetchOption) => {
+  post = async (options: BetterFetchOption) => {
     return fetchInstance<T>(this.endpoint, {
       ...options,
       method: "POST",
     }).then((res) => res);
   };
 
-  update = (id: number | string, options: BetterFetchOption) => {
+  update = async (id: number | string, options: BetterFetchOption) => {
     return fetchInstance<T>(`${this.endpoint}/${id}`, {
       ...options,
       method: "PUT",
     }).then((res) => res);
   };
 
-  delete = (id: number | string) => {
+  delete = async (id: number | string) => {
     return fetchInstance<void>(`${this.endpoint}/${id}`, {
       method: "DELETE",
     }).then((res) => res);
