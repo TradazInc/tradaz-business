@@ -1,6 +1,6 @@
 import { FetchResponse } from "@/server/entities/fetchResponse";
 
-export function getKey<T>(
+export function getCacheKey<T>(
   pageIndex: number,
   previousPageData: FetchResponse<T> | null,
   cacheKey: string,
