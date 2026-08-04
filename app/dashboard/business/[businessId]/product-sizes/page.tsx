@@ -14,8 +14,8 @@ export default async function page() {
 
   if (error) {
     toaster.create({
-      title: "Failed to fetch size types",
-      description: error instanceof Error ? error.message : "Please try again.",
+      title: error.name,
+      description: error.message,
       type: "error",
     });
   }

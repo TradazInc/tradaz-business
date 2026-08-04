@@ -13,8 +13,8 @@ export default async function page({ params }: Props) {
 
   if (error) {
     toaster.create({
-      title: "Failed to fetch product",
-      description: error instanceof Error ? error.message : "Please try again.",
+      title: error.name,
+      description: error.message,
       type: "error",
     });
   }

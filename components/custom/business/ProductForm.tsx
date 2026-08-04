@@ -104,9 +104,8 @@ const ProductForm = ({ product }: Props) => {
       push(`/dashboard/business/products/${product.id}`);
     } else {
       toaster.create({
-        title: "Could not create product",
-        description:
-          error instanceof Error ? error.message : "Please try again.",
+        title: error.name,
+        description: error.message,
         type: "error",
       });
     }
