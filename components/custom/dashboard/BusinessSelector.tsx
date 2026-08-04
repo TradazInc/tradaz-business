@@ -95,7 +95,13 @@ export const BusinessSelector = () => {
     }
   }, [businessId, storeId]);
 
-  if (error) return null;
+  if (error) {
+    toaster.create({
+      title: error.name,
+      description: error.message,
+      type: "error",
+    });
+  }
 
   return (
     <Breadcrumb.Root>

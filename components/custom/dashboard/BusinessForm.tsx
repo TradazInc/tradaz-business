@@ -78,12 +78,13 @@ export const BusinessForm = () => {
   });
 
   // Handle errors
-  if (error)
+  if (error) {
     toaster.create({
       title: error.code,
       description: error.message,
       type: "error",
     });
+  }
 
   return (
     <Steps.Root

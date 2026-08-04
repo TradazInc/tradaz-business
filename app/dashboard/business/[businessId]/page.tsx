@@ -7,6 +7,7 @@ import { PageContainer } from "@/components/custom/PageContainer";
 import PageHeader from "@/components/custom/PageHeader";
 import Search from "@/components/custom/Search";
 import ToolBarContainer from "@/components/custom/ToolBarContainer";
+import { toaster } from "@/components/ui/toaster";
 import { getBusiness } from "@/server/services/business";
 import { Button, For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -20,12 +21,18 @@ export default async function page({ params }: Props) {
   const { businessId } = await params;
   const { data, error } = await getBusiness(businessId);
 
-  if (error) return null;
+  if (error) {
+    toaster.create({
+      title: error.code,
+      description: error.message,
+      type: "error",
+    });
+  }
 
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>{`${data.name} Stores`}</PageHeader>
+        <PageHeader>{`${data?.name} Stores`}</PageHeader>
 
         <ToolBarContainer>
           <Suspense>
@@ -43,7 +50,7 @@ export default async function page({ params }: Props) {
           </DialogBox>
         </ToolBarContainer>
 
-        {data.teams.length ? (
+        {data?.teams?.length ? (
           <GridContainer>
             <For each={data.teams}>
               {(store) => (
