@@ -2,9 +2,9 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
-import { useBusinessCategories } from "@/server/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
-import { createBusiness } from "@/server/services/business";
+import { useAddBusiness } from "@/server/hooks/business";
+import { useBusinessCategories } from "@/server/hooks/businessCategory";
 import { parsePagedData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -32,6 +32,7 @@ import { useHookFormMask } from "use-mask-input";
 export const BusinessForm = () => {
   // Fetch data
   const { data, error, isLoading, size, setSize } = useBusinessCategories();
+  const { trigger, isMutating } = useAddBusiness();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
   const categoryScrollId = useId();
@@ -64,7 +65,7 @@ export const BusinessForm = () => {
   const withMask = useHookFormMask(register);
 
   const onSubmit = handleSubmit(async (businessData) => {
-    const { data: business, error } = await createBusiness(businessData);
+    const { data: business, error } = await trigger(businessData);
     if (business) {
       refresh();
       push(`/dashboard/business/${business.id}`);
@@ -266,13 +267,13 @@ export const BusinessForm = () => {
             <Button
               type={"submit"}
               form={"business-form"}
-              disabled={!isValid || isSubmitting}
-              loading={isSubmitting}
+              disabled={!isValid || isSubmitting || isMutating}
+              loading={isSubmitting || isMutating}
             >
               Submit
             </Button>
           ) : (
-            <Button disabled={isSubmitting}>Next</Button>
+            <Button disabled={isSubmitting || isMutating}>Next</Button>
           )}
         </Steps.NextTrigger>
       </ButtonGroup>

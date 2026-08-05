@@ -1,14 +1,16 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { storeSchema } from "@/schema/store";
-import { createStore } from "@/server/services/store";
+import { useAddStore } from "@/server/hooks/store";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { toaster } from "@/components/ui/toaster";
 
 export const StoreForm = () => {
+  const { businessId } = useParams<{ businessId?: string }>();
+  const { trigger, isMutating } = useAddStore(businessId);
   const { refresh, push } = useRouter();
 
   const {
@@ -18,7 +20,7 @@ export const StoreForm = () => {
   } = useForm({ resolver: zodResolver(storeSchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (storeData) => {
-    const { data: store, error } = await createStore(storeData);
+    const { data: store, error } = await trigger(storeData);
     if (store) {
       refresh();
       push(`/dashboard/store/${store.id}`);
@@ -69,8 +71,8 @@ export const StoreForm = () => {
           type={"submit"}
           variant={"outline"}
           alignSelf={"flex-start"}
-          disabled={!isValid || isSubmitting}
-          loading={isSubmitting}
+          disabled={!isValid || isSubmitting || isMutating}
+          loading={isSubmitting || isMutating}
         >
           Submit
         </Button>

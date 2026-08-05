@@ -1,13 +1,4 @@
 import { authClient } from "@/lib/authClient";
-import { BusinessData } from "@/schema/business";
-
-export async function createBusiness(business: BusinessData) {
-  return authClient.organization.create({
-    ...business,
-    metadata: { phone: business.phone, address: business.address },
-    keepCurrentActiveOrganization: false,
-  });
-}
 
 export async function setActiveBusiness(organizationId: string | null) {
   return authClient.organization.setActive({ organizationId });

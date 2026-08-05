@@ -3,7 +3,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { emptyTeamVariation } from "@/data/productForm";
 import { ProductData, ProductFormValues } from "@/schema/product";
-import { useStores } from "@/server/hooks/stores";
+import { useStores } from "@/server/hooks/store";
 import {
   Button,
   createListCollection,
