@@ -1,4 +1,4 @@
-import { ORGANIZATIONS_KEY } from "@/data/swrCacheKeys";
+import { ORGANIZATIONS_KEY, SESSION_KEY } from "@/data/swrCacheKeys";
 import { authClient } from "@/lib/authClient";
 import { BusinessData } from "@/schema/business";
 import useSWR from "swr";
@@ -34,5 +34,15 @@ export const useAddBusiness = () => {
         metadata: { phone: arg.phone, address: arg.address },
         keepCurrentActiveOrganization: false,
       }),
+  );
+};
+
+export const useSetActiveBusiness = () => {
+  return useSWRMutation(
+    SESSION_KEY,
+    (url: string, { arg }: { arg: { organizationId: string | null } }) =>
+      authClient.organization
+        .setActive({ ...arg, fetchOptions: { throw: true } })
+        .then((res) => res),
   );
 };

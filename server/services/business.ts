@@ -1,11 +1,7 @@
 import { authClient } from "@/lib/authClient";
 
-export async function setActiveBusiness(organizationId: string | null) {
-  return authClient.organization.setActive({ organizationId });
-}
-
 export async function checkBusinessSlug(slug: string) {
-  return authClient.organization.checkSlug({ slug });
+  return authClient.organization.checkSlug({ slug }).then((res) => res);
 }
 
 export async function getBusinesses(name?: string) {
