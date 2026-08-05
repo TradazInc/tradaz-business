@@ -4,6 +4,6 @@ import useSWR from "swr";
 
 export const useSession = () => {
   return useSWR(SESSION_KEY, () =>
-    authClient.getSession().then((res) => res.data),
+    authClient.getSession({ fetchOptions: { throw: true } }).then((res) => res),
   );
 };

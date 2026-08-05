@@ -6,14 +6,22 @@ import useSWRMutation from "swr/mutation";
 
 export const useBusinesses = () => {
   return useSWR(ORGANIZATIONS_KEY, () =>
-    authClient.organization.list().then((res) => res.data),
+    authClient.organization
+      .list({ fetchOptions: { throw: true } })
+      .then((res) => res),
   );
 };
 
 export const useBusiness = (organizationId?: string) => {
   return useSWR(
-    organizationId ? `/api/organization/${organizationId}` : null,
-    () => authClient.organization.getFullOrganization().then((res) => res.data),
+    organizationId ? `/api/organizations/${organizationId}` : null,
+    () =>
+      authClient.organization
+        .getFullOrganization({
+          query: { organizationId, membersLimit: 100 },
+          fetchOptions: { throw: true },
+        })
+        .then((res) => res),
   );
 };
 

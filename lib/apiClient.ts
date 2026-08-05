@@ -22,8 +22,9 @@ export class ApiClient<T> {
     }).then((res) => res);
   };
 
-  get = async (id: number | string) => {
+  get = async (id: number | string, options?: BetterFetchOption) => {
     return fetchInstance<T>(`${this.endpoint}/${id}`, {
+      ...options,
       method: "GET",
     }).then((res) => res);
   };
@@ -42,8 +43,9 @@ export class ApiClient<T> {
     }).then((res) => res);
   };
 
-  delete = async (id: number | string) => {
+  delete = async (id: number | string, options?: BetterFetchOption) => {
     return fetchInstance<void>(`${this.endpoint}/${id}`, {
+      ...options,
       method: "DELETE",
     }).then((res) => res);
   };

@@ -5,8 +5,11 @@ import useSWRMutation from "swr/mutation";
 
 export const useStores = (organizationId?: string) => {
   return useSWR(
-    organizationId ? `/api/organization/${organizationId}/stores` : null,
-    () => authClient.organization.listTeams().then((res) => res.data),
+    organizationId ? `/api/organizations/${organizationId}/stores` : null,
+    () =>
+      authClient.organization
+        .listTeams({ query: { organizationId }, fetchOptions: { throw: true } })
+        .then((res) => res),
   );
 };
 
