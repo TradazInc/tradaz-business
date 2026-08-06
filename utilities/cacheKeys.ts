@@ -7,7 +7,7 @@ export const SESSION_KEY = "/api/session"; // session is seeded from the layout
 
 export const PRODUCT_KEY = "/api/products";
 
-// Derived Keys
+// Computed Keys
 export const businessKey = (businessId: string) =>
   `${BUSINESS_KEY}/${businessId}`;
 

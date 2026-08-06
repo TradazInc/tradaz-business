@@ -1,11 +1,13 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
+import { emptyProduct, emptyVariation } from "@/data/productForm";
+import { productSchema } from "@/schema/product";
 import { Product } from "@/server/entities/product";
+import { useAddProduct } from "@/server/hooks/product";
 import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
-import { productSchema } from "@/schema/product";
-import { createProduct } from "@/server/services/product";
+import { formProduct } from "@/utilities/formProduct";
 import { parsePagedData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -34,16 +36,14 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { LuPlus, LuTrash2, LuUpload } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import TeamVariationField from "./TeamVariationField";
-import { emptyProduct, emptyVariation } from "@/data/productForm";
 import TotalQuantity from "./TotalQuantity";
-import { formProduct } from "@/utilities/formProduct";
 
 interface Props {
   product?: Product;
 }
 
 const ProductForm = ({ product }: Props) => {
-  // Fetch data
+  const { trigger, error, isMutating } = useAddProduct();
   const categories = useProductCategories();
   const sizeTypes = useSizeTypes();
   const { refresh, push } = useRouter();
@@ -98,16 +98,16 @@ const ProductForm = ({ product }: Props) => {
   });
 
   const onSubmit = handleSubmit(async (productData) => {
-    const { data: product, error } = await createProduct(productData);
-    if (product) {
-      refresh();
-      push(`/dashboard/business/products/${product.id}`);
-    } else {
+    const product = await trigger(productData);
+    if (error) {
       toaster.create({
         title: error.statusText,
         description: error.message,
         type: "error",
       });
+    } else {
+      refresh();
+      push(`/dashboard/business/products/${product.id}`);
     }
   });
 
@@ -505,11 +505,15 @@ const ProductForm = ({ product }: Props) => {
         <Button
           type="submit"
           alignSelf="flex-start"
-          disabled={!isValid || isSubmitting}
-          loading={isSubmitting}
+          disabled={!isValid || isSubmitting || isMutating}
+          loading={isSubmitting || isMutating}
         >
           {product ? "Update Product" : "Create Product"}
         </Button>
+
+        <Fieldset.ErrorText>
+          Some fields are invalid. Please check them.
+        </Fieldset.ErrorText>
       </Fieldset.Root>
     </form>
   );
