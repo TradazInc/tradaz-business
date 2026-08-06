@@ -1,8 +1,8 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
 import { useBusinesses, useSetActiveBusiness } from "@/server/hooks/business";
 import { useSetActiveStore, useStores } from "@/server/hooks/store";
+import { errorToast } from "@/utilities/errorToast";
 import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
@@ -11,7 +11,7 @@ import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
-  const { data: businesses, error, isLoading } = useBusinesses();
+  const { data: businesses, isLoading } = useBusinesses();
   const [selectedBusinessId, setSelectedBusinessId] = useState<string>();
   const { data: stores } = useStores(selectedBusinessId);
 
@@ -19,12 +19,20 @@ export const BusinessSelector = () => {
   const { data: store, trigger: setStore } = useSetActiveStore();
 
   const handleBusiness = async (businessId?: string) => {
-    setSelectedBusinessId(businessId);
-    await setBusiness({ organizationId: businessId ?? null });
+    try {
+      setSelectedBusinessId(businessId);
+      await setBusiness({ organizationId: businessId ?? null });
+    } catch (e) {
+      errorToast(e);
+    }
   };
 
   const handleStore = async (storeId?: string) => {
-    await setStore({ teamId: storeId ?? null });
+    try {
+      await setStore({ teamId: storeId ?? null });
+    } catch (e) {
+      errorToast(e);
+    }
   };
 
   // Tracks url changes
@@ -38,15 +46,6 @@ export const BusinessSelector = () => {
     if (!businessId && !storeId) handleBusiness(businessId);
     if (!storeId) handleStore(storeId);
   }, [businessId, storeId]);
-
-  // Review: handle errors*
-  if (error) {
-    toaster.create({
-      title: error.name,
-      description: error.message,
-      type: "error",
-    });
-  }
 
   return (
     <Breadcrumb.Root>

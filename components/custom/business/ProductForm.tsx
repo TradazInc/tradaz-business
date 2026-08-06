@@ -1,12 +1,12 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
 import { emptyProduct, emptyVariation } from "@/data/productForm";
 import { productSchema } from "@/schema/product";
 import { Product } from "@/server/entities/product";
 import { useAddProduct } from "@/server/hooks/product";
 import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
+import { errorToast } from "@/utilities/errorToast";
 import { formProduct } from "@/utilities/formProduct";
 import { parsePagedData } from "@/utilities/parsePagedData";
 import {
@@ -43,7 +43,7 @@ interface Props {
 }
 
 const ProductForm = ({ product }: Props) => {
-  const { trigger, error, isMutating } = useAddProduct();
+  const { trigger, isMutating } = useAddProduct();
   const categories = useProductCategories();
   const sizeTypes = useSizeTypes();
   const { refresh, push } = useRouter();
@@ -98,33 +98,14 @@ const ProductForm = ({ product }: Props) => {
   });
 
   const onSubmit = handleSubmit(async (productData) => {
-    const product = await trigger(productData);
-    if (error) {
-      toaster.create({
-        title: error.statusText,
-        description: error.message,
-        type: "error",
-      });
-    } else {
+    try {
+      const product = await trigger(productData);
       refresh();
       push(`/dashboard/business/products/${product.id}`);
+    } catch (e) {
+      errorToast(e);
     }
   });
-
-  // Handle errors
-  if (categories.error)
-    toaster.create({
-      title: categories.error.code,
-      description: categories.error.message,
-      type: "error",
-    });
-
-  if (sizeTypes.error)
-    toaster.create({
-      title: sizeTypes.error.code,
-      description: sizeTypes.error.message,
-      type: "error",
-    });
 
   return (
     <form style={{ width: "100%" }} onSubmit={onSubmit}>

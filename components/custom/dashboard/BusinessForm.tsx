@@ -1,10 +1,10 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
 import { businessSchema } from "@/schema/business";
 import { useAddBusiness } from "@/server/hooks/business";
 import { useBusinessCategories } from "@/server/hooks/businessCategory";
+import { errorToast } from "@/utilities/errorToast";
 import { parsePagedData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -30,9 +30,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
-  // Fetch data
-  const { data, error, isLoading, size, setSize } = useBusinessCategories();
-  const { trigger, isMutating, error: triggerError } = useAddBusiness();
+  const { data, isLoading, size, setSize } = useBusinessCategories();
+  const { trigger, isMutating } = useAddBusiness();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
   const categoryScrollId = useId();
@@ -65,27 +64,14 @@ export const BusinessForm = () => {
   const withMask = useHookFormMask(register);
 
   const onSubmit = handleSubmit(async (businessData) => {
-    const business = await trigger(businessData);
-    if (triggerError) {
-      toaster.create({
-        title: error.status,
-        description: error.message,
-        type: "error",
-      });
-    } else {
+    try {
+      const business = await trigger(businessData);
       refresh();
       push(`/dashboard/business/${business.id}`);
+    } catch (e) {
+      errorToast(e);
     }
   });
-
-  // Handle errors
-  if (error) {
-    toaster.create({
-      title: error.status,
-      description: error.message,
-      type: "error",
-    });
-  }
 
   return (
     <Steps.Root

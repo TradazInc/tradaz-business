@@ -6,7 +6,6 @@ import { logger } from "@better-fetch/logger";
 const $fetch = createFetch({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",
-  retry: { type: "linear", attempts: 3, delay: 1000 },
   onRequest: async (context) => setServerCookie(context),
   plugins: [logger()],
 });

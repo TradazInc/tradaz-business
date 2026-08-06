@@ -1,3 +1,4 @@
+import { SWRProvider } from "@/components/custom/shared/SWRProvider";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
@@ -27,8 +28,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Provider>
-          {children}
-          <Toaster />
+          <SWRProvider>
+            {children}
+            <Toaster />
+          </SWRProvider>
         </Provider>
       </body>
     </html>

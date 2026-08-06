@@ -7,7 +7,6 @@ import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import Search from "@/components/custom/shared/Search";
 import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
-import { toaster } from "@/components/ui/toaster";
 import { getBusiness } from "@/server/services/business";
 import { Button, For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -21,13 +20,7 @@ export default async function page({ params }: Props) {
   const { businessId } = await params;
   const { data, error } = await getBusiness(businessId);
 
-  if (error) {
-    toaster.create({
-      title: error.code,
-      description: error.message,
-      type: "error",
-    });
-  }
+  if (error) return null;
 
   return (
     <PageContainer>

@@ -1,24 +1,17 @@
-import { getProductCategories } from "@/server/services/productCategory";
 import ProductCategoryTable from "@/components/custom/business/ProductCategoryTable";
 import { DialogBox } from "@/components/custom/shared/DialogBox";
 import EmptyPage from "@/components/custom/shared/EmptyPage";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
-import { toaster } from "@/components/ui/toaster";
+import { getProductCategories } from "@/server/services/productCategory";
 import { Box, Button, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
 export default async function page() {
   const { data, error } = await getProductCategories();
 
-  if (error) {
-    toaster.create({
-      title: error.statusText,
-      description: error.message,
-      type: "error",
-    });
-  }
+  if (error) return null;
 
   return (
     <PageContainer>

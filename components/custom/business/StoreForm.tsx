@@ -1,8 +1,8 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
 import { storeSchema } from "@/schema/store";
 import { useAddStore } from "@/server/hooks/store";
+import { errorToast } from "@/utilities/errorToast";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams, useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 export const StoreForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
-  const { trigger, isMutating, error } = useAddStore(businessId);
+  const { trigger, isMutating } = useAddStore(businessId);
   const { refresh, push } = useRouter();
 
   const {
@@ -20,16 +20,12 @@ export const StoreForm = () => {
   } = useForm({ resolver: zodResolver(storeSchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (storeData) => {
-    const store = await trigger(storeData);
-    if (error) {
-      toaster.create({
-        title: error.status,
-        description: error.message,
-        type: "error",
-      });
-    } else {
+    try {
+      const store = await trigger(storeData);
       refresh();
       push(`/dashboard/store/${store.id}`);
+    } catch (e) {
+      errorToast(e);
     }
   });
 
