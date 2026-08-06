@@ -1,5 +1,5 @@
 import { FetchResponse } from "@/server/entities/fetchResponse";
-import { getCacheKey } from "@/utilities/getCacheKey";
+import { pagedKey } from "@/utilities/cacheKeys";
 import useSWRInfinite from "swr/infinite";
 import {
   BusinessCategory,
@@ -11,7 +11,7 @@ export const useBusinessCategories = () => {
 
   return useSWRInfinite<FetchResponse<BusinessCategory>>(
     (pageIndex, previousPageData) =>
-      getCacheKey(pageIndex, previousPageData, "business-categories", pageSize),
+      pagedKey(pageIndex, previousPageData, "business-categories", pageSize),
     ({ query }) => businessCategoryService.getAll({ query }),
   );
 };

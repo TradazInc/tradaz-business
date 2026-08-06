@@ -1,6 +1,6 @@
 import { FetchResponse } from "@/server/entities/fetchResponse";
 
-export function getCacheKey<T>(
+export function pagedKey<T>(
   pageIndex: number,
   previousPageData: FetchResponse<T> | null,
   cacheKey: string,
@@ -19,3 +19,12 @@ export function getCacheKey<T>(
     query: { pageSize, cursor: previousPageData?.meta?.next },
   };
 }
+export const ORGANIZATIONS_KEY = "/api/organizations"; // used for prefetching in layout
+
+export const SESSION_KEY = "/api/session"; // session is seeded from the layout
+
+export const businessKey = (businessId: string) =>
+  `${ORGANIZATIONS_KEY}/${businessId}`;
+
+export const storesKey = (businessId: string) =>
+  `${ORGANIZATIONS_KEY}/${businessId}/stores`;

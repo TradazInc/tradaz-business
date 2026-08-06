@@ -1,4 +1,4 @@
-import { SESSION_KEY } from "@/data/swrCacheKeys";
+import { SESSION_KEY } from "@/utilities/cacheKeys";
 import { authClient } from "@/lib/authClient";
 import useSWR from "swr";
 

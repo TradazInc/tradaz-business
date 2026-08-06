@@ -1,4 +1,8 @@
-import { ORGANIZATIONS_KEY, SESSION_KEY } from "@/data/swrCacheKeys";
+import {
+  businessKey,
+  ORGANIZATIONS_KEY,
+  SESSION_KEY,
+} from "@/utilities/cacheKeys";
 import { authClient } from "@/lib/authClient";
 import { BusinessData } from "@/schema/business";
 import useSWR from "swr";
@@ -13,15 +17,13 @@ export const useBusinesses = () => {
 };
 
 export const useBusiness = (organizationId?: string) => {
-  return useSWR(
-    organizationId ? `/api/organizations/${organizationId}` : null,
-    () =>
-      authClient.organization
-        .getFullOrganization({
-          query: { organizationId, membersLimit: 100 },
-          fetchOptions: { throw: true },
-        })
-        .then((res) => res),
+  return useSWR(organizationId ? businessKey(organizationId) : null, () =>
+    authClient.organization
+      .getFullOrganization({
+        query: { organizationId, membersLimit: 100 },
+        fetchOptions: { throw: true },
+      })
+      .then((res) => res),
   );
 };
 
@@ -30,7 +32,9 @@ export const useAddBusiness = () => {
     ORGANIZATIONS_KEY,
     (url: string, { arg }: { arg: BusinessData }) =>
       authClient.organization.create({
-        ...arg,
+        name: arg.name,
+        categoryId: arg.categoryId,
+        slug: arg.slug,
         metadata: { phone: arg.phone, address: arg.address },
         keepCurrentActiveOrganization: false,
       }),
