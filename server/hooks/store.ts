@@ -1,11 +1,11 @@
-import { SESSION_KEY, storesKey } from "@/utilities/cacheKeys";
+import { SESSION_KEY, storeKey } from "@/utilities/cacheKeys";
 import { authClient } from "@/lib/authClient";
 import { StoreData } from "@/schema/store";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 export const useStores = (organizationId?: string) => {
-  return useSWR(organizationId ? storesKey(organizationId) : null, () =>
+  return useSWR(organizationId ? storeKey(organizationId) : null, () =>
     authClient.organization.listTeams({
       query: { organizationId },
       fetchOptions: { throw: true },
@@ -15,7 +15,7 @@ export const useStores = (organizationId?: string) => {
 
 export const useAddStore = (organizationId?: string) => {
   return useSWRMutation(
-    organizationId ? `/api/organizations/${organizationId}/stores` : null,
+    organizationId ? storeKey(organizationId) : null,
     (url: string, { arg }: { arg: StoreData }) =>
       authClient.organization.createTeam({
         ...arg,

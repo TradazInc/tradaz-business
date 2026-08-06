@@ -1,4 +1,4 @@
-import { pagedKey } from "@/utilities/cacheKeys";
+import { pageKey } from "@/utilities/cacheKeys";
 import useSWRInfinite from "swr/infinite";
 import { productCategoryService } from "../entities/productCategory";
 
@@ -7,7 +7,7 @@ export const useProductCategories = () => {
 
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
-      pagedKey(pageIndex, previousPageData, "product-categories", pageSize),
+      pageKey(pageIndex, previousPageData, "product-categories", pageSize),
     () => productCategoryService.getAll({ throw: true }),
   );
 };

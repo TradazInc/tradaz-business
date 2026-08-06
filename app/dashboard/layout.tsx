@@ -1,6 +1,6 @@
 import { NavBar } from "@/components/custom/dashboard/NavBar";
 import { LayoutContainer } from "@/components/custom/dashboard/LayoutContainer";
-import { ORGANIZATIONS_KEY, SESSION_KEY } from "@/utilities/cacheKeys";
+import { BUSINESS_KEY, SESSION_KEY } from "@/utilities/cacheKeys";
 import { getSession } from "@/server/services/auth";
 import { getBusinesses } from "@/server/services/business";
 import { SWRConfig } from "swr";
@@ -23,7 +23,7 @@ export default async function BusinessLayout({
         value={{
           fallback: {
             [SESSION_KEY]: sessionPromise,
-            [ORGANIZATIONS_KEY]: businessPromise,
+            [BUSINESS_KEY]: businessPromise,
           },
         }}
       >

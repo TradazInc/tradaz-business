@@ -1,4 +1,4 @@
-import { pagedKey } from "@/utilities/cacheKeys";
+import { pageKey } from "@/utilities/cacheKeys";
 import useSWRInfinite from "swr/infinite";
 import { sizeTypeService } from "../entities/sizeType";
 
@@ -7,7 +7,7 @@ export const useSizeTypes = () => {
 
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
-      pagedKey(pageIndex, previousPageData, "size-types", pageSize),
+      pageKey(pageIndex, previousPageData, "size-types", pageSize),
     () => sizeTypeService.getAll({ throw: true }),
   );
 };

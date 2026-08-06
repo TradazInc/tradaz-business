@@ -1,6 +1,20 @@
 import { FetchResponse } from "@/server/entities/fetchResponse";
 
-export function pagedKey<T>(
+// Constant Keys
+export const BUSINESS_KEY = "/api/business"; // used for prefetching in layout
+
+export const SESSION_KEY = "/api/session"; // session is seeded from the layout
+
+export const PRODUCT_KEY = "/api/products";
+
+// Derived Keys
+export const businessKey = (businessId: string) =>
+  `${BUSINESS_KEY}/${businessId}`;
+
+export const storeKey = (businessId: string) =>
+  `${BUSINESS_KEY}/${businessId}/stores`;
+
+export function pageKey<T>(
   pageIndex: number,
   previousPageData: FetchResponse<T> | null,
   cacheKey: string,
@@ -19,12 +33,3 @@ export function pagedKey<T>(
     query: { pageSize, cursor: previousPageData?.meta?.next },
   };
 }
-export const ORGANIZATIONS_KEY = "/api/organizations"; // used for prefetching in layout
-
-export const SESSION_KEY = "/api/session"; // session is seeded from the layout
-
-export const businessKey = (businessId: string) =>
-  `${ORGANIZATIONS_KEY}/${businessId}`;
-
-export const storesKey = (businessId: string) =>
-  `${ORGANIZATIONS_KEY}/${businessId}/stores`;
