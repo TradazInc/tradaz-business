@@ -1,10 +1,9 @@
 import { FetchResponse } from "@/server/entities/fetchResponse";
-import { Response } from "@/types/betterFetch";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
 import { logger } from "@better-fetch/logger";
 
-export const fetchInstance = createFetch({
+const $fetch = createFetch({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",
   retry: { type: "linear", attempts: 3, delay: 1000 },
@@ -15,39 +14,46 @@ export const fetchInstance = createFetch({
 export class ApiClient<T> {
   constructor(private readonly endpoint: string) {}
 
-  getAll = async <O extends BetterFetchOption>(options?: O) =>
-    fetchInstance<FetchResponse<T>>(this.endpoint, {
-      ...options,
-      method: "GET",
-    }) as Promise<Response<FetchResponse<T>, O>>;
+  getAll = <Throw extends boolean = false>(
+    options?: BetterFetchOption & { throw?: Throw },
+  ) =>
+    $fetch<FetchResponse<T>, Throw extends true ? false : unknown>(
+      this.endpoint,
+      { ...options, method: "GET" },
+    );
 
-  get = async <O extends BetterFetchOption>(id: number | string, options?: O) =>
-    fetchInstance<T>(`${this.endpoint}/${id}`, {
-      ...options,
-      method: "GET",
-    }) as Promise<Response<T, O>>;
+  get = <Throw extends boolean = false>(
+    id: number | string,
+    options?: BetterFetchOption & { throw?: Throw },
+  ) =>
+    $fetch<T, Throw extends true ? false : unknown>(
+      `${this.endpoint}/${id}`,
+      { ...options, method: "GET" },
+    );
 
-  post = async <O extends BetterFetchOption>(options: O) =>
-    fetchInstance<T>(this.endpoint, {
+  post = <Throw extends boolean = false>(
+    options: BetterFetchOption & { throw?: Throw },
+  ) =>
+    $fetch<T, Throw extends true ? false : unknown>(this.endpoint, {
       ...options,
       method: "POST",
-    }) as Promise<Response<T, O>>;
+    });
 
-  update = async <O extends BetterFetchOption>(
+  update = <Throw extends boolean = false>(
     id: number | string,
-    options: O,
+    options: BetterFetchOption & { throw?: Throw },
   ) =>
-    fetchInstance<T>(`${this.endpoint}/${id}`, {
-      ...options,
-      method: "PUT",
-    }) as Promise<Response<T, O>>;
+    $fetch<T, Throw extends true ? false : unknown>(
+      `${this.endpoint}/${id}`,
+      { ...options, method: "PUT" },
+    );
 
-  delete = async <O extends BetterFetchOption>(
+  delete = <Throw extends boolean = false>(
     id: number | string,
-    options?: O,
+    options?: BetterFetchOption & { throw?: Throw },
   ) =>
-    fetchInstance<void>(`${this.endpoint}/${id}`, {
-      ...options,
-      method: "DELETE",
-    }) as Promise<Response<void, O>>;
+    $fetch<void, Throw extends true ? false : unknown>(
+      `${this.endpoint}/${id}`,
+      { ...options, method: "DELETE" },
+    );
 }

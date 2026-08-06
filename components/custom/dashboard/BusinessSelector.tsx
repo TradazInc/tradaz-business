@@ -20,11 +20,11 @@ export const BusinessSelector = () => {
 
   const handleBusiness = async (businessId?: string) => {
     setSelectedBusinessId(businessId);
-    setBusiness({ organizationId: businessId ?? null });
+    await setBusiness({ organizationId: businessId ?? null });
   };
 
   const handleStore = async (storeId?: string) => {
-    setStore({ teamId: storeId ?? null });
+    await setStore({ teamId: storeId ?? null });
   };
 
   // Tracks url changes

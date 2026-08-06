@@ -32,7 +32,7 @@ import { useHookFormMask } from "use-mask-input";
 export const BusinessForm = () => {
   // Fetch data
   const { data, error, isLoading, size, setSize } = useBusinessCategories();
-  const { trigger, isMutating } = useAddBusiness();
+  const { trigger, isMutating, error: triggerError } = useAddBusiness();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
   const categoryScrollId = useId();
@@ -65,23 +65,23 @@ export const BusinessForm = () => {
   const withMask = useHookFormMask(register);
 
   const onSubmit = handleSubmit(async (businessData) => {
-    const { data: business, error } = await trigger(businessData);
-    if (business) {
-      refresh();
-      push(`/dashboard/business/${business.id}`);
-    } else {
+    const business = await trigger(businessData);
+    if (triggerError) {
       toaster.create({
-        title: error.code,
+        title: error.status,
         description: error.message,
         type: "error",
       });
+    } else {
+      refresh();
+      push(`/dashboard/business/${business.id}`);
     }
   });
 
   // Handle errors
   if (error) {
     toaster.create({
-      title: error.code,
+      title: error.status,
       description: error.message,
       type: "error",
     });

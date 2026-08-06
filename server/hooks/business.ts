@@ -10,20 +10,16 @@ import useSWRMutation from "swr/mutation";
 
 export const useBusinesses = () => {
   return useSWR(ORGANIZATIONS_KEY, () =>
-    authClient.organization
-      .list({ fetchOptions: { throw: true } })
-      .then((res) => res),
+    authClient.organization.list({ fetchOptions: { throw: true } }),
   );
 };
 
 export const useBusiness = (organizationId?: string) => {
   return useSWR(organizationId ? businessKey(organizationId) : null, () =>
-    authClient.organization
-      .getFullOrganization({
-        query: { organizationId, membersLimit: 100 },
-        fetchOptions: { throw: true },
-      })
-      .then((res) => res),
+    authClient.organization.getFullOrganization({
+      query: { organizationId, membersLimit: 100 },
+      fetchOptions: { throw: true },
+    }),
   );
 };
 
@@ -37,6 +33,7 @@ export const useAddBusiness = () => {
         slug: arg.slug,
         metadata: { phone: arg.phone, address: arg.address },
         keepCurrentActiveOrganization: false,
+        fetchOptions: { throw: true },
       }),
   );
 };
@@ -45,8 +42,9 @@ export const useSetActiveBusiness = () => {
   return useSWRMutation(
     SESSION_KEY,
     (url: string, { arg }: { arg: { organizationId: string | null } }) =>
-      authClient.organization
-        .setActive({ ...arg, fetchOptions: { throw: true } })
-        .then((res) => res),
+      authClient.organization.setActive({
+        ...arg,
+        fetchOptions: { throw: true },
+      }),
   );
 };

@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 export const StoreForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
-  const { trigger, isMutating } = useAddStore(businessId);
+  const { trigger, isMutating, error } = useAddStore(businessId);
   const { refresh, push } = useRouter();
 
   const {
@@ -20,16 +20,16 @@ export const StoreForm = () => {
   } = useForm({ resolver: zodResolver(storeSchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (storeData) => {
-    const { data: store, error } = await trigger(storeData);
-    if (store) {
-      refresh();
-      push(`/dashboard/store/${store.id}`);
-    } else {
+    const store = await trigger(storeData);
+    if (error) {
       toaster.create({
-        title: error.code,
+        title: error.status,
         description: error.message,
         type: "error",
       });
+    } else {
+      refresh();
+      push(`/dashboard/store/${store.id}`);
     }
   });
 
