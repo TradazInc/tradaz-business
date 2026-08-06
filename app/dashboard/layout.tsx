@@ -14,8 +14,8 @@ export default async function BusinessLayout({
   const sessionPromise = getSession();
   const businessPromise = getBusinesses();
 
-  const session = await sessionPromise;
-  if (!session) unauthorized();
+  const { data, error } = await sessionPromise;
+  if (!data || error) unauthorized();
 
   return (
     <LayoutContainer>

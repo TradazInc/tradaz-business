@@ -11,7 +11,7 @@ import { LuPlus } from "react-icons/lu";
 export default async function page() {
   const { data, error } = await getSizeTypes();
 
-  if (error) return null;
+  if (error) return error.message ?? error.statusText;
 
   return (
     <PageContainer>
