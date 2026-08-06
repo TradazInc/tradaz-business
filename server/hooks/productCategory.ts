@@ -8,6 +8,6 @@ export const useProductCategories = () => {
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
       pagedKey(pageIndex, previousPageData, "product-categories", pageSize),
-    () => productCategoryService.getAll(),
+    () => productCategoryService.getAll({ throw: true }),
   );
 };

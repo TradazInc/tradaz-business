@@ -12,6 +12,6 @@ export const useBusinessCategories = () => {
   return useSWRInfinite<FetchResponse<BusinessCategory>>(
     (pageIndex, previousPageData) =>
       pagedKey(pageIndex, previousPageData, "business-categories", pageSize),
-    ({ query }) => businessCategoryService.getAll({ query }),
+    ({ query }) => businessCategoryService.getAll({ query, throw: true }),
   );
 };

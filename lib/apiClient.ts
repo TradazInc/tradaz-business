@@ -1,13 +1,13 @@
+import { FetchResponse } from "@/server/entities/fetchResponse";
+import { Response } from "@/types/betterFetch";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
-import { FetchResponse } from "@/server/entities/fetchResponse";
 import { logger } from "@better-fetch/logger";
 
 export const fetchInstance = createFetch({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",
   retry: { type: "linear", attempts: 3, delay: 1000 },
-  throw: true,
   onRequest: async (context) => setServerCookie(context),
   plugins: [logger()],
 });
@@ -15,38 +15,39 @@ export const fetchInstance = createFetch({
 export class ApiClient<T> {
   constructor(private readonly endpoint: string) {}
 
-  getAll = async (options?: BetterFetchOption) => {
-    return fetchInstance<FetchResponse<T>>(this.endpoint, {
+  getAll = async <O extends BetterFetchOption>(options?: O) =>
+    fetchInstance<FetchResponse<T>>(this.endpoint, {
       ...options,
       method: "GET",
-    }).then((res) => res);
-  };
+    }) as Promise<Response<FetchResponse<T>, O>>;
 
-  get = async (id: number | string, options?: BetterFetchOption) => {
-    return fetchInstance<T>(`${this.endpoint}/${id}`, {
+  get = async <O extends BetterFetchOption>(id: number | string, options?: O) =>
+    fetchInstance<T>(`${this.endpoint}/${id}`, {
       ...options,
       method: "GET",
-    }).then((res) => res);
-  };
+    }) as Promise<Response<T, O>>;
 
-  post = async (options: BetterFetchOption) => {
-    return fetchInstance<T>(this.endpoint, {
+  post = async <O extends BetterFetchOption>(options: O) =>
+    fetchInstance<T>(this.endpoint, {
       ...options,
       method: "POST",
-    }).then((res) => res);
-  };
+    }) as Promise<Response<T, O>>;
 
-  update = async (id: number | string, options: BetterFetchOption) => {
-    return fetchInstance<T>(`${this.endpoint}/${id}`, {
+  update = async <O extends BetterFetchOption>(
+    id: number | string,
+    options: O,
+  ) =>
+    fetchInstance<T>(`${this.endpoint}/${id}`, {
       ...options,
       method: "PUT",
-    }).then((res) => res);
-  };
+    }) as Promise<Response<T, O>>;
 
-  delete = async (id: number | string, options?: BetterFetchOption) => {
-    return fetchInstance<void>(`${this.endpoint}/${id}`, {
+  delete = async <O extends BetterFetchOption>(
+    id: number | string,
+    options?: O,
+  ) =>
+    fetchInstance<void>(`${this.endpoint}/${id}`, {
       ...options,
       method: "DELETE",
-    }).then((res) => res);
-  };
+    }) as Promise<Response<void, O>>;
 }

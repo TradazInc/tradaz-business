@@ -14,7 +14,7 @@ export default async function page() {
 
   if (error) {
     toaster.create({
-      title: error.name,
+      title: error.statusText,
       description: error.message,
       type: "error",
     });

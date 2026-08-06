@@ -8,6 +8,6 @@ export const useSizeTypes = () => {
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
       pagedKey(pageIndex, previousPageData, "size-types", pageSize),
-    () => sizeTypeService.getAll(),
+    () => sizeTypeService.getAll({ throw: true }),
   );
 };

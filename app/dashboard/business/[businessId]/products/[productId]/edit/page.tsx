@@ -13,10 +13,11 @@ export default async function page({ params }: Props) {
 
   if (error) {
     toaster.create({
-      title: error.name,
+      title: error.statusText,
       description: error.message,
       type: "error",
     });
+    return;
   }
 
   return (

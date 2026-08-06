@@ -104,7 +104,7 @@ const ProductForm = ({ product }: Props) => {
       push(`/dashboard/business/products/${product.id}`);
     } else {
       toaster.create({
-        title: error.name,
+        title: error.statusText,
         description: error.message,
         type: "error",
       });
