@@ -8,7 +8,7 @@ import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
 import { errorToast } from "@/utilities/errorToast";
 import { formProduct } from "@/utilities/formProduct";
-import { parsePagedData } from "@/utilities/parsePagedData";
+import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
   Button,
@@ -52,11 +52,11 @@ const ProductForm = ({ product }: Props) => {
 
   // Parse paged data
   const parsedCategories = useMemo(
-    () => parsePagedData(categories.data),
+    () => parseCursorData(categories.data),
     [categories.data],
   );
   const parsedSizeTypes = useMemo(
-    () => parsePagedData(sizeTypes.data),
+    () => parseCursorData(sizeTypes.data),
     [sizeTypes.data],
   );
 

@@ -5,7 +5,7 @@ import { businessSchema } from "@/schema/business";
 import { useAddBusiness } from "@/server/hooks/business";
 import { useBusinessCategories } from "@/server/hooks/businessCategory";
 import { errorToast } from "@/utilities/errorToast";
-import { parsePagedData } from "@/utilities/parsePagedData";
+import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
   Button,
@@ -37,7 +37,7 @@ export const BusinessForm = () => {
   const categoryScrollId = useId();
 
   // Parse paged data
-  const { flatData, hasMore } = useMemo(() => parsePagedData(data), [data]);
+  const { flatData, hasMore } = useMemo(() => parseCursorData(data), [data]);
 
   // Create collection data (chakra)
   const categoryCollection = useMemo(
