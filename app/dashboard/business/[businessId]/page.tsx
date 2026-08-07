@@ -9,6 +9,7 @@ import Search from "@/components/custom/shared/Search";
 import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
 import { getBusiness } from "@/server/services/business";
 import { Button, For, VStack } from "@chakra-ui/react";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
@@ -20,7 +21,7 @@ export default async function page({ params }: Props) {
   const { businessId } = await params;
   const { data, error } = await getBusiness(businessId);
 
-  if (error) return null;
+  if (error) notFound();
 
   return (
     <PageContainer>

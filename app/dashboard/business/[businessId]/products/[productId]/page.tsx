@@ -1,5 +1,16 @@
 import { PageContainer } from "@/components/custom/shared/PageContainer";
+import { getProduct } from "@/server/services/product";
+import { notFound } from "next/navigation";
 
-export default function page() {
-  return <PageContainer>product details page</PageContainer>;
+interface Props {
+  params: Promise<{ productId: string }>;
+}
+
+export default async function page({ params }: Props) {
+  const { productId } = await params;
+  const { data: product, error } = await getProduct(productId);
+
+  if (error) notFound();
+
+  return <PageContainer>product {product.id} details page</PageContainer>;
 }
