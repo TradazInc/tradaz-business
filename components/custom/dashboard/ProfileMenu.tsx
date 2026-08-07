@@ -7,6 +7,7 @@ import { Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
 import { ProfileAvatar } from "./ProfileAvatar";
+import { errorToast } from "@/utilities/errorToast";
 
 export const ProfileMenu = () => {
   const { data: session } = useSession();
@@ -17,7 +18,6 @@ export const ProfileMenu = () => {
     const { unwrap } = toaster.promise(trigger(), {
       loading: { title: "Logging out…", description: "Please wait" },
       success: () => ({ description: "Logout Succesful" }),
-      error: { title: "Unable to logout", description: "Please try again" },
     })!;
     try {
       const data = await unwrap();
@@ -26,11 +26,13 @@ export const ProfileMenu = () => {
         push("/signin");
       } else {
         toaster.error({
-          title: "Server Error",
-          description: "Unable to logout",
+          title: "Unable to logout",
+          description: "Please try again",
         });
       }
-    } catch (e) {}
+    } catch (e) {
+      errorToast(e);
+    }
   };
 
   if (!session) return <ProfileAvatar />;

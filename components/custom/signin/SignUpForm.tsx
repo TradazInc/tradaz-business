@@ -30,12 +30,13 @@ const SignUpForm = () => {
         title: "Signup successful",
         description: `Welcome ${session.user.name}`,
       }),
-      error: { title: "Signup failed", description: "Please try again" },
     })!;
     try {
       await unwrap();
       push("/dashboard?signup=true"); // review after emailVerification
-    } catch (e) {}
+    } catch (e) {
+      errorToast(e);
+    }
   });
 
   const handleGoogleSignup = async () => {

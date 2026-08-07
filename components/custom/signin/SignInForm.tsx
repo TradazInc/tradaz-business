@@ -31,12 +31,13 @@ const SignInForm = () => {
         title: "Login successful",
         description: `Welcome ${session.user.name}`,
       }),
-      error: { title: "Login failed", description: "Please try again" },
     })!;
     try {
       await unwrap();
       push("/dashboard");
-    } catch (e) {}
+    } catch (e) {
+      errorToast(e);
+    }
   });
 
   const handleGoogleSignIn = async () => {
