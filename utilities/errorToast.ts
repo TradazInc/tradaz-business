@@ -5,10 +5,5 @@ import { BetterFetchError } from "@better-fetch/fetch";
 
 export function errorToast(e: unknown) {
   const { status, statusText } = e as BetterFetchError;
-
-  toaster.create({
-    title: statusText,
-    description: status,
-    type: "error",
-  });
+  toaster.error({ title: statusText, description: status });
 }

@@ -1,20 +1,21 @@
 "use client";
 
-import { emailSignUp, googleSignIn } from "@/server/services/auth";
 import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { emailSignUpSchema } from "@/schema/auth";
+import { useEmailSignup, useGoogleSignin } from "@/server/hooks/auth";
+import { errorToast } from "@/utilities/errorToast";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 const SignUpForm = () => {
-  const [isGooglePending, startGoogleTransition] = useTransition();
-  const router = useRouter();
+  const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignup();
+  const { trigger, isMutating } = useGoogleSignin();
+  const { push } = useRouter();
 
   const {
     register,
@@ -23,29 +24,26 @@ const SignUpForm = () => {
   } = useForm({ resolver: zodResolver(emailSignUpSchema) });
 
   const onSubmit = handleSubmit(async (signUpData) => {
-    const { data, error } = await emailSignUp(signUpData);
-    if (data) {
-      router.push("/dashboard?signup=true"); // review after emailVerification
-    } else {
-      toaster.create({
-        title: error.code,
-        description: error.message,
-        type: "error",
+    try {
+      toaster.promise(emailTrigger({ signUpData }), {
+        loading: { title: "Signing up…", description: "Please wait" },
+        success: (session) => ({
+          title: "Signup successful",
+          description: `Welcome ${session.user.name}`,
+        }),
       });
+      push("/dashboard?signup=true"); // review after emailVerification
+    } catch (e) {
+      errorToast(e);
     }
   });
 
-  const handleGoogleSignup = () => {
-    startGoogleTransition(async () => {
-      const { error } = await googleSignIn("/dashboard?signup=true");
-      if (error) {
-        toaster.create({
-          title: error.code,
-          description: error.message,
-          type: "error",
-        });
-      }
-    });
+  const handleGoogleSignup = async () => {
+    try {
+      await trigger("/dashboard?signup=true");
+    } catch (e) {
+      errorToast(e);
+    }
   };
 
   return (
@@ -73,8 +71,7 @@ const SignUpForm = () => {
 
         <Button
           type={"submit"}
-          loading={isSubmitting}
-          disabled={!isValid || isSubmitting}
+          disabled={!isValid || isSubmitting || emailMutating}
           w={"full"}
         >
           Sign Up
@@ -83,9 +80,10 @@ const SignUpForm = () => {
         <SeparatorText>Or</SeparatorText>
 
         <Button
+          type={"button"}
           onClick={handleGoogleSignup}
-          loading={isGooglePending}
-          disabled={isGooglePending}
+          loading={isMutating}
+          disabled={isMutating}
           w={"full"}
         >
           <GoogleIcon />

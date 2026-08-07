@@ -1,33 +1,34 @@
 "use client";
 
-import { signOut } from "@/server/services/auth";
+import { useSignOut } from "@/server/hooks/auth";
 import { useSession } from "@/server/hooks/session";
-import { toaster } from "@/components/ui/toaster";
-import { Avatar, Menu, Portal } from "@chakra-ui/react";
+import { errorToast } from "@/utilities/errorToast";
+import { Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
+import { ProfileAvatar } from "./ProfileAvatar";
+import { toaster } from "@/components/ui/toaster";
 
-export const AvatarDropdown = () => {
+export const ProfileMenu = () => {
   const { data: session } = useSession();
-  const router = useRouter();
+  const { trigger, isMutating } = useSignOut();
+  const { push, refresh } = useRouter();
 
   const handleLogout = async () => {
-    const { data, error } = await signOut();
-
-    if (error) {
-      toaster.create({
-        title: error.code,
-        description: error.message,
-        type: "error",
-      });
-    } else if (data.success) {
-      router.push("/signin");
-    } else {
-      toaster.create({
-        title: "Server Error",
-        description: "Unable to logout",
-        type: "error",
-      });
+    try {
+      const data = await trigger();
+      if (data.success) {
+        toaster.info
+        refresh();
+        push("/signin");
+      } else {
+        toaster.error({
+          title: "Server Error",
+          description: "Unable to logout",
+        });
+      }
+    } catch (e) {
+      errorToast(e);
     }
   };
 
@@ -50,6 +51,7 @@ export const AvatarDropdown = () => {
               color={"fg.error"}
               _hover={{ bg: "bg.error", color: "fg.error" }}
               onClick={() => handleLogout()}
+              disabled={isMutating}
             >
               <LuLogOut />
               Log Out
@@ -58,14 +60,5 @@ export const AvatarDropdown = () => {
         </Menu.Positioner>
       </Portal>
     </Menu.Root>
-  );
-};
-
-const ProfileAvatar = ({ image, name }: { name?: string; image?: string }) => {
-  return (
-    <Avatar.Root size={"sm"}>
-      <Avatar.Fallback name={name} />
-      <Avatar.Image src={image} />
-    </Avatar.Root>
   );
 };
