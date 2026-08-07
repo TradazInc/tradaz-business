@@ -1,4 +1,4 @@
-import { pageKey } from "@/utilities/cacheKeys";
+import { cursorKey } from "@/utilities/cacheKeys";
 import useSWRInfinite from "swr/infinite";
 import { productCategoryService } from "../entities/productCategory";
 
@@ -7,7 +7,7 @@ export const useProductCategories = () => {
 
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
-      pageKey(pageIndex, previousPageData, "product-categories", pageSize),
+      cursorKey(pageIndex, previousPageData, "product-categories", pageSize),
     () => productCategoryService.getAll({ throw: true }),
   );
 };
