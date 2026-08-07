@@ -1,6 +1,6 @@
 import { customSession } from "better-auth/plugins";
 
-export interface Session {
+interface Session {
   user: {
     id: string;
     createdAt: Date;
