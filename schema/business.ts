@@ -1,4 +1,5 @@
-import { checkBusinessSlug } from "@/apis/client/business";
+import { checkBusinessSlug } from "@/server/services/business";
+import { toaster } from "@/components/ui/toaster";
 import { z } from "zod";
 
 export const businessSchema = z.object({
@@ -27,8 +28,15 @@ export const businessSchema = z.object({
     .refine(
       async (slug) => {
         if (!slug) return true;
-        const result = await checkBusinessSlug(slug);
-        return result.status;
+        const { data, error } = await checkBusinessSlug(slug);
+        if (error) {
+          toaster.create({
+            title: error.code,
+            description: error.message,
+            type: "error",
+          });
+        }
+        return data?.status;
       },
       { error: "Slug is taken" },
     ),

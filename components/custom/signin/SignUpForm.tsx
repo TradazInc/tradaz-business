@@ -3,17 +3,19 @@
 import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
+import { toaster } from "@/components/ui/toaster";
 import { emailSignUpSchema } from "@/schema/auth";
-import { emailSignUp, googleSignIn } from "@/apis/client/auth";
+import { useEmailSignup, useGoogleSignin } from "@/server/hooks/auth";
+import { errorToast } from "@/utilities/errorToast";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 const SignUpForm = () => {
+  const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignup();
+  const { trigger, isMutating } = useGoogleSignin();
   const { push } = useRouter();
-  const [isGooglePending, startGoogleTransition] = useTransition();
 
   const {
     register,
@@ -22,14 +24,26 @@ const SignUpForm = () => {
   } = useForm({ resolver: zodResolver(emailSignUpSchema) });
 
   const onSubmit = handleSubmit(async (signUpData) => {
-    const data = await emailSignUp(signUpData);
-    if (data) push("/dashboard?signup=true"); // review after emailVerification
+    const { unwrap } = toaster.promise(emailTrigger({ signUpData }), {
+      loading: { title: "Signing up…", description: "Please wait" },
+      success: (session) => ({
+        title: "Signup successful",
+        description: `Welcome ${session.user.name}`,
+      }),
+      error: { title: "Signup failed", description: "Please try again" },
+    })!;
+    try {
+      await unwrap();
+      push("/dashboard?signup=true"); // review after emailVerification
+    } catch (e) {}
   });
 
-  const handleGoogleSignup = () => {
-    startGoogleTransition(async () => {
-      await googleSignIn("/dashboard?signup=true");
-    });
+  const handleGoogleSignup = async () => {
+    try {
+      await trigger("/dashboard?signup=true");
+    } catch (e) {
+      errorToast(e);
+    }
   };
 
   return (
@@ -57,8 +71,7 @@ const SignUpForm = () => {
 
         <Button
           type={"submit"}
-          loading={isSubmitting}
-          disabled={!isValid || isSubmitting}
+          disabled={!isValid || isSubmitting || emailMutating}
           w={"full"}
         >
           Sign Up
@@ -67,9 +80,10 @@ const SignUpForm = () => {
         <SeparatorText>Or</SeparatorText>
 
         <Button
+          type={"button"}
           onClick={handleGoogleSignup}
-          loading={isGooglePending}
-          disabled={isGooglePending}
+          loading={isMutating}
+          disabled={isMutating}
           w={"full"}
         >
           <GoogleIcon />

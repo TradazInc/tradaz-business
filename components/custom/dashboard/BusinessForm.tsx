@@ -1,11 +1,11 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
-import { useBusinessCategories } from "@/apis/hooks/businessCategory";
 import { businessSchema } from "@/schema/business";
-import { createBusiness } from "@/apis/client/business";
-import { parsePagedData } from "@/utilities/parsePagedData";
+import { useAddBusiness } from "@/server/hooks/business";
+import { useBusinessCategories } from "@/server/hooks/businessCategory";
+import { errorToast } from "@/utilities/errorToast";
+import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
   Button,
@@ -30,14 +30,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
-  // Fetch data
-  const { data, error, isLoading, size, setSize } = useBusinessCategories();
+  const { data, isLoading, size, setSize } = useBusinessCategories();
+  const { trigger, isMutating } = useAddBusiness();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
   const categoryScrollId = useId();
 
   // Parse paged data
-  const { flatData, hasMore } = useMemo(() => parsePagedData(data), [data]);
+  const { flatData, hasMore } = useMemo(() => parseCursorData(data), [data]);
 
   // Create collection data (chakra)
   const categoryCollection = useMemo(
@@ -64,20 +64,14 @@ export const BusinessForm = () => {
   const withMask = useHookFormMask(register);
 
   const onSubmit = handleSubmit(async (businessData) => {
-    const business = await createBusiness(businessData);
-    if (business) {
+    try {
+      const business = await trigger(businessData);
       refresh();
       push(`/dashboard/business/${business.id}`);
+    } catch (e) {
+      errorToast(e);
     }
   });
-
-  // Handle errors
-  if (error)
-    toaster.create({
-      title: error.code,
-      description: error.message,
-      type: "error",
-    });
 
   return (
     <Steps.Root
@@ -161,12 +155,12 @@ export const BusinessForm = () => {
                       <Select.Root
                         name={field.name}
                         value={field.value}
+                        collection={categoryCollection}
                         onValueChange={({ value }) => {
                           field.onChange(value);
                           field.onBlur();
                         }}
                         onInteractOutside={() => field.onBlur()}
-                        collection={categoryCollection}
                       >
                         <Select.HiddenSelect />
                         <Select.Control>
@@ -259,13 +253,13 @@ export const BusinessForm = () => {
             <Button
               type={"submit"}
               form={"business-form"}
-              disabled={!isValid || isSubmitting}
-              loading={isSubmitting}
+              disabled={!isValid || isSubmitting || isMutating}
+              loading={isSubmitting || isMutating}
             >
               Submit
             </Button>
           ) : (
-            <Button disabled={isSubmitting}>Next</Button>
+            <Button disabled={isSubmitting || isMutating}>Next</Button>
           )}
         </Steps.NextTrigger>
       </ButtonGroup>

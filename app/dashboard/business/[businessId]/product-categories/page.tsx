@@ -1,15 +1,17 @@
-import { getProductCategories } from "@/apis/server/productCategories";
 import ProductCategoryTable from "@/components/custom/business/ProductCategoryTable";
-import { DialogBox } from "@/components/custom/DialogBox";
-import EmptyPage from "@/components/custom/EmptyPage";
-import { PageContainer } from "@/components/custom/PageContainer";
-import PageHeader from "@/components/custom/PageHeader";
-import ToolBarContainer from "@/components/custom/ToolBarContainer";
+import { DialogBox } from "@/components/custom/shared/DialogBox";
+import EmptyPage from "@/components/custom/shared/EmptyPage";
+import { PageContainer } from "@/components/custom/shared/PageContainer";
+import PageHeader from "@/components/custom/shared/PageHeader";
+import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
+import { getProductCategories } from "@/server/services/productCategory";
 import { Box, Button, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
 export default async function page() {
-  const categories = await getProductCategories();
+  const { data, error } = await getProductCategories();
+
+  if (error) return error.message ?? error.statusText;
 
   return (
     <PageContainer>
@@ -29,7 +31,7 @@ export default async function page() {
           </DialogBox>
         </ToolBarContainer>
 
-        {categories ? (
+        {data ? (
           <ProductCategoryTable />
         ) : (
           <EmptyPage

@@ -1,12 +1,14 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
-import { Product } from "@/apis/services/product";
-import { useProductCategories } from "@/apis/hooks/productCategory";
-import { useSizeTypes } from "@/apis/hooks/sizeType";
+import { emptyProduct, emptyVariation } from "@/data/productForm";
 import { productSchema } from "@/schema/product";
-import { createProduct } from "@/apis/client/product";
-import { parsePagedData } from "@/utilities/parsePagedData";
+import { Product } from "@/server/entities/product";
+import { useAddProduct } from "@/server/hooks/product";
+import { useProductCategories } from "@/server/hooks/productCategory";
+import { useSizeTypes } from "@/server/hooks/sizeType";
+import { errorToast } from "@/utilities/errorToast";
+import { formProduct } from "@/utilities/formProduct";
+import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
   Button,
@@ -33,17 +35,15 @@ import { useId, useMemo } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { LuPlus, LuTrash2, LuUpload } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
-import TeamVariationsField from "./TeamVariationsField";
-import { emptyProduct, emptyVariation } from "@/data/productForm";
+import TeamVariationField from "./TeamVariationField";
 import TotalQuantity from "./TotalQuantity";
-import { formProduct } from "@/utilities/formProduct";
 
 interface Props {
   product?: Product;
 }
 
 const ProductForm = ({ product }: Props) => {
-  // Fetch data
+  const { trigger, isMutating } = useAddProduct();
   const categories = useProductCategories();
   const sizeTypes = useSizeTypes();
   const { refresh, push } = useRouter();
@@ -52,11 +52,11 @@ const ProductForm = ({ product }: Props) => {
 
   // Parse paged data
   const parsedCategories = useMemo(
-    () => parsePagedData(categories.data),
+    () => parseCursorData(categories.data),
     [categories.data],
   );
   const parsedSizeTypes = useMemo(
-    () => parsePagedData(sizeTypes.data),
+    () => parseCursorData(sizeTypes.data),
     [sizeTypes.data],
   );
 
@@ -98,27 +98,14 @@ const ProductForm = ({ product }: Props) => {
   });
 
   const onSubmit = handleSubmit(async (productData) => {
-    const product = await createProduct(productData);
-    if (product) {
+    try {
+      const product = await trigger(productData);
       refresh();
       push(`/dashboard/business/products/${product.id}`);
+    } catch (e) {
+      errorToast(e);
     }
   });
-
-  // Handle errors
-  if (categories.error)
-    toaster.create({
-      title: categories.error.code,
-      description: categories.error.message,
-      type: "error",
-    });
-
-  if (sizeTypes.error)
-    toaster.create({
-      title: sizeTypes.error.code,
-      description: sizeTypes.error.message,
-      type: "error",
-    });
 
   return (
     <form style={{ width: "100%" }} onSubmit={onSubmit}>
@@ -468,7 +455,7 @@ const ProductForm = ({ product }: Props) => {
                     </Field.ErrorText>
                   </Field.Root>
 
-                  <TeamVariationsField
+                  <TeamVariationField
                     control={control}
                     register={register}
                     errors={errors}
@@ -499,11 +486,15 @@ const ProductForm = ({ product }: Props) => {
         <Button
           type="submit"
           alignSelf="flex-start"
-          disabled={!isValid || isSubmitting}
-          loading={isSubmitting}
+          disabled={!isValid || isSubmitting || isMutating}
+          loading={isSubmitting || isMutating}
         >
           {product ? "Update Product" : "Create Product"}
         </Button>
+
+        <Fieldset.ErrorText>
+          Some fields are invalid. Please check them.
+        </Fieldset.ErrorText>
       </Fieldset.Root>
     </form>
   );

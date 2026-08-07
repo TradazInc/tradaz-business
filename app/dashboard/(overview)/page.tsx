@@ -1,13 +1,13 @@
 import { BusinessForm } from "@/components/custom/dashboard/BusinessForm";
-import { DialogBox } from "@/components/custom/DialogBox";
-import EmptyPage from "@/components/custom/EmptyPage";
-import GridCard from "@/components/custom/GridCard";
-import GridContainer from "@/components/custom/GridContainer";
-import { PageContainer } from "@/components/custom/PageContainer";
-import PageHeader from "@/components/custom/PageHeader";
-import Search from "@/components/custom/Search";
-import ToolBarContainer from "@/components/custom/ToolBarContainer";
-import { getBusinesses } from "@/apis/server/business";
+import { DialogBox } from "@/components/custom/shared/DialogBox";
+import EmptyPage from "@/components/custom/shared/EmptyPage";
+import GridCard from "@/components/custom/shared/GridCard";
+import GridContainer from "@/components/custom/shared/GridContainer";
+import { PageContainer } from "@/components/custom/shared/PageContainer";
+import PageHeader from "@/components/custom/shared/PageHeader";
+import Search from "@/components/custom/shared/Search";
+import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
+import { getBusinesses } from "@/server/services/business";
 import { Button, For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -18,10 +18,9 @@ interface Props {
 
 export default async function page({ searchParams }: Props) {
   const { business, signup } = await searchParams;
-  // getBusiness is deduplicated (fetched in layout)
   const { data: businesses, error } = await getBusinesses(business);
 
-  if (error) return null;
+  if (error) return error.message ?? error.statusText;
 
   return (
     <PageContainer>

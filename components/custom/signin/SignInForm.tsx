@@ -3,16 +3,20 @@
 import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
+import { toaster } from "@/components/ui/toaster";
 import { emailSignInSchema } from "@/schema/auth";
-import { emailSignIn, googleSignIn } from "@/apis/client/auth";
+import { useEmailSignin, useGoogleSignin } from "@/server/hooks/auth";
+import { errorToast } from "@/utilities/errorToast";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const SignInForm = () => {
-  const [isGooglePending, startGoogleTransition] = useTransition();
+  const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignin();
+  const { trigger, isMutating } = useGoogleSignin();
+  const { push } = useRouter();
 
   const {
     register,
@@ -21,13 +25,26 @@ const SignInForm = () => {
   } = useForm({ resolver: zodResolver(emailSignInSchema) });
 
   const onSubmit = handleSubmit(async (signInData) => {
-    await emailSignIn(signInData, "/dashboard");
+    const { unwrap } = toaster.promise(emailTrigger({ signInData }), {
+      loading: { title: "Logging in…", description: "Please wait" },
+      success: (session) => ({
+        title: "Login successful",
+        description: `Welcome ${session.user.name}`,
+      }),
+      error: { title: "Login failed", description: "Please try again" },
+    })!;
+    try {
+      await unwrap();
+      push("/dashboard");
+    } catch (e) {}
   });
 
-  const handleGoogleSignIn = () => {
-    startGoogleTransition(async () => {
-      await googleSignIn("/dashboard");
-    });
+  const handleGoogleSignIn = async () => {
+    try {
+      await trigger("/dashboard");
+    } catch (e) {
+      errorToast(e);
+    }
   };
 
   return (
@@ -51,8 +68,7 @@ const SignInForm = () => {
         </Box>
         <Button
           type={"submit"}
-          loading={isSubmitting}
-          disabled={!isValid || isSubmitting}
+          disabled={!isValid || isSubmitting || emailMutating}
           w={"full"}
         >
           Sign in
@@ -61,9 +77,10 @@ const SignInForm = () => {
         <SeparatorText>Or</SeparatorText>
 
         <Button
+          type={"button"}
           onClick={handleGoogleSignIn}
-          loading={isGooglePending}
-          disabled={isGooglePending}
+          loading={isMutating}
+          disabled={isMutating}
           w={"full"}
         >
           <GoogleIcon />

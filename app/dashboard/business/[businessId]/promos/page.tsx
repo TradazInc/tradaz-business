@@ -1,4 +1,4 @@
-import { PageContainer } from "@/components/custom/PageContainer";
+import { PageContainer } from "@/components/custom/shared/PageContainer";
 
 export default function page() {
   return <PageContainer>promo page</PageContainer>;

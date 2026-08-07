@@ -1,4 +1,6 @@
-export interface Session {
+import { customSession } from "better-auth/plugins";
+
+interface Session {
   user: {
     id: string;
     createdAt: Date;
@@ -6,11 +8,11 @@ export interface Session {
     email: string;
     emailVerified: boolean;
     name: string;
-    image?: string | null | undefined;
-    banned: boolean | null | undefined;
+    image?: string | null;
+    banned?: boolean | null;
     role?: Role;
-    banReason?: string | null | undefined;
-    banExpires?: Date | null | undefined;
+    banReason?: string | null;
+    banExpires?: Date | null;
   };
   session: {
     id: string;
@@ -19,10 +21,10 @@ export interface Session {
     userId: string;
     expiresAt: Date;
     token: string;
-    ipAddress?: string | null | undefined;
-    userAgent?: string | null | undefined;
-    activeOrganizationId?: string | null | undefined;
-    activeTeamId?: string | null | undefined;
+    ipAddress?: string | null;
+    userAgent?: string | null;
+    activeOrganizationId?: string | null;
+    activeTeamId?: string | null;
   };
   teammember: {
     id: string;
@@ -53,3 +55,8 @@ export enum Role {
   admin = "admin",
   user = "user",
 }
+
+// Mirror the server's auth shape for type inference.
+export type ServerAuth = {
+  options: { plugins: [ReturnType<typeof customSession<Session>>] };
+};

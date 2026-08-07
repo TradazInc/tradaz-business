@@ -1,9 +1,8 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
 import { emptyTeamVariation } from "@/data/productForm";
-import { useStores } from "@/apis/hooks/stores";
 import { ProductData, ProductFormValues } from "@/schema/product";
+import { useStores } from "@/server/hooks/store";
 import {
   Button,
   createListCollection,
@@ -15,6 +14,7 @@ import {
   Select,
   Spinner,
 } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import {
   Control,
@@ -32,14 +32,15 @@ interface Props {
   variationIndex: number;
 }
 
-const TeamVariationsField = ({
+const TeamVariationField = ({
   control,
   register,
   errors,
   variationIndex,
 }: Props) => {
   // Fetch data
-  const { data, error, isLoading } = useStores();
+  const { businessId } = useParams<{ businessId?: string }>();
+  const { data, isLoading } = useStores(businessId);
 
   // Create collection data (chakra)
   const storeCollection = useMemo(
@@ -59,14 +60,6 @@ const TeamVariationsField = ({
   });
   const teamVariationErrors =
     errors.variations?.[variationIndex]?.teamVariations;
-
-  // Handle errors
-  if (error)
-    toaster.create({
-      title: error.code,
-      description: error.message,
-      type: "error",
-    });
 
   return (
     <Fieldset.Root invalid={!!teamVariationErrors?.root?.message}>
@@ -175,4 +168,4 @@ const TeamVariationsField = ({
   );
 };
 
-export default TeamVariationsField;
+export default TeamVariationField;

@@ -1,56 +1,58 @@
-import { baseURL } from "@/data/baseUrl";
+import { FetchResponse } from "@/server/entities/fetchResponse";
+import { setServerCookie } from "@/utilities/setServerCookie";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
+import { logger } from "@better-fetch/logger";
 
-export const fetchInstance = createFetch({
-  baseURL: process.env.BASE_URL ?? baseURL,
-  retry: { type: "linear", attempts: 3, delay: 1000 },
+const $fetch = createFetch({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",
-  throw: true,
+  onRequest: async (context) => setServerCookie(context),
+  plugins: [logger()],
 });
-
-export interface FetchResponse<D> {
-  data: D[];
-  aggregate?: number;
-  meta: {
-    next?: string;
-    count?: number;
-    totalPages?: number;
-  };
-}
 
 export class ApiClient<T> {
   constructor(private readonly endpoint: string) {}
 
-  getAll = (options?: BetterFetchOption) => {
-    return fetchInstance<FetchResponse<T>>(this.endpoint, {
-      ...options,
-      method: "GET",
-    }).then((res) => res);
-  };
+  getAll = <Throw extends boolean = false>(
+    options?: BetterFetchOption & { throw?: Throw },
+  ) =>
+    $fetch<FetchResponse<T>, Throw extends true ? false : unknown>(
+      this.endpoint,
+      { ...options, method: "GET" },
+    );
 
-  get = (id: number | string) => {
-    return fetchInstance<T>(`${this.endpoint}/${id}`, {
-      method: "GET",
-    }).then((res) => res);
-  };
+  get = <Throw extends boolean = false>(
+    id: number | string,
+    options?: BetterFetchOption & { throw?: Throw },
+  ) =>
+    $fetch<T, Throw extends true ? false : unknown>(
+      `${this.endpoint}/${id}`,
+      { ...options, method: "GET" },
+    );
 
-  post = (options: BetterFetchOption) => {
-    return fetchInstance<T>(this.endpoint, {
+  post = <Throw extends boolean = false>(
+    options: BetterFetchOption & { throw?: Throw },
+  ) =>
+    $fetch<T, Throw extends true ? false : unknown>(this.endpoint, {
       ...options,
       method: "POST",
-    }).then((res) => res);
-  };
+    });
 
-  update = (id: number | string, options: BetterFetchOption) => {
-    return fetchInstance<T>(`${this.endpoint}/${id}`, {
-      ...options,
-      method: "PUT",
-    }).then((res) => res);
-  };
+  update = <Throw extends boolean = false>(
+    id: number | string,
+    options: BetterFetchOption & { throw?: Throw },
+  ) =>
+    $fetch<T, Throw extends true ? false : unknown>(
+      `${this.endpoint}/${id}`,
+      { ...options, method: "PUT" },
+    );
 
-  delete = (id: number | string) => {
-    return fetchInstance<void>(`${this.endpoint}/${id}`, {
-      method: "DELETE",
-    }).then((res) => res);
-  };
+  delete = <Throw extends boolean = false>(
+    id: number | string,
+    options?: BetterFetchOption & { throw?: Throw },
+  ) =>
+    $fetch<void, Throw extends true ? false : unknown>(
+      `${this.endpoint}/${id}`,
+      { ...options, method: "DELETE" },
+    );
 }

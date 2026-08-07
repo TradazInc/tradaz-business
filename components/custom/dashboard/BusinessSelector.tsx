@@ -1,10 +1,8 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
-import { Store } from "@/apis/services/Store";
-import { useBusinesses } from "@/apis/hooks/business";
-import { setActiveBusiness } from "@/apis/client/business";
-import { getStores, setActiveStore } from "@/apis/client/store";
+import { useBusinesses, useSetActiveBusiness } from "@/server/hooks/business";
+import { useSetActiveStore, useStores } from "@/server/hooks/store";
+import { errorToast } from "@/utilities/errorToast";
 import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
@@ -13,89 +11,41 @@ import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
-  // Data state
-  const { data: businesses, error, isLoading } = useBusinesses();
-  const [stores, setStores] = useState<Store[]>();
+  const { data: businesses, isLoading } = useBusinesses();
+  const [selectedBusinessId, setSelectedBusinessId] = useState<string>();
+  const { data: stores } = useStores(selectedBusinessId);
 
-  // UI state
-  const [businessName, setBusinessName] = useState("Brands");
-  const [storeName, setStoreName] = useState<string>();
+  const { data: business, trigger: setBusiness } = useSetActiveBusiness();
+  const { data: store, trigger: setStore } = useSetActiveStore();
 
-  const handleBusiness = async (businessId: string) => {
-    if (storeName) {
-      setStoreName(undefined);
-      const activeStore = await setActiveStore(null);
-      if (activeStore.error) {
-        return toaster.create({
-          title: activeStore.error.code,
-          description: activeStore.error.message,
-          type: "error",
-        });
-      }
+  const handleBusiness = async (businessId?: string) => {
+    try {
+      setSelectedBusinessId(businessId);
+      await setBusiness({ organizationId: businessId ?? null });
+    } catch (e) {
+      errorToast(e);
     }
-
-    const [business, stores] = await Promise.all([
-      setActiveBusiness(businessId),
-      getStores(businessId),
-    ]);
-
-    if (business.error) {
-      return toaster.create({
-        title: business.error.code,
-        description: business.error.message,
-        type: "error",
-      });
-    }
-
-    if (stores.error) {
-      return toaster.create({
-        title: stores.error.code,
-        description: stores.error.message,
-        type: "error",
-      });
-    }
-
-    setBusinessName(business.data.name);
-    setStores(stores.data);
   };
 
-  const handleStore = async (storeId: string) => {
-    setStoreName(stores?.find((s) => s.id === storeId)?.name);
-    const { data, error } = await setActiveStore(storeId);
-    if (error) {
-      setStoreName(undefined);
-      return toaster.create({
-        title: error.code,
-        description: error.message,
-        type: "error",
-      });
+  const handleStore = async (storeId?: string) => {
+    try {
+      await setStore({ teamId: storeId ?? null });
+    } catch (e) {
+      errorToast(e);
     }
-    setStoreName(data.name);
   };
 
   // Tracks url changes
   const { businessId, storeId } = useParams<{
-    businessId: string;
-    storeId: string;
+    businessId?: string;
+    storeId?: string;
   }>();
 
   useEffect(() => {
-    const updateActiveStatus = async () => {
-      if (businessId) await handleBusiness(businessId);
-      if (storeId) await handleStore(storeId);
-    };
-    updateActiveStatus();
-
     // Unset active business on dashboard page
-    if (!businessId && !storeId) {
-      setActiveBusiness(null);
-      setBusinessName("Brands");
-      setActiveStore(null);
-      setStoreName(undefined);
-    }
+    if (!businessId && !storeId) handleBusiness(businessId);
+    if (!storeId) handleStore(storeId);
   }, [businessId, storeId]);
-
-  if (error) return null;
 
   return (
     <Breadcrumb.Root>
@@ -115,7 +65,7 @@ export const BusinessSelector = () => {
                 <LuBuilding2 />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
-                    {businessName}
+                    {business?.name ?? "Brands"}
                     <LuChevronDown />
                   </HStack>
                 </Skeleton>
@@ -124,7 +74,7 @@ export const BusinessSelector = () => {
           </Breadcrumb.Item>
         </>
 
-        {storeName && (
+        {store && (
           <>
             <Breadcrumb.Separator>
               <LiaSlashSolid />
@@ -138,7 +88,7 @@ export const BusinessSelector = () => {
               >
                 <Breadcrumb.Link as="button">
                   <LuStore />
-                  {storeName}
+                  {store.name}
                   <LuChevronDown />
                 </Breadcrumb.Link>
               </MenuItem>

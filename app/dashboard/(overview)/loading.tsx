@@ -1,7 +1,7 @@
-import GridCardSkeleton from "@/components/custom/GridCardSkeleton";
-import GridContainer from "@/components/custom/GridContainer";
-import { PageContainer } from "@/components/custom/PageContainer";
-import PageHeader from "@/components/custom/PageHeader";
+import GridCardSkeleton from "@/components/custom/shared/GridCardSkeleton";
+import GridContainer from "@/components/custom/shared/GridContainer";
+import { PageContainer } from "@/components/custom/shared/PageContainer";
+import PageHeader from "@/components/custom/shared/PageHeader";
 import { For, Skeleton, VStack } from "@chakra-ui/react";
 
 const loading = () => {
