@@ -24,18 +24,18 @@ const SignUpForm = () => {
   } = useForm({ resolver: zodResolver(emailSignUpSchema) });
 
   const onSubmit = handleSubmit(async (signUpData) => {
+    const { unwrap } = toaster.promise(emailTrigger({ signUpData }), {
+      loading: { title: "Signing up…", description: "Please wait" },
+      success: (session) => ({
+        title: "Signup successful",
+        description: `Welcome ${session.user.name}`,
+      }),
+      error: { title: "Signup failed", description: "Please try again" },
+    })!;
     try {
-      toaster.promise(emailTrigger({ signUpData }), {
-        loading: { title: "Signing up…", description: "Please wait" },
-        success: (session) => ({
-          title: "Signup successful",
-          description: `Welcome ${session.user.name}`,
-        }),
-      });
+      await unwrap();
       push("/dashboard?signup=true"); // review after emailVerification
-    } catch (e) {
-      errorToast(e);
-    }
+    } catch (e) {}
   });
 
   const handleGoogleSignup = async () => {

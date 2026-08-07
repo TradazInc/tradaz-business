@@ -25,18 +25,18 @@ const SignInForm = () => {
   } = useForm({ resolver: zodResolver(emailSignInSchema) });
 
   const onSubmit = handleSubmit(async (signInData) => {
+    const { unwrap } = toaster.promise(emailTrigger({ signInData }), {
+      loading: { title: "Logging in…", description: "Please wait" },
+      success: (session) => ({
+        title: "Login successful",
+        description: `Welcome ${session.user.name}`,
+      }),
+      error: { title: "Login failed", description: "Please try again" },
+    })!;
     try {
-      toaster.promise(emailTrigger({ signInData }), {
-        loading: { title: "Logging in…", description: "Please wait" },
-        success: (session) => ({
-          title: "Login successful",
-          description: `Welcome ${session.user.name}`,
-        }),
-      });
+      await unwrap();
       push("/dashboard");
-    } catch (e) {
-      errorToast(e);
-    }
+    } catch (e) {}
   });
 
   const handleGoogleSignIn = async () => {

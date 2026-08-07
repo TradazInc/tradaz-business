@@ -1,13 +1,12 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { useSignOut } from "@/server/hooks/auth";
 import { useSession } from "@/server/hooks/session";
-import { errorToast } from "@/utilities/errorToast";
 import { Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
 import { ProfileAvatar } from "./ProfileAvatar";
-import { toaster } from "@/components/ui/toaster";
 
 export const ProfileMenu = () => {
   const { data: session } = useSession();
@@ -15,11 +14,12 @@ export const ProfileMenu = () => {
   const { push, refresh } = useRouter();
 
   const handleLogout = async () => {
+    const { unwrap } = toaster.promise(trigger(), {
+      loading: { title: "Logging out…", description: "Please wait" },
+      success: () => ({ description: "Logout Succesful" }),
+      error: { title: "Unable to logout", description: "Please try again" },
+    })!;
     try {
-      const { unwrap } = toaster.promise(trigger(), {
-        loading: { title: "Logging out…", description: "Please wait" },
-        success: () => ({ description: "Logout Succesful" }),
-      })!;
       const data = await unwrap();
       if (data.success) {
         refresh();
@@ -30,9 +30,7 @@ export const ProfileMenu = () => {
           description: "Unable to logout",
         });
       }
-    } catch (e) {
-      errorToast(e);
-    }
+    } catch (e) {}
   };
 
   if (!session) return <ProfileAvatar />;
