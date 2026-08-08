@@ -30,12 +30,13 @@ const SignUpForm = () => {
         title: "Signup successful",
         description: `Welcome ${session.user.name}`,
       }),
-      error: { title: "Signup failed", description: "Please try again" },
     })!;
     try {
       await unwrap();
       push("/dashboard?signup=true"); // review after emailVerification
-    } catch (e) {}
+    } catch (e) {
+      errorToast(e);
+    }
   });
 
   const handleGoogleSignup = async () => {
@@ -71,6 +72,7 @@ const SignUpForm = () => {
 
         <Button
           type={"submit"}
+          loading={emailMutating}
           disabled={!isValid || isSubmitting || emailMutating}
           w={"full"}
         >
@@ -83,7 +85,7 @@ const SignUpForm = () => {
           type={"button"}
           onClick={handleGoogleSignup}
           loading={isMutating}
-          disabled={isMutating}
+          disabled={isMutating || emailMutating}
           w={"full"}
         >
           <GoogleIcon />

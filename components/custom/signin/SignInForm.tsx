@@ -31,12 +31,13 @@ const SignInForm = () => {
         title: "Login successful",
         description: `Welcome ${session.user.name}`,
       }),
-      error: { title: "Login failed", description: "Please try again" },
     })!;
     try {
       await unwrap();
       push("/dashboard");
-    } catch (e) {}
+    } catch (e) {
+      errorToast(e);
+    }
   });
 
   const handleGoogleSignIn = async () => {
@@ -68,10 +69,11 @@ const SignInForm = () => {
         </Box>
         <Button
           type={"submit"}
+          loading={emailMutating}
           disabled={!isValid || isSubmitting || emailMutating}
           w={"full"}
         >
-          Sign in
+          Sign In
         </Button>
 
         <SeparatorText>Or</SeparatorText>
@@ -80,7 +82,7 @@ const SignInForm = () => {
           type={"button"}
           onClick={handleGoogleSignIn}
           loading={isMutating}
-          disabled={isMutating}
+          disabled={isMutating || emailMutating}
           w={"full"}
         >
           <GoogleIcon />
