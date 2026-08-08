@@ -1,15 +1,15 @@
 "use client";
 
 import { Provider } from "@/components/ui/provider";
-import { Button, Heading } from "@chakra-ui/react";
+import { Button, Center, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 export default function GlobalError({
   error,
-  retry,
+  reset,
 }: {
   error: Error & { digest?: string };
-  retry: () => void;
+  reset: () => void;
 }) {
   useEffect(() => {
     console.error(error);
@@ -19,8 +19,10 @@ export default function GlobalError({
     <html>
       <body>
         <Provider>
-          <Heading size="2xl">Something went wrong!</Heading>
-          <Button onClick={() => retry()}>Try again</Button>
+          <Center w="full" h="full">
+            <Heading size="2xl">Something went wrong!</Heading>
+            <Button onClick={() => reset()}>Try again</Button>
+          </Center>
         </Provider>
       </body>
     </html>

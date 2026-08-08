@@ -11,19 +11,19 @@ export default async function BusinessLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const sessionPromise = getSession();
-  const businessPromise = getBusinesses();
-
-  const { data, error } = await sessionPromise;
-  if (!data || error) unauthorized();
+  const [session, business] = await Promise.all([
+    getSession(),
+    getBusinesses(),
+  ]);
+  if (!session.data || session.error) unauthorized();
 
   return (
     <LayoutContainer>
       <SWRConfig
         value={{
           fallback: {
-            [SESSION_KEY]: sessionPromise,
-            [BUSINESS_KEY]: businessPromise,
+            [SESSION_KEY]: session.data,
+            [BUSINESS_KEY]: business.data,
           },
         }}
       >
