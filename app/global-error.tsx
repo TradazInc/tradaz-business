@@ -1,8 +1,10 @@
 "use client";
 
 import { Provider } from "@/components/ui/provider";
-import { Button, Center, Heading } from "@chakra-ui/react";
+import { Button, Center, Heading, Icon, Stack, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { PiWarningOctagonDuotone } from "react-icons/pi";
+import { TfiReload } from "react-icons/tfi";
 
 export default function GlobalError({
   error,
@@ -19,9 +21,20 @@ export default function GlobalError({
     <html>
       <body>
         <Provider>
-          <Center w="full" h="full">
-            <Heading size="2xl">Something went wrong!</Heading>
-            <Button onClick={() => reset()}>Try again</Button>
+          <Center w={"full"} h={"full"}>
+            <Stack>
+              <Icon size={"xl"} color={"bg.muted"}>
+                <PiWarningOctagonDuotone />
+              </Icon>
+              <Heading size={"md"}>Something went wrong!</Heading>
+              <Text mb={"3"} textStyle={"sm"} color={"fg.muted"}>
+                There was an issue displaying the content.
+              </Text>
+              <Button onClick={() => reset()}>
+                Try again
+                <TfiReload />
+              </Button>
+            </Stack>
           </Center>
         </Provider>
       </body>
