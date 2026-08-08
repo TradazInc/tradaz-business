@@ -72,7 +72,7 @@ const SignInForm = () => {
           disabled={!isValid || isSubmitting || emailMutating}
           w={"full"}
         >
-          Sign in
+          Sign In
         </Button>
 
         <SeparatorText>Or</SeparatorText>
@@ -81,7 +81,7 @@ const SignInForm = () => {
           type={"button"}
           onClick={handleGoogleSignIn}
           loading={isMutating}
-          disabled={isMutating}
+          disabled={isMutating || emailMutating}
           w={"full"}
         >
           <GoogleIcon />

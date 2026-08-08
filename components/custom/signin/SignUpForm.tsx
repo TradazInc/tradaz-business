@@ -84,7 +84,7 @@ const SignUpForm = () => {
           type={"button"}
           onClick={handleGoogleSignup}
           loading={isMutating}
-          disabled={isMutating}
+          disabled={isMutating || emailMutating}
           w={"full"}
         >
           <GoogleIcon />
