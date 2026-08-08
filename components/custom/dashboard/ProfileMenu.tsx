@@ -17,7 +17,10 @@ export const ProfileMenu = () => {
   const handleLogout = async () => {
     const { unwrap } = toaster.promise(trigger(), {
       loading: { title: "Logging out…", description: "Please wait" },
-      success: () => ({ description: "Logout Succesful" }),
+      success: () => ({
+        title: "Logged Out",
+        description: "You have logged out of your account",
+      }),
     })!;
     try {
       const data = await unwrap();
