@@ -72,6 +72,7 @@ const SignUpForm = () => {
 
         <Button
           type={"submit"}
+          loading={emailMutating}
           disabled={!isValid || isSubmitting || emailMutating}
           w={"full"}
         >

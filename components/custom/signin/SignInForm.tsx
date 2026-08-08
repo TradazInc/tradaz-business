@@ -69,6 +69,7 @@ const SignInForm = () => {
         </Box>
         <Button
           type={"submit"}
+          loading={emailMutating}
           disabled={!isValid || isSubmitting || emailMutating}
           w={"full"}
         >
