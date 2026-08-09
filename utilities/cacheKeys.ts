@@ -17,23 +17,20 @@ export const storeKey = (businessId: string) =>
 export function cursorKey<T>(
   pageIndex: number,
   previousPageData: FetchResponse<T> | null,
-  cacheKey: string,
+  resourceKey: string,
   pageSize: number,
 ) {
   if (previousPageData && !previousPageData.meta?.next) return null; // reached the end
-  if (pageIndex === 0) return { key: cacheKey, query: { pageSize } }; // first page, we don't have `previousPageData`
-  return {
-    key: cacheKey,
-    query: { pageSize, cursor: previousPageData?.meta?.next },
-  };
+  if (pageIndex === 0) return `/${resourceKey}?&pageSize=${pageSize}`; // first page, we don't have `previousPageData`
+  return `/${resourceKey}?cursor=${previousPageData?.meta?.next}&pageSize=${pageSize}`;
 }
 
 export function indexKey<T>(
   pageIndex: number,
   previousPageData: FetchResponse<T> | null,
-  cacheKey: string,
+  resourceKey: string,
   pageSize: number,
 ) {
   if (previousPageData && !previousPageData.data.length) return null; // reached the end
-  return { key: cacheKey, query: { page: pageIndex, pageSize } };
+  return `/${resourceKey}?page=${pageIndex}&pageSize=${pageSize}`;
 }
