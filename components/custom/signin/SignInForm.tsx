@@ -6,7 +6,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { emailSignInSchema } from "@/schema/auth";
 import { useEmailSignin, useGoogleSignin } from "@/server/hooks/auth";
-import { errorToast } from "@/utilities/errorToast";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -25,33 +25,37 @@ const SignInForm = () => {
   } = useForm({ resolver: zodResolver(emailSignInSchema) });
 
   const onSubmit = handleSubmit(async (signInData) => {
-    const { unwrap } = toaster.promise(emailTrigger({ signInData }), {
+    const promise = toaster.promise(emailTrigger({ signInData }), {
       loading: { title: "Logging in…", description: "Please wait" },
       success: (session) => ({
         title: "Login successful",
         description: `Welcome ${session.user.name}`,
       }),
-    })!;
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      await unwrap();
+      await promise.unwrap();
       push("/dashboard");
-    } catch (e) {
-      errorToast(e);
+    } catch {
+      /* Toast handled by the `error` option */
     }
   });
 
   const handleGoogleSignIn = async () => {
-    const { unwrap } = toaster.promise(trigger("/dashboard"), {
+    const promise = toaster.promise(trigger("/dashboard"), {
       loading: { title: "Redirecting…", description: "Please wait" },
       success: {
         title: "Redirect successful",
         description: "Continue with Google",
       },
-    })!;
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      await unwrap();
-    } catch (e) {
-      errorToast(e);
+      await promise.unwrap();
+    } catch {
+      /* Toast handled by the `error` option */
     }
   };
 

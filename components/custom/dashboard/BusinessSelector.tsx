@@ -1,8 +1,9 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { useBusinesses, useSetActiveBusiness } from "@/server/hooks/business";
 import { useSetActiveStore, useStores } from "@/server/hooks/store";
-import { errorToast } from "@/utilities/errorToast";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
@@ -23,7 +24,7 @@ export const BusinessSelector = () => {
       setSelectedBusinessId(businessId);
       await setBusiness({ organizationId: businessId ?? null });
     } catch (e) {
-      errorToast(e);
+      toaster.error(errorOptions(e));
     }
   };
 
@@ -31,7 +32,7 @@ export const BusinessSelector = () => {
     try {
       await setStore({ teamId: storeId ?? null });
     } catch (e) {
-      errorToast(e);
+      toaster.error(errorOptions(e));
     }
   };
 

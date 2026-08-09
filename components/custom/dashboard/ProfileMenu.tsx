@@ -3,11 +3,11 @@
 import { toaster } from "@/components/ui/toaster";
 import { useSignOut } from "@/server/hooks/auth";
 import { useSession } from "@/server/hooks/session";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import { Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
 import { ProfileAvatar } from "./ProfileAvatar";
-import { errorToast } from "@/utilities/errorToast";
 
 export const ProfileMenu = () => {
   const { data: session } = useSession();
@@ -15,26 +15,29 @@ export const ProfileMenu = () => {
   const { push, refresh } = useRouter();
 
   const handleLogout = async () => {
-    const { unwrap } = toaster.promise(trigger(), {
+    const promise = toaster.promise(trigger(), {
       loading: { title: "Logging out…", description: "Please wait" },
       success: () => ({
         title: "Logged Out",
         description: "You have logged out of your account",
       }),
-    })!;
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      const data = await unwrap();
+      const data = await promise.unwrap();
       if (data.success) {
         refresh();
         push("/signin");
-      } else {
-        toaster.error({
+      } else if (promise.id) {
+        toaster.update(promise.id, {
           title: "Unable to logout",
           description: "Please try again",
+          type: "error",
         });
       }
-    } catch (e) {
-      errorToast(e);
+    } catch {
+      /* Toast handled by the `error` option */
     }
   };
 

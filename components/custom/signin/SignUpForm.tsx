@@ -6,7 +6,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { emailSignUpSchema } from "@/schema/auth";
 import { useEmailSignup, useGoogleSignin } from "@/server/hooks/auth";
-import { errorToast } from "@/utilities/errorToast";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -24,33 +24,37 @@ const SignUpForm = () => {
   } = useForm({ resolver: zodResolver(emailSignUpSchema) });
 
   const onSubmit = handleSubmit(async (signUpData) => {
-    const { unwrap } = toaster.promise(emailTrigger({ signUpData }), {
+    const promise = toaster.promise(emailTrigger({ signUpData }), {
       loading: { title: "Signing up…", description: "Please wait" },
       success: (session) => ({
         title: "Signup successful",
         description: `Welcome ${session.user.name}`,
       }),
-    })!;
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      await unwrap();
+      await promise.unwrap();
       push("/dashboard?signup=true"); // review after emailVerification
-    } catch (e) {
-      errorToast(e);
+    } catch {
+      /* Toast handled by the `error` option */
     }
   });
 
   const handleGoogleSignup = async () => {
-    const { unwrap } = toaster.promise(trigger("/dashboard?signup=true"), {
+    const promise = toaster.promise(trigger("/dashboard?signup=true"), {
       loading: { title: "Redirecting…", description: "Please wait" },
       success: {
         title: "Redirect successful",
         description: "Continue with Google",
       },
-    })!;
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      await unwrap();
-    } catch (e) {
-      errorToast(e);
+      await promise.unwrap();
+    } catch {
+      /* Toast handled by the `error` option */
     }
   };
 
