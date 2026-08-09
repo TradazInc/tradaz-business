@@ -41,8 +41,15 @@ const SignInForm = () => {
   });
 
   const handleGoogleSignIn = async () => {
+    const { unwrap } = toaster.promise(trigger("/dashboard"), {
+      loading: { title: "Redirecting…", description: "Please wait" },
+      success: {
+        title: "Redirect successful",
+        description: "Continue with Google",
+      },
+    })!;
     try {
-      await trigger("/dashboard");
+      await unwrap();
     } catch (e) {
       errorToast(e);
     }
@@ -70,7 +77,7 @@ const SignInForm = () => {
         <Button
           type={"submit"}
           loading={emailMutating}
-          disabled={!isValid || isSubmitting || emailMutating}
+          disabled={!isValid || isSubmitting || emailMutating || isMutating}
           w={"full"}
         >
           Sign In
