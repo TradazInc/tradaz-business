@@ -19,12 +19,13 @@ export const DialogBox = ({ children, trigger, signup }: Props) => {
 
   // Track url changes
   useEffect(() => {
+    if (!signup) return;
     if (signup) setOpen(true);
 
     const params = new URLSearchParams(searchParams.toString());
     params.delete("signup");
     router.replace(`${pathname}?${params.toString()}`);
-  });
+  }, [signup]);
 
   return (
     <Dialog.Root
