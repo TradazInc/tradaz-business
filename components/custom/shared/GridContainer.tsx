@@ -2,7 +2,12 @@ import { SimpleGrid } from "@chakra-ui/react";
 
 const GridContainer = ({ children }: { children: React.ReactNode }) => {
   return (
-    <SimpleGrid columns={{ base: 1, md: 2, lg: 3, "2xl": 4 }} gap={4} w={"full"}>
+    <SimpleGrid
+      columns={{ base: 1, md: 2, lg: 3, "2xl": 4 }}
+      gap={4}
+      w={"full"}
+      mb={24}
+    >
       {children}
     </SimpleGrid>
   );
