@@ -8,7 +8,7 @@ import { errorOptions } from "@/utilities/errorToastOptions";
 import { updateSession } from "@/utilities/updateSession";
 import { Breadcrumb, HStack, Skeleton } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 import { BusinessSelectorItem } from "./BusinessSelectorItem";
@@ -23,8 +23,14 @@ export const BusinessSelector = () => {
   const { trigger: setBusiness } = useSetActiveBusiness();
   const { trigger: setStore } = useSetActiveStore();
 
-  const business = businesses?.find((b) => b.id === activeBusinessId);
-  const store = stores?.find((s) => s.id === activeStoreId);
+  const business = useMemo(
+    () => businesses?.find((b) => b.id === activeBusinessId),
+    [businesses, activeBusinessId],
+  );
+  const store = useMemo(
+    () => stores?.find((s) => s.id === activeStoreId),
+    [stores, activeStoreId],
+  );
 
   const handleBusiness = async (businessId?: string) => {
     try {
