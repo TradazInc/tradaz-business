@@ -40,8 +40,15 @@ const SignUpForm = () => {
   });
 
   const handleGoogleSignup = async () => {
+    const { unwrap } = toaster.promise(trigger("/dashboard?signup=true"), {
+      loading: { title: "Redirecting…", description: "Please wait" },
+      success: {
+        title: "Redirect successful",
+        description: "Continue with Google",
+      },
+    })!;
     try {
-      await trigger("/dashboard?signup=true");
+      await unwrap();
     } catch (e) {
       errorToast(e);
     }
@@ -73,7 +80,7 @@ const SignUpForm = () => {
         <Button
           type={"submit"}
           loading={emailMutating}
-          disabled={!isValid || isSubmitting || emailMutating}
+          disabled={!isValid || isSubmitting || emailMutating || isMutating}
           w={"full"}
         >
           Sign Up
