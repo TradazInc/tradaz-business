@@ -21,12 +21,21 @@ export const StoreForm = () => {
   } = useForm({ resolver: zodResolver(storeSchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (storeData) => {
+    const promise = toaster.promise(trigger(storeData), {
+      loading: { title: "Setting up store", description: "Please wait" },
+      success: (store) => ({
+        title: "Setup successful",
+        description: `${store.name} store has been created`,
+      }),
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      const store = await trigger(storeData);
+      const store = await promise.unwrap();
       refresh();
       push(`/dashboard/store/${store.id}`);
     } catch (e) {
-      toaster.error(errorOptions(e));
+      /* Toast handled by the `error` option */
     }
   });
 

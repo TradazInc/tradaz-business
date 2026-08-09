@@ -40,7 +40,7 @@ const TeamVariationField = ({
 }: Props) => {
   // Fetch data
   const { businessId } = useParams<{ businessId?: string }>();
-  const { data, isLoading } = useStores(businessId);
+  const { data, isLoading, error, mutate } = useStores(businessId);
 
   // Create collection data (chakra)
   const storeCollection = useMemo(
@@ -73,7 +73,10 @@ const TeamVariationField = ({
           borderRadius={"md"}
           flexDirection={"row"}
         >
-          <Field.Root required invalid={!!teamVariationErrors?.[index]?.teamId}>
+          <Field.Root
+            required
+            invalid={!!teamVariationErrors?.[index]?.teamId || error}
+          >
             <Field.Label>
               Store <Field.RequiredIndicator />
             </Field.Label>
@@ -110,6 +113,15 @@ const TeamVariationField = ({
                             <Select.ItemIndicator />
                           </Select.Item>
                         ))}
+                        {error && (
+                          <Button
+                            variant={"plain"}
+                            size={"sm"}
+                            onClick={() => mutate()}
+                          >
+                            Couldn't load stores — retry
+                          </Button>
+                        )}
                       </Select.Content>
                     </Select.Positioner>
                   </Portal>
@@ -117,7 +129,9 @@ const TeamVariationField = ({
               )}
             />
             <Field.ErrorText>
-              {teamVariationErrors?.[index]?.teamId?.message}
+              {error
+                ? "Stores unavailable. Retry to continue."
+                : teamVariationErrors?.[index]?.teamId?.message}
             </Field.ErrorText>
           </Field.Root>
 

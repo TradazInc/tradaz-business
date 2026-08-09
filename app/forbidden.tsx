@@ -11,7 +11,7 @@ export default function Forbidden() {
         </Icon>
         <Heading size={"md"}>403 — Access denied</Heading>
         <Text mb={"3"} textStyle={"sm"} color={"fg.muted"}>
-          Your account doesn&apos;t have permission to view this page.
+          Your account doesn't have permission to view this page.
         </Text>
         <Button asChild>
           <Link href="/">Back home</Link>

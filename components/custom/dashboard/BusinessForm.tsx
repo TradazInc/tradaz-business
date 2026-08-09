@@ -31,7 +31,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
 
 export const BusinessForm = () => {
-  const { data, isLoading, size, setSize } = useBusinessCategories();
+  const { data, isLoading, size, setSize, error, mutate } =
+    useBusinessCategories();
   const { trigger, isMutating } = useAddBusiness();
   const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
@@ -65,12 +66,21 @@ export const BusinessForm = () => {
   const withMask = useHookFormMask(register);
 
   const onSubmit = handleSubmit(async (businessData) => {
+    const promise = toaster.promise(trigger(businessData), {
+      loading: { title: "Setting up brand…", description: "Please wait" },
+      success: (brand) => ({
+        title: "Setup successful",
+        description: `${brand.name} brand has been created`,
+      }),
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      const business = await trigger(businessData);
+      const business = await promise.unwrap();
       refresh();
       push(`/dashboard/business/${business.id}`);
     } catch (e) {
-      toaster.error(errorOptions(e));
+      /* Toast handled by the `error` option */
     }
   });
 
@@ -145,7 +155,7 @@ export const BusinessForm = () => {
                   </InputGroup>
                 </FileUpload.Root>
 
-                <Field.Root required invalid={!!errors.categoryId}>
+                <Field.Root required invalid={!!errors.categoryId || error}>
                   <Field.Label>
                     Brand category <Field.RequiredIndicator />
                   </Field.Label>
@@ -181,7 +191,7 @@ export const BusinessForm = () => {
                           <Select.Content id={categoryScrollId}>
                             <InfiniteScroll
                               dataLength={flatData.length}
-                              hasMore={hasMore}
+                              hasMore={hasMore && !error}
                               next={() => setSize(size + 1)}
                               loader={<Spinner size={"xs"} />}
                               scrollableTarget={categoryScrollId}
@@ -193,13 +203,24 @@ export const BusinessForm = () => {
                                 </Select.Item>
                               ))}
                             </InfiniteScroll>
+                            {error && (
+                              <Button
+                                variant={"plain"}
+                                size={"sm"}
+                                onClick={() => mutate()}
+                              >
+                                Couldn't load categories — retry
+                              </Button>
+                            )}
                           </Select.Content>
                         </Select.Positioner>
                       </Select.Root>
                     )}
                   />
                   <Field.ErrorText>
-                    {errors.categoryId?.message}
+                    {error
+                      ? "Categories unavailable. Retry to continue."
+                      : errors.categoryId?.message}
                   </Field.ErrorText>
                 </Field.Root>
               </>
