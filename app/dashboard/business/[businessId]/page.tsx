@@ -53,7 +53,7 @@ export default async function page({ params }: Props) {
                   name={store.name}
                   address={store.address}
                   createdAt={new Date(store.createdAt).toDateString()}
-                  href={`/dashboard/store/${store.id}`}
+                  href={`/dashboard/business/${businessId}/store/${store.id}`}
                 />
               )}
             </For>
