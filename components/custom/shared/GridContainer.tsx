@@ -6,7 +6,7 @@ const GridContainer = ({ children }: { children: React.ReactNode }) => {
       columns={{ base: 1, md: 2, lg: 3, "2xl": 4 }}
       gap={4}
       w={"full"}
-      mb={24}
+      pb={24}
     >
       {children}
     </SimpleGrid>
