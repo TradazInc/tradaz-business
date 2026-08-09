@@ -2,6 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { useBusinesses, useSetActiveBusiness } from "@/server/hooks/business";
+import { useSession } from "@/server/hooks/session";
 import { useSetActiveStore, useStores } from "@/server/hooks/store";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
@@ -12,10 +13,10 @@ import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
 
 export const BusinessSelector = () => {
+  const { data: session } = useSession();
   const { data: businesses, isLoading } = useBusinesses();
   const [selectedBusinessId, setSelectedBusinessId] = useState<string>();
   const { data: stores } = useStores(selectedBusinessId);
-
   const { data: business, trigger: setBusiness } = useSetActiveBusiness();
   const { data: store, trigger: setStore } = useSetActiveStore();
 
@@ -44,8 +45,15 @@ export const BusinessSelector = () => {
 
   useEffect(() => {
     // Unset active business on dashboard page
-    if (!businessId && !storeId) handleBusiness(businessId);
-    if (!storeId) handleStore(storeId);
+    if (
+      session?.session.activeOrganizationId === (businessId ?? null) &&
+      session?.session.activeTeamId === (storeId ?? null)
+    )
+      return;
+    (async () => {
+      await setBusiness({ organizationId: businessId ?? null });
+      await setStore({ teamId: storeId ?? null });
+    })();
   }, [businessId, storeId]);
 
   return (
@@ -66,7 +74,9 @@ export const BusinessSelector = () => {
                 <LuBuilding2 />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
-                    {business?.name ?? "Brands"}
+                    {session?.session.activeOrganizationId
+                      ? business?.name
+                      : "Brands"}
                     <LuChevronDown />
                   </HStack>
                 </Skeleton>
@@ -75,7 +85,7 @@ export const BusinessSelector = () => {
           </Breadcrumb.Item>
         </>
 
-        {store && (
+        {session?.session.activeTeamId && (
           <>
             <Breadcrumb.Separator>
               <LiaSlashSolid />
@@ -89,7 +99,7 @@ export const BusinessSelector = () => {
               >
                 <Breadcrumb.Link as="button">
                   <LuStore />
-                  {store.name}
+                  {store?.name}
                   <LuChevronDown />
                 </Breadcrumb.Link>
               </MenuItem>
