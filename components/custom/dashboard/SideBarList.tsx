@@ -1,27 +1,28 @@
 "use client";
 
 import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
-import { computeBasePath } from "@/utilities/computeBasePath";
+import { computePath } from "@/utilities/computePath";
 import { Accordion, Box, Icon } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export const SideBarList = () => {
-  const [sideItems, setSideItems] = useState(dashboardItems);
-
   // Tracks url changes
-  const { businessId, storeId } = useParams();
+  const { businessId, storeId } = useParams<{
+    businessId?: string;
+    storeId?: string;
+  }>();
 
   const basePath = useMemo(
-    () => computeBasePath({ businessId, storeId }),
+    () => computePath({ businessId, storeId }),
     [businessId, storeId],
   );
 
-  useEffect(() => {
-    if (!businessId && !storeId) setSideItems(dashboardItems);
-    if (businessId) setSideItems(businessItems);
-    if (storeId) setSideItems(storeItems);
+  const sideItems = useMemo(() => {
+    if (storeId) return storeItems;
+    if (businessId) return businessItems;
+    return dashboardItems;
   }, [businessId, storeId]);
 
   return (

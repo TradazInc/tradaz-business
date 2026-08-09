@@ -5,25 +5,39 @@ import { useBusinesses, useSetActiveBusiness } from "@/server/hooks/business";
 import { useSession } from "@/server/hooks/session";
 import { useSetActiveStore, useStores } from "@/server/hooks/store";
 import { errorOptions } from "@/utilities/errorToastOptions";
-import { Breadcrumb, HStack, Menu, Portal, Skeleton } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { updateSession } from "@/utilities/updateSession";
+import { Breadcrumb, HStack, Skeleton } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { LiaSlashSolid } from "react-icons/lia";
 import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
+import { BusinessSelectorItem } from "./BusinessSelectorItem";
 
 export const BusinessSelector = () => {
   const { data: session } = useSession();
+  const activeBusinessId = session?.session.activeOrganizationId ?? undefined;
+  const activeStoreId = session?.session.activeTeamId ?? undefined;
+
   const { data: businesses, isLoading } = useBusinesses();
-  const [selectedBusinessId, setSelectedBusinessId] = useState<string>();
-  const { data: stores } = useStores(selectedBusinessId);
-  const { data: business, trigger: setBusiness } = useSetActiveBusiness();
-  const { data: store, trigger: setStore } = useSetActiveStore();
+  const { data: stores } = useStores(activeBusinessId);
+  const { trigger: setBusiness } = useSetActiveBusiness();
+  const { trigger: setStore } = useSetActiveStore();
+
+  const business = businesses?.find((b) => b.id === activeBusinessId);
+  const store = stores?.find((s) => s.id === activeStoreId);
 
   const handleBusiness = async (businessId?: string) => {
     try {
-      setSelectedBusinessId(businessId);
-      await setBusiness({ organizationId: businessId ?? null });
+      await setBusiness(
+        { organizationId: businessId ?? null },
+        {
+          optimisticData: updateSession({
+            activeOrganizationId: businessId ?? null,
+            activeTeamId: null, // switching brand clears the store
+          }),
+          rollbackOnError: true,
+        },
+      );
     } catch (e) {
       toaster.error(errorOptions(e));
     }
@@ -31,7 +45,13 @@ export const BusinessSelector = () => {
 
   const handleStore = async (storeId?: string) => {
     try {
-      await setStore({ teamId: storeId ?? null });
+      await setStore(
+        { teamId: storeId ?? null },
+        {
+          optimisticData: updateSession({ activeTeamId: storeId ?? null }),
+          rollbackOnError: true,
+        },
+      );
     } catch (e) {
       toaster.error(errorOptions(e));
     }
@@ -44,15 +64,30 @@ export const BusinessSelector = () => {
   }>();
 
   useEffect(() => {
-    // Unset active business on dashboard page
+    // Use session as source of truth
     if (
       session?.session.activeOrganizationId === (businessId ?? null) &&
       session?.session.activeTeamId === (storeId ?? null)
     )
       return;
     (async () => {
-      await setBusiness({ organizationId: businessId ?? null });
-      await setStore({ teamId: storeId ?? null });
+      await setBusiness(
+        { organizationId: businessId ?? null },
+        {
+          optimisticData: updateSession({
+            activeOrganizationId: businessId ?? null,
+            activeTeamId: null, // switching brand clears the store
+          }),
+          rollbackOnError: true,
+        },
+      );
+      await setStore(
+        { teamId: storeId ?? null },
+        {
+          optimisticData: updateSession({ activeTeamId: storeId ?? null }),
+          rollbackOnError: true,
+        },
+      );
     })();
   }, [businessId, storeId]);
 
@@ -65,7 +100,7 @@ export const BusinessSelector = () => {
           </Breadcrumb.Separator>
 
           <Breadcrumb.Item>
-            <MenuItem
+            <BusinessSelectorItem
               data={businesses}
               dataType={"business"}
               handleClick={handleBusiness}
@@ -81,7 +116,7 @@ export const BusinessSelector = () => {
                   </HStack>
                 </Skeleton>
               </Breadcrumb.Link>
-            </MenuItem>
+            </BusinessSelectorItem>
           </Breadcrumb.Item>
         </>
 
@@ -92,63 +127,22 @@ export const BusinessSelector = () => {
             </Breadcrumb.Separator>
 
             <Breadcrumb.Item>
-              <MenuItem
+              <BusinessSelectorItem
                 data={stores}
                 dataType={"store"}
                 handleClick={handleStore}
+                activeBusiness={activeBusinessId}
               >
                 <Breadcrumb.Link as="button">
                   <LuStore />
                   {store?.name}
                   <LuChevronDown />
                 </Breadcrumb.Link>
-              </MenuItem>
+              </BusinessSelectorItem>
             </Breadcrumb.Item>
           </>
         )}
       </Breadcrumb.List>
     </Breadcrumb.Root>
-  );
-};
-
-interface BreadcrumbMenuItemProps {
-  data?: Array<{ name: string; id: string }> | null;
-  dataType: "business" | "store";
-  handleClick: (id: string) => Promise<unknown>;
-  children: React.ReactNode;
-}
-
-const MenuItem = ({
-  data,
-  dataType,
-  handleClick,
-  children,
-}: BreadcrumbMenuItemProps) => {
-  return (
-    <Menu.Root>
-      <Menu.Trigger asChild>{children}</Menu.Trigger>
-      <Portal>
-        <Menu.Positioner>
-          <Menu.Content>
-            {data && data.length > 0 ? (
-              data.map((item) => (
-                <Menu.Item
-                  key={item.id}
-                  value={item.id}
-                  onClick={() => handleClick(item.id)}
-                  asChild
-                >
-                  <NextLink href={`/dashboard/${dataType}/${item.id}`}>
-                    {item.name}
-                  </NextLink>
-                </Menu.Item>
-              ))
-            ) : (
-              <Menu.Item value="">Nothing found</Menu.Item>
-            )}
-          </Menu.Content>
-        </Menu.Positioner>
-      </Portal>
-    </Menu.Root>
   );
 };
