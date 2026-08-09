@@ -25,15 +25,16 @@ const SignInForm = () => {
   } = useForm({ resolver: zodResolver(emailSignInSchema) });
 
   const onSubmit = handleSubmit(async (signInData) => {
-    const { unwrap } = toaster.promise(emailTrigger({ signInData }), {
+    const promise = toaster.promise(emailTrigger({ signInData }), {
       loading: { title: "Logging in…", description: "Please wait" },
       success: (session) => ({
         title: "Login successful",
         description: `Welcome ${session.user.name}`,
       }),
-    })!;
+    });
     try {
-      await unwrap();
+      if (!promise) return;
+      await promise.unwrap();
       push("/dashboard");
     } catch (e) {
       errorToast(e);
@@ -41,15 +42,16 @@ const SignInForm = () => {
   });
 
   const handleGoogleSignIn = async () => {
-    const { unwrap } = toaster.promise(trigger("/dashboard"), {
+    const promise = toaster.promise(trigger("/dashboard"), {
       loading: { title: "Redirecting…", description: "Please wait" },
       success: {
         title: "Redirect successful",
         description: "Continue with Google",
       },
-    })!;
+    });
     try {
-      await unwrap();
+      if (!promise) return;
+      await promise.unwrap();
     } catch (e) {
       errorToast(e);
     }

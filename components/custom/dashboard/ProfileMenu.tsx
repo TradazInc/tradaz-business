@@ -15,15 +15,16 @@ export const ProfileMenu = () => {
   const { push, refresh } = useRouter();
 
   const handleLogout = async () => {
-    const { unwrap } = toaster.promise(trigger(), {
+    const promise = toaster.promise(trigger(), {
       loading: { title: "Logging out…", description: "Please wait" },
       success: () => ({
         title: "Logged Out",
         description: "You have logged out of your account",
       }),
-    })!;
+    });
     try {
-      const data = await unwrap();
+      if (!promise) return;
+      const data = await promise.unwrap();
       if (data.success) {
         refresh();
         push("/signin");
