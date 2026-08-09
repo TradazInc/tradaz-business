@@ -1,10 +1,11 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
 import { businessSchema } from "@/schema/business";
 import { useAddBusiness } from "@/server/hooks/business";
 import { useBusinessCategories } from "@/server/hooks/businessCategory";
-import { errorToast } from "@/utilities/errorToast";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -69,7 +70,7 @@ export const BusinessForm = () => {
       refresh();
       push(`/dashboard/business/${business.id}`);
     } catch (e) {
-      errorToast(e);
+      toaster.error(errorOptions(e));
     }
   });
 

@@ -1,8 +1,9 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { storeSchema } from "@/schema/store";
 import { useAddStore } from "@/server/hooks/store";
-import { errorToast } from "@/utilities/errorToast";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams, useRouter } from "next/navigation";
@@ -25,7 +26,7 @@ export const StoreForm = () => {
       refresh();
       push(`/dashboard/store/${store.id}`);
     } catch (e) {
-      errorToast(e);
+      toaster.error(errorOptions(e));
     }
   });
 

@@ -1,30 +1,26 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
 import { BetterFetchError } from "@better-fetch/fetch";
+import { ToastOptions } from "@chakra-ui/react";
 
-function errorOptions(e: unknown) {
+export function errorOptions(e: unknown): ToastOptions {
   if (e instanceof BetterFetchError) {
     return {
       title: e.error?.message ?? e.statusText,
       description: e.error?.code ?? `Error ${e.status}`,
-      closable: true,
+      type: "error",
     };
   } else if (e instanceof Error) {
     return {
       title: "Something went wrong",
       description: e.message,
-      closable: true,
+      type: "error",
     };
   } else {
     return {
       title: "Something went wrong",
       description: "Please try again.",
-      closable: true,
+      type: "error",
     };
   }
-}
-
-export function errorToast(e: unknown) {
-  toaster.error(errorOptions(e));
 }

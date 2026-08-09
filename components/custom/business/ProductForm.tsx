@@ -1,12 +1,13 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { emptyProduct, emptyVariation } from "@/data/productForm";
 import { productSchema } from "@/schema/product";
 import { Product } from "@/server/entities/product";
 import { useAddProduct } from "@/server/hooks/product";
 import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
-import { errorToast } from "@/utilities/errorToast";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import { formProduct } from "@/utilities/formProduct";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
@@ -103,7 +104,7 @@ const ProductForm = ({ product }: Props) => {
       refresh();
       push(`/dashboard/business/products/${product.id}`);
     } catch (e) {
-      errorToast(e);
+      toaster.error(errorOptions(e));
     }
   });
 

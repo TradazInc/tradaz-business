@@ -6,7 +6,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { emailSignInSchema } from "@/schema/auth";
 import { useEmailSignin, useGoogleSignin } from "@/server/hooks/auth";
-import { errorToast } from "@/utilities/errorToast";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -31,13 +31,14 @@ const SignInForm = () => {
         title: "Login successful",
         description: `Welcome ${session.user.name}`,
       }),
+      error: errorOptions,
     });
+    if (!promise) return;
     try {
-      if (!promise) return;
       await promise.unwrap();
       push("/dashboard");
-    } catch (e) {
-      errorToast(e);
+    } catch {
+      /* Toast handled by the `error` option */
     }
   });
 
@@ -48,12 +49,13 @@ const SignInForm = () => {
         title: "Redirect successful",
         description: "Continue with Google",
       },
+      error: errorOptions,
     });
+    if (!promise) return;
     try {
-      if (!promise) return;
       await promise.unwrap();
-    } catch (e) {
-      errorToast(e);
+    } catch {
+      /* Toast handled by the `error` option */
     }
   };
 
