@@ -45,7 +45,7 @@ export default async function page({ searchParams }: Props) {
         </ToolBarContainer>
 
         {businesses?.length ? (
-          <GridContainer>
+          <GridContainer pb={12}>
             <For each={businesses}>
               {(business) => (
                 <GridCard
