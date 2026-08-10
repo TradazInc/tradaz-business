@@ -219,10 +219,10 @@ export const BusinessForm = () => {
                     <Button
                       w={"full"}
                       size={"sm"}
-                      variant={"plain"}
+                      variant={"subtle"}
                       onClick={() => mutate()}
                     >
-                      Couldn't load categories — retry
+                      Click to retry
                     </Button>
                   )}
                   <Field.ErrorText>
