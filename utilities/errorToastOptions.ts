@@ -6,8 +6,8 @@ import { ToastOptions } from "@chakra-ui/react";
 export function errorOptions(e: unknown): ToastOptions {
   if (e instanceof BetterFetchError) {
     return {
-      title: e.name ?? e.statusText,
-      description: e.message ?? `Error ${e.status}`,
+      title: e.error?.code || e.statusText || e.name,
+      description: e.error?.message || e.message || `Error ${e.status}`,
       type: "error",
     };
   } else if (e instanceof Error) {
