@@ -99,12 +99,21 @@ const ProductForm = ({ product }: Props) => {
   });
 
   const onSubmit = handleSubmit(async (productData) => {
+    const promise = toaster.promise(trigger(productData), {
+      loading: { title: "Creating product...", description: "Please wait" },
+      success: (product) => ({
+        title: "Creation successful",
+        description: `${product.name} product has been created`,
+      }),
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      const product = await trigger(productData);
+      const product = await promise.unwrap();
       refresh();
       push(`/dashboard/business/products/${product.id}`);
-    } catch (e) {
-      toaster.error(errorOptions(e));
+    } catch {
+      /* Toast handled by the `error` option */
     }
   });
 
@@ -223,12 +232,16 @@ const ProductForm = ({ product }: Props) => {
                           loader={<Spinner size={"xs"} />}
                           scrollableTarget={categoryScrollId}
                         >
-                          {categoryCollection.items.map((category) => (
-                            <Select.Item item={category} key={category.id}>
-                              {category.name}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))}
+                          {categoryCollection.size > 0 ? (
+                            categoryCollection.items.map((category) => (
+                              <Select.Item item={category} key={category.id}>
+                                {category.name}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))
+                          ) : (
+                            <Box>No product categories found</Box>
+                          )}
                         </InfiniteScroll>
                       </Select.Content>
                     </Select.Positioner>
@@ -281,12 +294,16 @@ const ProductForm = ({ product }: Props) => {
                           loader={<Spinner size={"xs"} />}
                           scrollableTarget={sizetypeScrollId}
                         >
-                          {sizeTypeCollection.items.map((sizeType) => (
-                            <Select.Item item={sizeType} key={sizeType.id}>
-                              {sizeType.name}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))}
+                          {sizeTypeCollection.size > 0 ? (
+                            sizeTypeCollection.items.map((sizeType) => (
+                              <Select.Item item={sizeType} key={sizeType.id}>
+                                {sizeType.name}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))
+                          ) : (
+                            <Box>No size types found</Box>
+                          )}
                         </InfiniteScroll>
                       </Select.Content>
                     </Select.Positioner>
