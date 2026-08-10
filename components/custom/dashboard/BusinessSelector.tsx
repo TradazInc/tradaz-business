@@ -70,7 +70,7 @@ export const BusinessSelector = () => {
   }>();
 
   useEffect(() => {
-    if (!session || !businessId) return;
+    if (!session) return;
 
     // Use URL to update session
     if (activeBusinessId !== businessId) {
