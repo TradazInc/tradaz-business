@@ -210,20 +210,21 @@ export const BusinessForm = () => {
                                 <Box>No categories found</Box>
                               )}
                             </InfiniteScroll>
-                            {error && (
-                              <Button
-                                variant={"plain"}
-                                size={"sm"}
-                                onClick={() => mutate()}
-                              >
-                                Couldn't load categories — retry
-                              </Button>
-                            )}
                           </Select.Content>
                         </Select.Positioner>
                       </Select.Root>
                     )}
                   />
+                  {error && (
+                    <Button
+                      w={"full"}
+                      size={"sm"}
+                      variant={"plain"}
+                      onClick={() => mutate()}
+                    >
+                      Couldn't load categories — retry
+                    </Button>
+                  )}
                   <Field.ErrorText>
                     {error
                       ? "Categories unavailable. Retry to continue."

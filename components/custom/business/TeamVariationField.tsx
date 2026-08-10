@@ -113,21 +113,22 @@ const TeamVariationField = ({
                             <Select.ItemIndicator />
                           </Select.Item>
                         ))}
-                        {error && (
-                          <Button
-                            variant={"plain"}
-                            size={"sm"}
-                            onClick={() => mutate()}
-                          >
-                            Couldn't load stores — retry
-                          </Button>
-                        )}
                       </Select.Content>
                     </Select.Positioner>
                   </Portal>
                 </Select.Root>
               )}
             />
+            {error && (
+              <Button
+                w={"full"}
+                size={"sm"}
+                variant={"plain"}
+                onClick={() => mutate()}
+              >
+                Couldn't load stores — retry
+              </Button>
+            )}
             <Field.ErrorText>
               {error
                 ? "Stores unavailable. Retry to continue."
