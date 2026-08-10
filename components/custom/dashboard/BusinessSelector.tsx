@@ -23,11 +23,11 @@ export const BusinessSelector = () => {
   const { trigger: setBusiness } = useSetActiveBusiness();
   const { trigger: setStore } = useSetActiveStore();
 
-  const business = useMemo(
+  const activeBusiness = useMemo(
     () => businesses?.find((b) => b.id === activeBusinessId),
     [businesses, activeBusinessId],
   );
-  const store = useMemo(
+  const activeStore = useMemo(
     () => stores?.find((s) => s.id === activeStoreId),
     [stores, activeStoreId],
   );
@@ -70,32 +70,15 @@ export const BusinessSelector = () => {
   }>();
 
   useEffect(() => {
-    // Use session as source of truth
-    if (
-      session?.session.activeOrganizationId === (businessId ?? null) &&
-      session?.session.activeTeamId === (storeId ?? null)
-    )
+    if (!session || !businessId) return;
+
+    // Use URL to update session
+    if (activeBusinessId !== businessId) {
+      handleBusiness(businessId); // optimistic update re-runs this effect for the store
       return;
-    (async () => {
-      await setBusiness(
-        { organizationId: businessId ?? null },
-        {
-          optimisticData: updateSession({
-            activeOrganizationId: businessId ?? null,
-            activeTeamId: null, // switching brand clears the store
-          }),
-          rollbackOnError: true,
-        },
-      );
-      await setStore(
-        { teamId: storeId ?? null },
-        {
-          optimisticData: updateSession({ activeTeamId: storeId ?? null }),
-          rollbackOnError: true,
-        },
-      );
-    })();
-  }, [businessId, storeId]);
+    }
+    if (activeStoreId !== storeId) handleStore(storeId);
+  }, [session, activeBusinessId, activeStoreId, businessId, storeId]);
 
   return (
     <Breadcrumb.Root>
@@ -115,9 +98,7 @@ export const BusinessSelector = () => {
                 <LuBuilding2 />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
-                    {session?.session.activeOrganizationId
-                      ? business?.name
-                      : "Brands"}
+                    {activeBusiness ? activeBusiness.name : "Brands"}
                     <LuChevronDown />
                   </HStack>
                 </Skeleton>
@@ -126,7 +107,7 @@ export const BusinessSelector = () => {
           </Breadcrumb.Item>
         </>
 
-        {session?.session.activeTeamId && (
+        {activeStore && (
           <>
             <Breadcrumb.Separator>
               <LiaSlashSolid />
@@ -141,7 +122,7 @@ export const BusinessSelector = () => {
               >
                 <Breadcrumb.Link as="button">
                   <LuStore />
-                  {store?.name}
+                  {activeStore.name}
                   <LuChevronDown />
                 </Breadcrumb.Link>
               </BusinessSelectorItem>
