@@ -26,12 +26,10 @@ export const useAddStore = (organizationId?: string) => {
 };
 
 export const useSetActiveStore = () => {
-  return useSWRMutation(
-    SESSION_KEY,
-    (url: string, { arg }: { arg: { teamId: string | null } }) =>
-      authClient.organization.setActiveTeam({
-        ...arg,
-        fetchOptions: { throw: true },
-      }),
+  return useSWRMutation(SESSION_KEY, (url: string, { arg }: { arg?: string }) =>
+    authClient.organization.setActiveTeam({
+      teamId: arg ?? null,
+      fetchOptions: { throw: true },
+    }),
   );
 };
