@@ -34,16 +34,13 @@ export const BusinessSelector = () => {
 
   const handleBusiness = async (businessId?: string) => {
     try {
-      await setBusiness(
-        { organizationId: businessId ?? null },
-        {
-          optimisticData: updateSession({
-            activeOrganizationId: businessId ?? null,
-            activeTeamId: null, // switching brand clears the store
-          }),
-          rollbackOnError: true,
-        },
-      );
+      await setBusiness(businessId, {
+        optimisticData: updateSession({
+          activeOrganizationId: businessId ?? null,
+          activeTeamId: null, // switching brand clears the store
+        }),
+        rollbackOnError: true,
+      });
     } catch (e) {
       toaster.error(errorOptions(e));
     }
@@ -51,13 +48,10 @@ export const BusinessSelector = () => {
 
   const handleStore = async (storeId?: string) => {
     try {
-      await setStore(
-        { teamId: storeId ?? null },
-        {
-          optimisticData: updateSession({ activeTeamId: storeId ?? null }),
-          rollbackOnError: true,
-        },
-      );
+      await setStore(storeId, {
+        optimisticData: updateSession({ activeTeamId: storeId ?? null }),
+        rollbackOnError: true,
+      });
     } catch (e) {
       toaster.error(errorOptions(e));
     }

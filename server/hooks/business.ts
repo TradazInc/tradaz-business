@@ -35,12 +35,10 @@ export const useAddBusiness = () => {
 };
 
 export const useSetActiveBusiness = () => {
-  return useSWRMutation(
-    SESSION_KEY,
-    (url: string, { arg }: { arg: { organizationId: string | null } }) =>
-      authClient.organization.setActive({
-        ...arg,
-        fetchOptions: { throw: true },
-      }),
+  return useSWRMutation(SESSION_KEY, (url: string, { arg }: { arg?: string }) =>
+    authClient.organization.setActive({
+      organizationId: arg ?? null,
+      fetchOptions: { throw: true },
+    }),
   );
 };
