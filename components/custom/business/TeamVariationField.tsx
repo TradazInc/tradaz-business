@@ -123,10 +123,10 @@ const TeamVariationField = ({
               <Button
                 w={"full"}
                 size={"sm"}
-                variant={"plain"}
+                variant={"subtle"}
                 onClick={() => mutate()}
               >
-                Couldn't load stores — retry
+                Click to retry
               </Button>
             )}
             <Field.ErrorText>
