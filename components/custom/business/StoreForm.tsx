@@ -60,7 +60,10 @@ export const StoreForm = () => {
             <Field.Label>
               Name <Field.RequiredIndicator />
             </Field.Label>
-            <Input {...register("name")} placeholder="Tradaz Lekki Lagos" />
+            <Input
+              placeholder="e.g., Tradaz Lekki Lagos"
+              {...register("name")}
+            />
             <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
           </Field.Root>
 
@@ -69,8 +72,8 @@ export const StoreForm = () => {
               Address <Field.RequiredIndicator />
             </Field.Label>
             <Input
-              {...register("address")}
               placeholder="e.g., 123 Main St, Lekki, Lagos"
+              {...register("address")}
             />
             <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
           </Field.Root>
