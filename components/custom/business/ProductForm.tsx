@@ -232,12 +232,16 @@ const ProductForm = ({ product }: Props) => {
                           loader={<Spinner size={"xs"} />}
                           scrollableTarget={categoryScrollId}
                         >
-                          {categoryCollection.items.map((category) => (
-                            <Select.Item item={category} key={category.id}>
-                              {category.name}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))}
+                          {categoryCollection.size > 0 ? (
+                            categoryCollection.items.map((category) => (
+                              <Select.Item item={category} key={category.id}>
+                                {category.name}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))
+                          ) : (
+                            <Box>No product categories found</Box>
+                          )}
                         </InfiniteScroll>
                       </Select.Content>
                     </Select.Positioner>
@@ -290,12 +294,16 @@ const ProductForm = ({ product }: Props) => {
                           loader={<Spinner size={"xs"} />}
                           scrollableTarget={sizetypeScrollId}
                         >
-                          {sizeTypeCollection.items.map((sizeType) => (
-                            <Select.Item item={sizeType} key={sizeType.id}>
-                              {sizeType.name}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))}
+                          {sizeTypeCollection.size > 0 ? (
+                            sizeTypeCollection.items.map((sizeType) => (
+                              <Select.Item item={sizeType} key={sizeType.id}>
+                                {sizeType.name}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))
+                          ) : (
+                            <Box>No size types found</Box>
+                          )}
                         </InfiniteScroll>
                       </Select.Content>
                     </Select.Positioner>

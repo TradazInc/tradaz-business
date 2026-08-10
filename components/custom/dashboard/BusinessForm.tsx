@@ -196,12 +196,19 @@ export const BusinessForm = () => {
                               loader={<Spinner size={"xs"} />}
                               scrollableTarget={categoryScrollId}
                             >
-                              {categoryCollection.items.map((category) => (
-                                <Select.Item item={category} key={category.id}>
-                                  {category.name}
-                                  <Select.ItemIndicator />
-                                </Select.Item>
-                              ))}
+                              {categoryCollection.size > 0 ? (
+                                categoryCollection.items.map((category) => (
+                                  <Select.Item
+                                    item={category}
+                                    key={category.id}
+                                  >
+                                    {category.name}
+                                    <Select.ItemIndicator />
+                                  </Select.Item>
+                                ))
+                              ) : (
+                                <Box>No categories found</Box>
+                              )}
                             </InfiniteScroll>
                             {error && (
                               <Button
