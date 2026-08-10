@@ -22,7 +22,7 @@ export const StoreForm = () => {
 
   const onSubmit = handleSubmit(async (storeData) => {
     const promise = toaster.promise(trigger(storeData), {
-      loading: { title: "Setting up store", description: "Please wait" },
+      loading: { title: "Setting up store...", description: "Please wait" },
       success: (store) => ({
         title: "Setup successful",
         description: `${store.name} store has been created`,
@@ -34,7 +34,7 @@ export const StoreForm = () => {
       const store = await promise.unwrap();
       refresh();
       push(`/dashboard/store/${store.id}`);
-    } catch (e) {
+    } catch {
       /* Toast handled by the `error` option */
     }
   });

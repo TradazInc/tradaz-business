@@ -79,7 +79,7 @@ export const BusinessForm = () => {
       const business = await promise.unwrap();
       refresh();
       push(`/dashboard/business/${business.id}`);
-    } catch (e) {
+    } catch {
       /* Toast handled by the `error` option */
     }
   });

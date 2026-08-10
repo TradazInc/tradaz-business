@@ -99,12 +99,21 @@ const ProductForm = ({ product }: Props) => {
   });
 
   const onSubmit = handleSubmit(async (productData) => {
+    const promise = toaster.promise(trigger(productData), {
+      loading: { title: "Creating product...", description: "Please wait" },
+      success: (product) => ({
+        title: "Creation successful",
+        description: `${product.name} product has been created`,
+      }),
+      error: errorOptions,
+    });
+    if (!promise) return;
     try {
-      const product = await trigger(productData);
+      const product = await promise.unwrap();
       refresh();
       push(`/dashboard/business/products/${product.id}`);
-    } catch (e) {
-      toaster.error(errorOptions(e));
+    } catch {
+      /* Toast handled by the `error` option */
     }
   });
 
