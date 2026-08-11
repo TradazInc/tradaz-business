@@ -18,6 +18,8 @@ interface Props {
 }
 
 const BusinessGrid = ({ initialBusinesses }: Props) => {
+  // Implement infinite scroll
+
   return (
     <GridContainer pb={12}>
       <For each={initialBusinesses}>
