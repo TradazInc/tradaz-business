@@ -43,7 +43,7 @@ export default async function page({ searchParams }: Props) {
           </DialogBox>
         </ToolBarContainer>
 
-        {businesses.length ? (
+        {businesses.length > 0 ? (
           <BusinessGrid initialBusinesses={businesses} />
         ) : (
           <EmptyPage
