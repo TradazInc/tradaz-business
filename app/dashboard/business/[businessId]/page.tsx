@@ -43,7 +43,7 @@ export default async function page({ params }: Props) {
           </DialogBox>
         </ToolBarContainer>
 
-        {data?.teams.length ? (
+        {data?.teams.length > 0 ? (
           <StoreGrid initialStores={data.teams} businessId={businessId} />
         ) : (
           <EmptyPage
