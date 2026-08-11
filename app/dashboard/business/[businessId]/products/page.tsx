@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default async function page({ params }: Props) {
-  const [{ data, error }, { business }] = await Promise.all([
+  const [{ data: products, error }, { business }] = await Promise.all([
     getProducts(),
     params,
   ]);
@@ -23,8 +23,8 @@ export default async function page({ params }: Props) {
       <VStack w={"full"} h={"full"}>
         <PageHeader>Your Products</PageHeader>
 
-        {data ? (
-          <ProductGrid businessId={business} initialProducts={data} />
+        {products.data.length ? (
+          <ProductGrid businessId={business} initialProducts={products} />
         ) : (
           <EmptyPage
             title={"No products found"}
