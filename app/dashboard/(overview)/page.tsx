@@ -1,15 +1,13 @@
 import { BusinessForm } from "@/components/custom/dashboard/BusinessForm";
+import BusinessGrid from "@/components/custom/dashboard/BusinessGrid";
 import { DialogBox } from "@/components/custom/shared/DialogBox";
 import EmptyPage from "@/components/custom/shared/EmptyPage";
-import GridCard from "@/components/custom/shared/GridCard";
-import GridContainer from "@/components/custom/shared/GridContainer";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import Search from "@/components/custom/shared/Search";
 import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
 import { getBusinesses } from "@/server/services/business";
-import { computePath } from "@/utilities/computePath";
-import { Button, For, VStack } from "@chakra-ui/react";
+import { Button, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
@@ -45,21 +43,8 @@ export default async function page({ searchParams }: Props) {
           </DialogBox>
         </ToolBarContainer>
 
-        {businesses?.length ? (
-          <GridContainer pb={12}>
-            <For each={businesses}>
-              {(business) => (
-                <GridCard
-                  key={business.id}
-                  name={business.name}
-                  logo={business.logo}
-                  address={JSON.parse(business.metadata)?.address}
-                  createdAt={new Date(business.createdAt).toDateString()}
-                  href={computePath({ businessId: business.id })}
-                />
-              )}
-            </For>
-          </GridContainer>
+        {businesses ? (
+          <BusinessGrid initialBusinesses={businesses} />
         ) : (
           <EmptyPage
             title="No businesses found"

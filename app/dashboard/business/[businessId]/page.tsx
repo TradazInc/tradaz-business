@@ -1,14 +1,13 @@
 import { StoreForm } from "@/components/custom/business/StoreForm";
+import StoreGrid from "@/components/custom/business/StoreGrid";
 import { DialogBox } from "@/components/custom/shared/DialogBox";
 import EmptyPage from "@/components/custom/shared/EmptyPage";
-import GridCard from "@/components/custom/shared/GridCard";
-import GridContainer from "@/components/custom/shared/GridContainer";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import Search from "@/components/custom/shared/Search";
 import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
 import { getBusiness } from "@/server/services/business";
-import { Button, For, VStack } from "@chakra-ui/react";
+import { Button, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -44,20 +43,8 @@ export default async function page({ params }: Props) {
           </DialogBox>
         </ToolBarContainer>
 
-        {data?.teams?.length ? (
-          <GridContainer>
-            <For each={data.teams}>
-              {(store) => (
-                <GridCard
-                  key={store.id}
-                  name={store.name}
-                  address={store.address}
-                  createdAt={new Date(store.createdAt).toDateString()}
-                  href={`/dashboard/business/${businessId}/store/${store.id}`}
-                />
-              )}
-            </For>
-          </GridContainer>
+        {data?.teams ? (
+          <StoreGrid initialStores={data.teams} businessId={businessId} />
         ) : (
           <EmptyPage
             title="No stores found"
