@@ -97,7 +97,7 @@ const TeamVariationField = ({
                   <Select.HiddenSelect />
                   <Select.Control>
                     <Select.Trigger>
-                      <Select.ValueText placeholder={"Select store"} />
+                      <Select.ValueText placeholder="Select store" />
                     </Select.Trigger>
                     <Select.IndicatorGroup>
                       <Select.ClearTrigger />

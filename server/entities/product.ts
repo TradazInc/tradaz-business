@@ -9,6 +9,7 @@ export interface Product {
   discountPercentage: number;
   categoryId: string;
   sizeTypeId: string;
+  productStatus: ProductStatus;
   images: Image[];
   variations: Variation[];
 }
@@ -37,6 +38,12 @@ export enum Gender {
   male = "male",
   female = "female",
   unisex = "unisex",
+}
+
+export enum ProductStatus {
+  approved = "approved",
+  pending = "pending",
+  rejected = "rejected",
 }
 
 export const productService = new ApiClient<Product>("/api/products");

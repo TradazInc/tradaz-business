@@ -121,7 +121,7 @@ export const BusinessForm = () => {
                   <Field.Label>
                     Name <Field.RequiredIndicator />
                   </Field.Label>
-                  <Input {...register("name")} />
+                  <Input placeholder="e.g., Tradaz" {...register("name")} />
                   <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
                 </Field.Root>
 
@@ -176,7 +176,7 @@ export const BusinessForm = () => {
                         <Select.HiddenSelect />
                         <Select.Control>
                           <Select.Trigger>
-                            <Select.ValueText placeholder={"Select category"} />
+                            <Select.ValueText placeholder="Select category" />
                           </Select.Trigger>
                           <Select.IndicatorGroup>
                             <Select.ClearTrigger />
@@ -252,7 +252,10 @@ export const BusinessForm = () => {
                   <Field.Label>
                     Address <Field.RequiredIndicator />
                   </Field.Label>
-                  <Input {...register("address")} />
+                  <Input
+                    placeholder="e.g., 123 Main St, Lekki, Lagos"
+                    {...register("address")}
+                  />
                   <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
                 </Field.Root>
 
