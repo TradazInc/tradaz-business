@@ -4,17 +4,10 @@ import { computePath } from "@/utilities/computePath";
 import { For } from "@chakra-ui/react";
 import GridCard from "../shared/GridCard";
 import GridContainer from "../shared/GridContainer";
+import { Business } from "@/server/entities/business";
 
 interface Props {
-  initialBusinesses: {
-    id: string;
-    name: string;
-    slug: string;
-    createdAt: Date;
-    logo?: string | null;
-    metadata?: any;
-    categoryId: string;
-  }[];
+  initialBusinesses: Business[];
 }
 
 const BusinessGrid = ({ initialBusinesses }: Props) => {
