@@ -43,12 +43,12 @@ export default async function page({ params }: Props) {
           </DialogBox>
         </ToolBarContainer>
 
-        {data?.teams ? (
+        {data?.teams.length ? (
           <StoreGrid initialStores={data.teams} businessId={businessId} />
         ) : (
           <EmptyPage
-            title="No stores found"
-            description="Create a new store for your brand"
+            title={"No stores found"}
+            description={"Create a new store for your brand"}
           >
             <DialogBox
               trigger={

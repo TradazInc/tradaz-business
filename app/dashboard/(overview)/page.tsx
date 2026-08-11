@@ -43,12 +43,12 @@ export default async function page({ searchParams }: Props) {
           </DialogBox>
         </ToolBarContainer>
 
-        {businesses ? (
+        {businesses.length ? (
           <BusinessGrid initialBusinesses={businesses} />
         ) : (
           <EmptyPage
-            title="No businesses found"
-            description="Create a new business"
+            title={"No businesses found"}
+            description={"Create a new business"}
           >
             <DialogBox
               trigger={
