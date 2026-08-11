@@ -9,11 +9,11 @@ import NextLink from "next/link";
 import { LuPlus } from "react-icons/lu";
 
 interface Props {
-  params: Promise<{ business: string }>;
+  params: Promise<{ businessId: string }>;
 }
 
 export default async function page({ params }: Props) {
-  const [{ data: products, error }, { business }] = await Promise.all([
+  const [{ data: products, error }, { businessId }] = await Promise.all([
     getProducts(),
     params,
   ]);
@@ -26,7 +26,7 @@ export default async function page({ params }: Props) {
         <PageHeader>Your Products</PageHeader>
 
         {products.data.length > 0 ? (
-          <ProductGrid businessId={business} initialProducts={products} />
+          <ProductGrid businessId={businessId} initialProducts={products} />
         ) : (
           <EmptyPage
             title={"No products found"}
@@ -34,7 +34,7 @@ export default async function page({ params }: Props) {
           >
             <Button asChild>
               <NextLink
-                href={`${computePath({ businessId: business })}/products/new`}
+                href={`${computePath({ businessId })}/products/new`}
               >
                 <LuPlus />
                 Create Product
