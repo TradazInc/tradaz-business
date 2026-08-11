@@ -4,6 +4,7 @@ import GridContainer from "@/components/custom/shared/GridContainer";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import { getProducts } from "@/server/services/product";
+import { computePath } from "@/utilities/computePath";
 import { For, VStack } from "@chakra-ui/react";
 
 interface Props {
@@ -11,8 +12,10 @@ interface Props {
 }
 
 export default async function page({ params }: Props) {
-  const { data: products, error } = await getProducts();
-  const { business } = await params;
+  const [{ data: products, error }, { business }] = await Promise.all([
+    getProducts(),
+    params,
+  ]);
 
   if (error) return error.message ?? error.statusText;
 
@@ -31,7 +34,7 @@ export default async function page({ params }: Props) {
                   image={product.images[0].url}
                   description={product.description}
                   productStatus={product.productStatus}
-                  href={`/dashboard/business/${business}/products/${product.id}}`}
+                  href={`${computePath({ businessId: business })}/products/${product.id}}`}
                 />
               )}
             </For>

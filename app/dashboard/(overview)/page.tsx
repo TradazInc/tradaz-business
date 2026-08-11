@@ -8,6 +8,7 @@ import PageHeader from "@/components/custom/shared/PageHeader";
 import Search from "@/components/custom/shared/Search";
 import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
 import { getBusinesses } from "@/server/services/business";
+import { computePath } from "@/utilities/computePath";
 import { Button, For, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -54,7 +55,7 @@ export default async function page({ searchParams }: Props) {
                   logo={business.logo}
                   address={JSON.parse(business.metadata)?.address}
                   createdAt={new Date(business.createdAt).toDateString()}
-                  href={`/dashboard/business/${business.id}`}
+                  href={computePath({ businessId: business.id })}
                 />
               )}
             </For>
