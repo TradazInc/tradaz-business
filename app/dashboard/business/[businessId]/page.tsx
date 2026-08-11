@@ -47,8 +47,8 @@ export default async function page({ params }: Props) {
           <StoreGrid initialStores={data.teams} businessId={businessId} />
         ) : (
           <EmptyPage
-            title="No stores found"
-            description="Create a new store for your brand"
+            title={"No stores found"}
+            description={"Create a new store for your brand"}
           >
             <DialogBox
               trigger={

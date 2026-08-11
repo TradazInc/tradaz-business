@@ -3,7 +3,9 @@ import EmptyPage from "@/components/custom/shared/EmptyPage";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import { getProducts } from "@/server/services/product";
+import { computePath } from "@/utilities/computePath";
 import { Button, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { LuPlus } from "react-icons/lu";
 
 interface Props {
@@ -30,9 +32,13 @@ export default async function page({ params }: Props) {
             title={"No products found"}
             description={"Create a new product"}
           >
-            <Button>
-              <LuPlus />
-              Create Product
+            <Button asChild>
+              <NextLink
+                href={`${computePath({ businessId: business })}/products/new`}
+              >
+                <LuPlus />
+                Create Product
+              </NextLink>
             </Button>
           </EmptyPage>
         )}
