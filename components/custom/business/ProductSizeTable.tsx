@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   For,
+  HStack,
   IconButton,
   Spinner,
   Table,
@@ -74,24 +75,28 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
               {(sizeType) => (
                 <Table.Row key={sizeType.id} w={"full"}>
                   <Table.Cell>{sizeType.name}</Table.Cell>
-                  <Table.Cell flexDirection={"row"}>
-                    {sizeType.sizes?.map((size) => (
-                      <Text key={size.id}>{size.value}</Text>
-                    ))}
+                  <Table.Cell>
+                    <HStack gapX={2}>
+                      {sizeType.sizes?.map((size) => (
+                        <Text key={size.id}>{size.value}</Text>
+                      ))}
+                    </HStack>
                   </Table.Cell>
-                  <Table.Cell textAlign="end" gapX={5}>
-                    <IconButton variant={"subtle"}>
-                      <AiOutlineEdit />
-                    </IconButton>
-                    <IconButton
-                      variant={"subtle"}
-                      color={"fg.error"}
-                      _hover={{ bg: "bg.error", color: "fg.error" }}
-                      onClick={() => handleDelete(sizeType.id)}
-                      disabled={isMutating}
-                    >
-                      <MdDeleteOutline />
-                    </IconButton>
+                  <Table.Cell textAlign="end">
+                    <HStack gapX={5}>
+                      <IconButton variant={"subtle"}>
+                        <AiOutlineEdit />
+                      </IconButton>
+                      <IconButton
+                        variant={"subtle"}
+                        color={"fg.error"}
+                        _hover={{ bg: "bg.error", color: "fg.error" }}
+                        onClick={() => handleDelete(sizeType.id)}
+                        disabled={isMutating}
+                      >
+                        <MdDeleteOutline />
+                      </IconButton>
+                    </HStack>
                   </Table.Cell>
                 </Table.Row>
               )}
