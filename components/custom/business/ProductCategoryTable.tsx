@@ -63,16 +63,20 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
         loader={<Spinner />}
       >
         <Table.Body>
-          <For each={productCategories} fallback={"No categories available"}>
+          <For
+            each={productCategories}
+            fallback={<Text w={"full"}>"No categories available"</Text>}
+          >
             {(productCategory) => (
-              <Table.Row key={productCategory.id}>
+              <Table.Row key={productCategory.id} w={"full"}>
                 <Table.Cell>{productCategory.name}</Table.Cell>
                 <Table.Cell>CH</Table.Cell>
                 <Table.Cell textAlign="end">
-                  <IconButton>
+                  <IconButton variant={"subtle"}>
                     <AiOutlineEdit />
                   </IconButton>
                   <IconButton
+                    variant={"subtle"}
                     color={"fg.error"}
                     _hover={{ bg: "bg.error", color: "fg.error" }}
                     onClick={() => handleDelete(productCategory.id)}
@@ -95,7 +99,7 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
             >
               Click to retry
             </Button>
-            <Text>"Categories unavailable. Retry to continue."</Text>
+            <Text>Categories unavailable. Retry to continue.</Text>
           </>
         )}
       </InfiniteScroll>

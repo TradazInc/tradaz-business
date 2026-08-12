@@ -23,20 +23,29 @@ import {
   Steps,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { useRouter } from "next/navigation";
-import { useId, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useId, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuFileUp } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
+import { useDialogContext } from "@chakra-ui/react";
 
-export const BusinessForm = () => {
+interface Props {
+  signup?: string;
+}
+
+export const BusinessForm = ({ signup }: Props) => {
   const { data, isLoading, size, setSize, error, mutate } =
     useBusinessCategories();
   const { trigger, isMutating } = useAddBusiness();
-  const { refresh, push } = useRouter();
   const [step, setStep] = useState(0);
   const categoryScrollId = useId();
+
+  const { refresh, push, replace } = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
 
   // Parse paged data
   const { flatData, hasMore } = useMemo(() => parseCursorData(data), [data]);
@@ -83,6 +92,16 @@ export const BusinessForm = () => {
       /* Toast handled by the `error` option */
     }
   });
+
+  // Open form dialog on first signup
+  useEffect(() => {
+    if (!signup) return;
+    if (signup) setOpen(false);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("signup");
+    replace(`${pathname}?${params.toString()}`);
+  }, [signup]);
 
   return (
     <Steps.Root

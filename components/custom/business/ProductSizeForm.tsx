@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { emptySize } from "@/data/productSizeForm";
+import { emptySize, emptySizeType } from "@/data/productSizeForm";
 import { sizeTypeSchema } from "@/schema/sizeType";
 import { useAddSizeTypes } from "@/server/hooks/sizeType";
 import { errorOptions } from "@/utilities/errorToastOptions";
@@ -12,21 +12,25 @@ import {
   IconButton,
   Input,
   Stack,
+  useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useFieldArray, useForm } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 
-const ProductCategoryForm = () => {
+const ProductSizeForm = () => {
   const { trigger, isMutating } = useAddSizeTypes();
+  const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
 
   const {
+    reset,
     control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: standardSchemaResolver(sizeTypeSchema),
+    defaultValues: emptySizeType,
     mode: "onBlur",
   });
 
@@ -36,7 +40,7 @@ const ProductCategoryForm = () => {
   });
 
   const onSubmit = handleSubmit(async (sizeTypeData) => {
-    toaster.promise(trigger(sizeTypeData), {
+    const promise = toaster.promise(trigger(sizeTypeData), {
       loading: { title: "Creating size type...", description: "Please wait" },
       success: (sizeType) => ({
         title: "Creation successful",
@@ -44,6 +48,15 @@ const ProductCategoryForm = () => {
       }),
       error: errorOptions,
     });
+    if (!promise) return;
+    const ok = await promise
+      .unwrap()
+      .then(() => true)
+      .catch(() => false);
+    if (!ok) return; // toast already surfaced it; keep the input for a retry
+
+    reset(emptySizeType);
+    setOpen(false);
   });
 
   return (
@@ -72,7 +85,7 @@ const ProductCategoryForm = () => {
           </Field.Root>
         </Fieldset.Content>
 
-        <Fieldset.Root invalid={!!errors?.root?.message}>
+        <Fieldset.Root invalid={!!errors.sizes?.root?.message}>
           <Fieldset.Legend>Sizes</Fieldset.Legend>
           {fields.map((field, index) => (
             <Fieldset.Content
@@ -83,16 +96,16 @@ const ProductCategoryForm = () => {
               borderRadius={"md"}
               flexDirection={"row"}
             >
-              <Field.Root required invalid={!!errors?.sizes}>
+              <Field.Root required invalid={!!errors?.sizes?.[index]?.value}>
                 <Field.Label>
                   Size <Field.RequiredIndicator />
                 </Field.Label>
                 <Input
                   placeholder="e.g., XL"
-                  {...register(`sizes.${index}.name`)}
+                  {...register(`sizes.${index}.value`)}
                 />
                 <Field.ErrorText>
-                  {errors?.sizes?.[index]?.message}
+                  {errors?.sizes?.[index]?.value?.message}
                 </Field.ErrorText>
               </Field.Root>
 
@@ -117,7 +130,7 @@ const ProductCategoryForm = () => {
             <LuPlus /> Add size
           </Button>
 
-          <Fieldset.ErrorText>{errors?.root?.message}</Fieldset.ErrorText>
+          <Fieldset.ErrorText>{errors.sizes?.root?.message}</Fieldset.ErrorText>
         </Fieldset.Root>
 
         <Button
@@ -134,4 +147,4 @@ const ProductCategoryForm = () => {
   );
 };
 
-export default ProductCategoryForm;
+export default ProductSizeForm;

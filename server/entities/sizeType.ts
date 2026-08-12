@@ -8,7 +8,7 @@ export interface SizeType {
 
 export interface Size {
   id: string;
-  name: string;
+  value: string;
   sizeTypeId: string;
 }
 
