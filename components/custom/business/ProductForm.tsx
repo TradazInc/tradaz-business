@@ -3,7 +3,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { emptyProduct, emptyVariation } from "@/data/productForm";
 import { productSchema } from "@/schema/product";
-import { Product } from "@/server/entities/product";
+import { Gender, Product } from "@/server/entities/product";
 import { useAddProduct } from "@/server/hooks/product";
 import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
@@ -80,6 +80,14 @@ const ProductForm = ({ product }: Props) => {
       }),
     [parsedSizeTypes.flatData],
   );
+
+  const genderCollection = createListCollection({
+    items: [
+      { label: "Male", value: Gender.male },
+      { label: "Female", value: Gender.female },
+      { label: "Unisex", value: Gender.unisex },
+    ],
+  });
 
   // Initialize hook form
   const {
@@ -195,6 +203,51 @@ const ProductForm = ({ product }: Props) => {
               A short description of the product
             </Field.HelperText>
             <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root required invalid={!!errors.gender}>
+            <Field.Label>
+              Gender <Field.RequiredIndicator />
+            </Field.Label>
+            <Controller
+              control={control}
+              name={"gender"}
+              render={({ field }) => (
+                <Select.Root
+                  name={field.name}
+                  value={[field.value]}
+                  onValueChange={({ value }) => {
+                    field.onChange(value[0]);
+                    field.onBlur();
+                  }}
+                  onInteractOutside={() => field.onBlur()}
+                  collection={genderCollection}
+                >
+                  <Select.HiddenSelect />
+                  <Select.Control>
+                    <Select.Trigger>
+                      <Select.ValueText placeholder={"Select gender"} />
+                    </Select.Trigger>
+                    <Select.IndicatorGroup>
+                      <Select.Indicator />
+                    </Select.IndicatorGroup>
+                  </Select.Control>
+                  <Portal>
+                    <Select.Positioner>
+                      <Select.Content>
+                        {genderCollection.items.map((gender) => (
+                          <Select.Item item={gender} key={gender.value}>
+                            {gender.label}
+                            <Select.ItemIndicator />
+                          </Select.Item>
+                        ))}
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Portal>
+                </Select.Root>
+              )}
+            />
+            <Field.ErrorText>{errors.gender?.message}</Field.ErrorText>
           </Field.Root>
 
           <Field.Root required invalid={!!errors.discountPercentage}>
