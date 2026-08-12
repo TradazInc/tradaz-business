@@ -17,9 +17,7 @@ import {
   createListCollection,
   Field,
   Fieldset,
-  FileUpload,
   HStack,
-  Icon,
   IconButton,
   Input,
   parseColor,
@@ -34,8 +32,9 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
-import { LuPlus, LuTrash2, LuUpload } from "react-icons/lu";
+import { LuPlus, LuTrash2 } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ImageField from "./ImageField";
 import TeamVariationField from "./TeamVariationField";
 import TotalQuantity from "./TotalQuantity";
 
@@ -162,23 +161,7 @@ const ProductForm = ({ product }: Props) => {
           Please provide your product details below.
         </Fieldset.HelperText>
         <Fieldset.Content>
-          <FileUpload.Root
-            alignItems="stretch"
-            maxFiles={10}
-            accept={["image/png"]}
-          >
-            <FileUpload.HiddenInput />
-            <FileUpload.Dropzone>
-              <Icon size="md" color="fg.muted">
-                <LuUpload />
-              </Icon>
-              <FileUpload.DropzoneContent>
-                <Box>Drag and drop files here</Box>
-                <Box color="fg.muted">.png, .jpg up to 5MB</Box>
-              </FileUpload.DropzoneContent>
-            </FileUpload.Dropzone>
-            <FileUpload.List />
-          </FileUpload.Root>
+          <ImageField control={control} />
 
           <Field.Root required invalid={!!errors.name}>
             <Field.Label>

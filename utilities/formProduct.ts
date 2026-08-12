@@ -3,6 +3,7 @@ import { Product } from "@/server/entities/product";
 export function formProduct(product: Product) {
   return {
     ...product,
+    images: product.images.map(({ url }) => url),
     categoryId: [product.categoryId],
     sizeTypeId: [product.sizeTypeId],
     variations: product.variations.map((v) => ({

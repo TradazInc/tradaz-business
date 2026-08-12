@@ -53,9 +53,7 @@ const variationSchema = z.object({
 export type VariationData = z.infer<typeof variationSchema>;
 export type VariationFormValues = z.input<typeof variationSchema>;
 
-const imageSchema = z.object({
-  url: z.url({ error: "enter a valid image url" }),
-});
+const imageSchema = z.url({ error: "enter a valid image url" });
 
 export const productSchema = z.object({
   name: z
@@ -91,7 +89,10 @@ export const productSchema = z.object({
     .array(variationSchema)
     .min(1, { error: "add at least one variation" }),
 
-  images: z.array(imageSchema).min(1, { error: "add at least one image" }),
+  images: z
+    .array(imageSchema)
+    .min(1, { error: "add at least one image" })
+    .transform((urls) => urls.map((url) => ({ url }))),
 });
 export type ProductData = z.infer<typeof productSchema>;
 export type ProductFormValues = z.input<typeof productSchema>;
