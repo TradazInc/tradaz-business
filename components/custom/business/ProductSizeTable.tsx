@@ -74,12 +74,12 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
               {(sizeType) => (
                 <Table.Row key={sizeType.id} w={"full"}>
                   <Table.Cell>{sizeType.name}</Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell flexDirection={"row"}>
                     {sizeType.sizes?.map((size) => (
                       <Text key={size.id}>{size.value}</Text>
                     ))}
                   </Table.Cell>
-                  <Table.Cell textAlign="end" gapX={2}>
+                  <Table.Cell textAlign="end" gapX={5}>
                     <IconButton variant={"subtle"}>
                       <AiOutlineEdit />
                     </IconButton>

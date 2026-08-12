@@ -78,7 +78,7 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
                 <Table.Row key={productCategory.id} w={"full"}>
                   <Table.Cell>{productCategory.name}</Table.Cell>
                   <Table.Cell>CH</Table.Cell>
-                  <Table.Cell textAlign="end" gapX={2}>
+                  <Table.Cell textAlign="end" gapX={5}>
                     <IconButton variant={"subtle"}>
                       <AiOutlineEdit />
                     </IconButton>
