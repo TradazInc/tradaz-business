@@ -1,15 +1,15 @@
+"use client";
+
 import { toaster } from "@/components/ui/toaster";
 import { productCategorySchema } from "@/schema/productCategory";
 import { useAddProductCategory } from "@/server/hooks/productCategory";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const ProductCategoryForm = () => {
   const { trigger, isMutating } = useAddProductCategory();
-  const { refresh } = useRouter();
 
   const {
     register,
@@ -18,21 +18,14 @@ const ProductCategoryForm = () => {
   } = useForm({ resolver: zodResolver(productCategorySchema), mode: "onBlur" });
 
   const onSubmit = handleSubmit(async (categoryData) => {
-    const promise = toaster.promise(trigger(categoryData), {
-      loading: { title: "Setting up category...", description: "Please wait" },
+    toaster.promise(trigger(categoryData), {
+      loading: { title: "Creating category...", description: "Please wait" },
       success: (category) => ({
-        title: "Setup successful",
+        title: "Creation successful",
         description: `${category.name} category has been created`,
       }),
       error: errorOptions,
     });
-    if (!promise) return;
-    try {
-      await promise.unwrap();
-      refresh();
-    } catch {
-      /* Toast handled by the `error` option */
-    }
   });
 
   return (
@@ -56,10 +49,7 @@ const ProductCategoryForm = () => {
             <Field.Label>
               Name <Field.RequiredIndicator />
             </Field.Label>
-            <Input
-              placeholder="e.g., Tradaz Lekki Lagos"
-              {...register("name")}
-            />
+            <Input placeholder="e.g., Footwears" {...register("name")} />
             <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
           </Field.Root>
         </Fieldset.Content>

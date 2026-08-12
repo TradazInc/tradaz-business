@@ -10,7 +10,7 @@ import { ProductCategoryData } from "@/schema/productCategory";
 import { FetchResponse } from "../entities/fetchResponse";
 
 export const useProductCategories = (
-  fallbackData: FetchResponse<ProductCategory>[],
+  fallbackData?: FetchResponse<ProductCategory>[],
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
