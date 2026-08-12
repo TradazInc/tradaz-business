@@ -60,7 +60,10 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
         loader={<Spinner />}
       >
         <Table.Body>
-          <For each={sizeTypes} fallback={"No size types available"}>
+          <For
+            each={sizeTypes}
+            fallback={<Text w={"full"}>No size types available</Text>}
+          >
             {(sizeType) => (
               <Table.Row key={sizeType.id} w={"full"}>
                 <Table.Cell>{sizeType.name}</Table.Cell>

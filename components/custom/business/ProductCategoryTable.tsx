@@ -63,7 +63,10 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
         loader={<Spinner />}
       >
         <Table.Body>
-          <For each={productCategories} fallback={"No categories available"}>
+          <For
+            each={productCategories}
+            fallback={<Text w={"full"}>"No categories available"</Text>}
+          >
             {(productCategory) => (
               <Table.Row key={productCategory.id} w={"full"}>
                 <Table.Cell>{productCategory.name}</Table.Cell>
