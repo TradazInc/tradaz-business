@@ -13,6 +13,7 @@ import {
   Box,
   Button,
   For,
+  HStack,
   IconButton,
   Spinner,
   Table,
@@ -78,19 +79,21 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
                 <Table.Row key={productCategory.id} w={"full"}>
                   <Table.Cell>{productCategory.name}</Table.Cell>
                   <Table.Cell>CH</Table.Cell>
-                  <Table.Cell textAlign="end" gapX={5}>
-                    <IconButton variant={"subtle"}>
-                      <AiOutlineEdit />
-                    </IconButton>
-                    <IconButton
-                      variant={"subtle"}
-                      color={"fg.error"}
-                      _hover={{ bg: "bg.error", color: "fg.error" }}
-                      onClick={() => handleDelete(productCategory.id)}
-                      disabled={isMutating}
-                    >
-                      <MdDeleteOutline />
-                    </IconButton>
+                  <Table.Cell textAlign="end">
+                    <HStack gapX={5}>
+                      <IconButton variant={"subtle"}>
+                        <AiOutlineEdit />
+                      </IconButton>
+                      <IconButton
+                        variant={"subtle"}
+                        color={"fg.error"}
+                        _hover={{ bg: "bg.error", color: "fg.error" }}
+                        onClick={() => handleDelete(productCategory.id)}
+                        disabled={isMutating}
+                      >
+                        <MdDeleteOutline />
+                      </IconButton>
+                    </HStack>
                   </Table.Cell>
                 </Table.Row>
               )}
