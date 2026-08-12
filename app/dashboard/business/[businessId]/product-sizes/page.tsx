@@ -1,3 +1,4 @@
+import ProductSizeForm from "@/components/custom/business/ProductSizeForm";
 import ProductSizeTable from "@/components/custom/business/ProductSizeTable";
 import { DialogBox } from "@/components/custom/shared/DialogBox";
 import EmptyPage from "@/components/custom/shared/EmptyPage";
@@ -5,7 +6,7 @@ import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
 import { getSizeTypes } from "@/server/services/sizeType";
-import { Box, Button, VStack } from "@chakra-ui/react";
+import { Button, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
 export default async function page() {
@@ -27,12 +28,12 @@ export default async function page() {
               </Button>
             }
           >
-            <SizeForm />
+            <ProductSizeForm />
           </DialogBox>
         </ToolBarContainer>
 
         {data ? (
-          <ProductSizeTable />
+          <ProductSizeTable initialSizeTypes={data} />
         ) : (
           <EmptyPage title="No sizes found" description="Create a product size">
             <DialogBox
@@ -43,7 +44,7 @@ export default async function page() {
                 </Button>
               }
             >
-              <SizeForm />
+              <ProductSizeForm />
             </DialogBox>
           </EmptyPage>
         )}
@@ -51,7 +52,3 @@ export default async function page() {
     </PageContainer>
   );
 }
-
-const SizeForm = () => {
-  return <Box>Size form</Box>;
-};
