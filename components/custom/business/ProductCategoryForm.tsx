@@ -1,24 +1,37 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
+import { emptyProductCategory } from "@/data/productCategoryForm";
 import { productCategorySchema } from "@/schema/productCategory";
 import { useAddProductCategory } from "@/server/hooks/productCategory";
 import { errorOptions } from "@/utilities/errorToastOptions";
-import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Button,
+  Field,
+  Fieldset,
+  Input,
+  Stack,
+  useDialogContext,
+} from "@chakra-ui/react";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useForm } from "react-hook-form";
 
 const ProductCategoryForm = () => {
   const { trigger, isMutating } = useAddProductCategory();
+  const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
 
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm({ resolver: zodResolver(productCategorySchema), mode: "onBlur" });
+  } = useForm({
+    resolver: standardSchemaResolver(productCategorySchema),
+    mode: "onBlur",
+  });
 
   const onSubmit = handleSubmit(async (categoryData) => {
-    toaster.promise(trigger(categoryData), {
+    const promise = toaster.promise(trigger(categoryData), {
       loading: { title: "Creating category...", description: "Please wait" },
       success: (category) => ({
         title: "Creation successful",
@@ -26,6 +39,15 @@ const ProductCategoryForm = () => {
       }),
       error: errorOptions,
     });
+    if (!promise) return;
+    const ok = await promise
+      .unwrap()
+      .then(() => true)
+      .catch(() => false);
+    if (!ok) return; // toast already surfaced it; keep the input for a retry
+
+    reset(emptyProductCategory);
+    setOpen(false);
   });
 
   return (

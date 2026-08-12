@@ -1,7 +1,7 @@
 export interface FetchResponse<D> {
   data: D[];
   aggregate?: number;
-  meta: {
+  meta?: {
     next?: string;
     count?: number;
     totalPages?: number;

@@ -5,12 +5,14 @@ import { Product, productService } from "../entities/product";
 import { FetchResponse } from "../entities/fetchResponse";
 import { PAGE_SIZE } from "@/data/constants";
 import useSWRInfinite from "swr/infinite";
+import { extractSearchParams } from "@/utilities/extractSearchParams";
 
 export const useProducts = (fallbackData: FetchResponse<Product>[]) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
       cursorKey(pageIndex, previousPageData, "products", PAGE_SIZE),
-    () => productService.getAll({ throw: true }),
+    (url) =>
+      productService.getAll({ query: extractSearchParams(url), throw: true }),
     { fallbackData },
   );
 };

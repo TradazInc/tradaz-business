@@ -9,7 +9,7 @@ export const PRODUCT_KEY = "/api/products";
 
 export const PRODUCT_CATEGORY_KEY = "/api/product-categories";
 
-export const SIZE_TYPE_KEY = "/api/product-categories";
+export const SIZE_TYPE_KEY = "/api/size-types";
 
 // Computed Keys
 export const businessKey = (businessId: string) =>

@@ -5,7 +5,7 @@ import { storeSchema } from "@/schema/store";
 import { useAddStore } from "@/server/hooks/store";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -18,7 +18,10 @@ export const StoreForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm({ resolver: zodResolver(storeSchema), mode: "onBlur" });
+  } = useForm({
+    resolver: standardSchemaResolver(storeSchema),
+    mode: "onBlur",
+  });
 
   const onSubmit = handleSubmit(async (storeData) => {
     const promise = toaster.promise(trigger(storeData), {

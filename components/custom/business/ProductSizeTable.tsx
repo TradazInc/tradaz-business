@@ -62,14 +62,15 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
         <Table.Body>
           <For each={sizeTypes} fallback={"No size types available"}>
             {(sizeType) => (
-              <Table.Row key={sizeType.id}>
+              <Table.Row key={sizeType.id} w={"full"}>
                 <Table.Cell>{sizeType.name}</Table.Cell>
                 <Table.Cell>XL</Table.Cell>
                 <Table.Cell textAlign="end">
-                  <IconButton>
+                  <IconButton variant={"subtle"}>
                     <AiOutlineEdit />
                   </IconButton>
                   <IconButton
+                    variant={"subtle"}
                     color={"fg.error"}
                     _hover={{ bg: "bg.error", color: "fg.error" }}
                     onClick={() => handleDelete(sizeType.id)}
@@ -92,7 +93,7 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
             >
               Click to retry
             </Button>
-            <Text>"Size types unavailable. Retry to continue."</Text>
+            <Text>Size types unavailable. Retry to continue.</Text>
           </>
         )}
       </InfiniteScroll>
