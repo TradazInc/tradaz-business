@@ -1,9 +1,49 @@
 "use client";
 
-import { Table } from "@chakra-ui/react";
+import { toaster } from "@/components/ui/toaster";
+import { FetchResponse } from "@/server/entities/fetchResponse";
+import { SizeType } from "@/server/entities/sizeType";
+import { useRemoveSizeType, useSizeTypes } from "@/server/hooks/sizeType";
+import { errorOptions } from "@/utilities/errorToastOptions";
+import { parseCursorData } from "@/utilities/parsePagedData";
+import {
+  Button,
+  For,
+  IconButton,
+  Spinner,
+  Table,
+  Text,
+} from "@chakra-ui/react";
+import { useMemo } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
+import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const ProductSizeTable = () => {
+interface Props {
+  initialSizeTypes: FetchResponse<SizeType>;
+}
+
+const ProductSizeTable = ({ initialSizeTypes }: Props) => {
+  const { data, error, mutate, setSize, size } = useSizeTypes([
+    initialSizeTypes,
+  ]);
+  const { flatData: sizeTypes, hasMore } = useMemo(
+    () => parseCursorData(data),
+    [data],
+  );
+  const { trigger, isMutating } = useRemoveSizeType();
+
+  const handleDelete = async (id: string) => {
+    toaster.promise(trigger(id), {
+      loading: { title: "Deleting size type...", description: "Please wait" },
+      success: {
+        title: "Deletion successful",
+        description: "Size type has been created",
+      },
+      error: errorOptions,
+    });
+  };
+
   return (
     <Table.Root>
       <Table.Header>
@@ -13,25 +53,51 @@ const ProductSizeTable = () => {
           <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
-      <Table.Body>
-        {items.map((item) => (
-          <Table.Row key={item.id}>
-            <Table.Cell>{item.name}</Table.Cell>
-            <Table.Cell>{item.category}</Table.Cell>
-            <Table.Cell textAlign="end">{item.price}</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table.Body>
+      <InfiniteScroll
+        dataLength={sizeTypes.length}
+        next={() => setSize(size + 1)}
+        hasMore={hasMore && !error}
+        loader={<Spinner />}
+      >
+        <Table.Body>
+          <For each={sizeTypes} fallback={"No size types available"}>
+            {(sizeType) => (
+              <Table.Row key={sizeType.id}>
+                <Table.Cell>{sizeType.name}</Table.Cell>
+                <Table.Cell>XL</Table.Cell>
+                <Table.Cell textAlign="end">
+                  <IconButton>
+                    <AiOutlineEdit />
+                  </IconButton>
+                  <IconButton
+                    color={"fg.error"}
+                    _hover={{ bg: "bg.error", color: "fg.error" }}
+                    onClick={() => handleDelete(sizeType.id)}
+                    disabled={isMutating}
+                  >
+                    <MdDeleteOutline />
+                  </IconButton>
+                </Table.Cell>
+              </Table.Row>
+            )}
+          </For>
+        </Table.Body>
+        {error && (
+          <>
+            <Button
+              w={"full"}
+              size={"md"}
+              variant={"subtle"}
+              onClick={() => mutate()}
+            >
+              Click to retry
+            </Button>
+            <Text>"Size types unavailable. Retry to continue."</Text>
+          </>
+        )}
+      </InfiniteScroll>
     </Table.Root>
   );
 };
 
 export default ProductSizeTable;
-
-const items = [
-  { id: 1, name: "Laptop", category: "Electronics", price: 999.99 },
-  { id: 2, name: "Coffee Maker", category: "Home Appliances", price: 49.99 },
-  { id: 3, name: "Desk Chair", category: "Furniture", price: 150.0 },
-  { id: 4, name: "Smartphone", category: "Electronics", price: 799.99 },
-  { id: 5, name: "Headphones", category: "Accessories", price: 199.99 },
-];

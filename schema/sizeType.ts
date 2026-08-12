@@ -5,6 +5,7 @@ export const sizeSchema = z.object({
     .string({ error: "name is required" })
     .min(3, { error: "name must be at least 3 letters long" }),
 });
+export type SizeFormValues = z.input<typeof sizeSchema>;
 
 export const sizeTypeSchema = z.object({
   name: z
