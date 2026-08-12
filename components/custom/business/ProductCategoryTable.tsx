@@ -41,69 +41,76 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
       loading: { title: "Deleting category...", description: "Please wait" },
       success: {
         title: "Deletion successful",
-        description: "Category has been created",
+        description: "Category has been deleted",
       },
       error: errorOptions,
     });
   };
 
   return (
-    <Table.Root>
-      <Table.Header>
-        <Table.Row>
-          <Table.ColumnHeader>Name</Table.ColumnHeader>
-          <Table.ColumnHeader>Code</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
-        </Table.Row>
-      </Table.Header>
+    <>
       <InfiniteScroll
         dataLength={productCategories.length}
         next={() => setSize(size + 1)}
         hasMore={hasMore && !error}
         loader={<Spinner />}
+        style={{ width: "100%", overflow: "visible" }}
       >
-        <Table.Body>
-          <For
-            each={productCategories}
-            fallback={<Text w={"full"}>"No categories available"</Text>}
-          >
-            {(productCategory) => (
-              <Table.Row key={productCategory.id} w={"full"}>
-                <Table.Cell>{productCategory.name}</Table.Cell>
-                <Table.Cell>CH</Table.Cell>
-                <Table.Cell textAlign="end">
-                  <IconButton variant={"subtle"}>
-                    <AiOutlineEdit />
-                  </IconButton>
-                  <IconButton
-                    variant={"subtle"}
-                    color={"fg.error"}
-                    _hover={{ bg: "bg.error", color: "fg.error" }}
-                    onClick={() => handleDelete(productCategory.id)}
-                    disabled={isMutating}
-                  >
-                    <MdDeleteOutline />
-                  </IconButton>
-                </Table.Cell>
-              </Table.Row>
-            )}
-          </For>
-        </Table.Body>
-        {error && (
-          <>
-            <Button
-              w={"full"}
-              size={"md"}
-              variant={"subtle"}
-              onClick={() => mutate()}
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader>Name</Table.ColumnHeader>
+              <Table.ColumnHeader>Code</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <For
+              each={productCategories}
+              fallback={
+                <Table.Row>
+                  <Table.Cell colSpan={3}>No categories available</Table.Cell>
+                </Table.Row>
+              }
             >
-              Click to retry
-            </Button>
-            <Text>Categories unavailable. Retry to continue.</Text>
-          </>
-        )}
+              {(productCategory) => (
+                <Table.Row key={productCategory.id} w={"full"}>
+                  <Table.Cell>{productCategory.name}</Table.Cell>
+                  <Table.Cell>CH</Table.Cell>
+                  <Table.Cell textAlign="end">
+                    <IconButton variant={"subtle"}>
+                      <AiOutlineEdit />
+                    </IconButton>
+                    <IconButton
+                      variant={"subtle"}
+                      color={"fg.error"}
+                      _hover={{ bg: "bg.error", color: "fg.error" }}
+                      onClick={() => handleDelete(productCategory.id)}
+                      disabled={isMutating}
+                    >
+                      <MdDeleteOutline />
+                    </IconButton>
+                  </Table.Cell>
+                </Table.Row>
+              )}
+            </For>
+          </Table.Body>
+        </Table.Root>
       </InfiniteScroll>
-    </Table.Root>
+      {error && (
+        <>
+          <Button
+            w={"full"}
+            size={"md"}
+            variant={"subtle"}
+            onClick={() => mutate()}
+          >
+            Click to retry
+          </Button>
+          <Text>Categories unavailable. Retry to continue.</Text>
+        </>
+      )}
+    </>
   );
 };
 

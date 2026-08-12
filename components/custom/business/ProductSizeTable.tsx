@@ -38,69 +38,76 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
       loading: { title: "Deleting size type...", description: "Please wait" },
       success: {
         title: "Deletion successful",
-        description: "Size type has been created",
+        description: "Size type has been deleted",
       },
       error: errorOptions,
     });
   };
 
   return (
-    <Table.Root>
-      <Table.Header>
-        <Table.Row>
-          <Table.ColumnHeader>Name</Table.ColumnHeader>
-          <Table.ColumnHeader>Code</Table.ColumnHeader>
-          <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
-        </Table.Row>
-      </Table.Header>
+    <>
       <InfiniteScroll
         dataLength={sizeTypes.length}
         next={() => setSize(size + 1)}
         hasMore={hasMore && !error}
         loader={<Spinner />}
+        style={{ width: "100%", overflow: "visible" }}
       >
-        <Table.Body>
-          <For
-            each={sizeTypes}
-            fallback={<Text w={"full"}>No size types available</Text>}
-          >
-            {(sizeType) => (
-              <Table.Row key={sizeType.id} w={"full"}>
-                <Table.Cell>{sizeType.name}</Table.Cell>
-                <Table.Cell>XL</Table.Cell>
-                <Table.Cell textAlign="end">
-                  <IconButton variant={"subtle"}>
-                    <AiOutlineEdit />
-                  </IconButton>
-                  <IconButton
-                    variant={"subtle"}
-                    color={"fg.error"}
-                    _hover={{ bg: "bg.error", color: "fg.error" }}
-                    onClick={() => handleDelete(sizeType.id)}
-                    disabled={isMutating}
-                  >
-                    <MdDeleteOutline />
-                  </IconButton>
-                </Table.Cell>
-              </Table.Row>
-            )}
-          </For>
-        </Table.Body>
-        {error && (
-          <>
-            <Button
-              w={"full"}
-              size={"md"}
-              variant={"subtle"}
-              onClick={() => mutate()}
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader>Name</Table.ColumnHeader>
+              <Table.ColumnHeader>Code</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <For
+              each={sizeTypes}
+              fallback={
+                <Table.Row>
+                  <Table.Cell colSpan={3}>No size types available</Table.Cell>
+                </Table.Row>
+              }
             >
-              Click to retry
-            </Button>
-            <Text>Size types unavailable. Retry to continue.</Text>
-          </>
-        )}
+              {(sizeType) => (
+                <Table.Row key={sizeType.id} w={"full"}>
+                  <Table.Cell>{sizeType.name}</Table.Cell>
+                  <Table.Cell>XL</Table.Cell>
+                  <Table.Cell textAlign="end">
+                    <IconButton variant={"subtle"}>
+                      <AiOutlineEdit />
+                    </IconButton>
+                    <IconButton
+                      variant={"subtle"}
+                      color={"fg.error"}
+                      _hover={{ bg: "bg.error", color: "fg.error" }}
+                      onClick={() => handleDelete(sizeType.id)}
+                      disabled={isMutating}
+                    >
+                      <MdDeleteOutline />
+                    </IconButton>
+                  </Table.Cell>
+                </Table.Row>
+              )}
+            </For>
+          </Table.Body>
+        </Table.Root>
       </InfiniteScroll>
-    </Table.Root>
+      {error && (
+        <>
+          <Button
+            w={"full"}
+            size={"md"}
+            variant={"subtle"}
+            onClick={() => mutate()}
+          >
+            Click to retry
+          </Button>
+          <Text>Size types unavailable. Retry to continue.</Text>
+        </>
+      )}
+    </>
   );
 };
 
