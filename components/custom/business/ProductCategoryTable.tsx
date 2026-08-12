@@ -17,7 +17,6 @@ import {
   Table,
   Text,
 } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
@@ -36,10 +35,9 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
     [data],
   );
   const { trigger, isMutating } = useRemoveProductCategory();
-  const { refresh } = useRouter();
 
   const handleDelete = async (id: string) => {
-    const promise = toaster.promise(trigger(id), {
+    toaster.promise(trigger(id), {
       loading: { title: "Deleting category...", description: "Please wait" },
       success: {
         title: "Deletion successful",
@@ -47,13 +45,6 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
       },
       error: errorOptions,
     });
-    if (!promise) return;
-    try {
-      await promise.unwrap();
-      refresh();
-    } catch {
-      /* Toast handled by the `error` option */
-    }
   };
 
   return (
@@ -73,9 +64,9 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
       >
         <Table.Body>
           <For each={productCategories} fallback={"No categories available"}>
-            {(productCategories) => (
-              <Table.Row key={productCategories.id}>
-                <Table.Cell>{productCategories.name}</Table.Cell>
+            {(productCategory) => (
+              <Table.Row key={productCategory.id}>
+                <Table.Cell>{productCategory.name}</Table.Cell>
                 <Table.Cell>CH</Table.Cell>
                 <Table.Cell textAlign="end">
                   <IconButton>
@@ -84,7 +75,7 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
                   <IconButton
                     color={"fg.error"}
                     _hover={{ bg: "bg.error", color: "fg.error" }}
-                    onClick={() => handleDelete(productCategories.id)}
+                    onClick={() => handleDelete(productCategory.id)}
                     disabled={isMutating}
                   >
                     <MdDeleteOutline />
