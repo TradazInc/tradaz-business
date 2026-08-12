@@ -7,6 +7,7 @@ import { useRemoveSizeType, useSizeTypes } from "@/server/hooks/sizeType";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
+  Box,
   Button,
   For,
   IconButton,
@@ -45,7 +46,7 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
   };
 
   return (
-    <>
+    <Box w={"full"}>
       <InfiniteScroll
         dataLength={sizeTypes.length}
         next={() => setSize(size + 1)}
@@ -73,8 +74,12 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
               {(sizeType) => (
                 <Table.Row key={sizeType.id} w={"full"}>
                   <Table.Cell>{sizeType.name}</Table.Cell>
-                  <Table.Cell>XL</Table.Cell>
-                  <Table.Cell textAlign="end">
+                  <Table.Cell>
+                    {sizeType.sizes?.map((size) => (
+                      <Text key={size.id}>{size.value}</Text>
+                    ))}
+                  </Table.Cell>
+                  <Table.Cell textAlign="end" gapX={2}>
                     <IconButton variant={"subtle"}>
                       <AiOutlineEdit />
                     </IconButton>
@@ -107,7 +112,7 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
           <Text>Size types unavailable. Retry to continue.</Text>
         </>
       )}
-    </>
+    </Box>
   );
 };
 
