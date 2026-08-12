@@ -10,6 +10,7 @@ import {
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
+  Box,
   Button,
   For,
   IconButton,
@@ -48,7 +49,7 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
   };
 
   return (
-    <>
+    <Box w={"full"}>
       <InfiniteScroll
         dataLength={productCategories.length}
         next={() => setSize(size + 1)}
@@ -77,7 +78,7 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
                 <Table.Row key={productCategory.id} w={"full"}>
                   <Table.Cell>{productCategory.name}</Table.Cell>
                   <Table.Cell>CH</Table.Cell>
-                  <Table.Cell textAlign="end">
+                  <Table.Cell textAlign="end" gapX={2}>
                     <IconButton variant={"subtle"}>
                       <AiOutlineEdit />
                     </IconButton>
@@ -110,7 +111,7 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
           <Text>Categories unavailable. Retry to continue.</Text>
         </>
       )}
-    </>
+    </Box>
   );
 };
 
