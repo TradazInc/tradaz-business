@@ -37,7 +37,6 @@ export default async function page({ searchParams }: Props) {
                 New Brand
               </Button>
             }
-            signup={signup}
           >
             <BusinessForm />
           </DialogBox>
@@ -57,9 +56,8 @@ export default async function page({ searchParams }: Props) {
                   New Brand
                 </Button>
               }
-              signup={signup}
             >
-              <BusinessForm />
+              <BusinessForm signup={signup} />
             </DialogBox>
           </EmptyPage>
         )}
