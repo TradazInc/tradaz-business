@@ -33,7 +33,7 @@ import {
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { LuPlus, LuTrash2, LuUpload } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import TeamVariationField from "./TeamVariationField";
@@ -85,6 +85,8 @@ const ProductForm = ({ product }: Props) => {
   const {
     control,
     register,
+    setValue,
+    getValues,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
@@ -97,6 +99,27 @@ const ProductForm = ({ product }: Props) => {
     control,
     name: "variations",
   });
+
+  // Recompute size collection when size type changes
+  const [selectedSizeTypeId] = useWatch({ control, name: "sizeTypeId" });
+  const sizeCollection = useMemo(
+    () =>
+      createListCollection({
+        items:
+          parsedSizeTypes.flatData.find(
+            (sizeType) => sizeType.id === selectedSizeTypeId,
+          )?.sizes ?? [],
+        itemToValue: (item) => item.id,
+        itemToString: (item) => item.value,
+      }),
+    [parsedSizeTypes.flatData, selectedSizeTypeId],
+  );
+
+  // Clear sizes when size type changes
+  const clearVariationSizes = () =>
+    getValues("variations").forEach((_, index) =>
+      setValue(`variations.${index}.sizeId`, [], { shouldValidate: true }),
+    );
 
   const onSubmit = handleSubmit(async (productData) => {
     const promise = toaster.promise(trigger(productData), {
@@ -266,6 +289,7 @@ const ProductForm = ({ product }: Props) => {
                   onValueChange={({ value }) => {
                     field.onChange(value);
                     field.onBlur();
+                    clearVariationSizes();
                   }}
                   onInteractOutside={() => field.onBlur()}
                   collection={sizeTypeCollection}
@@ -414,7 +438,6 @@ const ProductForm = ({ product }: Props) => {
                     </Field.ErrorText>
                   </Field.Root>
 
-                  {/* TODO(step 5): dependent select on the chosen sizeTypeId (using sizeTypeId for now) */}
                   <Field.Root
                     required
                     invalid={!!errors.variations?.[index]?.sizeId}
@@ -429,12 +452,13 @@ const ProductForm = ({ product }: Props) => {
                         <Select.Root
                           name={field.name}
                           value={field.value}
+                          disabled={!selectedSizeTypeId}
                           onValueChange={({ value }) => {
                             field.onChange(value);
                             field.onBlur();
                           }}
                           onInteractOutside={() => field.onBlur()}
-                          collection={sizeTypeCollection}
+                          collection={sizeCollection}
                         >
                           <Select.HiddenSelect />
                           <Select.Control>
@@ -453,21 +477,25 @@ const ProductForm = ({ product }: Props) => {
                           <Portal>
                             <Select.Positioner>
                               <Select.Content>
-                                {sizeTypeCollection.items.map((sizeType) => (
-                                  <Select.Item
-                                    item={sizeType}
-                                    key={sizeType.id}
-                                  >
-                                    {sizeType.name}
-                                    <Select.ItemIndicator />
-                                  </Select.Item>
-                                ))}
+                                {sizeCollection.size > 0 ? (
+                                  sizeCollection.items.map((size) => (
+                                    <Select.Item item={size} key={size.id}>
+                                      {size.value}
+                                      <Select.ItemIndicator />
+                                    </Select.Item>
+                                  ))
+                                ) : (
+                                  <Box>No sizes found</Box>
+                                )}
                               </Select.Content>
                             </Select.Positioner>
                           </Portal>
                         </Select.Root>
                       )}
                     />
+                    <Field.HelperText>
+                      {!selectedSizeTypeId && "Select a size type first"}
+                    </Field.HelperText>
                     <Field.ErrorText>
                       {errors.variations?.[index]?.sizeId?.message}
                     </Field.ErrorText>
