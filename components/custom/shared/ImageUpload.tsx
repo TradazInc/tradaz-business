@@ -46,7 +46,7 @@ const ImageUpload = () => {
     <VStack gapY={5}>
       <Dialog.Root
         lazyMount
-        size={"lg"}
+        size={"full"}
         open={open}
         onOpenChange={({ open }) => setOpen(open)}
       >
