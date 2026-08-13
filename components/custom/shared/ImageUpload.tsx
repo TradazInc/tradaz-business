@@ -26,7 +26,7 @@ const ImageUpload = () => {
   return (
     <VStack gapY={5}>
       <CldUploadWidget
-        signatureEndpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/media/upload-signature`}
+        signatureEndpoint="/api/media/upload-signature"
         options={{ maxFiles: MAX_FILES, maxFileSize: MAX_FILE_SIZE }}
         onSuccess={(result) => {
           if (result.event !== "success") return;
@@ -36,28 +36,30 @@ const ImageUpload = () => {
       >
         {({ open }) => {
           return (
-            <FileUpload.Dropzone
-              onClick={(e) => {
-                e.preventDefault();
-                open();
-              }}
-            >
-              <Icon size={"md"} color={"fg.muted"}>
-                <LuUpload />
-              </Icon>
-              <FileUpload.DropzoneContent>
-                <Box>Drag and drop files here</Box>
-                <Box color={"fg.muted"}>
-                  Images up to <FormatByte value={MAX_FILE_SIZE} />
-                </Box>
-              </FileUpload.DropzoneContent>
-            </FileUpload.Dropzone>
+            <FileUpload.Root>
+              <FileUpload.Dropzone
+                onClick={(e) => {
+                  e.preventDefault();
+                  open();
+                }}
+              >
+                <Icon size={"md"} color={"fg.muted"}>
+                  <LuUpload />
+                </Icon>
+                <FileUpload.DropzoneContent>
+                  <Box>Drag and drop files here</Box>
+                  <Box color={"fg.muted"}>
+                    Images up to <FormatByte value={MAX_FILE_SIZE} />
+                  </Box>
+                </FileUpload.DropzoneContent>
+              </FileUpload.Dropzone>
+            </FileUpload.Root>
           );
         }}
       </CldUploadWidget>
       <Wrap>
         {urls.length > 0 &&
-          urls.map((url) => <Image src={url} rounded={"md"} />)}
+          urls.map((url, key) => <Image key={key} src={url} rounded={"md"} />)}
       </Wrap>
     </VStack>
   );
