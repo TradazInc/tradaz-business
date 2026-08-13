@@ -37,9 +37,7 @@ const SignInForm = () => {
     try {
       await promise.unwrap();
       push("/dashboard");
-    } catch {
-      /* Toast handled by the `error` option */
-    }
+    } catch {} // Error displayed by toaster
   });
 
   const handleGoogleSignIn = async () => {
@@ -54,9 +52,7 @@ const SignInForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-    } catch {
-      /* Toast handled by the `error` option */
-    }
+    } catch {} // Error displayed by toaster
   };
 
   return (

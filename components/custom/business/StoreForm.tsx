@@ -37,9 +37,7 @@ export const StoreForm = () => {
       const store = await promise.unwrap();
       refresh();
       push(`/dashboard/store/${store.id}`);
-    } catch {
-      /* Toast handled by the `error` option */
-    }
+    } catch {} // Error displayed by toaster
   });
 
   return (

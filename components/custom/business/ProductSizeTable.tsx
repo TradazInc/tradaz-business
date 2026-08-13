@@ -9,6 +9,7 @@ import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
   Button,
+  ButtonGroup,
   For,
   HStack,
   IconButton,
@@ -83,12 +84,11 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
                     </HStack>
                   </Table.Cell>
                   <Table.Cell textAlign="end">
-                    <HStack gapX={5}>
-                      <IconButton variant={"subtle"}>
+                    <ButtonGroup size="sm" variant="outline">
+                      <IconButton>
                         <AiOutlineEdit />
                       </IconButton>
                       <IconButton
-                        variant={"subtle"}
                         color={"fg.error"}
                         _hover={{ bg: "bg.error", color: "fg.error" }}
                         onClick={() => handleDelete(sizeType.id)}
@@ -96,7 +96,7 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
                       >
                         <MdDeleteOutline />
                       </IconButton>
-                    </HStack>
+                    </ButtonGroup>
                   </Table.Cell>
                 </Table.Row>
               )}

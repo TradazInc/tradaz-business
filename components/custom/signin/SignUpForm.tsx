@@ -36,9 +36,7 @@ const SignUpForm = () => {
     try {
       await promise.unwrap();
       push("/dashboard?signup=true"); // review after emailVerification
-    } catch {
-      /* Toast handled by the `error` option */
-    }
+    } catch {} // Error displayed by toaster
   });
 
   const handleGoogleSignup = async () => {
@@ -53,9 +51,7 @@ const SignUpForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-    } catch {
-      /* Toast handled by the `error` option */
-    }
+    } catch {} // Error displayed by toaster
   };
 
   return (

@@ -88,9 +88,7 @@ export const BusinessForm = ({ signup }: Props) => {
       const business = await promise.unwrap();
       refresh();
       push(`/dashboard/business/${business.id}`);
-    } catch {
-      /* Toast handled by the `error` option */
-    }
+    } catch {} // Error displayed by toaster
   });
 
   // Open form dialog on first signup
