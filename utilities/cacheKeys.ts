@@ -11,10 +11,6 @@ export const PRODUCT_CATEGORY_KEY = "/api/product-categories";
 
 export const SIZE_TYPE_KEY = "/api/size-types";
 
-export const MEDIA_SIGN_KEY = "/api/media/upload";
-
-export const MEDIA_UPLOAD_KEY = "/v1_1/auto/upload";
-
 // Computed Keys
 export const businessKey = (businessId: string) =>
   `${BUSINESS_KEY}/${businessId}`;

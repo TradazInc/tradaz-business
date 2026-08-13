@@ -1,9 +1,5 @@
-import { MediaClient } from "@/lib/mediaClient";
-
-export interface UploadedMedia {
-  secure_url: string;
-  public_Id: string;
+export interface CloudinaryResult {
   url: string;
+  secure_url: string;
+  public_id: string;
 }
-
-export const storageService = new MediaClient<UploadedMedia>("/v1_1");
