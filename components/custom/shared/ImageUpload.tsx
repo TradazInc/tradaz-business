@@ -27,7 +27,11 @@ const ImageUpload = () => {
     <VStack gapY={5}>
       <CldUploadWidget
         signatureEndpoint="/api/media/upload-signature"
-        options={{ maxFiles: MAX_FILES, maxFileSize: MAX_FILE_SIZE }}
+        options={{
+          maxFiles: MAX_FILES,
+          maxFileSize: MAX_FILE_SIZE,
+          inlineContainer: "#cld-widget",
+        }}
         onSuccess={(result) => {
           if (result.event !== "success") return;
           const info = result.info as CloudinaryResult;
@@ -36,7 +40,7 @@ const ImageUpload = () => {
       >
         {({ open }) => {
           return (
-            <FileUpload.Root>
+            <FileUpload.Root alignItems={"stretch"} w={"full"}>
               <FileUpload.Dropzone
                 onClick={(e) => {
                   e.preventDefault();
