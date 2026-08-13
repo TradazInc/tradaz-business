@@ -1,7 +1,15 @@
 "use client";
 
-import { MAX_FILES } from "@/data/constants";
-import { Box, FileUpload, HStack, Icon, Image, VStack } from "@chakra-ui/react";
+import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
+import {
+  Box,
+  FileUpload,
+  FormatByte,
+  Icon,
+  Image,
+  VStack,
+  Wrap,
+} from "@chakra-ui/react";
 import { CldUploadWidget } from "next-cloudinary";
 import { useState } from "react";
 import { LuUpload } from "react-icons/lu";
@@ -17,12 +25,10 @@ const ImageUpload = () => {
 
   return (
     <VStack gapY={5}>
-      <HStack>
-        {urls.length > 0 && urls.map((url) => <Image src={url} rounded="md" />)}
-      </HStack>
       <CldUploadWidget
         signatureEndpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/media/upload-signature`}
-        onSuccess={(result, options) => {
+        options={{ maxFiles: MAX_FILES, maxFileSize: MAX_FILE_SIZE }}
+        onSuccess={(result) => {
           if (result.event !== "success") return;
           const info = result.info as CloudinaryResult;
           setUrls((prev) => [...prev, info.url]);
@@ -30,18 +36,29 @@ const ImageUpload = () => {
       >
         {({ open }) => {
           return (
-            <FileUpload.Dropzone onClick={() => open()}>
-              <Icon size="md" color="fg.muted">
+            <FileUpload.Dropzone
+              onClick={(e) => {
+                e.preventDefault();
+                open();
+              }}
+            >
+              <Icon size={"md"} color={"fg.muted"}>
                 <LuUpload />
               </Icon>
               <FileUpload.DropzoneContent>
                 <Box>Drag and drop files here</Box>
-                <Box color="fg.muted">Images up to {MAX_FILES}MB</Box>
+                <Box color={"fg.muted"}>
+                  Images up to <FormatByte value={MAX_FILE_SIZE} />
+                </Box>
               </FileUpload.DropzoneContent>
             </FileUpload.Dropzone>
           );
         }}
       </CldUploadWidget>
+      <Wrap>
+        {urls.length > 0 &&
+          urls.map((url) => <Image src={url} rounded={"md"} />)}
+      </Wrap>
     </VStack>
   );
 };
