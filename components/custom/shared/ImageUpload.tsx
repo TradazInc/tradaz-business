@@ -3,6 +3,7 @@
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 import { darkModePalette, lightModePalette } from "@/data/imageUpload";
+import { CloudinaryResult } from "@/server/entities/storage";
 import {
   Box,
   CloseButton,
@@ -17,14 +18,8 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { CldUploadWidget, CldUploadWidgetPropsChildren } from "next-cloudinary";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { LuUpload } from "react-icons/lu";
-
-interface CloudinaryResult {
-  url: string;
-  secure_url: string;
-  public_id: string;
-}
 
 interface WidgetMountProps {
   isLoading?: boolean;
@@ -44,16 +39,16 @@ const WidgetMount = ({ isLoading, open }: WidgetMountProps) => {
 
 const ImageUpload = () => {
   const [urls, setUrls] = useState<string[]>([]);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const palette = useColorModeValue(lightModePalette, darkModePalette);
 
   return (
     <VStack gapY={5}>
       <Dialog.Root
-        size={"cover"}
         lazyMount
-        open={isDialogOpen}
-        onOpenChange={({ open }) => setIsDialogOpen(open)}
+        size={"lg"}
+        open={open}
+        onOpenChange={({ open }) => setOpen(open)}
       >
         <FileUpload.Root alignItems={"stretch"} w={"full"}>
           <Dialog.Trigger asChild>
@@ -82,6 +77,7 @@ const ImageUpload = () => {
                 <CldUploadWidget
                   signatureEndpoint="/api/media/upload-signature"
                   options={{
+                    cropping: true,
                     maxFiles: MAX_FILES,
                     maxFileSize: MAX_FILE_SIZE,
                     inlineContainer: "#cld-widget",
@@ -92,7 +88,7 @@ const ImageUpload = () => {
                     const info = result.info as CloudinaryResult;
                     setUrls((prev) => [...prev, info.url]);
                   }}
-                  onQueuesEnd={() => setIsDialogOpen(false)}
+                  onQueuesEnd={() => setOpen(false)}
                 >
                   {({ open, isLoading }) => (
                     <WidgetMount isLoading={isLoading} open={open} />
