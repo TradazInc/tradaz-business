@@ -1,8 +1,10 @@
 "use client";
 
-import { Button, HStack, Image, VStack } from "@chakra-ui/react";
+import { MAX_FILES } from "@/data/constants";
+import { Box, FileUpload, HStack, Icon, Image, VStack } from "@chakra-ui/react";
 import { CldUploadWidget } from "next-cloudinary";
 import { useState } from "react";
+import { LuUpload } from "react-icons/lu";
 
 interface CloudinaryResult {
   url: string;
@@ -10,7 +12,7 @@ interface CloudinaryResult {
   public_id: string;
 }
 
-const FileUpload = () => {
+const ImageUpload = () => {
   const [urls, setUrls] = useState<string[]>([]);
 
   return (
@@ -28,9 +30,15 @@ const FileUpload = () => {
       >
         {({ open }) => {
           return (
-            <Button w={"full"} onClick={() => open()}>
-              Upload an Image
-            </Button>
+            <FileUpload.Dropzone onClick={() => open()}>
+              <Icon size="md" color="fg.muted">
+                <LuUpload />
+              </Icon>
+              <FileUpload.DropzoneContent>
+                <Box>Drag and drop files here</Box>
+                <Box color="fg.muted">Images up to {MAX_FILES}MB</Box>
+              </FileUpload.DropzoneContent>
+            </FileUpload.Dropzone>
           );
         }}
       </CldUploadWidget>
@@ -38,4 +46,4 @@ const FileUpload = () => {
   );
 };
 
-export default FileUpload;
+export default ImageUpload;
