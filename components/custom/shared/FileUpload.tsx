@@ -20,7 +20,7 @@ const FileUpload = () => {
       </HStack>
       <CldUploadWidget
         signatureEndpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/media/upload-signature`}
-        onSuccess={(result, widget) => {
+        onSuccess={(result, options) => {
           if (result.event !== "success") return;
           const info = result.info as CloudinaryResult;
           setUrls((prev) => [...prev, info.url]);
