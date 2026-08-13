@@ -27,9 +27,9 @@ import { useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import InfiniteScroll from "react-infinite-scroll-component";
-import ImageUpload from "./ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
+import ImageUpload from "../shared/ImageUpload";
 
 interface Props {
   product?: Product;
@@ -132,7 +132,7 @@ const ProductForm = ({ product }: Props) => {
           Please provide your product details below.
         </Fieldset.HelperText>
         <Fieldset.Content>
-          <ImageUpload control={control} />
+          <ImageUpload />
 
           <Field.Root required invalid={!!errors.name}>
             <Field.Label>
