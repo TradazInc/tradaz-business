@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { emptyProduct, emptyVariation } from "@/data/productForm";
+import { emptyProduct } from "@/data/productForm";
 import { productSchema } from "@/schema/product";
 import { Gender, Product } from "@/server/entities/product";
 import { useAddProduct } from "@/server/hooks/product";
@@ -13,30 +13,23 @@ import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
   Button,
-  ColorPicker,
   createListCollection,
   Field,
   Fieldset,
-  HStack,
-  IconButton,
   Input,
-  parseColor,
   Portal,
   Select,
   Spinner,
-  Stack,
-  Text,
   Textarea,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
-import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
-import { LuPlus, LuTrash2 } from "react-icons/lu";
+import { Controller, useForm } from "react-hook-form";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ImageField from "./ImageField";
-import TeamVariationField from "./TeamVariationField";
 import TotalQuantity from "./TotalQuantity";
+import VariationField from "./VariationField";
 
 interface Props {
   product?: Product;
@@ -101,26 +94,6 @@ const ProductForm = ({ product }: Props) => {
     defaultValues: product ? formProduct(product) : emptyProduct,
     mode: "onBlur",
   });
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "variations",
-  });
-
-  // Recompute size collection when size type changes
-  const [selectedSizeTypeId] = useWatch({ control, name: "sizeTypeId" });
-  const sizeCollection = useMemo(
-    () =>
-      createListCollection({
-        items:
-          parsedSizeTypes.flatData.find(
-            (sizeType) => sizeType.id === selectedSizeTypeId,
-          )?.sizes ?? [],
-        itemToValue: (item) => item.id,
-        itemToString: (item) => item.value,
-      }),
-    [parsedSizeTypes.flatData, selectedSizeTypeId],
-  );
 
   // Clear sizes when size type changes
   const clearVariationSizes = () =>
@@ -372,193 +345,13 @@ const ProductForm = ({ product }: Props) => {
             <Field.ErrorText>{errors.sizeTypeId?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Fieldset.Root invalid={!!errors.variations?.root?.message}>
-            <Fieldset.Legend>Variations</Fieldset.Legend>
-            {fields.map((variation, index) => (
-              <Fieldset.Content
-                p={4}
-                bg={"bg.panel"}
-                key={variation.id}
-                borderRadius={"md"}
-              >
-                <HStack justify="space-between" mb={4}>
-                  <Text fontWeight="medium">Variation {index + 1}</Text>
-                  <IconButton
-                    size="sm"
-                    type="button"
-                    variant="subtle"
-                    onClick={() => remove(index)}
-                  >
-                    <LuTrash2 />
-                  </IconButton>
-                </HStack>
-
-                <Stack gap={4}>
-                  <Field.Root
-                    required
-                    invalid={!!errors.variations?.[index]?.sku}
-                  >
-                    <Field.Label>
-                      SKU <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input {...register(`variations.${index}.sku`)} />
-                    <Field.ErrorText>
-                      {errors.variations?.[index]?.sku?.message}
-                    </Field.ErrorText>
-                  </Field.Root>
-
-                  <Field.Root
-                    required
-                    invalid={!!errors.variations?.[index]?.color}
-                  >
-                    <Field.Label>
-                      Color <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Controller
-                      name={`variations.${index}.color`}
-                      control={control}
-                      render={({ field }) => (
-                        <ColorPicker.Root
-                          name={field.name}
-                          value={parseColor(field.value)}
-                          onValueChange={({ value }) =>
-                            field.onChange(value.toString("hex"))
-                          }
-                          onInteractOutside={() => field.onBlur()}
-                        >
-                          <ColorPicker.HiddenInput />
-                          <ColorPicker.Control>
-                            <ColorPicker.Input />
-                            <ColorPicker.Trigger />
-                          </ColorPicker.Control>
-                          <Portal>
-                            <ColorPicker.Positioner>
-                              <ColorPicker.Content>
-                                <ColorPicker.Area />
-                                <HStack>
-                                  <ColorPicker.EyeDropper
-                                    size="sm"
-                                    variant="outline"
-                                  />
-                                  <ColorPicker.Sliders />
-                                </HStack>
-                              </ColorPicker.Content>
-                            </ColorPicker.Positioner>
-                          </Portal>
-                        </ColorPicker.Root>
-                      )}
-                    />
-                    <Field.ErrorText>
-                      {errors.variations?.[index]?.color?.message}
-                    </Field.ErrorText>
-                  </Field.Root>
-
-                  <Field.Root
-                    required
-                    invalid={!!errors.variations?.[index]?.price}
-                  >
-                    <Field.Label>
-                      Price <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      {...register(`variations.${index}.price`, {
-                        valueAsNumber: true,
-                      })}
-                    />
-                    <Field.ErrorText>
-                      {errors.variations?.[index]?.price?.message}
-                    </Field.ErrorText>
-                  </Field.Root>
-
-                  <Field.Root
-                    required
-                    invalid={!!errors.variations?.[index]?.sizeId}
-                  >
-                    <Field.Label>
-                      Size <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Controller
-                      control={control}
-                      name={`variations.${index}.sizeId`}
-                      render={({ field }) => (
-                        <Select.Root
-                          name={field.name}
-                          value={field.value}
-                          disabled={!selectedSizeTypeId}
-                          onValueChange={({ value }) => {
-                            field.onChange(value);
-                            field.onBlur();
-                          }}
-                          onInteractOutside={() => field.onBlur()}
-                          collection={sizeCollection}
-                        >
-                          <Select.HiddenSelect />
-                          <Select.Control>
-                            <Select.Trigger>
-                              <Select.ValueText placeholder={"Select size"} />
-                            </Select.Trigger>
-                            <Select.IndicatorGroup>
-                              <Select.ClearTrigger />
-                              {sizeTypes.isLoading ? (
-                                <Spinner size="sm" />
-                              ) : (
-                                <Select.Indicator />
-                              )}
-                            </Select.IndicatorGroup>
-                          </Select.Control>
-                          <Portal>
-                            <Select.Positioner>
-                              <Select.Content>
-                                {sizeCollection.size > 0 ? (
-                                  sizeCollection.items.map((size) => (
-                                    <Select.Item item={size} key={size.id}>
-                                      {size.value}
-                                      <Select.ItemIndicator />
-                                    </Select.Item>
-                                  ))
-                                ) : (
-                                  <Box>No sizes found</Box>
-                                )}
-                              </Select.Content>
-                            </Select.Positioner>
-                          </Portal>
-                        </Select.Root>
-                      )}
-                    />
-                    <Field.HelperText>
-                      {!selectedSizeTypeId && "Select a size type first"}
-                    </Field.HelperText>
-                    <Field.ErrorText>
-                      {errors.variations?.[index]?.sizeId?.message}
-                    </Field.ErrorText>
-                  </Field.Root>
-
-                  <TeamVariationField
-                    control={control}
-                    register={register}
-                    errors={errors}
-                    variationIndex={index}
-                  />
-                </Stack>
-              </Fieldset.Content>
-            ))}
-
-            <Button
-              size={"sm"}
-              type="button"
-              variant="subtle"
-              alignSelf="flex-start"
-              onClick={() => append(emptyVariation)}
-            >
-              <LuPlus /> Add variation
-            </Button>
-
-            <Fieldset.ErrorText>
-              {errors.variations?.root?.message}
-            </Fieldset.ErrorText>
-          </Fieldset.Root>
+          <VariationField
+            control={control}
+            errors={errors}
+            register={register}
+            isLoading={sizeTypes.isLoading}
+            sizeTypes={parsedSizeTypes.flatData}
+          />
         </Fieldset.Content>
 
         <TotalQuantity control={control} />
