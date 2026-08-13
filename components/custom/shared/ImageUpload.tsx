@@ -12,6 +12,7 @@ import {
   Icon,
   Image,
   Portal,
+  useDialogContext,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
@@ -26,24 +27,17 @@ interface CloudinaryResult {
 }
 
 interface WidgetMountProps {
-  isDialogOpen: boolean;
   isLoading?: boolean;
   open: CldUploadWidgetPropsChildren["open"];
 }
 
-const WidgetMount = ({ isDialogOpen, isLoading, open }: WidgetMountProps) => {
-  const hasOpened = useRef(false);
+const WidgetMount = ({ isLoading, open }: WidgetMountProps) => {
+  const dialog = useDialogContext();
 
   useEffect(() => {
-    if (!isDialogOpen) {
-      hasOpened.current = false;
-      return;
-    }
-    if (isLoading || hasOpened.current) return;
-
-    hasOpened.current = true;
+    if (!dialog.open || isLoading) return;
     open();
-  }, [isDialogOpen, isLoading, open]);
+  }, [dialog.open, isLoading, open]);
 
   return <Box id="cld-widget" w={"full"} minH={"25rem"} />;
 };
@@ -101,11 +95,7 @@ const ImageUpload = () => {
                   onQueuesEnd={() => setIsDialogOpen(false)}
                 >
                   {({ open, isLoading }) => (
-                    <WidgetMount
-                      isDialogOpen={isDialogOpen}
-                      isLoading={isLoading}
-                      open={open}
-                    />
+                    <WidgetMount isLoading={isLoading} open={open} />
                   )}
                 </CldUploadWidget>
               </Dialog.Body>
