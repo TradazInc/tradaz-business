@@ -11,13 +11,16 @@ import {
   FileUpload,
   FormatByte,
   Icon,
-  Image,
   Portal,
+  SimpleGrid,
   useDialogContext,
   VStack,
-  Wrap,
 } from "@chakra-ui/react";
-import { CldUploadWidget, CldUploadWidgetPropsChildren } from "next-cloudinary";
+import {
+  CldImage,
+  CldUploadWidget,
+  CldUploadWidgetPropsChildren,
+} from "next-cloudinary";
 import { useEffect, useState } from "react";
 import { LuUpload } from "react-icons/lu";
 
@@ -38,7 +41,7 @@ const WidgetMount = ({ isLoading, open }: WidgetMountProps) => {
 };
 
 const ImageUpload = () => {
-  const [urls, setUrls] = useState<string[]>([]);
+  const [publicIds, setPublicIds] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const palette = useColorModeValue(lightModePalette, darkModePalette);
 
@@ -86,7 +89,7 @@ const ImageUpload = () => {
                   onSuccess={(result) => {
                     if (result.event !== "success") return;
                     const info = result.info as CloudinaryResult;
-                    setUrls((prev) => [...prev, info.url]);
+                    setPublicIds((prev) => [...prev, info.public_id]);
                   }}
                   onQueuesEnd={() => setOpen(false)}
                 >
@@ -103,10 +106,24 @@ const ImageUpload = () => {
         </Portal>
       </Dialog.Root>
 
-      <Wrap>
-        {urls.length > 0 &&
-          urls.map((url, key) => <Image key={key} src={url} rounded={"md"} />)}
-      </Wrap>
+      <SimpleGrid columns={MAX_FILES} gap={3} w={"full"}>
+        {publicIds.map((publicId) => (
+          <Box
+            key={publicId}
+            rounded={"md"}
+            overflow={"hidden"}
+            aspectRatio={1}
+          >
+            <CldImage
+              src={publicId}
+              width={200}
+              height={200}
+              crop={"fill"}
+              alt=""
+            />
+          </Box>
+        ))}
+      </SimpleGrid>
     </VStack>
   );
 };
