@@ -27,7 +27,11 @@ const FileUpload = () => {
         }}
       >
         {({ open }) => {
-          return <Button onClick={() => open()}>Upload an Image</Button>;
+          return (
+            <Button w={"full"} onClick={() => open()}>
+              Upload an Image
+            </Button>
+          );
         }}
       </CldUploadWidget>
     </VStack>
