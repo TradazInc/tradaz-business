@@ -142,9 +142,7 @@ const ProductForm = ({ product }: Props) => {
       const product = await promise.unwrap();
       refresh();
       push(`/dashboard/business/products/${product.id}`);
-    } catch {
-      /* Toast handled by the `error` option */
-    }
+    } catch {} // Error displayed by toaster
   });
 
   return (
