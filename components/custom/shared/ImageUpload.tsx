@@ -1,6 +1,8 @@
 "use client";
 
+import { useColorModeValue } from "@/components/ui/color-mode";
 import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
+import { darkModePalette, lightModePalette } from "@/data/imageUpload";
 import {
   Box,
   CloseButton,
@@ -49,6 +51,7 @@ const WidgetMount = ({ isDialogOpen, isLoading, open }: WidgetMountProps) => {
 const ImageUpload = () => {
   const [urls, setUrls] = useState<string[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const palette = useColorModeValue(lightModePalette, darkModePalette);
 
   return (
     <VStack gapY={5}>
@@ -88,6 +91,7 @@ const ImageUpload = () => {
                     maxFiles: MAX_FILES,
                     maxFileSize: MAX_FILE_SIZE,
                     inlineContainer: "#cld-widget",
+                    styles: { palette },
                   }}
                   onSuccess={(result) => {
                     if (result.event !== "success") return;
