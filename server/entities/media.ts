@@ -9,4 +9,4 @@ export interface UploadSignature {
   context?: string;
 }
 
-export const mediaService = new ApiClient<UploadSignature>("/api/media/upload");
+export const mediaService = new ApiClient<UploadSignature>("/api/media/upload-signature");
