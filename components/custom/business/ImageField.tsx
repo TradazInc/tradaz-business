@@ -1,8 +1,10 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 import { ProductData, ProductFormValues } from "@/schema/product";
 import { useAddImage, useUploadSignature } from "@/server/hooks/media";
+import { errorOptions } from "@/utilities/errorToastOptions";
 import {
   Box,
   Button,
@@ -23,15 +25,57 @@ const ImageField = ({ control }: Props) => {
   const { trigger: getSignature } = useUploadSignature();
   const { trigger: addImage, isMutating } = useAddImage();
 
+  const setImages = (urls: string[]) => {
+    field.onChange(urls);
+    field.onBlur();
+  };
+
+  const removeAt = (index: number) =>
+    setImages(field.value.filter((_, i) => i !== index));
+
   // Complete*
   const fileUpload = useFileUpload({
     maxFiles: MAX_FILES,
     maxFileSize: MAX_FILE_SIZE,
     accept: ["image/png", "image/jpeg", "image/webp"],
     invalid: !!fieldState.error,
-    onFileAccept: ({ files }) => {},
-    onFileChange: ({ acceptedFiles, rejectedFiles }) => {},
-    onFileReject: ({ files }) => {},
+    onFileAccept: async ({ files }) => {
+      try {
+        // Get upload signature
+        const signature = await getSignature();
+        if (!signature) return;
+
+        // Upload images
+        const promise = toaster.promise(
+          Promise.all(files.map((file) => addImage({ file, signature }))),
+          {
+            loading: {
+              title: "Uploading images...",
+              description: "Please wait",
+            },
+            success: {
+              title: "Upload successful",
+              description: "Images have been uploaded",
+            },
+            error: errorOptions,
+          },
+        );
+        if (!promise) return;
+
+        // Update RHF
+        const media = await promise.unwrap();
+        setImages([
+          ...field.value,
+          ...media.map((image) => image?.secure_url).filter(Boolean),
+        ]);
+      } catch (error) {
+        files.forEach((file) => fileUpload.deleteFile(file));
+      }
+    },
+    onFileReject: ({ files }) =>
+      files.forEach(({ file, errors }) =>
+        toaster.error({ title: file.name, description: errors.join(", ") }),
+      ),
   });
 
   return (
@@ -51,19 +95,21 @@ const ImageField = ({ control }: Props) => {
           </FileUpload.DropzoneContent>
         </FileUpload.Dropzone>
         <FileUpload.Trigger asChild>
-          <Button variant={"outline"} size={"xs"}>
+          <Button variant={"outline"} size={"xs"} loading={isMutating}>
             Upload Images
           </Button>
         </FileUpload.Trigger>
         <FileUpload.ItemGroup>
           <FileUpload.Context>
             {({ acceptedFiles }) =>
-              acceptedFiles.map((file) => (
-                <FileUpload.Item key={file.name} file={file}>
+              acceptedFiles.map((file, index) => (
+                <FileUpload.Item key={`${file.name}-${index}`} file={file}>
                   <FileUpload.ItemPreview />
                   <FileUpload.ItemName />
                   <FileUpload.ItemSizeText />
-                  <FileUpload.ItemDeleteTrigger />
+                  <FileUpload.ItemDeleteTrigger
+                    onClick={() => removeAt(index)}
+                  />
                 </FileUpload.Item>
               ))
             }
