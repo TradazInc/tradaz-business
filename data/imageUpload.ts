@@ -1,0 +1,31 @@
+export const lightModePalette = {
+  window: "#FFFFFF",
+  windowBorder: "#90A0B3",
+  tabIcon: "#0078FF",
+  menuIcons: "#5A616A",
+  textDark: "#000000",
+  textLight: "#FFFFFF",
+  link: "#0078FF",
+  action: "#FF620C",
+  inactiveTabIcon: "#0E2F5A",
+  error: "#F44235",
+  inProgress: "#0078FF",
+  complete: "#20B832",
+  sourceBg: "#E4EBF1",
+};
+
+export const darkModePalette = {
+  window: "#000000",
+  sourceBg: "#000000",
+  windowBorder: "#8E9FBF",
+  tabIcon: "#FFFFFF",
+  inactiveTabIcon: "#8E9FBF",
+  menuIcons: "#2AD9FF",
+  link: "#08C0FF",
+  action: "#336BFF",
+  inProgress: "#00BFFF",
+  complete: "#33ff00",
+  error: "#EA2727",
+  textDark: "#000000",
+  textLight: "#FFFFFF",
+};
