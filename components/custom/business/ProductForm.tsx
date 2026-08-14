@@ -1,6 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
+import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 import { emptyProduct } from "@/data/productForm";
 import { productSchema } from "@/schema/product";
 import { Gender, Product } from "@/server/entities/product";
@@ -31,7 +32,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import ImageUpload from "../shared/ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
-import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 
 interface Props {
   product?: Product;
