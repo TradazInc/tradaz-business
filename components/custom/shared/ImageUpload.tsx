@@ -66,8 +66,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
                     <Box rounded="md" asChild>
                       <CldImage
                         src={url}
-                        width={200}
-                        height={200}
+                        aspectRatio={1}
                         crop={"fill"}
                         alt={`Product image ${index + 1}`}
                       />
@@ -105,7 +104,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
           cropping: true,
           maxFiles: MAX_FILES - value.length,
           maxFileSize: MAX_FILE_SIZE,
-          styles: { palette, frame: { background: "transparent" } },
+          styles: { palette, frame: { background: "#111111" } },
         }}
         onSuccess={(result) => {
           if (result.event !== "success") return;

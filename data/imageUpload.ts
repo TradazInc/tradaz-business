@@ -15,8 +15,8 @@ export const lightModePalette = {
 };
 
 export const darkModePalette = {
-  window: "#111111",
-  sourceBg: "#111111",
+  window: "#18181b",
+  sourceBg: "#18181b",
   windowBorder: "#8E9FBF",
   tabIcon: "#FFFFFF",
   inactiveTabIcon: "#8E9FBF",
