@@ -25,13 +25,7 @@ import {
   CldUploadWidgetPropsChildren,
 } from "next-cloudinary";
 import { useEffect, useId, useState } from "react";
-import {
-  LuArrowLeft,
-  LuArrowRight,
-  LuChevronLeft,
-  LuChevronRight,
-  LuUpload,
-} from "react-icons/lu";
+import { LuArrowLeft, LuArrowRight, LuUpload } from "react-icons/lu";
 
 interface WidgetMountProps {
   id: string;
