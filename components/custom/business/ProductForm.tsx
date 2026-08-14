@@ -1,6 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
+import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 import { emptyProduct } from "@/data/productForm";
 import { productSchema } from "@/schema/product";
 import { Gender, Product } from "@/server/entities/product";
@@ -18,6 +19,7 @@ import {
   Field,
   Fieldset,
   Input,
+  NumberInput,
   Portal,
   Select,
   Spinner,
@@ -31,7 +33,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import ImageUpload from "../shared/ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
-import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 
 interface Props {
   product?: Product;
@@ -225,15 +226,31 @@ const ProductForm = ({ product }: Props) => {
 
           <Field.Root required invalid={!!errors.discountPercentage}>
             <Field.Label>
-              Discount %<Field.RequiredIndicator />
+              Discount
+              <Field.RequiredIndicator />
             </Field.Label>
-            <Input
-              type="number"
-              step="1"
-              onWheel={(e) => e.currentTarget.blur()}
-              {...register("discountPercentage", {
-                valueAsNumber: true,
-              })}
+            <Controller
+              control={control}
+              name={"discountPercentage"}
+              render={({ field }) => (
+                <NumberInput.Root
+                  min={0}
+                  max={100}
+                  step={1}
+                  w={"full"}
+                  name={field.name}
+                  disabled={field.disabled}
+                  defaultValue={"0"}
+                  formatOptions={{ style: "percent" }}
+                  value={field.value.toString()}
+                  onValueChange={({ valueAsNumber }) =>
+                    field.onChange(valueAsNumber)
+                  }
+                >
+                  <NumberInput.Control />
+                  <NumberInput.Input onBlur={field.onBlur} />
+                </NumberInput.Root>
+              )}
             />
             <Field.ErrorText>
               {errors.discountPercentage?.message}
