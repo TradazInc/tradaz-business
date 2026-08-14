@@ -176,22 +176,24 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
 
       {value.length > 0 && (
         <Carousel.Root
-          spacing={"8px"}
-          slidesPerPage={1.5}
           slideCount={value.length}
+          autoSize
+          spacing={"8px"}
           w={"full"}
           mx={"auto"}
         >
           <Carousel.ItemGroup>
             {value.map((url, index) => (
               <Carousel.Item key={url} index={index}>
-                <CldImage
-                  src={url}
-                  width={200}
-                  height={200}
-                  crop={"fill"}
-                  alt={`Product image ${index + 1}`}
-                />
+                <Box rounded="md" asChild>
+                  <CldImage
+                    src={url}
+                    width={200}
+                    height={200}
+                    crop={"fill"}
+                    alt={`Product image ${index + 1}`}
+                  />
+                </Box>
               </Carousel.Item>
             ))}
           </Carousel.ItemGroup>
