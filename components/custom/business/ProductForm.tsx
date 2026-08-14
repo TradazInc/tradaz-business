@@ -31,6 +31,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import ImageUpload from "../shared/ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
+import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 
 interface Props {
   product?: Product;
@@ -144,7 +145,8 @@ const ProductForm = ({ product }: Props) => {
                   value={field.value}
                   onBlur={field.onBlur}
                   onChange={field.onChange}
-                  invalid={!!fieldState.error}
+                  maxFileSize={MAX_FILE_SIZE}
+                  maxFiles={MAX_FILES}
                 />
                 <Field.ErrorText>{fieldState.error?.message}</Field.ErrorText>
               </Field.Root>
