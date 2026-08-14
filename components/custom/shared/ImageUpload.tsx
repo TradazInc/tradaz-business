@@ -6,7 +6,14 @@ import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 import { darkModePalette, lightModePalette } from "@/data/imageUpload";
 import { CloudinaryResult } from "@/server/entities/storage";
 import { errorOptions } from "@/utilities/errorToastOptions";
-import { Box, Button, Carousel, IconButton, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Carousel,
+  Center,
+  IconButton,
+  VStack,
+} from "@chakra-ui/react";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { useEffect, useId, useState } from "react";
 import { HiUpload } from "react-icons/hi";
@@ -69,9 +76,14 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
                 ))
               : items.map((_, index) => (
                   <Carousel.Item key={index} index={index}>
-                    <Box w={200} h={200} rounded="md" fontSize="2.5rem">
+                    <Center
+                      boxSize={"160px"}
+                      rounded={"md"}
+                      fontSize={"2.5rem"}
+                      bg={"bg.emphasized"}
+                    >
                       {index + 1}
-                    </Box>
+                    </Center>
                   </Carousel.Item>
                 ))}
           </Carousel.ItemGroup>
@@ -127,7 +139,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
         {({ open }) => (
           <Button
             w={"full"}
-            variant={"outline"}
+            variant={"subtle"}
             disabled={isFull}
             onClick={() => open()}
           >
