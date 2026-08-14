@@ -177,7 +177,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
       {value.length > 0 && (
         <Carousel.Root
           slideCount={value.length}
-          autoSize
+          slidesPerPage={MAX_FILES - 0.5}
           spacing={"8px"}
           w={"full"}
           mx={"auto"}
