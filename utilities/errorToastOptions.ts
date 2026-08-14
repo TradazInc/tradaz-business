@@ -7,7 +7,7 @@ export function errorOptions(e: unknown): ToastOptions {
   if (e instanceof BetterFetchError) {
     return {
       title: e.error?.code || e.statusText || e.name,
-      description: e.error?.message || e.message || `Error ${e.status}`,
+      description: e.error?.message || e.message || e.status,
       type: "error",
     };
   } else if (e instanceof Error) {
