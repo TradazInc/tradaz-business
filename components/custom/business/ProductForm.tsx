@@ -228,6 +228,7 @@ const ProductForm = ({ product }: Props) => {
             <Input
               type="number"
               step="1"
+              onWheel={(e) => e.currentTarget.blur()}
               {...register("discountPercentage", {
                 valueAsNumber: true,
               })}

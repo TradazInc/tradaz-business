@@ -147,6 +147,7 @@ const VariationField = ({
               <Input
                 type="number"
                 step="0.01"
+                onWheel={(e) => e.currentTarget.blur()}
                 {...register(`variations.${index}.price`, {
                   valueAsNumber: true,
                 })}

@@ -145,6 +145,7 @@ const TeamVariationField = ({
             </Field.Label>
             <Input
               type="number"
+              onWheel={(e) => e.currentTarget.blur()}
               {...register(
                 `variations.${variationIndex}.teamVariations.${index}.quantity`,
                 { valueAsNumber: true },
