@@ -234,15 +234,15 @@ const ProductForm = ({ product }: Props) => {
               name={"discountPercentage"}
               render={({ field }) => (
                 <NumberInput.Root
-                  min={0}
-                  max={100}
-                  step={1}
+                  step={0.01}
                   w={"full"}
                   name={field.name}
                   disabled={field.disabled}
                   defaultValue={"0"}
                   formatOptions={{ style: "percent" }}
-                  value={field.value.toString()}
+                  value={
+                    Number.isNaN(field.value) ? "" : field.value.toString()
+                  }
                   onValueChange={({ valueAsNumber }) =>
                     field.onChange(valueAsNumber)
                   }

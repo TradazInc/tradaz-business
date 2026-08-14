@@ -159,11 +159,13 @@ const VariationField = ({
                     formatOptions={{
                       style: "currency",
                       currency: "NGN",
-                      currencyDisplay: "symbol",
+                      currencyDisplay: "narrowSymbol",
                       currencySign: "accounting",
                       maximumFractionDigits: 2,
                     }}
-                    value={field.value.toString()}
+                    value={
+                      Number.isNaN(field.value) ? "" : field.value.toString()
+                    }
                     onValueChange={({ valueAsNumber }) =>
                       field.onChange(valueAsNumber)
                     }
