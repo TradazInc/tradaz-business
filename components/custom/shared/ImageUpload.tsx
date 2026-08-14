@@ -8,13 +8,14 @@ import { CloudinaryResult } from "@/server/entities/storage";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import {
   Box,
+  Carousel,
   CloseButton,
   Dialog,
   FileUpload,
   FormatByte,
   Icon,
+  IconButton,
   Portal,
-  SimpleGrid,
   useDialogContext,
   VStack,
 } from "@chakra-ui/react";
@@ -24,7 +25,7 @@ import {
   CldUploadWidgetPropsChildren,
 } from "next-cloudinary";
 import { useEffect, useId, useState } from "react";
-import { LuUpload } from "react-icons/lu";
+import { LuChevronLeft, LuChevronRight, LuUpload } from "react-icons/lu";
 
 interface WidgetMountProps {
   id: string;
@@ -173,23 +174,43 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
         </Portal>
       </Dialog.Root>
 
-      <SimpleGrid
-        columns={{ base: 1, md: 2, lg: 4, "2xl": MAX_FILES }}
-        gap={3}
+      <Carousel.Root
+        spacing={"8px"}
+        slidesPerPage={1.5}
+        slideCount={value.length}
         w={"full"}
+        mx={"auto"}
       >
-        {value.map((url, index) => (
-          <Box key={url} rounded={"md"} overflow={"hidden"} aspectRatio={1}>
-            <CldImage
-              src={url}
-              width={200}
-              height={200}
-              crop={"fill"}
-              alt={`Product image ${index + 1}`}
-            />
-          </Box>
-        ))}
-      </SimpleGrid>
+        <Carousel.ItemGroup>
+          {value.map((url, index) => (
+            <Carousel.Item key={url} index={index}>
+              <CldImage
+                src={url}
+                width={200}
+                height={200}
+                crop={"fill"}
+                alt={`Product image ${index + 1}`}
+              />
+            </Carousel.Item>
+          ))}
+        </Carousel.ItemGroup>
+
+        <Carousel.Control justifyContent="center" gap="4">
+          <Carousel.PrevTrigger asChild>
+            <IconButton size="xs" variant="ghost">
+              <LuChevronLeft />
+            </IconButton>
+          </Carousel.PrevTrigger>
+
+          <Carousel.Indicators />
+
+          <Carousel.NextTrigger asChild>
+            <IconButton size="xs" variant="ghost">
+              <LuChevronRight />
+            </IconButton>
+          </Carousel.NextTrigger>
+        </Carousel.Control>
+      </Carousel.Root>
     </VStack>
   );
 };
