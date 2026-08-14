@@ -72,7 +72,6 @@ const ProductForm = ({ product }: Props) => {
       }),
     [parsedSizeTypes.flatData],
   );
-
   const genderCollection = createListCollection({
     items: [
       { label: "Male", value: Gender.male },
@@ -81,7 +80,6 @@ const ProductForm = ({ product }: Props) => {
     ],
   });
 
-  // Initialize hook form
   const {
     control,
     register,
@@ -121,7 +119,7 @@ const ProductForm = ({ product }: Props) => {
   return (
     <form style={{ width: "100%" }} onSubmit={onSubmit}>
       <Fieldset.Root
-        px={4}
+        my={14}
         w={"full"}
         size={"lg"}
         mx={"auto"}

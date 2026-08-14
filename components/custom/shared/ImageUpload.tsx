@@ -77,13 +77,14 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
         onOpenChange={({ open }) => setOpen(open && !isFull)}
       >
         <FileUpload.Root
-          alignItems={"stretch"}
           w={"full"}
+          alignItems={"stretch"}
           invalid={invalid}
           disabled={isFull}
         >
-          <Dialog.Trigger asChild>
+          <Dialog.Trigger w={"full"} asChild>
             <FileUpload.Dropzone
+              w={"full"}
               _disabled={{
                 opacity: 0.6,
                 bg: "bg.muted",
@@ -98,7 +99,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
               <FileUpload.DropzoneContent>
                 <Box>
                   {isFull
-                    ? "Maximum of 5 images reached"
+                    ? `Maximum of ${MAX_FILES} images reached`
                     : "Click to upload files"}
                 </Box>
                 <Box color={"fg.muted"}>
