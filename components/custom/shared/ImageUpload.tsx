@@ -25,7 +25,13 @@ import {
   CldUploadWidgetPropsChildren,
 } from "next-cloudinary";
 import { useEffect, useId, useState } from "react";
-import { LuChevronLeft, LuChevronRight, LuUpload } from "react-icons/lu";
+import {
+  LuArrowLeft,
+  LuArrowRight,
+  LuChevronLeft,
+  LuChevronRight,
+  LuUpload,
+} from "react-icons/lu";
 
 interface WidgetMountProps {
   id: string;
@@ -177,42 +183,43 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
       {value.length > 0 && (
         <Carousel.Root
           slideCount={value.length}
-          slidesPerPage={MAX_FILES - 0.5}
+          slidesPerPage={MAX_FILES - 1.5}
           spacing={"8px"}
           w={"full"}
           mx={"auto"}
+          gap={"4"}
         >
-          <Carousel.ItemGroup>
-            {value.map((url, index) => (
-              <Carousel.Item key={url} index={index}>
-                <Box rounded="md" asChild>
-                  <CldImage
-                    src={url}
-                    width={200}
-                    height={200}
-                    crop={"fill"}
-                    alt={`Product image ${index + 1}`}
-                  />
-                </Box>
-              </Carousel.Item>
-            ))}
-          </Carousel.ItemGroup>
-
-          <Carousel.Control justifyContent="center" gap="4">
+          <Carousel.Control justifyContent="center" gap="4" width="full">
             <Carousel.PrevTrigger asChild>
-              <IconButton size="xs" variant="ghost">
-                <LuChevronLeft />
+              <IconButton size="xs" variant="outline">
+                <LuArrowLeft />
               </IconButton>
             </Carousel.PrevTrigger>
 
-            <Carousel.Indicators />
+            <Carousel.ItemGroup w="full">
+              {value.map((url, index) => (
+                <Carousel.Item key={url} index={index}>
+                  <Box rounded="md" asChild>
+                    <CldImage
+                      src={url}
+                      width={200}
+                      height={200}
+                      crop={"fill"}
+                      alt={`Product image ${index + 1}`}
+                    />
+                  </Box>
+                </Carousel.Item>
+              ))}
+            </Carousel.ItemGroup>
 
             <Carousel.NextTrigger asChild>
-              <IconButton size="xs" variant="ghost">
-                <LuChevronRight />
+              <IconButton size="xs" variant="outline">
+                <LuArrowRight />
               </IconButton>
             </Carousel.NextTrigger>
           </Carousel.Control>
+
+          <Carousel.Indicators />
         </Carousel.Root>
       )}
     </VStack>
