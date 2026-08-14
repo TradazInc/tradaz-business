@@ -174,43 +174,45 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
         </Portal>
       </Dialog.Root>
 
-      <Carousel.Root
-        spacing={"8px"}
-        slidesPerPage={1.5}
-        slideCount={value.length}
-        w={"full"}
-        mx={"auto"}
-      >
-        <Carousel.ItemGroup>
-          {value.map((url, index) => (
-            <Carousel.Item key={url} index={index}>
-              <CldImage
-                src={url}
-                width={200}
-                height={200}
-                crop={"fill"}
-                alt={`Product image ${index + 1}`}
-              />
-            </Carousel.Item>
-          ))}
-        </Carousel.ItemGroup>
+      {value.length > 0 && (
+        <Carousel.Root
+          spacing={"8px"}
+          slidesPerPage={1.5}
+          slideCount={value.length}
+          w={"full"}
+          mx={"auto"}
+        >
+          <Carousel.ItemGroup>
+            {value.map((url, index) => (
+              <Carousel.Item key={url} index={index}>
+                <CldImage
+                  src={url}
+                  width={200}
+                  height={200}
+                  crop={"fill"}
+                  alt={`Product image ${index + 1}`}
+                />
+              </Carousel.Item>
+            ))}
+          </Carousel.ItemGroup>
 
-        <Carousel.Control justifyContent="center" gap="4">
-          <Carousel.PrevTrigger asChild>
-            <IconButton size="xs" variant="ghost">
-              <LuChevronLeft />
-            </IconButton>
-          </Carousel.PrevTrigger>
+          <Carousel.Control justifyContent="center" gap="4">
+            <Carousel.PrevTrigger asChild>
+              <IconButton size="xs" variant="ghost">
+                <LuChevronLeft />
+              </IconButton>
+            </Carousel.PrevTrigger>
 
-          <Carousel.Indicators />
+            <Carousel.Indicators />
 
-          <Carousel.NextTrigger asChild>
-            <IconButton size="xs" variant="ghost">
-              <LuChevronRight />
-            </IconButton>
-          </Carousel.NextTrigger>
-        </Carousel.Control>
-      </Carousel.Root>
+            <Carousel.NextTrigger asChild>
+              <IconButton size="xs" variant="ghost">
+                <LuChevronRight />
+              </IconButton>
+            </Carousel.NextTrigger>
+          </Carousel.Control>
+        </Carousel.Root>
+      )}
     </VStack>
   );
 };
