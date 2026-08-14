@@ -125,7 +125,7 @@ const ProductForm = ({ product }: Props) => {
         mx={"auto"}
         maxW={{ base: "full", md: "2xl", xl: "4xl" }}
       >
-        <Fieldset.Legend>Product details</Fieldset.Legend>
+        <Fieldset.Legend textStyle="2xl">Product details</Fieldset.Legend>
         <Fieldset.HelperText>
           Please provide your product details below.
         </Fieldset.HelperText>
