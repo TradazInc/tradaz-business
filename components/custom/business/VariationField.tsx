@@ -155,7 +155,13 @@ const VariationField = ({
                     w={"full"}
                     name={field.name}
                     disabled={field.disabled}
-                    formatOptions={{ maximumFractionDigits: 2 }}
+                    formatOptions={{
+                      style: "currency",
+                      currency: "NGN",
+                      currencyDisplay: "code",
+                      currencySign: "accounting",
+                      maximumFractionDigits: 2,
+                    }}
                     value={field.value.toString()}
                     onValueChange={({ valueAsNumber }) =>
                       field.onChange(valueAsNumber)

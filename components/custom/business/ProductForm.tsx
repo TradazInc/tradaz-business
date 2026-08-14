@@ -226,7 +226,8 @@ const ProductForm = ({ product }: Props) => {
 
           <Field.Root required invalid={!!errors.discountPercentage}>
             <Field.Label>
-              Discount %<Field.RequiredIndicator />
+              Discount
+              <Field.RequiredIndicator />
             </Field.Label>
             <Controller
               control={control}
@@ -239,6 +240,7 @@ const ProductForm = ({ product }: Props) => {
                   w={"full"}
                   name={field.name}
                   disabled={field.disabled}
+                  formatOptions={{ style: "percent" }}
                   value={field.value.toString()}
                   onValueChange={({ valueAsNumber }) =>
                     field.onChange(valueAsNumber)
