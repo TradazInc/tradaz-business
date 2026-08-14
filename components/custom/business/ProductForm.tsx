@@ -7,6 +7,7 @@ import { Gender, Product } from "@/server/entities/product";
 import { useAddProduct } from "@/server/hooks/product";
 import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
+import { computePath } from "@/utilities/computePath";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { formProduct } from "@/utilities/formProduct";
 import { parseCursorData } from "@/utilities/parsePagedData";
@@ -23,13 +24,13 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ImageUpload from "../shared/ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
-import ImageUpload from "../shared/ImageUpload";
 
 interface Props {
   product?: Product;
@@ -99,6 +100,7 @@ const ProductForm = ({ product }: Props) => {
       setValue(`variations.${index}.sizeId`, [], { shouldValidate: true }),
     );
 
+  const { businessId } = useParams<{ businessId?: string }>();
   const onSubmit = handleSubmit(async (productData) => {
     const promise = toaster.promise(trigger(productData), {
       loading: { title: "Creating product...", description: "Please wait" },
@@ -112,7 +114,7 @@ const ProductForm = ({ product }: Props) => {
     try {
       const product = await promise.unwrap();
       refresh();
-      push(`/dashboard/business/products/${product.id}`);
+      push(`${computePath({ businessId })}/products/${product.id}`);
     } catch {} // Error displayed by toaster
   });
 
