@@ -1,3 +1,4 @@
+import "./globals.css";
 import { SWRProvider } from "@/components/custom/shared/SWRProvider";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";

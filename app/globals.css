@@ -1,0 +1,7 @@
+/* next-themes sets color-scheme: dark on <html> (enableColorScheme defaults to
+   true). color-scheme inherits, so Cloudinary's injected iframe picks it up and
+   the propagated dark scheme makes the iframe canvas opaque. Pin it to light so
+   the canvas stays transparent in both modes. */
+iframe[src^="https://upload-widget.cloudinary.com/"] {
+  color-scheme: light;
+}
