@@ -32,5 +32,4 @@ export const darkModeStyles = {
     textDark: "#000000",
     textLight: "#FFFFFF",
   },
-  frame: { background: "#111111" },
 };
