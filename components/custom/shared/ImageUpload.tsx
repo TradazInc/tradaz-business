@@ -73,7 +73,6 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
         lazyMount
         size={"cover"}
         open={open}
-        unmountOnExit
         onOpenChange={({ open }) => setOpen(open && !isFull)}
       >
         <FileUpload.Root
