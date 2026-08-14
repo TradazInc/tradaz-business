@@ -17,7 +17,12 @@ import {
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { useEffect, useId, useState } from "react";
 import { HiUpload } from "react-icons/hi";
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
+import {
+  LuArrowLeft,
+  LuArrowRight,
+  LuChevronLeft,
+  LuChevronRight,
+} from "react-icons/lu";
 
 interface Props {
   value: string[];
@@ -52,50 +57,50 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
         mx={"auto"}
         gap={"4"}
       >
-        <Carousel.Control justifyContent="center" gap="4" width="full">
+        <Carousel.ItemGroup w="full">
+          {value.length > 0
+            ? value.map((url, index) => (
+                <Carousel.Item key={url} index={index}>
+                  <Box rounded="md" asChild>
+                    <CldImage
+                      src={url}
+                      aspectRatio={1}
+                      crop={"fill"}
+                      alt={`Product image ${index + 1}`}
+                    />
+                  </Box>
+                </Carousel.Item>
+              ))
+            : items.map((_, index) => (
+                <Carousel.Item key={index} index={index}>
+                  <Center
+                    w="full"
+                    aspectRatio="1"
+                    rounded="md"
+                    fontSize="2.5rem"
+                    bg="bg.emphasized"
+                  >
+                    {index + 1}
+                  </Center>
+                </Carousel.Item>
+              ))}
+        </Carousel.ItemGroup>
+
+        <Carousel.Control justifyContent="center" gap="4">
           <Carousel.PrevTrigger asChild>
-            <IconButton size="xs" variant="outline">
-              <LuArrowLeft />
+            <IconButton size="xs" variant="ghost">
+              <LuChevronLeft />
             </IconButton>
           </Carousel.PrevTrigger>
 
-          <Carousel.ItemGroup w="full">
-            {value.length > 0
-              ? value.map((url, index) => (
-                  <Carousel.Item key={url} index={index}>
-                    <Box rounded="md" asChild>
-                      <CldImage
-                        src={url}
-                        aspectRatio={1}
-                        crop={"fill"}
-                        alt={`Product image ${index + 1}`}
-                      />
-                    </Box>
-                  </Carousel.Item>
-                ))
-              : items.map((_, index) => (
-                  <Carousel.Item key={index} index={index}>
-                    <Center
-                      w="full"
-                      aspectRatio="1"
-                      rounded="md"
-                      fontSize="2.5rem"
-                      bg="bg.emphasized"
-                    >
-                      {index + 1}
-                    </Center>
-                  </Carousel.Item>
-                ))}
-          </Carousel.ItemGroup>
+          <Carousel.Indicators />
 
           <Carousel.NextTrigger asChild>
-            <IconButton size="xs" variant="outline">
-              <LuArrowRight />
+            <IconButton size="xs" variant="ghost">
+              <LuChevronRight />
             </IconButton>
           </Carousel.NextTrigger>
         </Carousel.Control>
-
-        <Carousel.Indicators />
       </Carousel.Root>
 
       <CldUploadWidget
@@ -104,7 +109,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
           cropping: true,
           maxFiles: MAX_FILES - value.length,
           maxFileSize: MAX_FILE_SIZE,
-          styles: { palette, frame: { background: "#111111" } },
+          styles: { palette, frame: { background: "rgba(0, 0, 0, 0)" } },
         }}
         onSuccess={(result) => {
           if (result.event !== "success") return;
