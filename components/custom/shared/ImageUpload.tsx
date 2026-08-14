@@ -45,7 +45,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
   return (
     <VStack gapY={5} w={"full"}>
       <Carousel.Root
-        slideCount={value.length}
+        slideCount={value.length || items.length}
         slidesPerPage={MAX_FILES - 1.5}
         spacing={"8px"}
         w={"full"}
@@ -77,10 +77,11 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
               : items.map((_, index) => (
                   <Carousel.Item key={index} index={index}>
                     <Center
-                      boxSize={"160px"}
-                      rounded={"md"}
-                      fontSize={"2.5rem"}
-                      bg={"bg.emphasized"}
+                      w="full"
+                      aspectRatio="1"
+                      rounded="md"
+                      fontSize="2.5rem"
+                      bg="bg.emphasized"
                     >
                       {index + 1}
                     </Center>
