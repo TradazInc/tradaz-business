@@ -54,18 +54,18 @@ interface Props {
 const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
   const [open, setOpen] = useState(false);
   const palette = useColorModeValue(lightModePalette, darkModePalette);
-  const [pending, setPending] = useState<string[]>([]);
+  const [imageURLs, setImageURLs] = useState<string[]>([]);
   const containerId = useId();
   const toastId = `upload:${containerId}`;
 
   const isFull = disabled || value.length >= MAX_FILES;
 
   useEffect(() => {
-    if (pending.length === 0) return;
-    onChange([...value, ...pending]);
-    setPending([]);
+    if (imageURLs.length === 0) return;
+    onChange([...value, ...imageURLs]);
+    setImageURLs([]);
     onBlur?.();
-  }, [pending, value, onChange, onBlur]);
+  }, [imageURLs, value, onChange, onBlur]);
 
   return (
     <VStack gapY={5} w={"full"}>
@@ -128,7 +128,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
                   onSuccess={(result) => {
                     if (result.event !== "success") return;
                     const info = result.info as CloudinaryResult;
-                    setPending((prev) => [...prev, info.secure_url]);
+                    setImageURLs((prev) => [...prev, info.secure_url]);
                   }}
                   onQueuesStart={() =>
                     toaster.loading({
