@@ -109,7 +109,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
           cropping: true,
           maxFiles: MAX_FILES - value.length,
           maxFileSize: MAX_FILE_SIZE,
-          styles: { palette, frame: { background: "rgba(0, 0, 0, 0)" } },
+          styles: { palette, frame: { background: "#111111" } },
         }}
         onSuccess={(result) => {
           if (result.event !== "success") return;
