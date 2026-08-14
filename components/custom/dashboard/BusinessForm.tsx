@@ -5,6 +5,7 @@ import { lastStep, steps } from "@/data/businessFormSteps";
 import { businessSchema } from "@/schema/business";
 import { useAddBusiness } from "@/server/hooks/business";
 import { useBusinessCategories } from "@/server/hooks/businessCategory";
+import { computePath } from "@/utilities/computePath";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
@@ -21,6 +22,7 @@ import {
   Select,
   Spinner,
   Steps,
+  useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -29,7 +31,6 @@ import { Controller, useForm } from "react-hook-form";
 import { LuFileUp } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
-import { useDialogContext } from "@chakra-ui/react";
 
 interface Props {
   signup?: string;
@@ -87,7 +88,7 @@ export const BusinessForm = ({ signup }: Props) => {
     try {
       const business = await promise.unwrap();
       refresh();
-      push(`/dashboard/business/${business.id}`);
+      push(computePath({ businessId: business.id }));
     } catch {} // Error displayed by toaster
   });
 
