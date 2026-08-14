@@ -68,7 +68,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
   }, [pending, value, onChange, onBlur]);
 
   return (
-    <VStack gapY={5}>
+    <VStack gapY={5} w={"full"}>
       <Dialog.Root
         lazyMount
         size={"cover"}
@@ -82,9 +82,8 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
           invalid={invalid}
           disabled={isFull}
         >
-          <Dialog.Trigger w={"full"} asChild>
+          <Dialog.Trigger asChild>
             <FileUpload.Dropzone
-              w={"full"}
               _disabled={{
                 opacity: 0.6,
                 bg: "bg.muted",
