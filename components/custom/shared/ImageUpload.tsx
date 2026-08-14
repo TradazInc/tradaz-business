@@ -2,8 +2,7 @@
 
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
-import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
-import { darkModePalette, lightModePalette } from "@/data/imageUpload";
+import { darkModeStyles, lightModeStyles } from "@/data/imageUpload";
 import { CloudinaryResult } from "@/server/entities/storage";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import {
@@ -17,27 +16,29 @@ import {
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { useEffect, useId, useState } from "react";
 import { HiUpload } from "react-icons/hi";
-import {
-  LuArrowLeft,
-  LuArrowRight,
-  LuChevronLeft,
-  LuChevronRight,
-} from "react-icons/lu";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 interface Props {
   value: string[];
   onChange: (images: string[]) => void;
   onBlur?: () => void;
-  invalid?: boolean;
   disabled?: boolean;
+  maxFiles: number;
+  maxFileSize: number;
 }
 
-const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
-  const palette = useColorModeValue(lightModePalette, darkModePalette);
+const ImageUpload = ({
+  disabled,
+  onChange,
+  value,
+  onBlur,
+  maxFileSize,
+  maxFiles,
+}: Props) => {
+  const styles = useColorModeValue(lightModeStyles, darkModeStyles);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
   const toastId = useId();
-  const items = Array.from({ length: MAX_FILES });
-  const isFull = disabled || value.length >= MAX_FILES;
+  const items = Array.from({ length: maxFiles });
 
   useEffect(() => {
     // Trigger controller events after render
@@ -51,7 +52,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
     <VStack gapY={5} w={"full"}>
       <Carousel.Root
         slideCount={value.length || items.length}
-        slidesPerPage={MAX_FILES - 1.5}
+        slidesPerPage={maxFiles - 1.5}
         spacing={"8px"}
         w={"full"}
         mx={"auto"}
@@ -106,10 +107,10 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
       <CldUploadWidget
         signatureEndpoint={"/api/media/upload-signature"}
         options={{
+          styles,
           cropping: true,
-          maxFiles: MAX_FILES - value.length,
-          maxFileSize: MAX_FILE_SIZE,
-          styles: { palette, frame: { background: "rgba(0, 0, 0, 0)" } },
+          maxFileSize,
+          maxFiles: maxFiles - value.length,
         }}
         onSuccess={(result) => {
           if (result.event !== "success") return;
@@ -145,7 +146,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
           <Button
             w={"full"}
             variant={"subtle"}
-            disabled={isFull}
+            disabled={disabled || value.length >= maxFiles}
             onClick={() => open()}
           >
             <HiUpload /> Upload images
