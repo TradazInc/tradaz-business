@@ -2,7 +2,7 @@
 
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
-import { darkModeStyles, lightModeStyles } from "@/data/imageUpload";
+import { darkModePalette, lightModePalette } from "@/data/imageUpload";
 import { CloudinaryResult } from "@/server/entities/storage";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import {
@@ -35,7 +35,7 @@ const ImageUpload = ({
   maxFileSize,
   maxFiles,
 }: Props) => {
-  const styles = useColorModeValue(lightModeStyles, darkModeStyles);
+  const palette = useColorModeValue(lightModePalette, darkModePalette);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
   const toastId = useId();
   const items = Array.from({ length: maxFiles });
@@ -107,10 +107,10 @@ const ImageUpload = ({
       <CldUploadWidget
         signatureEndpoint={"/api/media/upload-signature"}
         options={{
-          styles,
           cropping: true,
           maxFileSize,
           maxFiles: maxFiles - value.length,
+          styles: { palette },
         }}
         onSuccess={(result) => {
           if (result.event !== "success") return;
