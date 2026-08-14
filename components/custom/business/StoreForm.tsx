@@ -3,6 +3,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { storeSchema } from "@/schema/store";
 import { useAddStore } from "@/server/hooks/store";
+import { computePath } from "@/utilities/computePath";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
@@ -36,7 +37,7 @@ export const StoreForm = () => {
     try {
       const store = await promise.unwrap();
       refresh();
-      push(`/dashboard/store/${store.id}`);
+      push(computePath({ businessId, storeId: store.id }));
     } catch {} // Error displayed by toaster
   });
 

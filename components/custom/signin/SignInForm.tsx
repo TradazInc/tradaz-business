@@ -6,6 +6,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { emailSignInSchema } from "@/schema/auth";
 import { useEmailSignin, useGoogleSignin } from "@/server/hooks/auth";
+import { computePath } from "@/utilities/computePath";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,12 +37,12 @@ const SignInForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      push("/dashboard");
+      push(computePath({}));
     } catch {} // Error displayed by toaster
   });
 
   const handleGoogleSignIn = async () => {
-    const promise = toaster.promise(trigger("/dashboard"), {
+    const promise = toaster.promise(trigger(computePath({})), {
       loading: { title: "Redirecting…", description: "Please wait" },
       success: {
         title: "Redirect successful",
