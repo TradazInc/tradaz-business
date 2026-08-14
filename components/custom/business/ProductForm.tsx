@@ -121,10 +121,10 @@ const ProductForm = ({ product }: Props) => {
   return (
     <form style={{ width: "100%" }} onSubmit={onSubmit}>
       <Fieldset.Root
-        w="full"
-        size="lg"
-        mx="auto"
-        px={{ base: 4, md: 0 }}
+        px={4}
+        w={"full"}
+        size={"lg"}
+        mx={"auto"}
         maxW={{ base: "full", md: "2xl", xl: "4xl" }}
       >
         <Fieldset.Legend>Product details</Fieldset.Legend>
@@ -132,7 +132,24 @@ const ProductForm = ({ product }: Props) => {
           Please provide your product details below.
         </Fieldset.HelperText>
         <Fieldset.Content>
-          <ImageUpload />
+          <Controller
+            control={control}
+            name={"images"}
+            render={({ field, fieldState }) => (
+              <Field.Root required invalid={!!fieldState.error}>
+                <Field.Label>
+                  Images <Field.RequiredIndicator />
+                </Field.Label>
+                <ImageUpload
+                  value={field.value}
+                  onBlur={field.onBlur}
+                  onChange={field.onChange}
+                  invalid={!!fieldState.error}
+                />
+                <Field.ErrorText>{fieldState.error?.message}</Field.ErrorText>
+              </Field.Root>
+            )}
+          />
 
           <Field.Root required invalid={!!errors.name}>
             <Field.Label>
