@@ -121,7 +121,7 @@ const ProductForm = ({ product }: Props) => {
   return (
     <form style={{ width: "100%" }} onSubmit={onSubmit}>
       <Fieldset.Root
-        px={4}
+        px={14}
         w={"full"}
         size={"lg"}
         mx={"auto"}
