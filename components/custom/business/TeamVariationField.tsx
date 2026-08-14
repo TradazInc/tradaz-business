@@ -157,6 +157,9 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
                 </NumberInput.Root>
               )}
             />
+            <Field.HelperText>
+              Quantity of each variation at each store
+            </Field.HelperText>
             <Field.ErrorText>
               {teamVariationErrors?.[index]?.quantity?.message}
             </Field.ErrorText>
