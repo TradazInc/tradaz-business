@@ -23,7 +23,7 @@ import {
   CldUploadWidget,
   CldUploadWidgetPropsChildren,
 } from "next-cloudinary";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { LuUpload } from "react-icons/lu";
 
 interface WidgetMountProps {
@@ -56,6 +56,7 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
   const palette = useColorModeValue(lightModePalette, darkModePalette);
   const [pending, setPending] = useState<string[]>([]);
   const containerId = useId();
+  const toastId = `upload:${containerId}`;
 
   const isFull = disabled || value.length >= MAX_FILES;
 
@@ -130,8 +131,31 @@ const ImageUpload = ({ disabled, onChange, value, invalid, onBlur }: Props) => {
                     const info = result.info as CloudinaryResult;
                     setPending((prev) => [...prev, info.secure_url]);
                   }}
-                  onQueuesEnd={() => setOpen(false)}
-                  onError={(error) => toaster.error(errorOptions(error))}
+                  onQueuesStart={() =>
+                    toaster.loading({
+                      id: toastId,
+                      title: "Uploading images...",
+                      description: "This may take a moment",
+                    })
+                  }
+                  onQueuesEnd={() => {
+                    toaster.success({
+                      id: toastId,
+                      title: "Upload successful",
+                      description: "Images have been uploaded",
+                    });
+                    setOpen(false);
+                  }}
+                  onBatchCancelled={() =>
+                    toaster.error({
+                      id: toastId,
+                      title: "Upload cancelled",
+                      description: "Image upload was cancelled",
+                    })
+                  }
+                  onError={(error) =>
+                    toaster.create({ id: toastId, ...errorOptions(error) })
+                  }
                 >
                   {({ open, isLoading }) => (
                     <WidgetMount
