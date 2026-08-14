@@ -173,6 +173,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
             size="sm"
             type="button"
             variant="subtle"
+            alignSelf={"flex-start"}
             onClick={() => remove(index)}
           >
             <LuTrash2 />

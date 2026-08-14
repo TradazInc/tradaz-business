@@ -234,7 +234,6 @@ const ProductForm = ({ product }: Props) => {
               name={"discountPercentage"}
               render={({ field }) => (
                 <NumberInput.Root
-                  step={0.01}
                   w={"full"}
                   name={field.name}
                   disabled={field.disabled}
