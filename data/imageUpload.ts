@@ -1,3 +1,5 @@
+import { system } from "@/theme";
+
 export const lightModePalette = {
   window: "#FFFFFF",
   windowBorder: "#90A0B3",
@@ -15,8 +17,8 @@ export const lightModePalette = {
 };
 
 export const darkModePalette = {
-  window: "#18181b",
-  sourceBg: "#18181b",
+  window: system.token("colors.gray.950"),
+  sourceBg: system.token("colors.gray.950"),
   windowBorder: "#8E9FBF",
   tabIcon: "#FFFFFF",
   inactiveTabIcon: "#8E9FBF",
