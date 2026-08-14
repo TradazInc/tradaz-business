@@ -1,4 +1,0 @@
-/* Force cloudinary iFrame to light mode for transparent canvas */
-iframe[src^="https://upload-widget.cloudinary.com/"] {
-  color-scheme: light;
-}
