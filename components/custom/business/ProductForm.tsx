@@ -19,6 +19,7 @@ import {
   Field,
   Fieldset,
   Input,
+  NumberInput,
   Portal,
   Select,
   Spinner,
@@ -227,13 +228,26 @@ const ProductForm = ({ product }: Props) => {
             <Field.Label>
               Discount %<Field.RequiredIndicator />
             </Field.Label>
-            <Input
-              type="number"
-              step="1"
-              onWheel={(e) => e.currentTarget.blur()}
-              {...register("discountPercentage", {
-                valueAsNumber: true,
-              })}
+            <Controller
+              control={control}
+              name={"discountPercentage"}
+              render={({ field }) => (
+                <NumberInput.Root
+                  min={0}
+                  max={100}
+                  step={1}
+                  w={"full"}
+                  name={field.name}
+                  disabled={field.disabled}
+                  value={field.value.toString()}
+                  onValueChange={({ valueAsNumber }) =>
+                    field.onChange(valueAsNumber)
+                  }
+                >
+                  <NumberInput.Control />
+                  <NumberInput.Input onBlur={field.onBlur} />
+                </NumberInput.Root>
+              )}
             />
             <Field.ErrorText>
               {errors.discountPercentage?.message}

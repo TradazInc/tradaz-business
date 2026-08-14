@@ -1,5 +1,6 @@
 import { emptyVariation } from "@/data/productForm";
 import { ProductData, ProductFormValues } from "@/schema/product";
+import { SizeType } from "@/server/entities/sizeType";
 import {
   Box,
   Button,
@@ -10,6 +11,7 @@ import {
   HStack,
   IconButton,
   Input,
+  NumberInput,
   parseColor,
   Portal,
   Select,
@@ -17,6 +19,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useMemo } from "react";
 import {
   Control,
   Controller,
@@ -27,8 +30,6 @@ import {
 } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 import TeamVariationField from "./TeamVariationField";
-import { useMemo } from "react";
-import { SizeType } from "@/server/entities/sizeType";
 
 interface Props {
   control: Control<ProductFormValues, unknown, ProductData>;
@@ -144,13 +145,26 @@ const VariationField = ({
               <Field.Label>
                 Price <Field.RequiredIndicator />
               </Field.Label>
-              <Input
-                type="number"
-                step="0.01"
-                onWheel={(e) => e.currentTarget.blur()}
-                {...register(`variations.${index}.price`, {
-                  valueAsNumber: true,
-                })}
+              <Controller
+                control={control}
+                name={`variations.${index}.price`}
+                render={({ field }) => (
+                  <NumberInput.Root
+                    min={0}
+                    step={0.01}
+                    w={"full"}
+                    name={field.name}
+                    disabled={field.disabled}
+                    formatOptions={{ maximumFractionDigits: 2 }}
+                    value={field.value.toString()}
+                    onValueChange={({ valueAsNumber }) =>
+                      field.onChange(valueAsNumber)
+                    }
+                  >
+                    <NumberInput.Control />
+                    <NumberInput.Input onBlur={field.onBlur} />
+                  </NumberInput.Root>
+                )}
               />
               <Field.ErrorText>
                 {errors.variations?.[index]?.price?.message}
@@ -219,7 +233,6 @@ const VariationField = ({
 
             <TeamVariationField
               control={control}
-              register={register}
               errors={errors}
               variationIndex={index}
             />

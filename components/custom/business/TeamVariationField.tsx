@@ -9,7 +9,7 @@ import {
   Field,
   Fieldset,
   IconButton,
-  Input,
+  NumberInput,
   Portal,
   Select,
   Spinner,
@@ -21,23 +21,16 @@ import {
   Controller,
   FieldErrors,
   useFieldArray,
-  UseFormRegister,
 } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 
 interface Props {
   control: Control<ProductFormValues, unknown, ProductData>;
-  register: UseFormRegister<ProductFormValues>;
   errors: FieldErrors<ProductFormValues>;
   variationIndex: number;
 }
 
-const TeamVariationField = ({
-  control,
-  register,
-  errors,
-  variationIndex,
-}: Props) => {
+const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
   // Fetch data
   const { businessId } = useParams<{ businessId?: string }>();
   const { data, isLoading, error, mutate } = useStores(businessId);
@@ -143,12 +136,25 @@ const TeamVariationField = ({
             <Field.Label>
               Quantity <Field.RequiredIndicator />
             </Field.Label>
-            <Input
-              type="number"
-              onWheel={(e) => e.currentTarget.blur()}
-              {...register(
-                `variations.${variationIndex}.teamVariations.${index}.quantity`,
-                { valueAsNumber: true },
+            <Controller
+              control={control}
+              name={`variations.${variationIndex}.teamVariations.${index}.quantity`}
+              render={({ field }) => (
+                <NumberInput.Root
+                  min={0}
+                  step={1}
+                  w={"full"}
+                  name={field.name}
+                  disabled={field.disabled}
+                  formatOptions={{ maximumFractionDigits: 0 }}
+                  value={field.value.toString()}
+                  onValueChange={({ valueAsNumber }) =>
+                    field.onChange(valueAsNumber)
+                  }
+                >
+                  <NumberInput.Control />
+                  <NumberInput.Input onBlur={field.onBlur} />
+                </NumberInput.Root>
               )}
             />
             <Field.ErrorText>
