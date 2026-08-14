@@ -17,7 +17,7 @@ export type TeamVariationFormValues = z.input<typeof teamVariationSchema>;
 const variationSchema = z.object({
   sku: z
     .string({ error: "sku is required" })
-    .min(1, { error: "sku is required" }),
+    .min(2, { error: "sku is required" }),
 
   color: z
     .string({ error: "color is required" })
@@ -62,13 +62,13 @@ export const productSchema = z.object({
 
   brand: z
     .string({ error: "brand is required" })
-    .min(1, { error: "brand is required" }),
+    .min(2, { error: "brand is required" }),
 
   gender: z.enum(Gender, { error: "select a gender" }),
 
   description: z
     .string({ error: "description is required" })
-    .min(1, { error: "description is required" }),
+    .min(2, { error: "description is required" }),
 
   discountPercentage: z
     .number({ error: "discount is required" })
