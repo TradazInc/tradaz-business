@@ -146,6 +146,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
                   w={"full"}
                   name={field.name}
                   disabled={field.disabled}
+                  defaultValue={"0"}
                   formatOptions={{ maximumFractionDigits: 0 }}
                   value={field.value.toString()}
                   onValueChange={({ valueAsNumber }) =>

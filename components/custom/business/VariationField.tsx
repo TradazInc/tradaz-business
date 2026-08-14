@@ -155,10 +155,11 @@ const VariationField = ({
                     w={"full"}
                     name={field.name}
                     disabled={field.disabled}
+                    defaultValue={"0"}
                     formatOptions={{
                       style: "currency",
                       currency: "NGN",
-                      currencyDisplay: "code",
+                      currencyDisplay: "symbol",
                       currencySign: "accounting",
                       maximumFractionDigits: 2,
                     }}

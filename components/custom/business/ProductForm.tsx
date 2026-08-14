@@ -240,6 +240,7 @@ const ProductForm = ({ product }: Props) => {
                   w={"full"}
                   name={field.name}
                   disabled={field.disabled}
+                  defaultValue={"0"}
                   formatOptions={{ style: "percent" }}
                   value={field.value.toString()}
                   onValueChange={({ valueAsNumber }) =>
