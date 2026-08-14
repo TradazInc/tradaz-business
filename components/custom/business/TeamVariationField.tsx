@@ -122,6 +122,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
                 Click to retry
               </Button>
             )}
+            <Field.HelperText>Store with variation available</Field.HelperText>
             <Field.ErrorText>
               {error
                 ? "Stores unavailable. Retry to continue."
@@ -148,7 +149,9 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
                   disabled={field.disabled}
                   defaultValue={"0"}
                   formatOptions={{ maximumFractionDigits: 0 }}
-                  value={field.value.toString()}
+                  value={
+                    Number.isNaN(field.value) ? "" : field.value.toString()
+                  }
                   onValueChange={({ valueAsNumber }) =>
                     field.onChange(valueAsNumber)
                   }
@@ -159,7 +162,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
               )}
             />
             <Field.HelperText>
-              Quantity of each variation at each store
+              Quantity of variation at the store
             </Field.HelperText>
             <Field.ErrorText>
               {teamVariationErrors?.[index]?.quantity?.message}
