@@ -6,7 +6,7 @@ export const lightModePalette = {
   windowBorder: system.token("colors.gray.300"),
   tabIcon: system.token("colors.black"),
   inactiveTabIcon: system.token("colors.gray.400"),
-  menuIcons: system.token("colors.gray.200"),
+  menuIcons: system.token("colors.black"),
   link: system.token("colors.gray.100"),
   action: system.token("colors.orange.600"),
   inProgress: system.token("colors.blue.600"),
