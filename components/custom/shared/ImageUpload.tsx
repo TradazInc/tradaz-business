@@ -25,6 +25,7 @@ interface Props {
   disabled?: boolean;
   maxFiles: number;
   maxFileSize: number;
+  slidesPerPage: number;
 }
 
 const ImageUpload = ({
@@ -34,6 +35,7 @@ const ImageUpload = ({
   onBlur,
   maxFileSize,
   maxFiles,
+  slidesPerPage,
 }: Props) => {
   const palette = useColorModeValue(lightModePalette, darkModePalette);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
@@ -52,7 +54,7 @@ const ImageUpload = ({
     <VStack gapY={5} w={"full"}>
       <Carousel.Root
         slideCount={value.length || items.length}
-        slidesPerPage={maxFiles - 1.5}
+        slidesPerPage={slidesPerPage}
         spacing={"8px"}
         w={"full"}
         mx={"auto"}

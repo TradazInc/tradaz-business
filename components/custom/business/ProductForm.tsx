@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
+import { MAX_FILE_SIZE, MAX_FILES, SLIDES_PER_PAGE } from "@/data/constants";
 import { emptyProduct } from "@/data/productForm";
 import { productSchema } from "@/schema/product";
 import { Gender, Product } from "@/server/entities/product";
@@ -148,6 +148,7 @@ const ProductForm = ({ product }: Props) => {
                   onChange={field.onChange}
                   maxFileSize={MAX_FILE_SIZE}
                   maxFiles={MAX_FILES}
+                  slidesPerPage={SLIDES_PER_PAGE}
                 />
                 <Field.ErrorText>{fieldState.error?.message}</Field.ErrorText>
               </Field.Root>
