@@ -147,7 +147,6 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
                   w={"full"}
                   name={field.name}
                   disabled={field.disabled}
-                  defaultValue={"0"}
                   formatOptions={{ maximumFractionDigits: 0 }}
                   value={
                     Number.isNaN(field.value) ? "" : field.value.toString()
@@ -173,7 +172,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
             size="sm"
             type="button"
             variant="subtle"
-            alignSelf={"flex-start"}
+            alignSelf={"center"}
             onClick={() => remove(index)}
           >
             <LuTrash2 />
