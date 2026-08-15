@@ -22,7 +22,7 @@ export const darkModePalette = {
   windowBorder: system.token("colors.gray.500"),
   tabIcon: system.token("colors.gray.50"),
   inactiveTabIcon: system.token("colors.gray.500"),
-  menuIcons: system.token("colors.cyan.500"),
+  menuIcons: system.token("colors.white"),
   link: system.token("colors.gray.800"),
   action: system.token("colors.blue.600"),
   inProgress: system.token("colors.blue.300"),
