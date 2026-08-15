@@ -226,7 +226,7 @@ const ProductForm = ({ product }: Props) => {
 
           <Field.Root required invalid={!!errors.discountPercentage}>
             <Field.Label>
-              Discount %
+              Discount
               <Field.RequiredIndicator />
             </Field.Label>
             <Controller
@@ -238,6 +238,7 @@ const ProductForm = ({ product }: Props) => {
                   name={field.name}
                   disabled={field.disabled}
                   defaultValue={"0"}
+                  formatOptions={{ style: "percent", maximumFractionDigits: 0 }}
                   value={
                     Number.isNaN(field.value) ? "" : field.value.toString()
                   }
