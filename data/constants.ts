@@ -1,3 +1,4 @@
 export const PAGE_SIZE = 20;
 export const MAX_FILES = 5;
 export const MAX_FILE_SIZE = 5 * 1000 * 1000; // 5MB
+export const SLIDES_PER_PAGE = 3.5;
