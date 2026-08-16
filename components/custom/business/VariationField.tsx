@@ -11,14 +11,12 @@ import {
   GridItem,
   HStack,
   IconButton,
-  Input,
   NumberInput,
   parseColor,
   Portal,
   Select,
   SimpleGrid,
   Spinner,
-  Stack,
   Text,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
