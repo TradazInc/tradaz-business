@@ -114,7 +114,6 @@ const ImageUpload = ({
           styles: { palette },
         }}
         onSuccess={(result) => {
-          if (result.event !== "success") return;
           const info = result.info;
           if (!info || typeof info === "string") return;
           setImageURLs((prev) => [...prev, info.secure_url]);
@@ -133,18 +132,27 @@ const ImageUpload = ({
             description: "Images have been uploaded",
           })
         }
-        onBatchCancelled={() =>
-          toaster.error({
+        onRetry={() =>
+          toaster.loading({
             id: toastId,
-            title: "Upload cancelled",
-            description: "Image upload was cancelled",
+            title: "Retrying upload...",
+            description: "Please wait",
           })
         }
+        onBatchCancelled={(result) => {
+          const info = result.info;
+          if (typeof info === "string") return;
+          toaster.warning({
+            id: toastId,
+            title: "Upload cancelled",
+            description: info?.reason ?? "Image upload was cancelled",
+          });
+        }}
         onError={(error) =>
           toaster.create({ id: toastId, ...errorOptions(error) })
         }
         onAbort={() =>
-          toaster.error({
+          toaster.warning({
             id: toastId,
             title: "Upload aborted",
             description: "Image upload was aborted",
