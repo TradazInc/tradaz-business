@@ -18,7 +18,6 @@ export const emptyProduct: ProductFormValues = {
 };
 
 export const emptyVariation: VariationFormValues = {
-  sku: "",
   color: "#000000",
   price: 0,
   sizeId: [],

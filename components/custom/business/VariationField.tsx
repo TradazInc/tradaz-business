@@ -8,6 +8,7 @@ import {
   createListCollection,
   Field,
   Fieldset,
+  GridItem,
   HStack,
   IconButton,
   Input,
@@ -15,6 +16,7 @@ import {
   parseColor,
   Portal,
   Select,
+  SimpleGrid,
   Spinner,
   Stack,
   Text,
@@ -87,17 +89,7 @@ const VariationField = ({
             </IconButton>
           </HStack>
 
-          <Stack gap={4}>
-            <Field.Root required invalid={!!errors.variations?.[index]?.sku}>
-              <Field.Label>
-                SKU <Field.RequiredIndicator />
-              </Field.Label>
-              <Input {...register(`variations.${index}.sku`)} />
-              <Field.ErrorText>
-                {errors.variations?.[index]?.sku?.message}
-              </Field.ErrorText>
-            </Field.Root>
-
+          <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
             <Field.Root required invalid={!!errors.variations?.[index]?.color}>
               <Field.Label>
                 Color <Field.RequiredIndicator />
@@ -107,6 +99,8 @@ const VariationField = ({
                 control={control}
                 render={({ field }) => (
                   <ColorPicker.Root
+                    w={"full"}
+                    variant={"subtle"}
                     name={field.name}
                     value={parseColor(field.value)}
                     onValueChange={({ value }) =>
@@ -138,44 +132,6 @@ const VariationField = ({
               />
               <Field.ErrorText>
                 {errors.variations?.[index]?.color?.message}
-              </Field.ErrorText>
-            </Field.Root>
-
-            <Field.Root required invalid={!!errors.variations?.[index]?.price}>
-              <Field.Label>
-                Price <Field.RequiredIndicator />
-              </Field.Label>
-              <Controller
-                control={control}
-                name={`variations.${index}.price`}
-                render={({ field }) => (
-                  <NumberInput.Root
-                    min={0}
-                    step={0.01}
-                    w={"full"}
-                    name={field.name}
-                    disabled={field.disabled}
-                    formatOptions={{
-                      style: "currency",
-                      currency: "NGN",
-                      currencyDisplay: "symbol",
-                      currencySign: "accounting",
-                      maximumFractionDigits: 2,
-                    }}
-                    value={
-                      Number.isNaN(field.value) ? "" : field.value.toString()
-                    }
-                    onValueChange={({ valueAsNumber }) =>
-                      field.onChange(valueAsNumber)
-                    }
-                  >
-                    <NumberInput.Control />
-                    <NumberInput.Input onBlur={field.onBlur} />
-                  </NumberInput.Root>
-                )}
-              />
-              <Field.ErrorText>
-                {errors.variations?.[index]?.price?.message}
               </Field.ErrorText>
             </Field.Root>
 
@@ -239,12 +195,55 @@ const VariationField = ({
               </Field.ErrorText>
             </Field.Root>
 
+            <GridItem colSpan={{ base: 1, md: 2 }}>
+              <Field.Root
+                required
+                invalid={!!errors.variations?.[index]?.price}
+              >
+                <Field.Label>
+                  Price <Field.RequiredIndicator />
+                </Field.Label>
+                <Controller
+                  control={control}
+                  name={`variations.${index}.price`}
+                  render={({ field }) => (
+                    <NumberInput.Root
+                      min={0}
+                      step={0.01}
+                      w={"full"}
+                      name={field.name}
+                      disabled={field.disabled}
+                      formatOptions={{
+                        style: "currency",
+                        currency: "NGN",
+                        currencyDisplay: "symbol",
+                        currencySign: "accounting",
+                        maximumFractionDigits: 2,
+                      }}
+                      value={
+                        Number.isNaN(field.value) ? "" : field.value.toString()
+                      }
+                      onValueChange={({ valueAsNumber }) =>
+                        field.onChange(valueAsNumber)
+                      }
+                    >
+                      <NumberInput.Control />
+                      <NumberInput.Input onBlur={field.onBlur} />
+                    </NumberInput.Root>
+                  )}
+                />
+                <Field.ErrorText>
+                  {errors.variations?.[index]?.price?.message}
+                </Field.ErrorText>
+              </Field.Root>
+            </GridItem>
+
             <TeamVariationField
               control={control}
               errors={errors}
               variationIndex={index}
             />
-          </Stack>
+          </SimpleGrid>
         </Fieldset.Content>
       ))}
 

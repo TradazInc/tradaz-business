@@ -144,19 +144,21 @@ const ProductForm = ({ product }: Props) => {
                   Images <Field.RequiredIndicator />
                 </Field.Label>
                 <ImageUpload
-                  value={field.value}
-                  onBlur={field.onBlur}
-                  onChange={field.onChange}
-                  maxFileSize={MAX_FILE_SIZE}
                   maxFiles={MAX_FILES}
+                  maxFileSize={MAX_FILE_SIZE}
                   slidesPerPage={SLIDES_PER_PAGE}
+                  value={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    field.onBlur();
+                  }}
                 />
                 <Field.ErrorText>{fieldState.error?.message}</Field.ErrorText>
               </Field.Root>
             )}
           />
 
-          <SimpleGrid columns={2} gap={4}>
+          <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
             <Field.Root required invalid={!!errors.name}>
               <Field.Label>
                 Name <Field.RequiredIndicator />
@@ -259,7 +261,7 @@ const ProductForm = ({ product }: Props) => {
             <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
           </Field.Root>
 
-          <SimpleGrid columns={2} gap={4}>
+          <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
             <Field.Root required invalid={!!errors.categoryId}>
               <Field.Label>
                 Product category <Field.RequiredIndicator />

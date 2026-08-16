@@ -19,8 +19,7 @@ import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 interface Props {
   value: string[];
-  onChange: (images: string[]) => void;
-  onBlur?: () => void;
+  onValueChange: (images: string[]) => void;
   disabled?: boolean;
   maxFiles: number;
   maxFileSize: number;
@@ -29,12 +28,11 @@ interface Props {
 
 const ImageUpload = ({
   disabled,
-  onChange,
-  value,
-  onBlur,
-  maxFileSize,
   maxFiles,
+  maxFileSize,
+  onValueChange,
   slidesPerPage,
+  value,
 }: Props) => {
   const palette = useColorModeValue(lightModePalette, darkModePalette);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
@@ -44,10 +42,9 @@ const ImageUpload = ({
   useEffect(() => {
     // Trigger controller events after render
     if (imageURLs.length === 0) return;
-    onChange([...value, ...imageURLs]);
+    onValueChange([...value, ...imageURLs]);
     setImageURLs([]);
-    onBlur?.();
-  }, [imageURLs, value, onChange, onBlur]);
+  }, [imageURLs, value, onValueChange]);
 
   return (
     <VStack gapY={5} w={"full"}>
@@ -110,7 +107,7 @@ const ImageUpload = ({
         options={{
           cropping: true,
           maxFileSize,
-          maxFiles: maxFiles - value.length,
+          maxFiles: maxFiles,
           styles: { palette },
         }}
         onSuccess={(result) => {
