@@ -22,7 +22,6 @@ import {
   NumberInput,
   Portal,
   Select,
-  SimpleGrid,
   Spinner,
   Textarea,
 } from "@chakra-ui/react";
@@ -31,6 +30,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import InfiniteScroll from "react-infinite-scroll-component";
+import FormInputGrid from "../shared/FormInputGrid";
 import ImageUpload from "../shared/ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
@@ -158,7 +158,7 @@ const ProductForm = ({ product }: Props) => {
             )}
           />
 
-          <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+          <FormInputGrid>
             <Field.Root required invalid={!!errors.name}>
               <Field.Label>
                 Name <Field.RequiredIndicator />
@@ -250,7 +250,7 @@ const ProductForm = ({ product }: Props) => {
                 {errors.discountPercentage?.message}
               </Field.ErrorText>
             </Field.Root>
-          </SimpleGrid>
+          </FormInputGrid>
 
           <Field.Root invalid={!!errors.description}>
             <Field.Label>Description</Field.Label>
@@ -261,7 +261,7 @@ const ProductForm = ({ product }: Props) => {
             <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
           </Field.Root>
 
-          <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+          <FormInputGrid>
             <Field.Root required invalid={!!errors.categoryId}>
               <Field.Label>
                 Product category <Field.RequiredIndicator />
@@ -386,7 +386,7 @@ const ProductForm = ({ product }: Props) => {
               />
               <Field.ErrorText>{errors.sizeTypeId?.message}</Field.ErrorText>
             </Field.Root>
-          </SimpleGrid>
+          </FormInputGrid>
 
           <VariationField
             control={control}
