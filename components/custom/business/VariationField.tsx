@@ -25,7 +25,6 @@ import {
   Controller,
   FieldErrors,
   useFieldArray,
-  UseFormRegister,
   useWatch,
 } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
@@ -33,19 +32,12 @@ import TeamVariationField from "./TeamVariationField";
 
 interface Props {
   control: Control<ProductFormValues, unknown, ProductData>;
-  register: UseFormRegister<ProductFormValues>;
   errors: FieldErrors<ProductFormValues>;
   sizeTypes: SizeType[];
   isLoading: boolean;
 }
 
-const VariationField = ({
-  control,
-  errors,
-  register,
-  sizeTypes,
-  isLoading,
-}: Props) => {
+const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "variations",
@@ -234,13 +226,13 @@ const VariationField = ({
                 </Field.ErrorText>
               </Field.Root>
             </GridItem>
-
-            <TeamVariationField
-              control={control}
-              errors={errors}
-              variationIndex={index}
-            />
           </SimpleGrid>
+
+          <TeamVariationField
+            control={control}
+            errors={errors}
+            variationIndex={index}
+          />
         </Fieldset.Content>
       ))}
 
