@@ -15,7 +15,6 @@ import {
   parseColor,
   Portal,
   Select,
-  SimpleGrid,
   Spinner,
   Text,
 } from "@chakra-ui/react";
@@ -28,6 +27,7 @@ import {
   useWatch,
 } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
+import FormInputGrid from "../shared/FormInputGrid";
 import TeamVariationField from "./TeamVariationField";
 
 interface Props {
@@ -79,51 +79,7 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
             </IconButton>
           </HStack>
 
-          <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
-            <Field.Root required invalid={!!errors.variations?.[index]?.color}>
-              <Field.Label>
-                Color <Field.RequiredIndicator />
-              </Field.Label>
-              <Controller
-                name={`variations.${index}.color`}
-                control={control}
-                render={({ field }) => (
-                  <ColorPicker.Root
-                    w={"full"}
-                    name={field.name}
-                    value={parseColor(field.value)}
-                    onValueChange={({ value }) =>
-                      field.onChange(value.toString("hex"))
-                    }
-                    onInteractOutside={() => field.onBlur()}
-                  >
-                    <ColorPicker.HiddenInput />
-                    <ColorPicker.Control>
-                      <ColorPicker.Input />
-                      <ColorPicker.Trigger />
-                    </ColorPicker.Control>
-                    <Portal>
-                      <ColorPicker.Positioner>
-                        <ColorPicker.Content>
-                          <ColorPicker.Area />
-                          <HStack>
-                            <ColorPicker.EyeDropper
-                              size="sm"
-                              variant="outline"
-                            />
-                            <ColorPicker.Sliders />
-                          </HStack>
-                        </ColorPicker.Content>
-                      </ColorPicker.Positioner>
-                    </Portal>
-                  </ColorPicker.Root>
-                )}
-              />
-              <Field.ErrorText>
-                {errors.variations?.[index]?.color?.message}
-              </Field.ErrorText>
-            </Field.Root>
-
+          <FormInputGrid>
             <Field.Root required invalid={!!errors.variations?.[index]?.sizeId}>
               <Field.Label>
                 Size <Field.RequiredIndicator />
@@ -226,7 +182,51 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
                 </Field.ErrorText>
               </Field.Root>
             </GridItem>
-          </SimpleGrid>
+
+            <Field.Root required invalid={!!errors.variations?.[index]?.color}>
+              <Field.Label>
+                Color <Field.RequiredIndicator />
+              </Field.Label>
+              <Controller
+                name={`variations.${index}.color`}
+                control={control}
+                render={({ field }) => (
+                  <ColorPicker.Root
+                    w={"full"}
+                    name={field.name}
+                    value={parseColor(field.value)}
+                    onValueChange={({ value }) =>
+                      field.onChange(value.toString("hex"))
+                    }
+                    onInteractOutside={() => field.onBlur()}
+                  >
+                    <ColorPicker.HiddenInput />
+                    <ColorPicker.Control>
+                      <ColorPicker.Input />
+                      <ColorPicker.Trigger />
+                    </ColorPicker.Control>
+                    <Portal>
+                      <ColorPicker.Positioner>
+                        <ColorPicker.Content>
+                          <ColorPicker.Area />
+                          <HStack>
+                            <ColorPicker.EyeDropper
+                              size="sm"
+                              variant="outline"
+                            />
+                            <ColorPicker.Sliders />
+                          </HStack>
+                        </ColorPicker.Content>
+                      </ColorPicker.Positioner>
+                    </Portal>
+                  </ColorPicker.Root>
+                )}
+              />
+              <Field.ErrorText>
+                {errors.variations?.[index]?.color?.message}
+              </Field.ErrorText>
+            </Field.Root>
+          </FormInputGrid>
 
           <TeamVariationField
             control={control}
