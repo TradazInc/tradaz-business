@@ -143,7 +143,13 @@ const ImageUpload = ({
         onError={(error) =>
           toaster.create({ id: toastId, ...errorOptions(error) })
         }
-        onAbort={() => toaster.dismiss(toastId)}
+        onAbort={() =>
+          toaster.error({
+            id: toastId,
+            title: "Upload aborted",
+            description: "Image upload was aborted",
+          })
+        }
       >
         {({ open }) => (
           <Button
