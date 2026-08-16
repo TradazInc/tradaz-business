@@ -22,6 +22,7 @@ import {
   NumberInput,
   Portal,
   Select,
+  SimpleGrid,
   Spinner,
   Textarea,
 } from "@chakra-ui/react";
@@ -155,21 +156,99 @@ const ProductForm = ({ product }: Props) => {
             )}
           />
 
-          <Field.Root required invalid={!!errors.name}>
-            <Field.Label>
-              Name <Field.RequiredIndicator />
-            </Field.Label>
-            <Input {...register("name")} />
-            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-          </Field.Root>
+          <SimpleGrid columns={2}>
+            <Field.Root required invalid={!!errors.name}>
+              <Field.Label>
+                Name <Field.RequiredIndicator />
+              </Field.Label>
+              <Input {...register("name")} />
+              <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+            </Field.Root>
 
-          <Field.Root required invalid={!!errors.brand}>
-            <Field.Label>
-              Brand <Field.RequiredIndicator />
-            </Field.Label>
-            <Input {...register("brand")} />
-            <Field.ErrorText>{errors.brand?.message}</Field.ErrorText>
-          </Field.Root>
+            <Field.Root required invalid={!!errors.brand}>
+              <Field.Label>
+                Brand <Field.RequiredIndicator />
+              </Field.Label>
+              <Input {...register("brand")} />
+              <Field.ErrorText>{errors.brand?.message}</Field.ErrorText>
+            </Field.Root>
+
+            <Field.Root required invalid={!!errors.gender}>
+              <Field.Label>
+                Gender <Field.RequiredIndicator />
+              </Field.Label>
+              <Controller
+                control={control}
+                name={"gender"}
+                render={({ field }) => (
+                  <Select.Root
+                    name={field.name}
+                    value={[field.value]}
+                    onValueChange={({ value }) => {
+                      field.onChange(value[0]);
+                      field.onBlur();
+                    }}
+                    onInteractOutside={() => field.onBlur()}
+                    collection={genderCollection}
+                  >
+                    <Select.HiddenSelect />
+                    <Select.Control>
+                      <Select.Trigger>
+                        <Select.ValueText placeholder={"Select gender"} />
+                      </Select.Trigger>
+                      <Select.IndicatorGroup>
+                        <Select.Indicator />
+                      </Select.IndicatorGroup>
+                    </Select.Control>
+                    <Portal>
+                      <Select.Positioner>
+                        <Select.Content>
+                          {genderCollection.items.map((gender) => (
+                            <Select.Item item={gender} key={gender.value}>
+                              {gender.label}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))}
+                        </Select.Content>
+                      </Select.Positioner>
+                    </Portal>
+                  </Select.Root>
+                )}
+              />
+              <Field.ErrorText>{errors.gender?.message}</Field.ErrorText>
+            </Field.Root>
+
+            <Field.Root required invalid={!!errors.discountPercentage}>
+              <Field.Label>
+                Discount %
+                <Field.RequiredIndicator />
+              </Field.Label>
+              <Controller
+                control={control}
+                name={"discountPercentage"}
+                render={({ field }) => (
+                  <NumberInput.Root
+                    w={"full"}
+                    name={field.name}
+                    disabled={field.disabled}
+                    defaultValue={"0"}
+                    value={
+                      Number.isNaN(field.value) ? "" : field.value.toString()
+                    }
+                    onValueChange={({ valueAsNumber }) =>
+                      field.onChange(valueAsNumber)
+                    }
+                  >
+                    <NumberInput.Control />
+                    <NumberInput.Input onBlur={field.onBlur} />
+                  </NumberInput.Root>
+                )}
+              />
+              <Field.ErrorText>
+                {errors.discountPercentage?.message}
+              </Field.ErrorText>
+            </Field.Root>
+          </SimpleGrid>
 
           <Field.Root invalid={!!errors.description}>
             <Field.Label>Description</Field.Label>
@@ -180,206 +259,132 @@ const ProductForm = ({ product }: Props) => {
             <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root required invalid={!!errors.gender}>
-            <Field.Label>
-              Gender <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"gender"}
-              render={({ field }) => (
-                <Select.Root
-                  name={field.name}
-                  value={[field.value]}
-                  onValueChange={({ value }) => {
-                    field.onChange(value[0]);
-                    field.onBlur();
-                  }}
-                  onInteractOutside={() => field.onBlur()}
-                  collection={genderCollection}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder={"Select gender"} />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      <Select.Indicator />
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content>
-                        {genderCollection.items.map((gender) => (
-                          <Select.Item item={gender} key={gender.value}>
-                            {gender.label}
-                            <Select.ItemIndicator />
-                          </Select.Item>
-                        ))}
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
-                </Select.Root>
-              )}
-            />
-            <Field.ErrorText>{errors.gender?.message}</Field.ErrorText>
-          </Field.Root>
+          <SimpleGrid columns={2}>
+            <Field.Root required invalid={!!errors.categoryId}>
+              <Field.Label>
+                Product category <Field.RequiredIndicator />
+              </Field.Label>
+              <Controller
+                control={control}
+                name={"categoryId"}
+                render={({ field }) => (
+                  <Select.Root
+                    name={field.name}
+                    value={field.value}
+                    onValueChange={({ value }) => {
+                      field.onChange(value);
+                      field.onBlur();
+                    }}
+                    onInteractOutside={() => field.onBlur()}
+                    collection={categoryCollection}
+                  >
+                    <Select.HiddenSelect />
+                    <Select.Control>
+                      <Select.Trigger>
+                        <Select.ValueText placeholder={"Select category"} />
+                      </Select.Trigger>
+                      <Select.IndicatorGroup>
+                        <Select.ClearTrigger />
+                        {categories.isLoading ? (
+                          <Spinner size="sm" />
+                        ) : (
+                          <Select.Indicator />
+                        )}
+                      </Select.IndicatorGroup>
+                    </Select.Control>
+                    <Portal>
+                      <Select.Positioner>
+                        <Select.Content id={categoryScrollId}>
+                          <InfiniteScroll
+                            dataLength={parsedCategories.flatData.length}
+                            hasMore={parsedCategories.hasMore}
+                            next={() => categories.setSize(categories.size + 1)}
+                            loader={<Spinner size={"xs"} />}
+                            scrollableTarget={categoryScrollId}
+                          >
+                            {categoryCollection.size > 0 ? (
+                              categoryCollection.items.map((category) => (
+                                <Select.Item item={category} key={category.id}>
+                                  {category.name}
+                                  <Select.ItemIndicator />
+                                </Select.Item>
+                              ))
+                            ) : (
+                              <Box>No product categories found</Box>
+                            )}
+                          </InfiniteScroll>
+                        </Select.Content>
+                      </Select.Positioner>
+                    </Portal>
+                  </Select.Root>
+                )}
+              />
+              <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
+            </Field.Root>
 
-          <Field.Root required invalid={!!errors.discountPercentage}>
-            <Field.Label>
-              Discount %
-              <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"discountPercentage"}
-              render={({ field }) => (
-                <NumberInput.Root
-                  w={"full"}
-                  name={field.name}
-                  disabled={field.disabled}
-                  defaultValue={"0"}
-                  value={
-                    Number.isNaN(field.value) ? "" : field.value.toString()
-                  }
-                  onValueChange={({ valueAsNumber }) =>
-                    field.onChange(valueAsNumber)
-                  }
-                >
-                  <NumberInput.Control />
-                  <NumberInput.Input onBlur={field.onBlur} />
-                </NumberInput.Root>
-              )}
-            />
-            <Field.ErrorText>
-              {errors.discountPercentage?.message}
-            </Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root required invalid={!!errors.categoryId}>
-            <Field.Label>
-              Product category <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"categoryId"}
-              render={({ field }) => (
-                <Select.Root
-                  name={field.name}
-                  value={field.value}
-                  onValueChange={({ value }) => {
-                    field.onChange(value);
-                    field.onBlur();
-                  }}
-                  onInteractOutside={() => field.onBlur()}
-                  collection={categoryCollection}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder={"Select category"} />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      <Select.ClearTrigger />
-                      {categories.isLoading ? (
-                        <Spinner size="sm" />
-                      ) : (
-                        <Select.Indicator />
-                      )}
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content id={categoryScrollId}>
-                        <InfiniteScroll
-                          dataLength={parsedCategories.flatData.length}
-                          hasMore={parsedCategories.hasMore}
-                          next={() => categories.setSize(categories.size + 1)}
-                          loader={<Spinner size={"xs"} />}
-                          scrollableTarget={categoryScrollId}
-                        >
-                          {categoryCollection.size > 0 ? (
-                            categoryCollection.items.map((category) => (
-                              <Select.Item item={category} key={category.id}>
-                                {category.name}
-                                <Select.ItemIndicator />
-                              </Select.Item>
-                            ))
-                          ) : (
-                            <Box>No product categories found</Box>
-                          )}
-                        </InfiniteScroll>
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
-                </Select.Root>
-              )}
-            />
-            <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root required invalid={!!errors.sizeTypeId}>
-            <Field.Label>
-              Product size type <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"sizeTypeId"}
-              render={({ field }) => (
-                <Select.Root
-                  name={field.name}
-                  value={field.value}
-                  onValueChange={({ value }) => {
-                    field.onChange(value);
-                    field.onBlur();
-                    clearVariationSizes();
-                  }}
-                  onInteractOutside={() => field.onBlur()}
-                  collection={sizeTypeCollection}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder={"Select size type"} />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      <Select.ClearTrigger />
-                      {sizeTypes.isLoading ? (
-                        <Spinner size="sm" />
-                      ) : (
-                        <Select.Indicator />
-                      )}
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content id={sizetypeScrollId}>
-                        <InfiniteScroll
-                          dataLength={parsedSizeTypes.flatData.length}
-                          hasMore={parsedSizeTypes.hasMore}
-                          next={() => sizeTypes.setSize(sizeTypes.size + 1)}
-                          loader={<Spinner size={"xs"} />}
-                          scrollableTarget={sizetypeScrollId}
-                        >
-                          {sizeTypeCollection.size > 0 ? (
-                            sizeTypeCollection.items.map((sizeType) => (
-                              <Select.Item item={sizeType} key={sizeType.id}>
-                                {sizeType.name}
-                                <Select.ItemIndicator />
-                              </Select.Item>
-                            ))
-                          ) : (
-                            <Box>No size types found</Box>
-                          )}
-                        </InfiniteScroll>
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
-                </Select.Root>
-              )}
-            />
-            <Field.ErrorText>{errors.sizeTypeId?.message}</Field.ErrorText>
-          </Field.Root>
+            <Field.Root required invalid={!!errors.sizeTypeId}>
+              <Field.Label>
+                Product size type <Field.RequiredIndicator />
+              </Field.Label>
+              <Controller
+                control={control}
+                name={"sizeTypeId"}
+                render={({ field }) => (
+                  <Select.Root
+                    name={field.name}
+                    value={field.value}
+                    onValueChange={({ value }) => {
+                      field.onChange(value);
+                      field.onBlur();
+                      clearVariationSizes();
+                    }}
+                    onInteractOutside={() => field.onBlur()}
+                    collection={sizeTypeCollection}
+                  >
+                    <Select.HiddenSelect />
+                    <Select.Control>
+                      <Select.Trigger>
+                        <Select.ValueText placeholder={"Select size type"} />
+                      </Select.Trigger>
+                      <Select.IndicatorGroup>
+                        <Select.ClearTrigger />
+                        {sizeTypes.isLoading ? (
+                          <Spinner size="sm" />
+                        ) : (
+                          <Select.Indicator />
+                        )}
+                      </Select.IndicatorGroup>
+                    </Select.Control>
+                    <Portal>
+                      <Select.Positioner>
+                        <Select.Content id={sizetypeScrollId}>
+                          <InfiniteScroll
+                            dataLength={parsedSizeTypes.flatData.length}
+                            hasMore={parsedSizeTypes.hasMore}
+                            next={() => sizeTypes.setSize(sizeTypes.size + 1)}
+                            loader={<Spinner size={"xs"} />}
+                            scrollableTarget={sizetypeScrollId}
+                          >
+                            {sizeTypeCollection.size > 0 ? (
+                              sizeTypeCollection.items.map((sizeType) => (
+                                <Select.Item item={sizeType} key={sizeType.id}>
+                                  {sizeType.name}
+                                  <Select.ItemIndicator />
+                                </Select.Item>
+                              ))
+                            ) : (
+                              <Box>No size types found</Box>
+                            )}
+                          </InfiniteScroll>
+                        </Select.Content>
+                      </Select.Positioner>
+                    </Portal>
+                  </Select.Root>
+                )}
+              />
+              <Field.ErrorText>{errors.sizeTypeId?.message}</Field.ErrorText>
+            </Field.Root>
+          </SimpleGrid>
 
           <VariationField
             control={control}
