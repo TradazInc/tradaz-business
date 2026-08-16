@@ -156,7 +156,7 @@ const ProductForm = ({ product }: Props) => {
             )}
           />
 
-          <SimpleGrid columns={2}>
+          <SimpleGrid columns={2} gap={4}>
             <Field.Root required invalid={!!errors.name}>
               <Field.Label>
                 Name <Field.RequiredIndicator />
@@ -259,7 +259,7 @@ const ProductForm = ({ product }: Props) => {
             <Field.ErrorText>{errors.description?.message}</Field.ErrorText>
           </Field.Root>
 
-          <SimpleGrid columns={2}>
+          <SimpleGrid columns={2} gap={4}>
             <Field.Root required invalid={!!errors.categoryId}>
               <Field.Label>
                 Product category <Field.RequiredIndicator />
