@@ -3,7 +3,6 @@
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
 import { darkModePalette, lightModePalette } from "@/data/imageUpload";
-import { CloudinaryResult } from "@/server/entities/storage";
 import { errorOptions } from "@/utilities/errorToastOptions";
 import {
   Box,
@@ -116,7 +115,8 @@ const ImageUpload = ({
         }}
         onSuccess={(result) => {
           if (result.event !== "success") return;
-          const info = result.info as CloudinaryResult;
+          const info = result.info;
+          if (!info || typeof info === "string") return;
           setImageURLs((prev) => [...prev, info.secure_url]);
         }}
         onQueuesStart={() =>
