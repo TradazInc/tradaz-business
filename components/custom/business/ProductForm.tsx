@@ -391,7 +391,6 @@ const ProductForm = ({ product }: Props) => {
           <VariationField
             control={control}
             errors={errors}
-            register={register}
             isLoading={sizeTypes.isLoading}
             sizeTypes={parsedSizeTypes.flatData}
           />
