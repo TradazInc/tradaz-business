@@ -140,49 +140,6 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
               </Field.ErrorText>
             </Field.Root>
 
-            <GridItem colSpan={{ base: 1, md: 2 }}>
-              <Field.Root
-                required
-                invalid={!!errors.variations?.[index]?.price}
-              >
-                <Field.Label>
-                  Price <Field.RequiredIndicator />
-                </Field.Label>
-                <Controller
-                  control={control}
-                  name={`variations.${index}.price`}
-                  render={({ field }) => (
-                    <NumberInput.Root
-                      min={0}
-                      step={0.01}
-                      w={"full"}
-                      name={field.name}
-                      disabled={field.disabled}
-                      formatOptions={{
-                        style: "currency",
-                        currency: "NGN",
-                        currencyDisplay: "symbol",
-                        currencySign: "accounting",
-                        maximumFractionDigits: 2,
-                      }}
-                      value={
-                        Number.isNaN(field.value) ? "" : field.value.toString()
-                      }
-                      onValueChange={({ valueAsNumber }) =>
-                        field.onChange(valueAsNumber)
-                      }
-                    >
-                      <NumberInput.Control />
-                      <NumberInput.Input onBlur={field.onBlur} />
-                    </NumberInput.Root>
-                  )}
-                />
-                <Field.ErrorText>
-                  {errors.variations?.[index]?.price?.message}
-                </Field.ErrorText>
-              </Field.Root>
-            </GridItem>
-
             <Field.Root required invalid={!!errors.variations?.[index]?.color}>
               <Field.Label>
                 Color <Field.RequiredIndicator />
@@ -226,6 +183,49 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
                 {errors.variations?.[index]?.color?.message}
               </Field.ErrorText>
             </Field.Root>
+
+            <GridItem colSpan={{ base: 1, md: 2 }}>
+              <Field.Root
+                required
+                invalid={!!errors.variations?.[index]?.price}
+              >
+                <Field.Label>
+                  Price <Field.RequiredIndicator />
+                </Field.Label>
+                <Controller
+                  control={control}
+                  name={`variations.${index}.price`}
+                  render={({ field }) => (
+                    <NumberInput.Root
+                      min={0}
+                      step={0.01}
+                      w={"full"}
+                      name={field.name}
+                      disabled={field.disabled}
+                      formatOptions={{
+                        style: "currency",
+                        currency: "NGN",
+                        currencyDisplay: "symbol",
+                        currencySign: "accounting",
+                        maximumFractionDigits: 2,
+                      }}
+                      value={
+                        Number.isNaN(field.value) ? "" : field.value.toString()
+                      }
+                      onValueChange={({ valueAsNumber }) =>
+                        field.onChange(valueAsNumber)
+                      }
+                    >
+                      <NumberInput.Control />
+                      <NumberInput.Input onBlur={field.onBlur} />
+                    </NumberInput.Root>
+                  )}
+                />
+                <Field.ErrorText>
+                  {errors.variations?.[index]?.price?.message}
+                </Field.ErrorText>
+              </Field.Root>
+            </GridItem>
           </FormInputGrid>
 
           <TeamVariationField
