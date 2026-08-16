@@ -126,13 +126,13 @@ const ImageUpload = ({
             description: "This may take a moment",
           })
         }
-        onQueuesEnd={() => {
+        onQueuesEnd={() =>
           toaster.success({
             id: toastId,
             title: "Upload successful",
             description: "Images have been uploaded",
-          });
-        }}
+          })
+        }
         onBatchCancelled={() =>
           toaster.error({
             id: toastId,
@@ -142,6 +142,13 @@ const ImageUpload = ({
         }
         onError={(error) =>
           toaster.create({ id: toastId, ...errorOptions(error) })
+        }
+        onAbort={() =>
+          toaster.error({
+            id: toastId,
+            title: "Upload aborted",
+            description: "Image upload was aborted",
+          })
         }
       >
         {({ open }) => (
