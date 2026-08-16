@@ -7,7 +7,7 @@ import { toaster } from "@/components/ui/toaster";
 import { emailSignUpSchema } from "@/schema/auth";
 import { useEmailSignup, useGoogleSignin } from "@/server/hooks/auth";
 import { computePath } from "@/utilities/computePath";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -31,7 +31,7 @@ const SignUpForm = () => {
         title: "Signup successful",
         description: `Welcome ${session.user.name}`,
       }),
-      error: errorOptions,
+      error: errorToastOptions,
     });
     if (!promise) return;
     try {
@@ -47,7 +47,7 @@ const SignUpForm = () => {
         title: "Redirect successful",
         description: "Continue with Google",
       },
-      error: errorOptions,
+      error: errorToastOptions,
     });
     if (!promise) return;
     try {

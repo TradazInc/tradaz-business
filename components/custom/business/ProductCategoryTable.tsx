@@ -7,7 +7,7 @@ import {
   useProductCategories,
   useRemoveProductCategory,
 } from "@/server/hooks/productCategory";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -45,7 +45,7 @@ const ProductCategoryTable = ({ initialCategories }: Props) => {
         title: "Deletion successful",
         description: "Category has been deleted",
       },
-      error: errorOptions,
+      error: errorToastOptions,
     });
   };
 

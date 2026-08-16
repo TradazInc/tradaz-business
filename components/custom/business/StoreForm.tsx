@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { storeSchema } from "@/schema/store";
 import { useAddStore } from "@/server/hooks/store";
 import { computePath } from "@/utilities/computePath";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
@@ -31,7 +31,7 @@ export const StoreForm = () => {
         title: "Setup successful",
         description: `${store.name} store has been created`,
       }),
-      error: errorOptions,
+      error: errorToastOptions,
     });
     if (!promise) return;
     try {

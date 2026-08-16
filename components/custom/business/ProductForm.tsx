@@ -9,7 +9,7 @@ import { useAddProduct } from "@/server/hooks/product";
 import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
 import { computePath } from "@/utilities/computePath";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { formProduct } from "@/utilities/formProduct";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
@@ -110,7 +110,7 @@ const ProductForm = ({ product }: Props) => {
         title: "Creation successful",
         description: `${product.name} product has been created`,
       }),
-      error: errorOptions,
+      error: errorToastOptions,
     });
     if (!promise) return;
     try {

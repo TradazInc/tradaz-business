@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { FetchResponse } from "@/server/entities/fetchResponse";
 import { SizeType } from "@/server/entities/sizeType";
 import { useRemoveSizeType, useSizeTypes } from "@/server/hooks/sizeType";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -43,7 +43,7 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
         title: "Deletion successful",
         description: "Size type has been deleted",
       },
-      error: errorOptions,
+      error: errorToastOptions,
     });
   };
 
