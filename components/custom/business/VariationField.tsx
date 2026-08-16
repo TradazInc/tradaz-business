@@ -98,7 +98,6 @@ const VariationField = ({
                 render={({ field }) => (
                   <ColorPicker.Root
                     w={"full"}
-                    variant={"subtle"}
                     name={field.name}
                     value={parseColor(field.value)}
                     onValueChange={({ value }) =>
