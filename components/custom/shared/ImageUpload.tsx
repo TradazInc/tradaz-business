@@ -142,7 +142,7 @@ const ImageUpload = ({
         onBatchCancelled={(result) => {
           const info = result.info;
           if (typeof info === "string") return;
-          toaster.info({
+          toaster.error({
             id: toastId,
             title: "Upload cancelled",
             description: info?.reason ?? "Image upload was cancelled",
@@ -152,7 +152,7 @@ const ImageUpload = ({
           toaster.create({ id: toastId, ...errorToastOptions(error) })
         }
         onAbort={() =>
-          toaster.info({
+          toaster.warning({
             id: toastId,
             title: "Upload aborted",
             description: "Image upload was aborted",
