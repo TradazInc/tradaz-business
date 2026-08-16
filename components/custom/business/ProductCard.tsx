@@ -2,7 +2,6 @@ import { ProductStatus } from "@/server/entities/product";
 import { Button, Card, Image } from "@chakra-ui/react";
 import NextLink from "next/link";
 import StatusIndicator from "./StatusIndicator";
-import livingRoomSofa from "@/public/living-room-sofa.png";
 
 interface Props {
   name: string;
@@ -21,7 +20,7 @@ const ProductCard = ({
 }: Props) => {
   return (
     <Card.Root maxW="sm" overflow="hidden">
-      <Image src={image ?? livingRoomSofa.src} />
+      <Image src={image} />
       <Card.Body gap="2">
         <Card.Title>{name}</Card.Title>
         <Card.Description>{description}</Card.Description>
