@@ -3,7 +3,7 @@
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
 import { darkModePalette, lightModePalette } from "@/data/imageUpload";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Box,
   Button,
@@ -149,7 +149,7 @@ const ImageUpload = ({
           });
         }}
         onError={(error) =>
-          toaster.create({ id: toastId, ...errorOptions(error) })
+          toaster.create({ id: toastId, ...errorToastOptions(error) })
         }
         onAbort={() =>
           toaster.warning({

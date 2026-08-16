@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { emptySize, emptySizeType } from "@/data/productSizeForm";
 import { sizeTypeSchema } from "@/schema/sizeType";
 import { useAddSizeTypes } from "@/server/hooks/sizeType";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
   Field,
@@ -46,7 +46,7 @@ const ProductSizeForm = () => {
         title: "Creation successful",
         description: `${sizeType.name} size type has been created`,
       }),
-      error: errorOptions,
+      error: errorToastOptions,
     });
     if (!promise) return;
     const ok = await promise

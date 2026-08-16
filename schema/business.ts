@@ -1,7 +1,7 @@
 import { checkBusinessSlug } from "@/server/services/business";
 import { toaster } from "@/components/ui/toaster";
 import { z } from "zod";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 
 export const businessSchema = z.object({
   name: z
@@ -30,7 +30,7 @@ export const businessSchema = z.object({
       async (slug) => {
         if (!slug) return true;
         const { data, error } = await checkBusinessSlug(slug);
-        if (error) toaster.create(errorOptions(error));
+        if (error) toaster.create(errorToastOptions(error));
         return data?.status;
       },
       { error: "Slug is taken" },

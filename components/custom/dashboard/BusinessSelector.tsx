@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { useBusinesses, useSetActiveBusiness } from "@/server/hooks/business";
 import { useSession } from "@/server/hooks/session";
 import { useSetActiveStore, useStores } from "@/server/hooks/store";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { updateSession } from "@/utilities/updateSession";
 import { Breadcrumb, HStack, Skeleton } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
@@ -42,7 +42,7 @@ export const BusinessSelector = () => {
         rollbackOnError: true,
       });
     } catch (e) {
-      toaster.error(errorOptions(e));
+      toaster.error(errorToastOptions(e));
     }
   };
 
@@ -53,7 +53,7 @@ export const BusinessSelector = () => {
         rollbackOnError: true,
       });
     } catch (e) {
-      toaster.error(errorOptions(e));
+      toaster.error(errorToastOptions(e));
     }
   };
 

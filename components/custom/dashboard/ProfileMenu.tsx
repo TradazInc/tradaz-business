@@ -3,7 +3,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { useSignOut } from "@/server/hooks/auth";
 import { useSession } from "@/server/hooks/session";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
@@ -21,7 +21,7 @@ export const ProfileMenu = () => {
         title: "Logged Out",
         description: "You have logged out of your account",
       }),
-      error: errorOptions,
+      error: errorToastOptions,
     });
     if (!promise) return;
     try {

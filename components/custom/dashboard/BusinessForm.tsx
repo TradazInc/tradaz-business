@@ -6,7 +6,7 @@ import { businessSchema } from "@/schema/business";
 import { useAddBusiness } from "@/server/hooks/business";
 import { useBusinessCategories } from "@/server/hooks/businessCategory";
 import { computePath } from "@/utilities/computePath";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
@@ -82,7 +82,7 @@ export const BusinessForm = ({ signup }: Props) => {
         title: "Setup successful",
         description: `${brand.name} brand has been created`,
       }),
-      error: errorOptions,
+      error: errorToastOptions,
     });
     if (!promise) return;
     try {

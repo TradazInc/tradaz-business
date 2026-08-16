@@ -4,7 +4,7 @@ import { toaster } from "@/components/ui/toaster";
 import { emptyProductCategory } from "@/data/productCategoryForm";
 import { productCategorySchema } from "@/schema/productCategory";
 import { useAddProductCategory } from "@/server/hooks/productCategory";
-import { errorOptions } from "@/utilities/errorToastOptions";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
   Field,
@@ -37,7 +37,7 @@ const ProductCategoryForm = () => {
         title: "Creation successful",
         description: `${category.name} category has been created`,
       }),
-      error: errorOptions,
+      error: errorToastOptions,
     });
     if (!promise) return;
     const ok = await promise
