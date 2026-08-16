@@ -8,7 +8,6 @@ export function formProduct(product: Product) {
     sizeTypeId: [product.sizeTypeId],
     variations: product.variations.map((v) => ({
       id: v.id,
-      sku: v.sku,
       color: v.color,
       price: v.price,
       sizeId: [v.sizeId],

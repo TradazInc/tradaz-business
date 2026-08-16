@@ -1,3 +1,4 @@
+import { MAX_FILES } from "@/data/constants";
 import { Gender } from "@/server/entities/product";
 import { z } from "zod";
 
@@ -15,10 +16,6 @@ export type TeamVariationData = z.infer<typeof teamVariationSchema>;
 export type TeamVariationFormValues = z.input<typeof teamVariationSchema>;
 
 const variationSchema = z.object({
-  sku: z
-    .string({ error: "sku is required" })
-    .min(2, { error: "sku is required" }),
-
   color: z
     .string({ error: "color is required" })
     .regex(/^#[0-9a-fA-F]{6}$/, { error: "select a valid color" }),
@@ -92,6 +89,7 @@ export const productSchema = z.object({
   images: z
     .array(imageSchema)
     .min(1, { error: "add at least one image" })
+    .max(MAX_FILES, { error: `at most ${MAX_FILES} images` })
     .transform((urls) => urls.map((url) => ({ url }))),
 });
 export type ProductData = z.infer<typeof productSchema>;
