@@ -23,7 +23,7 @@ export default async function page({ params }: Props) {
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>Products</PageHeader>
+        <PageHeader>Product Inventory</PageHeader>
 
         {products.data.length > 0 ? (
           <ProductGrid businessId={businessId} initialProducts={products} />
@@ -33,9 +33,7 @@ export default async function page({ params }: Props) {
             description={"Create a new product"}
           >
             <Button asChild>
-              <NextLink
-                href={`${computePath({ businessId })}/products/new`}
-              >
+              <NextLink href={`${computePath({ businessId })}/products/new`}>
                 <LuPlus />
                 Create Product
               </NextLink>
