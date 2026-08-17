@@ -46,7 +46,7 @@ const ProductCard = ({
           <Card.Title>{name}</Card.Title>
           <StatusIndicator status={productStatus} />
         </HStack>
-        <DataList.Root orientation={"horizontal"}>
+        <DataList.Root size="sm">
           {vendor && (
             <DataList.Item>
               <DataList.ItemLabel>Vendor</DataList.ItemLabel>
