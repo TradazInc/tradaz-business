@@ -37,6 +37,7 @@ const Notification = () => {
                   size={"sm"}
                   variant={"bold"}
                   flexDirection={"row"}
+                  alignItems={"center"}
                 >
                   <Icon size={"md"} color={"green.500"}>
                     <LuCircleCheck />
