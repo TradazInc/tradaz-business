@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { FetchResponse } from "@/server/entities/fetchResponse";
+import { FetchResponse } from "@/lib/apiClient";
 import { SizeType } from "@/server/entities/sizeType";
 import { useRemoveSizeType, useSizeTypes } from "@/server/hooks/sizeType";
 import { errorToastOptions } from "@/utilities/errorToastOptions";

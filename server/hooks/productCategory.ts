@@ -1,10 +1,10 @@
 import { PAGE_SIZE } from "@/data/constants";
+import { FetchResponse } from "@/lib/apiClient";
 import { ProductCategoryData } from "@/schema/productCategory";
 import { cursorKey, PRODUCT_CATEGORY_KEY } from "@/utilities/cacheKeys";
 import { extractSearchParams } from "@/utilities/extractSearchParams";
 import useSWRInfinite from "swr/infinite";
 import useSWRMutation from "swr/mutation";
-import { FetchResponse } from "../entities/fetchResponse";
 import {
   ProductCategory,
   productCategoryService,

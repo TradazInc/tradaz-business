@@ -1,4 +1,3 @@
-import { FetchResponse } from "@/server/entities/fetchResponse";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
 import { logger } from "@better-fetch/logger";
@@ -9,6 +8,16 @@ const $fetch = createFetch({
   onRequest: async (context) => setServerCookie(context),
   plugins: [logger()],
 });
+
+export interface FetchResponse<D> {
+  data: D[];
+  aggregate?: number;
+  meta?: {
+    next?: string;
+    count?: number;
+    totalPages?: number;
+  };
+}
 
 export class ApiClient<T> {
   constructor(private readonly endpoint: string) {}
@@ -25,10 +34,10 @@ export class ApiClient<T> {
     id: number | string,
     options?: BetterFetchOption & { throw?: Throw },
   ) =>
-    $fetch<T, Throw extends true ? false : unknown>(
-      `${this.endpoint}/${id}`,
-      { ...options, method: "GET" },
-    );
+    $fetch<T, Throw extends true ? false : unknown>(`${this.endpoint}/${id}`, {
+      ...options,
+      method: "GET",
+    });
 
   post = <Throw extends boolean = false>(
     options: BetterFetchOption & { throw?: Throw },
@@ -42,10 +51,10 @@ export class ApiClient<T> {
     id: number | string,
     options: BetterFetchOption & { throw?: Throw },
   ) =>
-    $fetch<T, Throw extends true ? false : unknown>(
-      `${this.endpoint}/${id}`,
-      { ...options, method: "PUT" },
-    );
+    $fetch<T, Throw extends true ? false : unknown>(`${this.endpoint}/${id}`, {
+      ...options,
+      method: "PUT",
+    });
 
   delete = <Throw extends boolean = false>(
     id: number | string,

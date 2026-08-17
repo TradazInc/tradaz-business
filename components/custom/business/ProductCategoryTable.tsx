@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { FetchResponse } from "@/server/entities/fetchResponse";
+import { FetchResponse } from "@/lib/apiClient";
 import { ProductCategory } from "@/server/entities/productCategory";
 import {
   useProductCategories,

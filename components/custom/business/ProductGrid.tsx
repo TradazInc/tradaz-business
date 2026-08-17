@@ -1,15 +1,15 @@
 "use client";
 
-import { FetchResponse } from "@/server/entities/fetchResponse";
+import { FetchResponse } from "@/lib/apiClient";
 import { Product } from "@/server/entities/product";
-import { computePath } from "@/utilities/computePath";
-import { Button, For, Spinner, Text } from "@chakra-ui/react";
-import GridContainer from "../shared/GridContainer";
-import ProductCard from "./ProductCard";
 import { useProducts } from "@/server/hooks/product";
+import { computePath } from "@/utilities/computePath";
 import { parseCursorData } from "@/utilities/parsePagedData";
+import { Button, For, Spinner, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import GridContainer from "../shared/GridContainer";
+import ProductCard from "./ProductCard";
 
 interface Props {
   businessId: string;
