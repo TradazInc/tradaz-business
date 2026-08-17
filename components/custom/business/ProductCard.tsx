@@ -1,9 +1,10 @@
 import noImage from "@/public/no-image-placeholder.webp";
 import { ProductStatus } from "@/server/entities/product";
-import { Button, Card, Image } from "@chakra-ui/react";
+import { Button, Card, HStack, Image } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import NextImage from "next/image";
 import NextLink from "next/link";
+import { MdDeleteOutline, MdOutlineViewInAr } from "react-icons/md";
 import StatusIndicator from "./StatusIndicator";
 
 interface Props {
@@ -43,15 +44,24 @@ const ProductCard = ({
         )}
       </Image>
       <Card.Body gap="2">
-        <Card.Title>{name}</Card.Title>
+        <HStack>
+          <Card.Title>{name}</Card.Title>
+          <StatusIndicator status={productStatus} />
+        </HStack>
         <Card.Description>{description}</Card.Description>
-        <StatusIndicator status={productStatus} />
       </Card.Body>
       <Card.Footer gap="2">
-        <Button variant={"solid"} asChild>
+        <Button variant={"subtle"} colorPalette={"bue"} flex={"1"} asChild>
+          <MdOutlineViewInAr />
           <NextLink href={href}>View</NextLink>
         </Button>
-        <Button variant={"ghost"} bg={"bg.error"} onClick={() => {}}>
+        <Button
+          variant={"subtle"}
+          colorPalette={"red"}
+          flex={"1"}
+          onClick={() => {}}
+        >
+          <MdDeleteOutline />
           Delete
         </Button>
       </Card.Footer>
