@@ -4,14 +4,11 @@ import { notifications } from "@/data/notifications";
 import {
   Circle,
   DataList,
-  Flex,
   Float,
-  Heading,
   Icon,
   IconButton,
   Menu,
   Portal,
-  VStack,
 } from "@chakra-ui/react";
 import { LuBell, LuCircleDashed } from "react-icons/lu";
 
@@ -55,27 +52,3 @@ const Notification = () => {
 };
 
 export default Notification;
-
-const NotificationContent = ({
-  createdAt,
-  title,
-}: {
-  title: string;
-  createdAt: string;
-}) => {
-  return (
-    <VStack gap={0}>
-      <Heading textStyle={"xs"} w={"full"}>
-        {title}
-      </Heading>
-      <Flex
-        w={"full"}
-        textStyle={"xs"}
-        color={"fg.muted"}
-        justify={"flex-start"}
-      >
-        {createdAt}
-      </Flex>
-    </VStack>
-  );
-};
