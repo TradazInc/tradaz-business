@@ -23,7 +23,7 @@ const ProductCard = ({
   image,
 }: Props) => {
   return (
-    <Card.Root maxW="sm" overflow="hidden">
+    <Card.Root maxW={"sm"} overflow={"hidden"} border={"none"}>
       <Image asChild w={"full"} aspectRatio={4 / 3} objectFit={"cover"}>
         {image ? (
           <CldImage
@@ -45,7 +45,7 @@ const ProductCard = ({
         <Card.Description>{description}</Card.Description>
       </Card.Body>
       <Card.Footer gap="2">
-        <Button variant={"subtle"} colorPalette={"bue"} flex={"1"} asChild>
+        <Button variant={"subtle"} colorPalette={"blue"} flex={"1"} asChild>
           <NextLink href={href}>
             <MdOutlineViewInAr />
             View

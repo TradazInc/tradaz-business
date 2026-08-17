@@ -23,7 +23,7 @@ export default async function page({ params }: Props) {
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>Your Products</PageHeader>
+        <PageHeader>Products</PageHeader>
 
         {products.data.length > 0 ? (
           <ProductGrid businessId={businessId} initialProducts={products} />
