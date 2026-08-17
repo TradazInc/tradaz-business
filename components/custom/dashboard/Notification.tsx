@@ -2,8 +2,8 @@
 
 import { notifications } from "@/data/notifications";
 import {
-  Box,
   Circle,
+  DataList,
   Flex,
   Float,
   Heading,
@@ -13,7 +13,7 @@ import {
   Portal,
   VStack,
 } from "@chakra-ui/react";
-import { LuBell, LuShoppingBag } from "react-icons/lu";
+import { LuBell, LuCircleDashed } from "react-icons/lu";
 
 const Notification = () => {
   return (
@@ -36,13 +36,15 @@ const Notification = () => {
           <Menu.Content>
             {notifications.map((content) => (
               <Menu.Item value={content.id} key={content.id}>
-                <Icon as={LuShoppingBag} size={"md"} />
-                <Box flex="1">
-                  <NotificationContent
-                    title={content.title}
-                    createdAt={content.createdAt}
-                  />
-                </Box>
+                <DataList.Root variant={"bold"} size={"sm"}>
+                  <Icon size={"md"} color={"green.500"}>
+                    <LuCircleDashed />
+                  </Icon>
+                  <DataList.Item>
+                    <DataList.ItemLabel>{content.title}</DataList.ItemLabel>
+                    <DataList.ItemValue>{content.createdAt}</DataList.ItemValue>
+                  </DataList.Item>
+                </DataList.Root>
               </Menu.Item>
             ))}
           </Menu.Content>
