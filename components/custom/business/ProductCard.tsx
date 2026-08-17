@@ -1,9 +1,10 @@
 import noImage from "@/public/no-image-placeholder.webp";
 import { ProductStatus } from "@/server/entities/product";
-import { Button, Card, HStack, Image } from "@chakra-ui/react";
+import { Button, Card, HStack, Image, List } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import NextImage from "next/image";
 import NextLink from "next/link";
+import { LuCircleCheck } from "react-icons/lu";
 import { MdDeleteOutline, MdOutlineViewInAr } from "react-icons/md";
 import StatusIndicator from "./StatusIndicator";
 
@@ -13,6 +14,8 @@ interface Props {
   productStatus: ProductStatus;
   href: string;
   image?: string;
+  vendor?: string;
+  variationCount: number;
 }
 
 const ProductCard = ({
@@ -21,14 +24,11 @@ const ProductCard = ({
   name,
   productStatus,
   image,
+  variationCount,
+  vendor,
 }: Props) => {
   return (
-    <Card.Root
-      maxW={"sm"}
-      overflow={"hidden"}
-      border={"none"}
-      _hover={{ scale: "1.05" }}
-    >
+    <Card.Root maxW={"sm"} overflow={"hidden"} border={"none"}>
       <Image asChild w={"full"} aspectRatio={4 / 3} objectFit={"cover"}>
         {image ? (
           <CldImage
@@ -48,6 +48,20 @@ const ProductCard = ({
           <StatusIndicator status={productStatus} />
         </HStack>
         <Card.Description>{description}</Card.Description>
+        <List.Root gap="2" variant="plain" align="center">
+          <List.Item>
+            <List.Indicator asChild color="green.500">
+              <LuCircleCheck />
+            </List.Indicator>
+            Vendor: {vendor}
+          </List.Item>
+          <List.Item>
+            <List.Indicator asChild color="green.500">
+              <LuCircleCheck />
+            </List.Indicator>
+            Variations: {variationCount}
+          </List.Item>
+        </List.Root>
       </Card.Body>
       <Card.Footer gap="2">
         <Button variant={"subtle"} colorPalette={"blue"} flex={"1"} asChild>
