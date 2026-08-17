@@ -36,10 +36,10 @@ const ProductGrid = ({ businessId, initialProducts }: Props) => {
             <ProductCard
               key={product.id}
               name={product.name}
-              image={product.images[0].url} // default to first image
+              image={product.images[0]?.url} // default to first image
               description={product.description}
               productStatus={product.productStatus}
-              href={`${computePath({ businessId })}/products/${product.id}}`}
+              href={`${computePath({ businessId })}/products/${product.id}`}
             />
           )}
         </For>
