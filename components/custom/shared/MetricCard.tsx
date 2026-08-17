@@ -2,7 +2,7 @@ import { Card, Heading } from "@chakra-ui/react";
 
 const MetricCard = () => {
   return (
-    <Card.Root size={"sm"}>
+    <Card.Root size={"sm"} border={"none"}>
       <Card.Header>
         <Heading>Heading</Heading>
       </Card.Header>

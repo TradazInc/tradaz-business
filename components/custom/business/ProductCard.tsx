@@ -23,7 +23,7 @@ const ProductCard = ({
   image,
 }: Props) => {
   return (
-    <Card.Root maxW="sm" overflow="hidden">
+    <Card.Root maxW={"sm"} overflow={"hidden"} border={"none"}>
       <Image asChild w={"full"} aspectRatio={4 / 3} objectFit={"cover"}>
         {image ? (
           <CldImage
