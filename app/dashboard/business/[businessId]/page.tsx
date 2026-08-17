@@ -5,9 +5,8 @@ import EmptyPage from "@/components/custom/shared/EmptyPage";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import Search from "@/components/custom/shared/Search";
-import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
 import { getBusiness } from "@/server/services/business";
-import { Button, VStack } from "@chakra-ui/react";
+import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -27,10 +26,11 @@ export default async function page({ params }: Props) {
       <VStack w={"full"} h={"full"}>
         <PageHeader>{`${data?.name} Stores`}</PageHeader>
 
-        <ToolBarContainer>
+        <HStack w={"full"}>
           <Suspense>
             <Search placeholder={"Search for a store"} query={"store"} />
           </Suspense>
+          <Spacer />
           <DialogBox
             trigger={
               <Button variant={"outline"} size={"xs"}>
@@ -41,7 +41,7 @@ export default async function page({ params }: Props) {
           >
             <StoreForm />
           </DialogBox>
-        </ToolBarContainer>
+        </HStack>
 
         {data?.teams.length > 0 ? (
           <StoreGrid initialStores={data.teams} businessId={businessId} />

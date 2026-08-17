@@ -3,10 +3,9 @@ import EmptyPage from "@/components/custom/shared/EmptyPage";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import Search from "@/components/custom/shared/Search";
-import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
 import { getProducts } from "@/server/services/product";
 import { computePath } from "@/utilities/computePath";
-import { Button, VStack } from "@chakra-ui/react";
+import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -28,13 +27,13 @@ export default async function page({ params }: Props) {
       <VStack w={"full"} h={"full"}>
         <PageHeader>Product Inventory</PageHeader>
 
-        <ToolBarContainer>
+        <HStack w={"full"}>
           <Suspense>
             <Search placeholder={"Search for a product"} query={"product"} />
           </Suspense>
-
+          <Spacer />
           {/* add dropdown */}
-        </ToolBarContainer>
+        </HStack>
 
         {products.data.length > 0 ? (
           <ProductGrid businessId={businessId} initialProducts={products} />

@@ -4,9 +4,8 @@ import { DialogBox } from "@/components/custom/shared/DialogBox";
 import EmptyPage from "@/components/custom/shared/EmptyPage";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
-import ToolBarContainer from "@/components/custom/shared/ToolBarContainer";
 import { getSizeTypes } from "@/server/services/sizeType";
-import { Button, VStack } from "@chakra-ui/react";
+import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
 export default async function page() {
@@ -19,7 +18,8 @@ export default async function page() {
       <VStack w={"full"} h={"full"}>
         <PageHeader>Product Sizes</PageHeader>
 
-        <ToolBarContainer>
+        <HStack w={"full"}>
+          <Spacer />
           <DialogBox
             trigger={
               <Button variant={"outline"} size={"xs"}>
@@ -30,7 +30,7 @@ export default async function page() {
           >
             <ProductSizeForm />
           </DialogBox>
-        </ToolBarContainer>
+        </HStack>
 
         {data ? (
           <ProductSizeTable initialSizeTypes={data} />
