@@ -50,7 +50,7 @@ const ProductCard = ({
         </HStack>
         <Card.Description>
           <Text>{description}</Text>
-          <List.Root variant={"plain"} align={"center"}>
+          <List.Root align={"center"}>
             {vendor && <List.Item>Vendor: {vendor}</List.Item>}
             {brand && <List.Item>Brand: {brand}</List.Item>}
             <List.Item>Variations: {variationCount}</List.Item>
