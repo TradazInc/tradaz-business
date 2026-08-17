@@ -45,7 +45,7 @@ const ProductCard = ({
         <Card.Description>{description}</Card.Description>
       </Card.Body>
       <Card.Footer gap="2">
-        <Button variant={"subtle"} colorPalette={"bue"} flex={"1"} asChild>
+        <Button variant={"subtle"} colorPalette={"blue"} flex={"1"} asChild>
           <NextLink href={href}>
             <MdOutlineViewInAr />
             View
