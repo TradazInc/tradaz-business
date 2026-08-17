@@ -1,10 +1,9 @@
 import noImage from "@/public/no-image-placeholder.webp";
 import { ProductStatus } from "@/server/entities/product";
-import { Button, Card, DataList, HStack, Image, List } from "@chakra-ui/react";
+import { Button, Card, DataList, HStack, Image } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { LuCircleCheck } from "react-icons/lu";
 import { MdDeleteOutline, MdOutlineViewInAr } from "react-icons/md";
 import StatusIndicator from "./StatusIndicator";
 
