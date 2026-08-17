@@ -10,6 +10,7 @@ import StatusIndicator from "./StatusIndicator";
 
 interface Props {
   name: string;
+  brand?: string;
   description: string;
   productStatus: ProductStatus;
   href: string;
@@ -22,13 +23,14 @@ const ProductCard = ({
   description,
   href,
   name,
+  brand,
   productStatus,
   image,
   variationCount,
   vendor,
 }: Props) => {
   return (
-    <Card.Root maxW={"sm"} overflow={"hidden"} border={"none"}>
+    <Card.Root maxW={"sm"} overflow={"hidden"} border={"none"} h={"full"}>
       <Image asChild w={"full"} aspectRatio={4 / 3} objectFit={"cover"}>
         {image ? (
           <CldImage
@@ -49,12 +51,22 @@ const ProductCard = ({
         </HStack>
         <Card.Description>{description}</Card.Description>
         <List.Root gap="2" variant="plain" align="center">
-          <List.Item>
-            <List.Indicator asChild color="green.500">
-              <LuCircleCheck />
-            </List.Indicator>
-            Vendor: {vendor}
-          </List.Item>
+          {vendor && (
+            <List.Item>
+              <List.Indicator asChild color="green.500">
+                <LuCircleCheck />
+              </List.Indicator>
+              Vendor: {vendor}
+            </List.Item>
+          )}
+          {brand && (
+            <List.Item>
+              <List.Indicator asChild color="green.500">
+                <LuCircleCheck />
+              </List.Indicator>
+              Brand: {brand}
+            </List.Item>
+          )}
           <List.Item>
             <List.Indicator asChild color="green.500">
               <LuCircleCheck />

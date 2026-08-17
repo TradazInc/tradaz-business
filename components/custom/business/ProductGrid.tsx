@@ -36,6 +36,7 @@ const ProductGrid = ({ businessId, initialProducts }: Props) => {
             <ProductCard
               key={product.id}
               name={product.name}
+              brand={product.brand}
               image={product.images[0]?.url} // default to first image
               description={product.description}
               vendor={product?.vendor?.user.name}
