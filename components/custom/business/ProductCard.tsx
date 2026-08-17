@@ -49,31 +49,33 @@ const ProductCard = ({
           <Card.Title>{name}</Card.Title>
           <StatusIndicator status={productStatus} />
         </HStack>
-        <Card.Description>{description}</Card.Description>
-        <List.Root gap="2" variant="plain" align="center">
-          {vendor && (
+        <Card.Description>
+          {description}
+          <List.Root gap="2" variant="plain" align="center">
+            {vendor && (
+              <List.Item>
+                <List.Indicator asChild color="green.500">
+                  <LuCircleCheck />
+                </List.Indicator>
+                Vendor: {vendor}
+              </List.Item>
+            )}
+            {brand && (
+              <List.Item>
+                <List.Indicator asChild color="green.500">
+                  <LuCircleCheck />
+                </List.Indicator>
+                Brand: {brand}
+              </List.Item>
+            )}
             <List.Item>
               <List.Indicator asChild color="green.500">
                 <LuCircleCheck />
               </List.Indicator>
-              Vendor: {vendor}
+              Variations: {variationCount}
             </List.Item>
-          )}
-          {brand && (
-            <List.Item>
-              <List.Indicator asChild color="green.500">
-                <LuCircleCheck />
-              </List.Indicator>
-              Brand: {brand}
-            </List.Item>
-          )}
-          <List.Item>
-            <List.Indicator asChild color="green.500">
-              <LuCircleCheck />
-            </List.Indicator>
-            Variations: {variationCount}
-          </List.Item>
-        </List.Root>
+          </List.Root>
+        </Card.Description>
       </Card.Body>
       <Card.Footer gap="2">
         <Button variant={"subtle"} colorPalette={"blue"} flex={"1"} asChild>
