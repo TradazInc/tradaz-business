@@ -1,10 +1,9 @@
 import noImage from "@/public/no-image-placeholder.webp";
 import { ProductStatus } from "@/server/entities/product";
-import { Button, Card, HStack, Image, List } from "@chakra-ui/react";
+import { Button, Card, HStack, Image, List, Text } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { LuCircleCheck } from "react-icons/lu";
 import { MdDeleteOutline, MdOutlineViewInAr } from "react-icons/md";
 import StatusIndicator from "./StatusIndicator";
 
@@ -50,30 +49,11 @@ const ProductCard = ({
           <StatusIndicator status={productStatus} />
         </HStack>
         <Card.Description>
-          {description}
-          <List.Root gap="2" variant="plain" align="center">
-            {vendor && (
-              <List.Item>
-                <List.Indicator asChild color="green.500">
-                  <LuCircleCheck />
-                </List.Indicator>
-                Vendor: {vendor}
-              </List.Item>
-            )}
-            {brand && (
-              <List.Item>
-                <List.Indicator asChild color="green.500">
-                  <LuCircleCheck />
-                </List.Indicator>
-                Brand: {brand}
-              </List.Item>
-            )}
-            <List.Item>
-              <List.Indicator asChild color="green.500">
-                <LuCircleCheck />
-              </List.Indicator>
-              Variations: {variationCount}
-            </List.Item>
+          <Text>{description}</Text>
+          <List.Root variant={"plain"} align={"center"}>
+            {vendor && <List.Item>Vendor: {vendor}</List.Item>}
+            {brand && <List.Item>Brand: {brand}</List.Item>}
+            <List.Item>Variations: {variationCount}</List.Item>
           </List.Root>
         </Card.Description>
       </Card.Body>
