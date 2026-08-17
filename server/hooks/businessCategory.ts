@@ -1,5 +1,5 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { FetchResponse } from "@/server/entities/fetchResponse";
+import { FetchResponse } from "@/lib/apiClient";
 import { cursorKey } from "@/utilities/cacheKeys";
 import { extractSearchParams } from "@/utilities/extractSearchParams";
 import useSWRInfinite from "swr/infinite";

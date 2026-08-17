@@ -1,10 +1,10 @@
 import { PAGE_SIZE } from "@/data/constants";
+import { FetchResponse } from "@/lib/apiClient";
 import { SizeTypeData } from "@/schema/sizeType";
 import { cursorKey, SIZE_TYPE_KEY } from "@/utilities/cacheKeys";
 import { extractSearchParams } from "@/utilities/extractSearchParams";
 import useSWRInfinite from "swr/infinite";
 import useSWRMutation from "swr/mutation";
-import { FetchResponse } from "../entities/fetchResponse";
 import { SizeType, sizeTypeService } from "../entities/sizeType";
 
 export const useSizeTypes = (fallbackData?: FetchResponse<SizeType>[]) => {

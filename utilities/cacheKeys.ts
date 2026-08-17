@@ -1,4 +1,4 @@
-import { FetchResponse } from "@/server/entities/fetchResponse";
+import { FetchResponse } from "@/lib/apiClient";
 
 // Constant Keys
 export const BUSINESS_KEY = "/api/business"; // used for prefetching in layout
