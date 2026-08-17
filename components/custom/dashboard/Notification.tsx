@@ -10,7 +10,7 @@ import {
   Menu,
   Portal,
 } from "@chakra-ui/react";
-import { LuBell, LuCircleDashed } from "react-icons/lu";
+import { LuBell } from "react-icons/lu";
 
 const Notification = () => {
   return (
@@ -32,10 +32,14 @@ const Notification = () => {
         <Menu.Positioner>
           <Menu.Content>
             {notifications.map((content) => (
-              <Menu.Item value={content.id} key={content.id}>
+              <Menu.Item
+                value={content.id}
+                key={content.id}
+                flexDirection={"row"}
+              >
                 <DataList.Root variant={"bold"} size={"sm"}>
                   <Icon size={"md"} color={"green.500"}>
-                    <LuCircleDashed />
+                    <LuBell />
                   </Icon>
                   <DataList.Item>
                     <DataList.ItemLabel>{content.title}</DataList.ItemLabel>
