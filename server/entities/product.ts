@@ -3,7 +3,7 @@ import { ApiClient } from "@/lib/apiClient";
 export interface Product {
   id: string;
   name: string;
-  brand: string;
+  brand?: string;
   gender: Gender;
   description: string;
   discountPercentage: number;
@@ -12,6 +12,8 @@ export interface Product {
   productStatus: ProductStatus;
   images: Image[];
   variations: Variation[];
+  vendor?: { user: { name: string } };
+  _count: { variations: number };
 }
 
 interface Variation {
