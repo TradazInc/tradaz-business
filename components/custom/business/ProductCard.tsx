@@ -24,27 +24,21 @@ const ProductCard = ({
 }: Props) => {
   return (
     <Card.Root maxW="sm" overflow="hidden">
-      <Image asChild w={"full"} aspectRatio={1} objectFit={"cover"}>
+      <Image asChild w={"full"} aspectRatio={4 / 3} objectFit={"cover"}>
         {image ? (
           <CldImage
             src={image}
-            width={400}
-            height={400}
+            aspectRatio={4 / 3}
             crop={"fill"}
             gravity={"auto"}
             alt={name}
           />
         ) : (
-          <NextImage
-            src={noImage}
-            width={400}
-            height={400}
-            alt={`No image for ${name}`}
-          />
+          <NextImage src={noImage} alt={`No image for ${name}`} />
         )}
       </Image>
       <Card.Body gap="2">
-        <HStack>
+        <HStack justify={"space-between"}>
           <Card.Title>{name}</Card.Title>
           <StatusIndicator status={productStatus} />
         </HStack>
@@ -52,8 +46,10 @@ const ProductCard = ({
       </Card.Body>
       <Card.Footer gap="2">
         <Button variant={"subtle"} colorPalette={"bue"} flex={"1"} asChild>
-          <MdOutlineViewInAr />
-          <NextLink href={href}>View</NextLink>
+          <NextLink href={href}>
+            <MdOutlineViewInAr />
+            View
+          </NextLink>
         </Button>
         <Button
           variant={"subtle"}
