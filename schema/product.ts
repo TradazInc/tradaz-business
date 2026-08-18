@@ -27,8 +27,7 @@ const variationSchema = z.object({
   sizeId: z
     .array(z.cuid2(), { error: "select a size" })
     .length(1, { error: "select one size" })
-    .transform(([id]) => id)
-    .optional(),
+    .transform(([id]) => id),
 
   teamVariations: z
     .array(teamVariationSchema)
@@ -82,8 +81,7 @@ export const productSchema = z.object({
   sizeTypeId: z
     .array(z.cuid2(), { error: "select a size type" })
     .length(1, { error: "select one size type" })
-    .transform(([id]) => id)
-    .optional(),
+    .transform(([id]) => id),
 
   variations: z
     .array(variationSchema)
