@@ -40,7 +40,7 @@ const ProductGrid = ({ businessId, initialProducts }: Props) => {
               image={product.images[0]?.url} // default to first image
               vendor={product?.vendor?.user.name}
               productStatus={product.productStatus}
-              variationCount={product._count.variations}
+              variationCount={product?._count?.variations}
               href={`${computePath({ businessId })}/products/${product.id}`}
             />
           )}

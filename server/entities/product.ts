@@ -7,13 +7,13 @@ export interface Product {
   gender: Gender;
   description: string;
   discountPercentage: number;
-  categoryId: string;
-  sizeTypeId: string;
+  category: { id: string; name: string }; //make optional
+  sizeType: { id: string; sizes: { id: string; value: string }[] }; // make optional
   productStatus: ProductStatus;
   images: Image[];
   variations: Variation[];
   vendor?: { user: { name: string } };
-  _count: { variations: number };
+  _count?: { variations: number };
 }
 
 interface Variation {
