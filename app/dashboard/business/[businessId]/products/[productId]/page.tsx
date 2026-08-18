@@ -1,5 +1,8 @@
+import ProductCarousel from "@/components/custom/business/ProductCarousel";
+import ProductDescription from "@/components/custom/business/ProductDescription";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import { getProduct } from "@/server/services/product";
+import { SimpleGrid } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -12,5 +15,12 @@ export default async function page({ params }: Props) {
 
   if (error) notFound();
 
-  return <PageContainer>product {product.id} details page</PageContainer>;
+  return (
+    <PageContainer>
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+        <ProductCarousel product={product} />
+        <ProductDescription product={product} />
+      </SimpleGrid>
+    </PageContainer>
+  );
 }
