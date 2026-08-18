@@ -27,7 +27,8 @@ const variationSchema = z.object({
   sizeId: z
     .array(z.cuid2(), { error: "select a size" })
     .length(1, { error: "select one size" })
-    .transform(([id]) => id),
+    .transform(([id]) => id)
+    .optional(),
 
   teamVariations: z
     .array(teamVariationSchema)
@@ -59,7 +60,8 @@ export const productSchema = z.object({
 
   brand: z
     .string({ error: "brand is required" })
-    .min(2, { error: "brand is required" }),
+    .min(2, { error: "brand is required" })
+    .optional(),
 
   gender: z.enum(Gender, { error: "select a gender" }),
 
@@ -80,7 +82,8 @@ export const productSchema = z.object({
   sizeTypeId: z
     .array(z.cuid2(), { error: "select a size type" })
     .length(1, { error: "select one size type" })
-    .transform(([id]) => id),
+    .transform(([id]) => id)
+    .optional(),
 
   variations: z
     .array(variationSchema)

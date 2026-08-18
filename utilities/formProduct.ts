@@ -4,8 +4,8 @@ export function formProduct(product: Product) {
   return {
     ...product,
     images: product.images.map(({ url }) => url),
-    categoryId: [product.categoryId],
-    sizeTypeId: [product.sizeTypeId],
+    categoryId: [product.category.id],
+    sizeTypeId: [product.sizeType?.id],
     variations: product.variations.map((v) => ({
       id: v.id,
       color: v.color,
