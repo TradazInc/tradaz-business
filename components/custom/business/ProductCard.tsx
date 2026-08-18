@@ -14,7 +14,7 @@ interface Props {
   href: string;
   image?: string;
   vendor?: string;
-  variationCount: number;
+  variationCount?: number;
 }
 
 const ProductCard = ({
@@ -59,10 +59,12 @@ const ProductCard = ({
               <DataList.ItemValue>{brand}</DataList.ItemValue>
             </DataList.Item>
           )}
-          <DataList.Item>
-            <DataList.ItemLabel>Variations</DataList.ItemLabel>
-            <DataList.ItemValue>{variationCount}</DataList.ItemValue>
-          </DataList.Item>
+          {variationCount && (
+            <DataList.Item>
+              <DataList.ItemLabel>Variations</DataList.ItemLabel>
+              <DataList.ItemValue>{variationCount}</DataList.ItemValue>
+            </DataList.Item>
+          )}
         </DataList.Root>
       </Card.Body>
       <Card.Footer gap="2">
