@@ -60,7 +60,7 @@ const ProductDescription = ({ product }: Props) => {
         {product.sizeType && (
           <DataList.Item>
             <DataList.ItemLabel>
-              Sizes{" "}
+              Sizes
               <InfoTip>
                 Product sizes based on size type. See variation for available
                 sizes
