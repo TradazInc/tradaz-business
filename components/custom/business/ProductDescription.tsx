@@ -1,6 +1,13 @@
 import { InfoTip } from "@/components/ui/toggle-tip";
 import { Product } from "@/server/entities/product";
-import { DataList, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  DataList,
+  Heading,
+  HStack,
+  Square,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
 
 interface Props {
@@ -60,12 +67,23 @@ const ProductDescription = ({ product }: Props) => {
         {product.sizeType && (
           <DataList.Item>
             <DataList.ItemLabel>
-              Sizes <InfoTip>This is some info</InfoTip>
+              Sizes{" "}
+              <InfoTip>
+                Product sizes based on size type. See variation for available
+                sizes
+              </InfoTip>
             </DataList.ItemLabel>
             <DataList.ItemValue>
               <HStack gapX={2}>
                 {product.sizeType.sizes.map((s) => (
-                  <Text key={s.id}>{s.value}</Text>
+                  <Square
+                    key={s.id}
+                    size={"10"}
+                    bg={"bg.inverted"}
+                    color={"fg.inverted"}
+                  >
+                    {s.value}
+                  </Square>
                 ))}
               </HStack>
             </DataList.ItemValue>
