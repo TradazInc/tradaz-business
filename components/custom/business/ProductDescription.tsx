@@ -10,7 +10,7 @@ interface Props {
 const ProductDescription = ({ product }: Props) => {
   return (
     <VStack w={"full"} mx={"auto"}>
-      <Heading size={{ sm: "4xl", lg: "5xl" }} marginBottom={3}>
+      <Heading size={{ smToMd: "4xl", lg: "5xl" }} marginBottom={3}>
         {product.name.toUpperCase()}
       </Heading>
       <DataList.Root

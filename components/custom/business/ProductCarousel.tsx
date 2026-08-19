@@ -1,7 +1,7 @@
 "use client";
 
 import { Product } from "@/server/entities/product";
-import { Box, Carousel } from "@chakra-ui/react";
+import { Carousel } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 const ProductCarousel = ({ product }: Props) => {
   return (
-    <Carousel.Root slideCount={product.images.length} maxW={"2xl"} gap={"4"}>
+    <Carousel.Root slideCount={product.images.length} w={"full"} gap={"4"}>
       <Carousel.ItemGroup w={"full"}>
         {product.images.map((img, index) => (
           <Carousel.Item key={img.id} index={index}>

@@ -25,7 +25,9 @@ export default async function page({ params }: Props) {
         <Box w={{ base: "full", md: "60%" }}>
           <ProductCarousel product={product} />
         </Box>
-        <ProductDescription product={product} />
+        <Box w={{ base: "full", md: "40%" }}>
+          <ProductDescription product={product} />
+        </Box>
       </Stack>
     </PageContainer>
   );
