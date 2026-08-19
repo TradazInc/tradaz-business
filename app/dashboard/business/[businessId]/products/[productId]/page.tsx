@@ -12,8 +12,8 @@ interface Props {
 export default async function page({ params }: Props) {
   const { productId } = await params;
   const { data: product, error } = await getProduct(productId);
-
-  if (error) notFound();
+  console.log(product);
+  if (!product || error) notFound();
 
   return (
     <PageContainer>

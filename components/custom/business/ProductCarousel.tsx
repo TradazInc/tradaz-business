@@ -9,8 +9,6 @@ interface Props {
 const ProductCarousel = ({ product }: Props) => {
   return (
     <Carousel.Root
-      spacing={"8px"}
-      slidesPerPage={2.5}
       slideCount={product.images.length}
       w={"full"}
       mx={"auto"}
@@ -18,7 +16,7 @@ const ProductCarousel = ({ product }: Props) => {
     >
       <Carousel.ItemGroup w={"full"}>
         {product.images.map((img, index) => (
-          <Carousel.Item key={index} index={index}>
+          <Carousel.Item key={img.id} index={index}>
             <Box rounded={"md"} asChild>
               <CldImage
                 src={img.url}
