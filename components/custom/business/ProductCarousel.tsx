@@ -1,3 +1,5 @@
+"use client";
+
 import { Product } from "@/server/entities/product";
 import { Box, Carousel } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
