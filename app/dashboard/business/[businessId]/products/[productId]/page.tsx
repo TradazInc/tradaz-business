@@ -17,7 +17,7 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} py={8}>
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ sm: 4, md: 10 }} py={10}>
         <ProductCarousel product={product} />
         <ProductDescription product={product} />
       </SimpleGrid>

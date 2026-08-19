@@ -19,14 +19,12 @@ const ProductCarousel = ({ product }: Props) => {
       <Carousel.ItemGroup w={"full"}>
         {product.images.map((img, index) => (
           <Carousel.Item key={img.id} index={index}>
-            <Box rounded={"md"} asChild>
-              <CldImage
-                src={img.url}
-                aspectRatio={1}
-                crop={"fill"}
-                alt={`Product image ${index + 1}`}
-              />
-            </Box>
+            <CldImage
+              src={img.url}
+              aspectRatio={1}
+              crop={"fill"}
+              alt={`Product image ${index + 1}`}
+            />
           </Carousel.Item>
         ))}
       </Carousel.ItemGroup>

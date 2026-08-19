@@ -9,7 +9,7 @@ interface Props {
 
 const ProductDescription = ({ product }: Props) => {
   return (
-    <VStack w={"full"}>
+    <VStack w={"full"} mx={"auto"}>
       <Heading size={"5xl"} marginBottom={3}>
         {product.name.toUpperCase()}
       </Heading>
@@ -71,7 +71,7 @@ const ProductDescription = ({ product }: Props) => {
                 {product.sizeType.sizes.map((s) => (
                   <Square
                     key={s.id}
-                    size={"10"}
+                    size={8}
                     bg={"bg.inverted"}
                     color={"fg.inverted"}
                   >

@@ -14,6 +14,7 @@ import {
   HStack,
   IconButton,
   Spinner,
+  Square,
   Table,
   Text,
 } from "@chakra-ui/react";
@@ -79,7 +80,14 @@ const ProductSizeTable = ({ initialSizeTypes }: Props) => {
                   <Table.Cell>
                     <HStack gapX={2}>
                       {sizeType.sizes?.map((size) => (
-                        <Text key={size.id}>{size.value}</Text>
+                        <Square
+                          key={size.id}
+                          size={8}
+                          bg={"bg.inverted"}
+                          color={"fg.inverted"}
+                        >
+                          {size.value}
+                        </Square>
                       ))}
                     </HStack>
                   </Table.Cell>
