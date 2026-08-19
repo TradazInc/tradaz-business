@@ -43,8 +43,8 @@ const VariationCard = ({ variation, index }: Props) => {
               <DataList.ItemLabel>Color</DataList.ItemLabel>
               <DataList.ItemValue>
                 <HStack gap={2}>
-                  <ColorSwatch value={variation.color} />
                   <Text textStyle="sm">{variation.color}</Text>
+                  <ColorSwatch value={variation.color} />
                 </HStack>
               </DataList.ItemValue>
             </DataList.Item>
@@ -85,13 +85,10 @@ const VariationCard = ({ variation, index }: Props) => {
                         justifyContent={"space-between"}
                         gap={4}
                       >
-                        {/* horizontal reserves 120px per label, too much nested inside a value */}
-                        <DataList.ItemLabel minW={"auto"}>
+                        <DataList.ItemLabel>
                           {tv.team.address}
                         </DataList.ItemLabel>
-                        <DataList.ItemValue flex={"none"}>
-                          {tv.quantity}
-                        </DataList.ItemValue>
+                        <DataList.ItemValue>{tv.quantity}</DataList.ItemValue>
                       </DataList.Item>
                     ))}
                   </DataList.Root>
