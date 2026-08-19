@@ -10,10 +10,10 @@ export function formProduct(product: Product) {
       id: v.id,
       color: v.color,
       price: v.price,
-      sizeId: [v.sizeId],
+      sizeId: [v.size.id],
       teamVariations: v.teamVariations.map((tv) => ({
         id: tv.id,
-        teamId: [tv.teamId],
+        teamId: [tv.team.id],
         quantity: tv.quantity,
       })),
     })),

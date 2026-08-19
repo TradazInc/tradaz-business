@@ -7,33 +7,28 @@ export interface Product {
   gender: Gender;
   description: string;
   discountPercentage: number;
-  category: { id: string; name: string }; //make optional
+  category: { id: string; name: string }; // make optional
   sizeType: { id: string; sizes: { id: string; value: string }[] }; // make optional
   productStatus: ProductStatus;
-  images: Image[];
+  images: { id: string; url: string }[];
   variations: Variation[];
   vendor?: { user: { name: string } };
   _count?: { variations: number };
 }
 
-interface Variation {
+export interface Variation {
   id: string;
   sku: string;
   color: string;
   price: number;
-  sizeId: string;
+  size: { id: string; value: string };
   teamVariations: TeamVariation[];
 }
 
 interface TeamVariation {
   id: string;
-  teamId: string;
+  team: { id: string; name: string; address: string };
   quantity: number;
-}
-
-interface Image {
-  id: string;
-  url: string;
 }
 
 export enum Gender {
