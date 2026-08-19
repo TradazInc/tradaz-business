@@ -16,7 +16,7 @@ const ProductCarousel = ({ product }: Props) => {
           <Carousel.Item key={img.id} index={index}>
             <CldImage
               src={img.url}
-              aspectRatio={1}
+              aspectRatio={4 / 3}
               crop={"fill"}
               alt={`Product image ${index + 1}`}
             />

@@ -63,7 +63,7 @@ const ImageUpload = ({
                   <Box rounded="md" asChild>
                     <CldImage
                       src={url}
-                      aspectRatio={1}
+                      aspectRatio={4 / 3}
                       crop={"fill"}
                       alt={`Product image ${index + 1}`}
                     />
@@ -74,7 +74,7 @@ const ImageUpload = ({
                 <Carousel.Item key={index} index={index}>
                   <Center
                     w="full"
-                    aspectRatio="1"
+                    aspectRatio="4/3"
                     rounded="md"
                     fontSize="2.5rem"
                     bg="bg.emphasized"
