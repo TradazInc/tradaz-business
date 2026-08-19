@@ -1,13 +1,6 @@
 import { InfoTip } from "@/components/ui/toggle-tip";
 import { Product } from "@/server/entities/product";
-import {
-  DataList,
-  Heading,
-  HStack,
-  Square,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { DataList, Heading, HStack, Square, VStack } from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
 
 interface Props {
