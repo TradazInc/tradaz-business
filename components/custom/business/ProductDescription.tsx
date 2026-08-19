@@ -9,12 +9,20 @@ interface Props {
 
 const ProductDescription = ({ product }: Props) => {
   return (
-    <VStack>
-      <Heading fontSize={30} marginBottom={3}>
+    <VStack w={"full"}>
+      <Heading size={"5xl"} marginBottom={3}>
         {product.name.toUpperCase()}
       </Heading>
-      <Text>{product.description}</Text>
-      <DataList.Root orientation="horizontal">
+      <DataList.Root
+        w={"full"}
+        orientation={"horizontal"}
+        size={{ sm: "md", md: "lg" }}
+      >
+        <DataList.Item>
+          <DataList.ItemLabel>Description</DataList.ItemLabel>
+          <DataList.ItemValue>{product.description}</DataList.ItemValue>
+        </DataList.Item>
+
         {product.vendor && (
           <DataList.Item>
             <DataList.ItemLabel>Vendor</DataList.ItemLabel>
