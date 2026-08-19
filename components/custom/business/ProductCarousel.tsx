@@ -1,8 +1,9 @@
 "use client";
 
 import { Product } from "@/server/entities/product";
-import { Carousel } from "@chakra-ui/react";
+import { Carousel, IconButton } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 interface Props {
   product: Product;
@@ -24,26 +25,21 @@ const ProductCarousel = ({ product }: Props) => {
         ))}
       </Carousel.ItemGroup>
 
-      <Carousel.IndicatorGroup>
-        {product.images.map((img, index) => (
-          <Carousel.Indicator
-            key={index}
-            index={index}
-            unstyled
-            _current={{
-              outline: "2px solid currentColor",
-              outlineOffset: "2px",
-            }}
-          >
-            <CldImage
-              src={img.url}
-              aspectRatio={1}
-              crop={"fill"}
-              alt={`Product image ${index + 1}`}
-            />
-          </Carousel.Indicator>
-        ))}
-      </Carousel.IndicatorGroup>
+      <Carousel.Control justifyContent="center" gap="4">
+        <Carousel.PrevTrigger asChild>
+          <IconButton size="xs" variant="ghost">
+            <LuChevronLeft />
+          </IconButton>
+        </Carousel.PrevTrigger>
+
+        <Carousel.Indicators />
+
+        <Carousel.NextTrigger asChild>
+          <IconButton size="xs" variant="ghost">
+            <LuChevronRight />
+          </IconButton>
+        </Carousel.NextTrigger>
+      </Carousel.Control>
     </Carousel.Root>
   );
 };
