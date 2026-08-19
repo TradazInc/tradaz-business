@@ -10,12 +10,7 @@ interface Props {
 
 const ProductCarousel = ({ product }: Props) => {
   return (
-    <Carousel.Root
-      slideCount={product.images.length}
-      w={"full"}
-      mx={"auto"}
-      gap={"4"}
-    >
+    <Carousel.Root slideCount={product.images.length} maxW={"2xl"} gap={"4"}>
       <Carousel.ItemGroup w={"full"}>
         {product.images.map((img, index) => (
           <Carousel.Item key={img.id} index={index}>
@@ -29,7 +24,7 @@ const ProductCarousel = ({ product }: Props) => {
         ))}
       </Carousel.ItemGroup>
 
-      <Carousel.IndicatorGroup w={"full"}>
+      <Carousel.IndicatorGroup>
         {product.images.map((img, index) => (
           <Carousel.Indicator
             key={index}
@@ -40,14 +35,12 @@ const ProductCarousel = ({ product }: Props) => {
               outlineOffset: "2px",
             }}
           >
-            <Box w={"20"} rounded={"md"}>
-              <CldImage
-                src={img.url}
-                aspectRatio={1}
-                crop={"fill"}
-                alt={`Product image ${index + 1}`}
-              />
-            </Box>
+            <CldImage
+              src={img.url}
+              aspectRatio={1}
+              crop={"fill"}
+              alt={`Product image ${index + 1}`}
+            />
           </Carousel.Indicator>
         ))}
       </Carousel.IndicatorGroup>
