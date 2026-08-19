@@ -17,7 +17,7 @@ export default async function page({ params }: Props) {
   if (!product || error) notFound();
 
   return (
-    <PageContainer py={10} gap={{ sm: 4, md: 10 }}>
+    <PageContainer py={10}>
       <Stack direction={{ base: "column", md: "row" }} gap={{ sm: 4, md: 10 }}>
         <Box w={{ base: "full", md: "60%" }}>
           <ProductCarousel product={product} />
@@ -27,7 +27,7 @@ export default async function page({ params }: Props) {
         </Box>
       </Stack>
 
-      <VStack gap={{ base: 4, md: 10 }}>
+      <VStack gap={{ base: 4, md: 10 }} mt={8}>
         {product.variations.map((v, i) => (
           <VariationCard key={v.id} variation={v} index={i} />
         ))}
