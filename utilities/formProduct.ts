@@ -10,7 +10,7 @@ export function formProduct(product: Product) {
       id: v.id,
       color: v.color,
       price: v.price,
-      sizeId: [v.size.id],
+      sizeId: v.size ? [v.size.id] : [], // size is cleared when its Size row is deleted
       teamVariations: v.teamVariations.map((tv) => ({
         id: tv.id,
         teamId: [tv.team.id],

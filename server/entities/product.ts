@@ -21,7 +21,7 @@ export interface Variation {
   sku: string;
   color: string;
   price: number;
-  size: { id: string; value: string };
+  size: { id: string; value: string } | null; // Size.onDelete is SetNull
   teamVariations: TeamVariation[];
 }
 

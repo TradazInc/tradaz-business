@@ -23,15 +23,8 @@ const VariationCard = ({ variation, index }: Props) => {
         <Heading size="md">Variation {index + 1}</Heading>
       </Card.Header>
       <Card.Body>
-        <Flex
-          flexDirection={{ base: "column", md: "row" }}
-          align={"stretch"}
-          w={"full"}
-        >
-          <DataList.Root
-            orientation={{ base: "vertical", md: "horizontal" }}
-            w={"full"}
-          >
+        <Flex flexDirection={{ base: "column", md: "row" }} w={"full"} gap={4}>
+          <DataList.Root orientation={"horizontal"} w={"full"}>
             <DataList.Item>
               <DataList.ItemLabel>SKU</DataList.ItemLabel>
               <DataList.ItemValue>{variation.sku}</DataList.ItemValue>
@@ -57,10 +50,7 @@ const VariationCard = ({ variation, index }: Props) => {
             </DataList.Item>
           </DataList.Root>
 
-          <DataList.Root
-            orientation={{ base: "vertical", md: "horizontal" }}
-            w={"full"}
-          >
+          <DataList.Root orientation={"horizontal"} w={"full"}>
             <DataList.Item>
               <DataList.ItemLabel>Price</DataList.ItemLabel>
               <DataList.ItemValue>
@@ -83,14 +73,31 @@ const VariationCard = ({ variation, index }: Props) => {
             <DataList.Item>
               <DataList.ItemLabel>Store quantity</DataList.ItemLabel>
               <DataList.ItemValue>
-                <DataList.Root size={"sm"} orientation={"horizontal"}>
-                  {variation.teamVariations.map((tv) => (
-                    <DataList.Item key={tv.id}>
-                      <DataList.ItemLabel>{tv.team.address}</DataList.ItemLabel>
-                      <DataList.ItemValue>{tv.quantity}</DataList.ItemValue>
-                    </DataList.Item>
-                  ))}
-                </DataList.Root>
+                {variation.teamVariations.length ? (
+                  <DataList.Root
+                    size={"sm"}
+                    orientation={"horizontal"}
+                    w={"full"}
+                  >
+                    {variation.teamVariations.map((tv) => (
+                      <DataList.Item
+                        key={tv.id}
+                        justifyContent={"space-between"}
+                        gap={4}
+                      >
+                        {/* horizontal reserves 120px per label, too much nested inside a value */}
+                        <DataList.ItemLabel minW={"auto"}>
+                          {tv.team.address}
+                        </DataList.ItemLabel>
+                        <DataList.ItemValue flex={"none"}>
+                          {tv.quantity}
+                        </DataList.ItemValue>
+                      </DataList.Item>
+                    ))}
+                  </DataList.Root>
+                ) : (
+                  <Text color={"fg.muted"}>Not stocked in any store</Text>
+                )}
               </DataList.ItemValue>
             </DataList.Item>
           </DataList.Root>
