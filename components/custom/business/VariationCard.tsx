@@ -21,7 +21,11 @@ const VariationCard = ({ variation, index }: Props) => {
       <Card.Header>
         <Heading size="md">Variation {index + 1}</Heading>
       </Card.Header>
-      <Card.Body flexDirection={{ base: "column", md: "row" }}>
+      <Card.Body
+        flexDirection={{ base: "column", md: "row" }}
+        alignItems={"stretch"}
+        w={"full"}
+      >
         <DataList.Root orientation={{ base: "vertical", md: "horizontal" }}>
           <DataList.Item>
             <DataList.ItemLabel>SKU</DataList.ItemLabel>
