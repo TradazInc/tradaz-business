@@ -27,9 +27,9 @@ export default async function page({ params }: Props) {
         </Box>
       </Stack>
 
-      <VStack gap={{ sm: 4, md: 10 }}>
+      <VStack gap={{ base: 4, md: 10 }}>
         {product.variations.map((v, i) => (
-          <VariationCard key={i} variation={v} index={i} />
+          <VariationCard key={v.id} variation={v} index={i} />
         ))}
       </VStack>
     </PageContainer>

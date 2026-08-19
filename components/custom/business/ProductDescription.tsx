@@ -10,13 +10,13 @@ interface Props {
 const ProductDescription = ({ product }: Props) => {
   return (
     <VStack w={"full"} mx={"auto"}>
-      <Heading size={{ sm: "3xl", md: "4xl", lg: "5xl" }} marginBottom={3}>
+      <Heading size={{ base: "3xl", md: "4xl", lg: "5xl" }} marginBottom={3}>
         {product.name.toUpperCase()}
       </Heading>
       <DataList.Root
         w={"full"}
         orientation={"horizontal"}
-        size={{ sm: "md", md: "lg" }}
+        size={{ base: "md", md: "lg" }}
       >
         <DataList.Item>
           <DataList.ItemLabel>Description</DataList.ItemLabel>
