@@ -52,6 +52,21 @@ const ProductDescription = ({ product }: Props) => {
           <DataList.ItemValue>{product.gender}</DataList.ItemValue>
         </DataList.Item>
         <DataList.Item>
+          <DataList.ItemLabel>Total stock</DataList.ItemLabel>
+          <DataList.ItemValue>
+            {product.variations.reduce(
+              (total, variation) =>
+                total +
+                variation.teamVariations.reduce(
+                  (variationTotal, teamVariation) =>
+                    variationTotal + teamVariation.quantity,
+                  0,
+                ),
+              0,
+            )}
+          </DataList.ItemValue>
+        </DataList.Item>
+        <DataList.Item>
           <DataList.ItemLabel>Status</DataList.ItemLabel>
           <DataList.ItemValue>
             <StatusIndicator status={product.productStatus} />

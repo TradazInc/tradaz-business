@@ -1,7 +1,7 @@
 "use client";
 
 import { Product } from "@/server/entities/product";
-import { Carousel, IconButton } from "@chakra-ui/react";
+import { Box, Carousel, IconButton } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
@@ -15,12 +15,14 @@ const ProductCarousel = ({ product }: Props) => {
       <Carousel.ItemGroup w={"full"}>
         {product.images.map((img, index) => (
           <Carousel.Item key={img.id} index={index}>
-            <CldImage
-              src={img.url}
-              aspectRatio={4 / 3}
-              crop={"fill"}
-              alt={`Product image ${index + 1}`}
-            />
+            <Box rounded="md" asChild>
+              <CldImage
+                src={img.url}
+                aspectRatio={4 / 3}
+                crop={"fill"}
+                alt={`Product image ${index + 1}`}
+              />
+            </Box>
           </Carousel.Item>
         ))}
       </Carousel.ItemGroup>
