@@ -1,12 +1,12 @@
 import { Variation } from "@/server/entities/product";
 import {
+  Badge,
   Card,
   ColorSwatch,
   DataList,
   Flex,
   FormatNumber,
   Heading,
-  HStack,
   Square,
   Text,
 } from "@chakra-ui/react";
@@ -33,7 +33,7 @@ const VariationCard = ({ variation, index }: Props) => {
               <DataList.Item>
                 <DataList.ItemLabel>Size</DataList.ItemLabel>
                 <DataList.ItemValue>
-                  <Square size={8} bg={"bg.inverted"} color={"fg.inverted"}>
+                  <Square size={6} bg={"bg.inverted"} color={"fg.inverted"}>
                     {variation.size.value}
                   </Square>
                 </DataList.ItemValue>
@@ -42,10 +42,10 @@ const VariationCard = ({ variation, index }: Props) => {
             <DataList.Item>
               <DataList.ItemLabel>Color</DataList.ItemLabel>
               <DataList.ItemValue>
-                <HStack gap={2}>
-                  <Text textStyle="sm">{variation.color}</Text>
+                <Badge size={"lg"}>
                   <ColorSwatch value={variation.color} />
-                </HStack>
+                  #bada55
+                </Badge>
               </DataList.ItemValue>
             </DataList.Item>
           </DataList.Root>
