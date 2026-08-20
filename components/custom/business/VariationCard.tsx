@@ -42,9 +42,9 @@ const VariationCard = ({ variation, index }: Props) => {
             <DataList.Item>
               <DataList.ItemLabel>Color</DataList.ItemLabel>
               <DataList.ItemValue>
-                <Badge size={"lg"}>
+                <Badge size={{ base: "md", md: "lg" }}>
                   <ColorSwatch value={variation.color} />
-                  #bada55
+                  {variation.color}
                 </Badge>
               </DataList.ItemValue>
             </DataList.Item>
