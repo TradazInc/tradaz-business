@@ -238,9 +238,9 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
 
       <Button
         size={"sm"}
-        type="button"
-        variant="subtle"
-        alignSelf="flex-start"
+        type={"button"}
+        variant={"subtle"}
+        alignSelf={"flex-start"}
         onClick={() => append(emptyVariation)}
       >
         <LuPlus /> Add variation

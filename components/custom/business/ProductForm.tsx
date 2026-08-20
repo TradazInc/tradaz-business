@@ -397,10 +397,11 @@ const ProductForm = ({ product }: Props) => {
         <TotalQuantity control={control} />
 
         <Button
-          type="submit"
-          alignSelf="flex-start"
-          disabled={!isValid || isSubmitting || isMutating}
+          type={"submit"}
+          variant={"outline"}
+          alignSelf={"flex-start"}
           loading={isSubmitting || isMutating}
+          disabled={!isValid || isSubmitting || isMutating}
         >
           {product ? "Update Product" : "Create Product"}
         </Button>
