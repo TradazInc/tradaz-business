@@ -167,10 +167,8 @@ const ProductForm = ({ product }: Props) => {
               <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
             </Field.Root>
 
-            <Field.Root required invalid={!!errors.brand}>
-              <Field.Label>
-                Brand <Field.RequiredIndicator />
-              </Field.Label>
+            <Field.Root invalid={!!errors.brand}>
+              <Field.Label>Brand</Field.Label>
               <Input {...register("brand")} />
               <Field.ErrorText>{errors.brand?.message}</Field.ErrorText>
             </Field.Root>
