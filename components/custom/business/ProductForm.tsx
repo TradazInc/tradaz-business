@@ -34,6 +34,7 @@ import FormInputGrid from "../shared/FormInputGrid";
 import ImageUpload from "../shared/ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
+import { LuPackage } from "react-icons/lu";
 
 interface Props {
   product?: Product;
@@ -403,6 +404,7 @@ const ProductForm = ({ product }: Props) => {
           loading={isSubmitting || isMutating}
           disabled={!isValid || isSubmitting || isMutating}
         >
+          <LuPackage />
           {product ? "Update Product" : "Create Product"}
         </Button>
 
