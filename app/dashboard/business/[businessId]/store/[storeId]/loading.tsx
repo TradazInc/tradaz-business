@@ -1,9 +1,7 @@
-import React from 'react'
+import { PageContainer } from "@/components/custom/shared/PageContainer";
 
 const loading = () => {
-  return (
-    <div>loading...</div>
-  )
-}
+  return <PageContainer>loading...</PageContainer>;
+};
 
-export default loading
+export default loading;
