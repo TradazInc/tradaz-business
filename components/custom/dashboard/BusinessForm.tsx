@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { lastStep, steps } from "@/data/businessForm";
+import { lastStep, steps } from "@/data/businessFormSteps";
 import { businessSchema } from "@/schema/business";
 import { useAddBusiness } from "@/server/hooks/business";
 import { useBusinessCategories } from "@/server/hooks/businessCategory";

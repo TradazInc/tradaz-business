@@ -1,5 +1,5 @@
 import { ColorModeButton } from "@/components/ui/color-mode";
-import { steps } from "@/data/homePage";
+import { steps } from "@/data/homePageSteps";
 import {
   Box,
   Button,
