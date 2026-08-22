@@ -15,7 +15,7 @@ export const useProductCategories = (
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
-      cursorKey(pageIndex, previousPageData, "product-categories", PAGE_SIZE),
+      cursorKey(pageIndex, previousPageData, PRODUCT_CATEGORY_KEY, PAGE_SIZE),
     (url) =>
       productCategoryService.getAll({
         query: extractSearchParams(url),

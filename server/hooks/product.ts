@@ -10,7 +10,7 @@ import { Product, productService } from "../entities/product";
 export const useProducts = (fallbackData: FetchResponse<Product>[]) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
-      cursorKey(pageIndex, previousPageData, "products", PAGE_SIZE),
+      cursorKey(pageIndex, previousPageData, PRODUCT_KEY, PAGE_SIZE),
     (url) =>
       productService.getAll({ query: extractSearchParams(url), throw: true }),
     { fallbackData },

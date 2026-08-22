@@ -9,7 +9,11 @@ export const PRODUCT_KEY = "/api/products";
 
 export const PRODUCT_CATEGORY_KEY = "/api/product-categories";
 
+export const BUSINESS_CATEGORY_KEY = "/api/business-categories";
+
 export const SIZE_TYPE_KEY = "/api/size-types";
+
+export const POINTS_CONFIG_KEY = "/api/points-config";
 
 // Computed Keys
 export const businessKey = (businessId: string) =>
@@ -21,20 +25,20 @@ export const storeKey = (businessId: string) =>
 export function cursorKey<T>(
   pageIndex: number,
   previousPageData: FetchResponse<T> | null,
-  resource: string,
+  cacheKey: string,
   pageSize: number,
 ) {
   if (previousPageData && !previousPageData.meta?.next) return null; // reached the end
-  if (pageIndex === 0) return `/api/${resource}?&pageSize=${pageSize}`; // first page, we don't have `previousPageData`
-  return `/api/${resource}?cursor=${previousPageData?.meta?.next}&pageSize=${pageSize}`;
+  if (pageIndex === 0) return `${cacheKey}?&pageSize=${pageSize}`; // first page, we don't have `previousPageData`
+  return `${cacheKey}?cursor=${previousPageData?.meta?.next}&pageSize=${pageSize}`;
 }
 
 export function indexKey<T>(
   pageIndex: number,
   previousPageData: FetchResponse<T> | null,
-  resource: string,
+  cacheKey: string,
   pageSize: number,
 ) {
   if (previousPageData && !previousPageData.data.length) return null; // reached the end
-  return `/api/${resource}?page=${pageIndex}&pageSize=${pageSize}`;
+  return `${cacheKey}?page=${pageIndex}&pageSize=${pageSize}`;
 }

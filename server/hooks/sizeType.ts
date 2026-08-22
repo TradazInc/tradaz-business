@@ -10,7 +10,7 @@ import { SizeType, sizeTypeService } from "../entities/sizeType";
 export const useSizeTypes = (fallbackData?: FetchResponse<SizeType>[]) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) =>
-      cursorKey(pageIndex, previousPageData, "size-types", PAGE_SIZE),
+      cursorKey(pageIndex, previousPageData, SIZE_TYPE_KEY, PAGE_SIZE),
     (url) =>
       sizeTypeService.getAll({ query: extractSearchParams(url), throw: true }),
     { fallbackData },
