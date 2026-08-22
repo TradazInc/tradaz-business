@@ -1,5 +1,10 @@
-import { emptyVariation } from "@/data/productForm";
-import { ProductData, ProductFormValues } from "@/schema/product";
+"use client";
+
+import {
+  emptyVariation,
+  ProductData,
+  ProductFormValues,
+} from "@/schema/product";
 import { SizeType } from "@/server/entities/sizeType";
 import {
   Box,

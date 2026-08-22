@@ -2,8 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { MAX_FILE_SIZE, MAX_FILES, SLIDES_PER_PAGE } from "@/data/constants";
-import { emptyProduct } from "@/data/productForm";
-import { productSchema } from "@/schema/product";
+import { emptyProduct, productSchema } from "@/schema/product";
 import { Gender, Product } from "@/server/entities/product";
 import { useAddProduct } from "@/server/hooks/product";
 import { useProductCategories } from "@/server/hooks/productCategory";

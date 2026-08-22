@@ -1,7 +1,10 @@
 "use client";
 
-import { emptyTeamVariation } from "@/data/productForm";
-import { ProductData, ProductFormValues } from "@/schema/product";
+import {
+  emptyTeamVariation,
+  ProductData,
+  ProductFormValues,
+} from "@/schema/product";
 import { useStores } from "@/server/hooks/store";
 import {
   Button,

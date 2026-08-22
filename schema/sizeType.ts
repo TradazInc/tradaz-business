@@ -16,3 +16,12 @@ export const sizeTypeSchema = z.object({
 });
 export type SizeTypeData = z.infer<typeof sizeTypeSchema>;
 export type SizeTypeFormValues = z.input<typeof sizeTypeSchema>;
+
+export const emptySize: SizeFormValues = {
+  value: "",
+};
+
+export const emptySizeType: SizeTypeFormValues = {
+  name: "",
+  sizes: [emptySize],
+};

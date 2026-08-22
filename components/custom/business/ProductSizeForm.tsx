@@ -1,8 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { emptySize, emptySizeType } from "@/data/productSizeForm";
-import { sizeTypeSchema } from "@/schema/sizeType";
+import { emptySize, emptySizeType, sizeTypeSchema } from "@/schema/sizeType";
 import { useAddSizeTypes } from "@/server/hooks/sizeType";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
@@ -49,14 +48,13 @@ const ProductSizeForm = () => {
       error: errorToastOptions,
     });
     if (!promise) return;
-    const ok = await promise
-      .unwrap()
-      .then(() => true)
-      .catch(() => false);
-    if (!ok) return; // toast already surfaced it; keep the input for a retry
-
-    reset(emptySizeType);
-    setOpen(false);
+    try {
+      await promise.unwrap();
+      reset(emptySizeType);
+      setOpen(false);
+    } catch (error) {
+      return; // toast already surfaced it; keep the input for a retry
+    }
   });
 
   return (

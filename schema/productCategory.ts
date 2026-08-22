@@ -7,3 +7,5 @@ export const productCategorySchema = z.object({
 });
 export type ProductCategoryData = z.infer<typeof productCategorySchema>;
 export type ProductCategoryFormValues = z.input<typeof productCategorySchema>;
+
+export const emptyProductCategory: ProductCategoryFormValues = { name: "" };

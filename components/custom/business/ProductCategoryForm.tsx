@@ -1,8 +1,10 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { emptyProductCategory } from "@/data/productCategoryForm";
-import { productCategorySchema } from "@/schema/productCategory";
+import {
+  emptyProductCategory,
+  productCategorySchema,
+} from "@/schema/productCategory";
 import { useAddProductCategory } from "@/server/hooks/productCategory";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
@@ -40,14 +42,13 @@ const ProductCategoryForm = () => {
       error: errorToastOptions,
     });
     if (!promise) return;
-    const ok = await promise
-      .unwrap()
-      .then(() => true)
-      .catch(() => false);
-    if (!ok) return; // toast already surfaced it; keep the input for a retry
-
-    reset(emptyProductCategory);
-    setOpen(false);
+    try {
+      await promise.unwrap();
+      reset(emptyProductCategory);
+      setOpen(false);
+    } catch (error) {
+      return; // toast already surfaced it; keep the input for a retry
+    }
   });
 
   return (
