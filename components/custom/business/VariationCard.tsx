@@ -70,33 +70,24 @@ const VariationCard = ({ variation, index }: Props) => {
                 )}
               </DataList.ItemValue>
             </DataList.Item>
-            <DataList.Item>
-              <DataList.ItemLabel>Store quantity</DataList.ItemLabel>
-              <DataList.ItemValue>
-                {variation.teamVariations.length ? (
-                  <DataList.Root
-                    size={"sm"}
-                    orientation={"horizontal"}
-                    w={"full"}
+            {variation.teamVariations.length ? (
+              <>
+                {variation.teamVariations.map((tv) => (
+                  <DataList.Item
+                    key={tv.id}
+                    justifyContent={"space-between"}
+                    gap={4}
                   >
-                    {variation.teamVariations.map((tv) => (
-                      <DataList.Item
-                        key={tv.id}
-                        justifyContent={"space-between"}
-                        gap={4}
-                      >
-                        <DataList.ItemLabel>
-                          {tv.team.address}
-                        </DataList.ItemLabel>
-                        <DataList.ItemValue>{tv.quantity}</DataList.ItemValue>
-                      </DataList.Item>
-                    ))}
-                  </DataList.Root>
-                ) : (
-                  <Text color={"fg.muted"}>Not stocked in any store</Text>
-                )}
-              </DataList.ItemValue>
-            </DataList.Item>
+                    <DataList.ItemLabel>
+                      {tv.team.address} quantity
+                    </DataList.ItemLabel>
+                    <DataList.ItemValue>{tv.quantity}</DataList.ItemValue>
+                  </DataList.Item>
+                ))}
+              </>
+            ) : (
+              <Text color={"fg.muted"}>Not stocked in any store</Text>
+            )}
           </DataList.Root>
         </Flex>
       </Card.Body>
