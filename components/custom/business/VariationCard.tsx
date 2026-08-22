@@ -18,7 +18,7 @@ interface Props {
 
 const VariationCard = ({ variation, index }: Props) => {
   return (
-    <Card.Root size={{ base: "sm", md: "lg" }} w={"full"} border={"none"}>
+    <Card.Root size={{ base: "sm", md: "lg" }} w={"full"}>
       <Card.Header>
         <Heading size="md">Variation {index + 1}</Heading>
       </Card.Header>
