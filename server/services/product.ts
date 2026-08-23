@@ -1,3 +1,4 @@
+import { PAGE_SIZE } from "@/data/constants";
 import { productService } from "../entities/product";
 
 export async function getProduct(id: string) {
@@ -5,5 +6,5 @@ export async function getProduct(id: string) {
 }
 
 export async function getProducts() {
-  return productService.getAll();
+  return productService.getAll({ query: { pageSize: PAGE_SIZE } });
 }
