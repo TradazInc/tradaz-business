@@ -1,45 +1,40 @@
 import { PAGE_SIZE } from "@/data/constants";
 import { FetchResponse } from "@/lib/apiClient";
-import { cursorKey, POINTS_CONFIG_KEY } from "@/utilities/cacheKeys";
-import { extractSearchParams } from "@/utilities/extractSearchParams";
-import useSWRInfinite from "swr/infinite";
-import { PointsConfig, pointsConfigService } from "../entities/pointsConfig";
-import useSWRMutation from "swr/mutation";
 import { PointsConfigData } from "@/schema/pointsConfig";
+import { POINTS_CONFIG_KEY } from "@/utilities/cacheKeys";
+import { cursorQuery } from "@/utilities/pageQuery";
+import useSWRInfinite from "swr/infinite";
+import useSWRMutation from "swr/mutation";
+import { PointsConfig, pointsConfigService } from "../entities/pointsConfig";
 
 export const usePointsConfigs = (
   fallbackData?: FetchResponse<PointsConfig>[],
+  organizationId?: string,
 ) => {
   return useSWRInfinite<FetchResponse<PointsConfig>>(
-    (pageIndex, previousPageData) =>
-      cursorKey(pageIndex, previousPageData, POINTS_CONFIG_KEY, PAGE_SIZE),
-    (url) =>
-      pointsConfigService.getAll({
-        query: extractSearchParams(url),
-        throw: true,
-      }),
+    (pageIndex, previousPageData) => {
+      const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
+      return organizationId && cursor
+        ? [POINTS_CONFIG_KEY, { organizationId, ...cursor }]
+        : null;
+    },
+    ([key, query]) => pointsConfigService.getAll({ query, throw: true }),
     { fallbackData },
   );
 };
 
-export const useAddPointsConfig = () => {
-  const { mutate } = usePointsConfigs();
-
+export const useAddPointsConfig = (organizationId?: string) => {
   return useSWRMutation(
-    POINTS_CONFIG_KEY,
-    (url: string, { arg }: { arg: PointsConfigData }) =>
+    organizationId ? [POINTS_CONFIG_KEY, organizationId] : null,
+    (key, { arg }: { arg: PointsConfigData }) =>
       pointsConfigService.post({ body: arg, throw: true }),
-    { onSuccess: () => mutate() },
   );
 };
 
-export const useRemovePointsConfig = () => {
-  const { mutate } = usePointsConfigs();
-
+export const useRemovePointsConfig = (organizationId?: string) => {
   return useSWRMutation(
-    POINTS_CONFIG_KEY,
-    (url: string, { arg }: { arg: string }) =>
+    organizationId ? [POINTS_CONFIG_KEY, organizationId] : null,
+    (key, { arg }: { arg: string }) =>
       pointsConfigService.delete(arg, { throw: true }),
-    { onSuccess: () => mutate() },
   );
 };

@@ -5,9 +5,9 @@ import { SESSION_KEY } from "@/utilities/cacheKeys";
 
 export const useEmailSignup = () => {
   return useSWRMutation(
-    SESSION_KEY,
+    [SESSION_KEY],
     (
-      url: string,
+      key,
       { arg }: { arg: { signUpData: EmailSignUpData; callbackURL?: string } },
     ) =>
       authClient.signUp.email({
@@ -20,9 +20,9 @@ export const useEmailSignup = () => {
 
 export const useEmailSignin = () => {
   return useSWRMutation(
-    SESSION_KEY,
+    [SESSION_KEY],
     (
-      url: string,
+      key,
       { arg }: { arg: { signInData: EmailSignInData; callbackURL?: string } },
     ) =>
       authClient.signIn.email({
@@ -34,7 +34,7 @@ export const useEmailSignin = () => {
 };
 
 export const useGoogleSignin = () => {
-  return useSWRMutation(SESSION_KEY, (url: string, { arg }: { arg?: string }) =>
+  return useSWRMutation([SESSION_KEY], (key, { arg }: { arg?: string }) =>
     authClient.signIn.social({
       provider: "google",
       callbackURL: arg,
@@ -44,7 +44,7 @@ export const useGoogleSignin = () => {
 };
 
 export const useSignOut = () => {
-  return useSWRMutation(SESSION_KEY, (url: string, { arg }: { arg?: null }) =>
+  return useSWRMutation([SESSION_KEY], (key, { arg }: { arg?: null }) =>
     authClient.signOut({ fetchOptions: { throw: true } }),
   );
 };

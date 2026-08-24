@@ -18,6 +18,7 @@ import {
   Table,
   Text,
 } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
@@ -28,9 +29,11 @@ interface Props {
 }
 
 const ProductSizeTable = ({ initialSizeTypes }: Props) => {
-  const { data, error, mutate, setSize, size } = useSizeTypes([
-    initialSizeTypes,
-  ]);
+  const { businessId } = useParams<{ businessId?: string }>();
+  const { data, error, mutate, setSize, size } = useSizeTypes(
+    [initialSizeTypes],
+    businessId,
+  );
   const { flatData: sizeTypes, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],

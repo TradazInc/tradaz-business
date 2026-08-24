@@ -1,7 +1,7 @@
 import { PAGE_SIZE } from "@/data/constants";
 import { FetchResponse } from "@/lib/apiClient";
-import { BUSINESS_CATEGORY_KEY, cursorKey } from "@/utilities/cacheKeys";
-import { extractSearchParams } from "@/utilities/extractSearchParams";
+import { BUSINESS_CATEGORY_KEY } from "@/utilities/cacheKeys";
+import { cursorQuery } from "@/utilities/pageQuery";
 import useSWRInfinite from "swr/infinite";
 import {
   BusinessCategory,
@@ -10,12 +10,10 @@ import {
 
 export const useBusinessCategories = () => {
   return useSWRInfinite<FetchResponse<BusinessCategory>>(
-    (pageIndex, previousPageData) =>
-      cursorKey(pageIndex, previousPageData, BUSINESS_CATEGORY_KEY, PAGE_SIZE),
-    (url) =>
-      businessCategoryService.getAll({
-        query: extractSearchParams(url),
-        throw: true,
-      }),
+    (pageIndex, previousPageData) => {
+      const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
+      return cursor ? [BUSINESS_CATEGORY_KEY, cursor] : null;
+    },
+    ([key, query]) => businessCategoryService.getAll({ query, throw: true }),
   );
 };

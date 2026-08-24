@@ -41,8 +41,9 @@ interface Props {
 
 const ProductForm = ({ product }: Props) => {
   const { trigger, isMutating } = useAddProduct();
+  const { businessId } = useParams<{ businessId?: string }>();
   const categories = useProductCategories();
-  const sizeTypes = useSizeTypes();
+  const sizeTypes = useSizeTypes(undefined, businessId);
   const { refresh, push } = useRouter();
   const categoryScrollId = useId();
   const sizetypeScrollId = useId();
@@ -103,7 +104,6 @@ const ProductForm = ({ product }: Props) => {
       setValue(`variations.${index}.sizeId`, [], { shouldValidate: true }),
     );
 
-  const { businessId } = useParams<{ businessId?: string }>();
   const onSubmit = handleSubmit(async (productData) => {
     const promise = toaster.promise(trigger(productData), {
       loading: { title: "Creating product...", description: "Please wait" },

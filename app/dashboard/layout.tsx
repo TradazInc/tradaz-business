@@ -3,7 +3,7 @@ import { LayoutContainer } from "@/components/custom/dashboard/LayoutContainer";
 import { BUSINESS_KEY, SESSION_KEY } from "@/utilities/cacheKeys";
 import { getSession } from "@/server/services/auth";
 import { getBusinesses } from "@/server/services/business";
-import { SWRConfig } from "swr";
+import { SWRConfig, unstable_serialize } from "swr";
 import { unauthorized } from "next/navigation";
 
 export default async function BusinessLayout({
@@ -22,8 +22,8 @@ export default async function BusinessLayout({
       <SWRConfig
         value={{
           fallback: {
-            [SESSION_KEY]: session.data,
-            [BUSINESS_KEY]: business.data,
+            [unstable_serialize([SESSION_KEY])]: session.data,
+            [unstable_serialize([BUSINESS_KEY])]: business.data,
           },
         }}
       >

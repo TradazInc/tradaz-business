@@ -1,44 +1,15 @@
-import { FetchResponse } from "@/lib/apiClient";
+export const BUSINESS_KEY = "business";
 
-// Constant Keys
-export const BUSINESS_KEY = "/api/business"; // used for prefetching in layout
+export const SESSION_KEY = "session";
 
-export const SESSION_KEY = "/api/session"; // session is seeded from the layout
+export const BUSINESS_CATEGORY_KEY = "business-categories";
 
-export const PRODUCT_KEY = "/api/products";
+export const PRODUCT_KEY = "products";
 
-export const PRODUCT_CATEGORY_KEY = "/api/product-categories";
+export const STORE_KEY = "stores";
 
-export const BUSINESS_CATEGORY_KEY = "/api/business-categories";
+export const PRODUCT_CATEGORY_KEY = "product-categories";
 
-export const SIZE_TYPE_KEY = "/api/size-types";
+export const SIZE_TYPE_KEY = "size-types";
 
-export const POINTS_CONFIG_KEY = "/api/points-config";
-
-// Computed Keys
-export const businessKey = (businessId: string) =>
-  `${BUSINESS_KEY}/${businessId}`;
-
-export const storeKey = (businessId: string) =>
-  `${BUSINESS_KEY}/${businessId}/stores`;
-
-export function cursorKey<T>(
-  pageIndex: number,
-  previousPageData: FetchResponse<T> | null,
-  cacheKey: string,
-  pageSize: number,
-) {
-  if (previousPageData && !previousPageData.meta?.next) return null; // reached the end
-  if (pageIndex === 0) return `${cacheKey}?&pageSize=${pageSize}`; // first page, we don't have `previousPageData`
-  return `${cacheKey}?cursor=${previousPageData?.meta?.next}&pageSize=${pageSize}`;
-}
-
-export function indexKey<T>(
-  pageIndex: number,
-  previousPageData: FetchResponse<T> | null,
-  cacheKey: string,
-  pageSize: number,
-) {
-  if (previousPageData && !previousPageData.data.length) return null; // reached the end
-  return `${cacheKey}?page=${pageIndex}&pageSize=${pageSize}`;
-}
+export const POINTS_CONFIG_KEY = "points-config";

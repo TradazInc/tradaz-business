@@ -1,40 +1,40 @@
 import { PAGE_SIZE } from "@/data/constants";
 import { FetchResponse } from "@/lib/apiClient";
 import { SizeTypeData } from "@/schema/sizeType";
-import { cursorKey, SIZE_TYPE_KEY } from "@/utilities/cacheKeys";
-import { extractSearchParams } from "@/utilities/extractSearchParams";
+import { SIZE_TYPE_KEY } from "@/utilities/cacheKeys";
+import { cursorQuery } from "@/utilities/pageQuery";
 import useSWRInfinite from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 import { SizeType, sizeTypeService } from "../entities/sizeType";
 
-export const useSizeTypes = (fallbackData?: FetchResponse<SizeType>[]) => {
+export const useSizeTypes = (
+  fallbackData?: FetchResponse<SizeType>[],
+  organizationId?: string,
+) => {
   return useSWRInfinite(
-    (pageIndex, previousPageData) =>
-      cursorKey(pageIndex, previousPageData, SIZE_TYPE_KEY, PAGE_SIZE),
-    (url) =>
-      sizeTypeService.getAll({ query: extractSearchParams(url), throw: true }),
+    (pageIndex, previousPageData) => {
+      const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
+      return organizationId && cursor
+        ? [SIZE_TYPE_KEY, { organizationId, ...cursor }]
+        : null;
+    },
+    ([key, query]) => sizeTypeService.getAll({ query, throw: true }),
     { fallbackData },
   );
 };
 
-export const useAddSizeTypes = () => {
-  const { mutate } = useSizeTypes();
-
+export const useAddSizeTypes = (organizationId?: string) => {
   return useSWRMutation(
-    SIZE_TYPE_KEY,
-    (url: string, { arg }: { arg: SizeTypeData }) =>
+    organizationId ? [SIZE_TYPE_KEY, organizationId] : null,
+    (key, { arg }: { arg: SizeTypeData }) =>
       sizeTypeService.post({ body: arg, throw: true }),
-    { onSuccess: () => mutate() },
   );
 };
 
-export const useRemoveSizeType = () => {
-  const { mutate } = useSizeTypes();
-
+export const useRemoveSizeType = (organizationId?: string) => {
   return useSWRMutation(
-    SIZE_TYPE_KEY,
-    (url: string, { arg }: { arg: string }) =>
+    organizationId ? [SIZE_TYPE_KEY, organizationId] : null,
+    (key, { arg }: { arg: string }) =>
       sizeTypeService.delete(arg, { throw: true }),
-    { onSuccess: () => mutate() },
   );
 };
