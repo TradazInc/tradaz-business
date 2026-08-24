@@ -18,7 +18,6 @@ import {
   Table,
   Text,
 } from "@chakra-ui/react";
-import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
@@ -26,10 +25,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   initialSizeTypes: FetchResponse<SizeType>;
+  businessId?: string;
 }
 
-const ProductSizeTable = ({ initialSizeTypes }: Props) => {
-  const { businessId } = useParams<{ businessId?: string }>();
+const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = useSizeTypes(
     [initialSizeTypes],
     businessId,

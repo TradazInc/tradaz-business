@@ -8,10 +8,15 @@ import { getProductCategories } from "@/server/services/productCategory";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
-export default async function page() {
-  const { data, error } = await getProductCategories();
+interface Props {
+  params: Promise<{ businessId?: string }>;
+}
 
-  if (error) return error.message ?? error.statusText;
+export default async function page({ params }: Props) {
+  const { businessId } = await params;
+  const { data: categories, error } = await getProductCategories(businessId);
+
+  if (error) return error.message;
 
   return (
     <PageContainer>
@@ -32,8 +37,11 @@ export default async function page() {
           </DialogBox>
         </HStack>
 
-        {data ? (
-          <ProductCategoryTable initialCategories={data} />
+        {categories.data.length > 0 ? (
+          <ProductCategoryTable
+            initialCategories={categories}
+            businessId={businessId}
+          />
         ) : (
           <EmptyPage
             title="No categories found"

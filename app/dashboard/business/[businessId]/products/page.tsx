@@ -11,16 +11,14 @@ import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
 interface Props {
-  params: Promise<{ businessId: string }>;
+  params: Promise<{ businessId?: string }>;
 }
 
 export default async function page({ params }: Props) {
-  const [{ data: products, error }, { businessId }] = await Promise.all([
-    getProducts(),
-    params,
-  ]);
+  const { businessId } = await params;
+  const { data: products, error } = await getProducts(businessId);
 
-  if (error) return error.message ?? error.statusText;
+  if (error) return error.message;
 
   return (
     <PageContainer>

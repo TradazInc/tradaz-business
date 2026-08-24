@@ -8,10 +8,15 @@ import { getSizeTypes } from "@/server/services/sizeType";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 
-export default async function page() {
-  const { data, error } = await getSizeTypes();
+interface Props {
+  params: Promise<{ businessId?: string }>;
+}
 
-  if (error) return error.message ?? error.statusText;
+export default async function page({ params }: Props) {
+  const { businessId } = await params;
+  const { data: sizeTypes, error } = await getSizeTypes(businessId);
+
+  if (error) return error.message;
 
   return (
     <PageContainer>
@@ -32,8 +37,11 @@ export default async function page() {
           </DialogBox>
         </HStack>
 
-        {data ? (
-          <ProductSizeTable initialSizeTypes={data} />
+        {sizeTypes.data.length > 0 ? (
+          <ProductSizeTable
+            initialSizeTypes={sizeTypes}
+            businessId={businessId}
+          />
         ) : (
           <EmptyPage title="No sizes found" description="Create a product size">
             <DialogBox

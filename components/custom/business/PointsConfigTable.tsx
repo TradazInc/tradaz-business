@@ -19,7 +19,6 @@ import {
   Table,
   Text,
 } from "@chakra-ui/react";
-import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
@@ -27,10 +26,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   initialPointsConfigs: FetchResponse<PointsConfig>;
+  businessId?: string;
 }
 
-const PointsConfigTable = ({ initialPointsConfigs }: Props) => {
-  const { businessId } = useParams<{ businessId?: string }>();
+const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = usePointsConfigs(
     [initialPointsConfigs],
     businessId,

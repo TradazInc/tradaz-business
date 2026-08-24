@@ -5,6 +5,8 @@ export async function getProduct(id: string) {
   return productService.get(id);
 }
 
-export async function getProducts() {
-  return productService.getAll({ query: { pageSize: PAGE_SIZE } });
+export async function getProducts(organizationId?: string) {
+  return productService.getAll({
+    query: { pageSize: PAGE_SIZE, organizationId },
+  });
 }

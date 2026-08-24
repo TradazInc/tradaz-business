@@ -12,8 +12,8 @@ import GridContainer from "../shared/GridContainer";
 import ProductCard from "./ProductCard";
 
 interface Props {
-  businessId: string;
   initialProducts: FetchResponse<Product>;
+  businessId?: string;
 }
 
 const ProductGrid = ({ businessId, initialProducts }: Props) => {

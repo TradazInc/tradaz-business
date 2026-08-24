@@ -11,14 +11,14 @@ import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
 interface Props {
-  searchParams: Promise<{ business: string; signup: string }>;
+  searchParams: Promise<{ signup?: string }>;
 }
 
 export default async function page({ searchParams }: Props) {
-  const { business, signup } = await searchParams;
-  const { data: businesses, error } = await getBusinesses(business);
+  const { signup } = await searchParams;
+  const { data: businesses, error } = await getBusinesses();
 
-  if (error) return error.message ?? error.statusText;
+  if (error) return error.message;
 
   return (
     <PageContainer>

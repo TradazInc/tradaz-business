@@ -26,12 +26,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   initialCategories: FetchResponse<ProductCategory>;
+  businessId?: string;
 }
 
-const ProductCategoryTable = ({ initialCategories }: Props) => {
-  const { data, error, mutate, setSize, size } = useProductCategories([
-    initialCategories,
-  ]);
+const ProductCategoryTable = ({ initialCategories, businessId }: Props) => {
+  const { data, error, mutate, setSize, size } = useProductCategories(
+    [initialCategories],
+    businessId,
+  );
   const { flatData: productCategories, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
