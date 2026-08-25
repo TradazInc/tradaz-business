@@ -11,7 +11,7 @@ export const usePointsConfigs = (
   fallbackData?: FetchResponse<PointsConfig>[],
   organizationId?: string,
 ) => {
-  return useSWRInfinite<FetchResponse<PointsConfig>>(
+  return useSWRInfinite(
     (pageIndex, previousPageData) => {
       const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
       return organizationId && cursor
