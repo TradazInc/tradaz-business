@@ -14,11 +14,13 @@ import {
   useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { useParams } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 
 const ProductSizeForm = () => {
-  const { trigger, isMutating } = useAddSizeTypes();
+  const { businessId } = useParams<{ businessId?: string }>();
+  const { trigger, isMutating } = useAddSizeTypes(businessId);
   const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
 
   const {

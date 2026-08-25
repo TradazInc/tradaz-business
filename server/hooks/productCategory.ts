@@ -11,8 +11,8 @@ import {
 } from "../entities/productCategory";
 
 export const useProductCategories = (
-  fallbackData?: FetchResponse<ProductCategory>[],
   organizationId?: string,
+  fallbackData?: FetchResponse<ProductCategory>[],
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {

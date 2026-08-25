@@ -8,8 +8,8 @@ import useSWRMutation from "swr/mutation";
 import { Product, productService } from "../entities/product";
 
 export const useProducts = (
-  fallbackData?: FetchResponse<Product>[],
   organizationId?: string,
+  fallbackData?: FetchResponse<Product>[],
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {

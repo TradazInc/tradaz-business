@@ -31,14 +31,14 @@ interface Props {
 
 const ProductCategoryTable = ({ initialCategories, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = useProductCategories(
-    [initialCategories],
     businessId,
+    [initialCategories],
   );
   const { flatData: productCategories, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
-  const { trigger, isMutating } = useRemoveProductCategory();
+  const { trigger, isMutating } = useRemoveProductCategory(businessId);
 
   const handleDelete = async (id: string) => {
     toaster.promise(trigger(id), {

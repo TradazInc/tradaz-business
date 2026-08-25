@@ -11,7 +11,7 @@ export const useBusinesses = () => {
 };
 
 export const useBusiness = (organizationId?: string) => {
-  return useSWR([BUSINESS_KEY, organizationId], () =>
+  return useSWR(organizationId ? [BUSINESS_KEY, organizationId] : null, () =>
     authClient.organization.getFullOrganization({
       query: { organizationId, membersLimit: 100 },
       fetchOptions: { throw: true },

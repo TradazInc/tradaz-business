@@ -29,15 +29,14 @@ interface Props {
 }
 
 const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
-  const { data, error, mutate, setSize, size } = useSizeTypes(
-    [initialSizeTypes],
-    businessId,
-  );
+  const { data, error, mutate, setSize, size } = useSizeTypes(businessId, [
+    initialSizeTypes,
+  ]);
   const { flatData: sizeTypes, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
-  const { trigger, isMutating } = useRemoveSizeType();
+  const { trigger, isMutating } = useRemoveSizeType(businessId);
 
   const handleDelete = async (id: string) => {
     toaster.promise(trigger(id), {

@@ -39,10 +39,10 @@ interface Props {
 }
 
 const ProductForm = ({ product }: Props) => {
-  const { trigger, isMutating } = useAddProduct();
   const { businessId } = useParams<{ businessId?: string }>();
-  const categories = useProductCategories();
-  const sizeTypes = useSizeTypes(undefined, businessId);
+  const { trigger, isMutating } = useAddProduct(businessId);
+  const categories = useProductCategories(businessId);
+  const sizeTypes = useSizeTypes(businessId);
   const { refresh, push } = useRouter();
   const categoryScrollId = useId();
   const sizetypeScrollId = useId();

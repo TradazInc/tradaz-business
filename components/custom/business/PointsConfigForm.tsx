@@ -14,10 +14,12 @@ import {
   useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 
 const PointsConfigForm = () => {
-  const { trigger, isMutating } = useAddPointsConfig();
+  const { businessId } = useParams<{ businessId?: string }>();
+  const { trigger, isMutating } = useAddPointsConfig(businessId);
   const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
 
   const {

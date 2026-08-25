@@ -8,8 +8,8 @@ import useSWRMutation from "swr/mutation";
 import { PointsConfig, pointsConfigService } from "../entities/pointsConfig";
 
 export const usePointsConfigs = (
-  fallbackData?: FetchResponse<PointsConfig>[],
   organizationId?: string,
+  fallbackData?: FetchResponse<PointsConfig>[],
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {

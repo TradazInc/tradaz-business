@@ -30,15 +30,14 @@ interface Props {
 }
 
 const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
-  const { data, error, mutate, setSize, size } = usePointsConfigs(
-    [initialPointsConfigs],
-    businessId,
-  );
+  const { data, error, mutate, setSize, size } = usePointsConfigs(businessId, [
+    initialPointsConfigs,
+  ]);
   const { flatData: pointsConfigs, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
-  const { trigger, isMutating } = useRemovePointsConfig();
+  const { trigger, isMutating } = useRemovePointsConfig(businessId);
 
   const handleDelete = async (id: string) => {
     toaster.promise(trigger(id), {

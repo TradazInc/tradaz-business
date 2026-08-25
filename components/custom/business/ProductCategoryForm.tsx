@@ -16,10 +16,12 @@ import {
   useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const ProductCategoryForm = () => {
-  const { trigger, isMutating } = useAddProductCategory();
+  const { businessId } = useParams<{ businessId?: string }>();
+  const { trigger, isMutating } = useAddProductCategory(businessId);
   const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
 
   const {

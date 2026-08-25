@@ -8,8 +8,8 @@ import useSWRMutation from "swr/mutation";
 import { SizeType, sizeTypeService } from "../entities/sizeType";
 
 export const useSizeTypes = (
-  fallbackData?: FetchResponse<SizeType>[],
   organizationId?: string,
+  fallbackData?: FetchResponse<SizeType>[],
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {
