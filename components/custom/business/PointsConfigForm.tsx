@@ -30,6 +30,7 @@ const PointsConfigForm = () => {
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: standardSchemaResolver(pointsConfigSchema),
+    defaultValues: emptyPointsConfig,
     mode: "onBlur",
   });
 
