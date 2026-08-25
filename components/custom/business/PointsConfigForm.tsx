@@ -77,7 +77,7 @@ const PointsConfigForm = () => {
             <Field.Label>
               Name <Field.RequiredIndicator />
             </Field.Label>
-            <Input placeholder="e.g., Footwears" {...register("name")} />
+            <Input placeholder="e.g., Gold" {...register("name")} />
             <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
           </Field.Root>
 
