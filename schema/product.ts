@@ -1,6 +1,7 @@
 import { MAX_FILES } from "@/data/constants";
-import { Gender } from "@/server/entities/product";
+import { Gender, Product } from "@/server/entities/product";
 import { z } from "zod";
+import { imageSchema } from "./image";
 
 const teamVariationSchema = z.object({
   teamId: z
@@ -49,8 +50,6 @@ const variationSchema = z.object({
 });
 export type VariationData = z.infer<typeof variationSchema>;
 export type VariationFormValues = z.input<typeof variationSchema>;
-
-const imageSchema = z.url({ error: "enter a valid image url" });
 
 export const productSchema = z.object({
   name: z
@@ -119,3 +118,23 @@ export const emptyTeamVariation: TeamVariationFormValues = {
   teamId: [],
   quantity: 0,
 };
+
+export function formProduct(product: Product): ProductFormValues {
+  return {
+    ...product,
+    images: product.images.map(({ url }) => url),
+    categoryId: [product.category.id],
+    sizeTypeId: [product.sizeType?.id],
+    variations: product.variations.map((v) => ({
+      id: v.id,
+      color: v.color,
+      price: v.price,
+      sizeId: v.size ? [v.size.id] : [], // size is cleared when its Size row is deleted
+      teamVariations: v.teamVariations.map((tv) => ({
+        id: tv.id,
+        teamId: [tv.team.id],
+        quantity: tv.quantity,
+      })),
+    })),
+  };
+}

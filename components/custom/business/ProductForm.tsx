@@ -2,14 +2,13 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { MAX_FILE_SIZE, MAX_FILES, SLIDES_PER_PAGE } from "@/data/constants";
-import { emptyProduct, productSchema } from "@/schema/product";
+import { emptyProduct, formProduct, productSchema } from "@/schema/product";
 import { Gender, Product } from "@/server/entities/product";
 import { useAddProduct } from "@/server/hooks/product";
 import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
-import { formProduct } from "@/utilities/formProduct";
 import { parseCursorData } from "@/utilities/parsePagedData";
 import {
   Box,
