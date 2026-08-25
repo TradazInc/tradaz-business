@@ -4,7 +4,7 @@ import { FetchResponse } from "@/lib/apiClient";
 import { Product } from "@/server/entities/product";
 import { useProducts } from "@/server/hooks/product";
 import { computePath } from "@/utilities/computePath";
-import { parseCursorData } from "@/utilities/parsePagedData";
+import { parseCursorData } from "@/utilities/parsePageData";
 import { Button, For, Spinner, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";

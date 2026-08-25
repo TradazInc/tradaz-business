@@ -9,7 +9,7 @@ import { useProductCategories } from "@/server/hooks/productCategory";
 import { useSizeTypes } from "@/server/hooks/sizeType";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
-import { parseCursorData } from "@/utilities/parsePagedData";
+import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Box,
   Button,

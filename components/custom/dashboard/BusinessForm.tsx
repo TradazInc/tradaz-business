@@ -7,7 +7,7 @@ import { useAddBusiness } from "@/server/hooks/business";
 import { useBusinessCategories } from "@/server/hooks/businessCategory";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
-import { parseCursorData } from "@/utilities/parsePagedData";
+import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Box,
   Button,

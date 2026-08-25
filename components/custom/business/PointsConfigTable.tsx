@@ -8,7 +8,7 @@ import {
   useRemovePointsConfig,
 } from "@/server/hooks/pointsConfig";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
-import { parseCursorData } from "@/utilities/parsePagedData";
+import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Box,
   Button,
