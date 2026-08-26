@@ -32,7 +32,7 @@ interface Props {
 const ProductCategoryTable = ({ initialCategories, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = useProductCategories(
     businessId,
-    [initialCategories],
+    { fallbackData: [initialCategories] },
   );
   const { flatData: productCategories, hasMore } = useMemo(
     () => parseCursorData(data),

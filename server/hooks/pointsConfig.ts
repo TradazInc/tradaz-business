@@ -1,5 +1,5 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { FetchResponse } from "@/lib/apiClient";
+import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { PointsConfigData } from "@/schema/pointsConfig";
 import { POINTS_CONFIG_KEY } from "@/utilities/cacheKeys";
 import { cursorQuery } from "@/utilities/pageQuery";
@@ -9,7 +9,7 @@ import { PointsConfig, pointsConfigService } from "../entities/pointsConfig";
 
 export const usePointsConfigs = (
   organizationId?: string,
-  fallbackData?: FetchResponse<PointsConfig>[],
+  config?: SWRInfiniteConfig<PointsConfig>,
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {
@@ -19,22 +19,32 @@ export const usePointsConfigs = (
         : null;
     },
     ([key, query]) => pointsConfigService.getAll({ query, throw: true }),
-    { fallbackData },
+    config,
   );
 };
 
 export const useAddPointsConfig = (organizationId?: string) => {
+  const { mutate } = usePointsConfigs(organizationId, {
+    revalidateOnMount: false,
+  });
+
   return useSWRMutation(
     organizationId ? [POINTS_CONFIG_KEY, organizationId] : null,
     (key, { arg }: { arg: PointsConfigData }) =>
       pointsConfigService.post({ body: arg, throw: true }),
+    { onSuccess: () => mutate() },
   );
 };
 
 export const useRemovePointsConfig = (organizationId?: string) => {
+  const { mutate } = usePointsConfigs(organizationId, {
+    revalidateOnMount: false,
+  });
+
   return useSWRMutation(
     organizationId ? [POINTS_CONFIG_KEY, organizationId] : null,
     (key, { arg }: { arg: string }) =>
       pointsConfigService.delete(arg, { throw: true }),
+    { onSuccess: () => mutate() },
   );
 };

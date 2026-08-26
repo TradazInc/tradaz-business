@@ -30,9 +30,9 @@ interface Props {
 }
 
 const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
-  const { data, error, mutate, setSize, size } = usePointsConfigs(businessId, [
-    initialPointsConfigs,
-  ]);
+  const { data, error, mutate, setSize, size } = usePointsConfigs(businessId, {
+    fallbackData: [initialPointsConfigs],
+  });
   const { flatData: pointsConfigs, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],

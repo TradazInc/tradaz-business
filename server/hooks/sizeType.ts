@@ -1,5 +1,5 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { FetchResponse } from "@/lib/apiClient";
+import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { SizeTypeData } from "@/schema/sizeType";
 import { SIZE_TYPE_KEY } from "@/utilities/cacheKeys";
 import { cursorQuery } from "@/utilities/pageQuery";
@@ -9,7 +9,7 @@ import { SizeType, sizeTypeService } from "../entities/sizeType";
 
 export const useSizeTypes = (
   organizationId?: string,
-  fallbackData?: FetchResponse<SizeType>[],
+  configs?: SWRInfiniteConfig<SizeType>,
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {
@@ -19,22 +19,28 @@ export const useSizeTypes = (
         : null;
     },
     ([key, query]) => sizeTypeService.getAll({ query, throw: true }),
-    { fallbackData },
+    configs,
   );
 };
 
 export const useAddSizeTypes = (organizationId?: string) => {
+  const { mutate } = useSizeTypes(organizationId, { revalidateOnMount: false });
+
   return useSWRMutation(
     organizationId ? [SIZE_TYPE_KEY, organizationId] : null,
     (key, { arg }: { arg: SizeTypeData }) =>
       sizeTypeService.post({ body: arg, throw: true }),
+    { onSuccess: () => mutate() },
   );
 };
 
 export const useRemoveSizeType = (organizationId?: string) => {
+  const { mutate } = useSizeTypes(organizationId, { revalidateOnMount: false });
+
   return useSWRMutation(
     organizationId ? [SIZE_TYPE_KEY, organizationId] : null,
     (key, { arg }: { arg: string }) =>
       sizeTypeService.delete(arg, { throw: true }),
+    { onSuccess: () => mutate() },
   );
 };

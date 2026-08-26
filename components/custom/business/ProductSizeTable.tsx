@@ -29,9 +29,9 @@ interface Props {
 }
 
 const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
-  const { data, error, mutate, setSize, size } = useSizeTypes(businessId, [
-    initialSizeTypes,
-  ]);
+  const { data, error, mutate, setSize, size } = useSizeTypes(businessId, {
+    fallbackData: [initialSizeTypes],
+  });
   const { flatData: sizeTypes, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],

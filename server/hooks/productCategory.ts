@@ -1,5 +1,5 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { FetchResponse } from "@/lib/apiClient";
+import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { ProductCategoryData } from "@/schema/productCategory";
 import { PRODUCT_CATEGORY_KEY } from "@/utilities/cacheKeys";
 import { cursorQuery } from "@/utilities/pageQuery";
@@ -12,7 +12,7 @@ import {
 
 export const useProductCategories = (
   organizationId?: string,
-  fallbackData?: FetchResponse<ProductCategory>[],
+  config?: SWRInfiniteConfig<ProductCategory>,
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {
@@ -22,22 +22,32 @@ export const useProductCategories = (
         : null;
     },
     ([key, query]) => productCategoryService.getAll({ query, throw: true }),
-    { fallbackData },
+    config,
   );
 };
 
 export const useAddProductCategory = (organizationId?: string) => {
+  const { mutate } = useProductCategories(organizationId, {
+    revalidateOnMount: true,
+  });
+
   return useSWRMutation(
     organizationId ? [PRODUCT_CATEGORY_KEY, organizationId] : null,
     (key, { arg }: { arg: ProductCategoryData }) =>
       productCategoryService.post({ body: arg, throw: true }),
+    { onSuccess: () => mutate() },
   );
 };
 
 export const useRemoveProductCategory = (organizationId?: string) => {
+  const { mutate } = useProductCategories(organizationId, {
+    revalidateOnMount: true,
+  });
+
   return useSWRMutation(
     organizationId ? [PRODUCT_CATEGORY_KEY, organizationId] : null,
     (key, { arg }: { arg: string }) =>
       productCategoryService.delete(arg, { throw: true }),
+    { onSuccess: () => mutate() },
   );
 };

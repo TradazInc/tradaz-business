@@ -1,5 +1,5 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { FetchResponse } from "@/lib/apiClient";
+import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { ProductData } from "@/schema/product";
 import { PRODUCT_KEY } from "@/utilities/cacheKeys";
 import { cursorQuery } from "@/utilities/pageQuery";
@@ -9,7 +9,7 @@ import { Product, productService } from "../entities/product";
 
 export const useProducts = (
   organizationId?: string,
-  fallbackData?: FetchResponse<Product>[],
+  config?: SWRInfiniteConfig<Product>,
 ) => {
   return useSWRInfinite(
     (pageIndex, previousPageData) => {
@@ -19,14 +19,17 @@ export const useProducts = (
         : null;
     },
     ([key, query]) => productService.getAll({ query, throw: true }),
-    { fallbackData },
+    config,
   );
 };
 
 export const useAddProduct = (organizationId?: string) => {
+  const { mutate } = useProducts(organizationId, { revalidateOnMount: false });
+
   return useSWRMutation(
     organizationId ? [PRODUCT_KEY, organizationId] : null,
     (key, { arg }: { arg: ProductData }) =>
       productService.post({ body: arg, throw: true }),
+    { onSuccess: () => mutate() },
   );
 };
