@@ -38,7 +38,10 @@ export default async function page({ params }: Props) {
         </HStack>
 
         {pointsConfigs.data.length > 0 ? (
-          <PointsConfigTable initialPointsConfigs={pointsConfigs} />
+          <PointsConfigTable
+            initialPointsConfigs={pointsConfigs}
+            businessId={businessId}
+          />
         ) : (
           <EmptyPage
             title="No loyalty points configs found"

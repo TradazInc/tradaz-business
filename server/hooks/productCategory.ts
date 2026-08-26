@@ -3,6 +3,7 @@ import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { ProductCategoryData } from "@/schema/productCategory";
 import { PRODUCT_CATEGORY_KEY } from "@/utilities/cacheKeys";
 import { cursorQuery } from "@/utilities/pageQuery";
+import { SILENT } from "@/utilities/swrConfig";
 import useSWRInfinite from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 import {
@@ -27,9 +28,7 @@ export const useProductCategories = (
 };
 
 export const useAddProductCategory = (organizationId?: string) => {
-  const { mutate } = useProductCategories(organizationId, {
-    revalidateOnMount: true,
-  });
+  const { mutate } = useProductCategories(organizationId, SILENT);
 
   return useSWRMutation(
     organizationId ? [PRODUCT_CATEGORY_KEY, organizationId] : null,
@@ -40,9 +39,7 @@ export const useAddProductCategory = (organizationId?: string) => {
 };
 
 export const useRemoveProductCategory = (organizationId?: string) => {
-  const { mutate } = useProductCategories(organizationId, {
-    revalidateOnMount: true,
-  });
+  const { mutate } = useProductCategories(organizationId, SILENT);
 
   return useSWRMutation(
     organizationId ? [PRODUCT_CATEGORY_KEY, organizationId] : null,

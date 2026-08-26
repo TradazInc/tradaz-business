@@ -3,6 +3,7 @@ import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { SizeTypeData } from "@/schema/sizeType";
 import { SIZE_TYPE_KEY } from "@/utilities/cacheKeys";
 import { cursorQuery } from "@/utilities/pageQuery";
+import { SILENT } from "@/utilities/swrConfig";
 import useSWRInfinite from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 import { SizeType, sizeTypeService } from "../entities/sizeType";
@@ -24,7 +25,7 @@ export const useSizeTypes = (
 };
 
 export const useAddSizeTypes = (organizationId?: string) => {
-  const { mutate } = useSizeTypes(organizationId, { revalidateOnMount: false });
+  const { mutate } = useSizeTypes(organizationId, SILENT);
 
   return useSWRMutation(
     organizationId ? [SIZE_TYPE_KEY, organizationId] : null,
@@ -35,7 +36,7 @@ export const useAddSizeTypes = (organizationId?: string) => {
 };
 
 export const useRemoveSizeType = (organizationId?: string) => {
-  const { mutate } = useSizeTypes(organizationId, { revalidateOnMount: false });
+  const { mutate } = useSizeTypes(organizationId, SILENT);
 
   return useSWRMutation(
     organizationId ? [SIZE_TYPE_KEY, organizationId] : null,

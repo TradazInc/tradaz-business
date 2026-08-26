@@ -5,7 +5,7 @@ export function cursorQuery<T>(
   previousPageData: FetchResponse<T> | null,
   pageSize: number,
 ): { cursor?: string; pageSize: number } | null {
-  if (previousPageData && !previousPageData.meta?.next) return null; // reached the end
+  if (previousPageData && !previousPageData.data) return null; // reached the end
   if (pageIndex === 0) return { pageSize }; // first page, no `previousPageData`
   return { cursor: previousPageData?.meta?.next, pageSize };
 }

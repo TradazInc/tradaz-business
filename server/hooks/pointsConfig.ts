@@ -3,6 +3,7 @@ import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { PointsConfigData } from "@/schema/pointsConfig";
 import { POINTS_CONFIG_KEY } from "@/utilities/cacheKeys";
 import { cursorQuery } from "@/utilities/pageQuery";
+import { SILENT } from "@/utilities/swrConfig";
 import useSWRInfinite from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 import { PointsConfig, pointsConfigService } from "../entities/pointsConfig";
@@ -24,9 +25,7 @@ export const usePointsConfigs = (
 };
 
 export const useAddPointsConfig = (organizationId?: string) => {
-  const { mutate } = usePointsConfigs(organizationId, {
-    revalidateOnMount: false,
-  });
+  const { mutate } = usePointsConfigs(organizationId, SILENT);
 
   return useSWRMutation(
     organizationId ? [POINTS_CONFIG_KEY, organizationId] : null,
@@ -37,9 +36,7 @@ export const useAddPointsConfig = (organizationId?: string) => {
 };
 
 export const useRemovePointsConfig = (organizationId?: string) => {
-  const { mutate } = usePointsConfigs(organizationId, {
-    revalidateOnMount: false,
-  });
+  const { mutate } = usePointsConfigs(organizationId, SILENT);
 
   return useSWRMutation(
     organizationId ? [POINTS_CONFIG_KEY, organizationId] : null,

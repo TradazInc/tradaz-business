@@ -24,12 +24,9 @@ export const useProducts = (
 };
 
 export const useAddProduct = (organizationId?: string) => {
-  const { mutate } = useProducts(organizationId, { revalidateOnMount: false });
-
   return useSWRMutation(
     organizationId ? [PRODUCT_KEY, organizationId] : null,
     (key, { arg }: { arg: ProductData }) =>
       productService.post({ body: arg, throw: true }),
-    { onSuccess: () => mutate() },
   );
 };
