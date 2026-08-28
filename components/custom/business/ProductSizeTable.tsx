@@ -25,7 +25,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   initialSizeTypes: FetchResponse<SizeType>;
-  businessId?: string;
+  businessId: string | undefined;
 }
 
 const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {

@@ -26,7 +26,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   initialCategories: FetchResponse<ProductCategory>;
-  businessId?: string;
+  businessId: string | undefined;
 }
 
 const ProductCategoryTable = ({ initialCategories, businessId }: Props) => {

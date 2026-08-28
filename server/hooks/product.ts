@@ -1,14 +1,14 @@
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { ProductData } from "@/schema/product";
 import { PRODUCT_KEY } from "@/data/cacheKeys";
-import { getCursorKey } from "@/utilities/getPageKey";
+import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 import { Product, productService } from "../entities/product";
 
 export const useProducts = (
-  organizationId?: string,
+  organizationId: string | undefined,
   config?: SWRInfiniteConfig<Product>,
 ) => {
   return useSWRInfinite(
@@ -18,11 +18,11 @@ export const useProducts = (
   );
 };
 
-export const useAddProduct = (organizationId?: string) => {
+export const useAddProduct = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    organizationId ? [PRODUCT_KEY, organizationId] : null,
+    getScopedKey(PRODUCT_KEY, organizationId),
     (key, { arg }: { arg: ProductData }) =>
       productService.post({ body: arg, throw: true }),
     {

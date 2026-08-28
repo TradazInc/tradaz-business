@@ -26,7 +26,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   initialPointsConfigs: FetchResponse<PointsConfig>;
-  businessId?: string;
+  businessId: string | undefined;
 }
 
 const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {

@@ -1,14 +1,14 @@
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { PointsConfigData } from "@/schema/pointsConfig";
 import { POINTS_CONFIG_KEY } from "@/data/cacheKeys";
-import { getCursorKey } from "@/utilities/getPageKey";
+import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 import { PointsConfig, pointsConfigService } from "../entities/pointsConfig";
 
 export const usePointsConfigs = (
-  organizationId?: string,
+  organizationId: string | undefined,
   config?: SWRInfiniteConfig<PointsConfig>,
 ) => {
   return useSWRInfinite(
@@ -18,11 +18,11 @@ export const usePointsConfigs = (
   );
 };
 
-export const useAddPointsConfig = (organizationId?: string) => {
+export const useAddPointsConfig = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    organizationId ? [POINTS_CONFIG_KEY, organizationId] : null,
+    getScopedKey(POINTS_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: PointsConfigData }) =>
       pointsConfigService.post({ body: arg, throw: true }),
     {
@@ -36,11 +36,11 @@ export const useAddPointsConfig = (organizationId?: string) => {
   );
 };
 
-export const useRemovePointsConfig = (organizationId?: string) => {
+export const useRemovePointsConfig = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    organizationId ? [POINTS_CONFIG_KEY, organizationId] : null,
+    getScopedKey(POINTS_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
       pointsConfigService.delete(arg, { throw: true }),
     {

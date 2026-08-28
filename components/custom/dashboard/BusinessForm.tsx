@@ -173,7 +173,7 @@ export const BusinessForm = ({ signup }: Props) => {
                   </InputGroup>
                 </FileUpload.Root>
 
-                <Field.Root required invalid={!!errors.categoryId || error}>
+                <Field.Root required invalid={!!(errors.categoryId || error)}>
                   <Field.Label>
                     Brand category <Field.RequiredIndicator />
                   </Field.Label>

@@ -5,6 +5,7 @@ import { getSession } from "@/server/services/auth";
 import { getBusinesses } from "@/server/services/business";
 import { SWRConfig, unstable_serialize } from "swr";
 import { unauthorized } from "next/navigation";
+import { getKey } from "@/utilities/computeKey";
 
 export default async function BusinessLayout({
   children,
@@ -22,8 +23,8 @@ export default async function BusinessLayout({
       <SWRConfig
         value={{
           fallback: {
-            [unstable_serialize([SESSION_KEY])]: session.data,
-            [unstable_serialize([BUSINESS_KEY])]: business.data,
+            [unstable_serialize(getKey(SESSION_KEY))]: session.data,
+            [unstable_serialize(getKey(BUSINESS_KEY))]: business.data,
           },
         }}
       >

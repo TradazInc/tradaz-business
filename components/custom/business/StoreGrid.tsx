@@ -7,8 +7,8 @@ import GridContainer from "../shared/GridContainer";
 import { Store } from "@/server/entities/store";
 
 interface Props {
-  businessId: string;
   initialStores: Store[];
+  businessId: string | undefined;
 }
 
 const StoreGrid = ({ businessId, initialStores }: Props) => {

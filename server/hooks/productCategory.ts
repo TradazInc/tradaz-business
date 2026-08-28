@@ -1,7 +1,7 @@
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { ProductCategoryData } from "@/schema/productCategory";
 import { PRODUCT_CATEGORY_KEY } from "@/data/cacheKeys";
-import { getCursorKey } from "@/utilities/getPageKey";
+import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
@@ -11,7 +11,7 @@ import {
 } from "../entities/productCategory";
 
 export const useProductCategories = (
-  organizationId?: string,
+  organizationId: string | undefined,
   config?: SWRInfiniteConfig<ProductCategory>,
 ) => {
   return useSWRInfinite(
@@ -21,11 +21,11 @@ export const useProductCategories = (
   );
 };
 
-export const useAddProductCategory = (organizationId?: string) => {
+export const useAddProductCategory = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    organizationId ? [PRODUCT_CATEGORY_KEY, organizationId] : null,
+    getScopedKey(PRODUCT_CATEGORY_KEY, organizationId),
     (key, { arg }: { arg: ProductCategoryData }) =>
       productCategoryService.post({ body: arg, throw: true }),
     {
@@ -39,11 +39,13 @@ export const useAddProductCategory = (organizationId?: string) => {
   );
 };
 
-export const useRemoveProductCategory = (organizationId?: string) => {
+export const useRemoveProductCategory = (
+  organizationId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    organizationId ? [PRODUCT_CATEGORY_KEY, organizationId] : null,
+    getScopedKey(PRODUCT_CATEGORY_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
       productCategoryService.delete(arg, { throw: true }),
     {

@@ -13,7 +13,7 @@ import ProductCard from "./ProductCard";
 
 interface Props {
   initialProducts: FetchResponse<Product>;
-  businessId?: string;
+  businessId: string | undefined;
 }
 
 const ProductGrid = ({ businessId, initialProducts }: Props) => {
