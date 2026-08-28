@@ -1,10 +1,9 @@
-import { PAGE_SIZE } from "@/data/constants";
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { SizeTypeData } from "@/schema/sizeType";
-import { SIZE_TYPE_KEY } from "@/utilities/cacheKeys";
-import { cursorQuery } from "@/utilities/pageQuery";
-import { SILENT } from "@/utilities/swrConfig";
-import useSWRInfinite from "swr/infinite";
+import { SIZE_TYPE_KEY } from "@/data/cacheKeys";
+import { getCursorKey } from "@/utilities/getPageKey";
+import { useSWRConfig } from "swr";
+import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 import { SizeType, sizeTypeService } from "../entities/sizeType";
 
@@ -13,35 +12,40 @@ export const useSizeTypes = (
   configs?: SWRInfiniteConfig<SizeType>,
 ) => {
   return useSWRInfinite(
-    (pageIndex, previousPageData) => {
-      const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
-      return organizationId && cursor
-        ? [SIZE_TYPE_KEY, { organizationId, ...cursor }]
-        : null;
-    },
+    getCursorKey(SIZE_TYPE_KEY, { organizationId }),
     ([key, query]) => sizeTypeService.getAll({ query, throw: true }),
     configs,
   );
 };
 
 export const useAddSizeTypes = (organizationId?: string) => {
-  const { mutate } = useSizeTypes(organizationId, SILENT);
+  const { mutate } = useSWRConfig();
 
   return useSWRMutation(
     organizationId ? [SIZE_TYPE_KEY, organizationId] : null,
     (key, { arg }: { arg: SizeTypeData }) =>
       sizeTypeService.post({ body: arg, throw: true }),
-    { onSuccess: () => mutate() },
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+        ),
+    },
   );
 };
 
 export const useRemoveSizeType = (organizationId?: string) => {
-  const { mutate } = useSizeTypes(organizationId, SILENT);
+  const { mutate } = useSWRConfig();
 
   return useSWRMutation(
     organizationId ? [SIZE_TYPE_KEY, organizationId] : null,
     (key, { arg }: { arg: string }) =>
       sizeTypeService.delete(arg, { throw: true }),
-    { onSuccess: () => mutate() },
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+        ),
+    },
   );
 };

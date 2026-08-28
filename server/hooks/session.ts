@@ -1,5 +1,5 @@
 import { authClient } from "@/lib/authClient";
-import { SESSION_KEY } from "@/utilities/cacheKeys";
+import { SESSION_KEY } from "@/data/cacheKeys";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 

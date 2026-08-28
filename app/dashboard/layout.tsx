@@ -1,6 +1,6 @@
 import { NavBar } from "@/components/custom/dashboard/NavBar";
 import { LayoutContainer } from "@/components/custom/dashboard/LayoutContainer";
-import { BUSINESS_KEY, SESSION_KEY } from "@/utilities/cacheKeys";
+import { BUSINESS_KEY, SESSION_KEY } from "@/data/cacheKeys";
 import { getSession } from "@/server/services/auth";
 import { getBusinesses } from "@/server/services/business";
 import { SWRConfig, unstable_serialize } from "swr";

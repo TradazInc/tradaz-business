@@ -1,7 +1,7 @@
 import useSWRMutation from "swr/mutation";
 import { authClient } from "@/lib/authClient";
 import { EmailSignInData, EmailSignUpData } from "@/schema/auth";
-import { SESSION_KEY } from "@/utilities/cacheKeys";
+import { SESSION_KEY } from "@/data/cacheKeys";
 
 export const useEmailSignup = () => {
   return useSWRMutation(

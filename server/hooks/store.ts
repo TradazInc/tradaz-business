@@ -1,6 +1,6 @@
 import { authClient } from "@/lib/authClient";
 import { StoreData } from "@/schema/store";
-import { STORE_KEY } from "@/utilities/cacheKeys";
+import { STORE_KEY } from "@/data/cacheKeys";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 

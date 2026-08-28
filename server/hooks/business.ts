@@ -1,6 +1,6 @@
 import { authClient } from "@/lib/authClient";
 import { BusinessData } from "@/schema/business";
-import { BUSINESS_KEY } from "@/utilities/cacheKeys";
+import { BUSINESS_KEY } from "@/data/cacheKeys";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
