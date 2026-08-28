@@ -12,4 +12,6 @@ export const PRODUCT_CATEGORY_KEY = "product-categories";
 
 export const SIZE_TYPE_KEY = "size-types";
 
-export const POINTS_CONFIG_KEY = "points-config";
+export const POINTS_CONFIG_KEY = "points-configs";
+
+export const COUPON_KEY = "coupons";
