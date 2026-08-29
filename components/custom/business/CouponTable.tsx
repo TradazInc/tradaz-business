@@ -1,5 +1,5 @@
 import { FetchResponse } from "@/lib/apiClient";
-import { Coupon } from "@/server/entities/coupons";
+import { Coupon } from "@/entities/coupons";
 import { Box } from "@chakra-ui/react";
 
 interface Props {

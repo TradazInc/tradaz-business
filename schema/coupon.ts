@@ -1,4 +1,4 @@
-import { Coupon, DiscountType } from "@/server/entities/coupons";
+import { Coupon, DiscountType } from "@/entities/coupons";
 import { z } from "zod";
 
 export const couponSchema = z

@@ -2,11 +2,8 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { FetchResponse } from "@/lib/apiClient";
-import { PointsConfig } from "@/server/entities/pointsConfig";
-import {
-  usePointsConfigs,
-  useRemovePointsConfig,
-} from "@/server/hooks/pointsConfig";
+import { PointsConfig } from "@/entities/pointsConfig";
+import { usePointsConfigs, useRemovePointsConfig } from "@/hooks/pointsConfig";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {

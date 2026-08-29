@@ -4,7 +4,7 @@ import { computePath } from "@/utilities/computePath";
 import { For } from "@chakra-ui/react";
 import GridCard from "../shared/GridCard";
 import GridContainer from "../shared/GridContainer";
-import { Business } from "@/server/entities/business";
+import { Business } from "@/entities/business";
 
 interface Props {
   initialBusinesses: Business[];

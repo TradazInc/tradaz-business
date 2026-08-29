@@ -1,4 +1,4 @@
-import { Variation } from "@/server/entities/product";
+import { Variation } from "@/entities/product";
 import {
   Badge,
   Card,

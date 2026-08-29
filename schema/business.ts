@@ -1,4 +1,4 @@
-import { checkBusinessSlug } from "@/server/services/business";
+import { checkBusinessSlug } from "@/server/business";
 import { toaster } from "@/components/ui/toaster";
 import { z } from "zod";
 import { errorToastOptions } from "@/utilities/errorToastOptions";

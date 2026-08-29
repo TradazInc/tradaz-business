@@ -1,6 +1,6 @@
 import ProductForm from "@/components/custom/business/ProductForm";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
-import { getProduct } from "@/server/services/product";
+import { getProduct } from "@/server/product";
 import { notFound } from "next/navigation";
 
 interface Props {

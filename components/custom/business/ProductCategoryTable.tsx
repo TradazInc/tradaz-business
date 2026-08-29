@@ -2,11 +2,11 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { FetchResponse } from "@/lib/apiClient";
-import { ProductCategory } from "@/server/entities/productCategory";
+import { ProductCategory } from "@/entities/productCategory";
 import {
   useProductCategories,
   useRemoveProductCategory,
-} from "@/server/hooks/productCategory";
+} from "@/hooks/productCategory";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {

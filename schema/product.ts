@@ -1,5 +1,5 @@
 import { MAX_FILES } from "@/data/constants";
-import { Gender, Product } from "@/server/entities/product";
+import { Gender, Product } from "@/entities/product";
 import { z } from "zod";
 import { imageSchema } from "./image";
 

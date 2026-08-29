@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { emptyPointsConfig, pointsConfigSchema } from "@/schema/pointsConfig";
-import { useAddPointsConfig } from "@/server/hooks/pointsConfig";
+import { useAddPointsConfig } from "@/hooks/pointsConfig";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,

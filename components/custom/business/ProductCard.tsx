@@ -1,5 +1,5 @@
 import noImage from "@/public/no-image-placeholder.webp";
-import { Product } from "@/server/entities/product";
+import { Product } from "@/entities/product";
 import { Button, Card, DataList, HStack, Image } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import NextImage from "next/image";

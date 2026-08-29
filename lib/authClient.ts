@@ -1,4 +1,4 @@
-import { ServerAuth } from "@/server/entities/session";
+import { ServerAuth } from "@/entities/session";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import {
   adminClient,

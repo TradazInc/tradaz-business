@@ -3,7 +3,7 @@ import EmptyPage from "@/components/custom/shared/EmptyPage";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import Search from "@/components/custom/shared/Search";
-import { getProducts } from "@/server/services/product";
+import { getProducts } from "@/server/product";
 import { computePath } from "@/utilities/computePath";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";

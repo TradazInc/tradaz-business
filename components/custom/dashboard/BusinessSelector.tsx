@@ -1,13 +1,13 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { useBusinesses } from "@/server/hooks/business";
+import { useBusinesses } from "@/hooks/business";
 import {
   useSession,
   useSetActiveBusiness,
   useSetActiveStore,
-} from "@/server/hooks/session";
-import { useStores } from "@/server/hooks/store";
+} from "@/hooks/session";
+import { useStores } from "@/hooks/store";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { updateSession } from "@/utilities/updateSession";
 import { Breadcrumb, HStack, Skeleton } from "@chakra-ui/react";

@@ -1,5 +1,5 @@
 import { InfoTip } from "@/components/ui/toggle-tip";
-import { Product } from "@/server/entities/product";
+import { Product } from "@/entities/product";
 import { DataList, Heading, HStack, Square, VStack } from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
 

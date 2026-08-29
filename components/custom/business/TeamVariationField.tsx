@@ -5,7 +5,7 @@ import {
   ProductData,
   ProductFormValues,
 } from "@/schema/product";
-import { useStores } from "@/server/hooks/store";
+import { useStores } from "@/hooks/store";
 import {
   Button,
   createListCollection,

@@ -1,8 +1,8 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { useSignOut } from "@/server/hooks/auth";
-import { useSession } from "@/server/hooks/session";
+import { useSignOut } from "@/hooks/auth";
+import { useSession } from "@/hooks/session";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Menu, Portal } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";

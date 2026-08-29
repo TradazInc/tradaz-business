@@ -5,7 +5,7 @@ import {
   emptyProductCategory,
   productCategorySchema,
 } from "@/schema/productCategory";
-import { useAddProductCategory } from "@/server/hooks/productCategory";
+import { useAddProductCategory } from "@/hooks/productCategory";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,

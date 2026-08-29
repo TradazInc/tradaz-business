@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { storeSchema } from "@/schema/store";
-import { useAddStore } from "@/server/hooks/store";
+import { useAddStore } from "@/hooks/store";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Stack } from "@chakra-ui/react";

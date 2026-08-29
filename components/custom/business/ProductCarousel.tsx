@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/server/entities/product";
+import { Product } from "@/entities/product";
 import { Box, Carousel, IconButton } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";

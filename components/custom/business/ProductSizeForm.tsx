@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { emptySize, emptySizeType, sizeTypeSchema } from "@/schema/sizeType";
-import { useAddSizeTypes } from "@/server/hooks/sizeType";
+import { useAddSizeTypes } from "@/hooks/sizeType";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,

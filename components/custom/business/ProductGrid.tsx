@@ -1,8 +1,8 @@
 "use client";
 
 import { FetchResponse } from "@/lib/apiClient";
-import { Product } from "@/server/entities/product";
-import { useProducts } from "@/server/hooks/product";
+import { Product } from "@/entities/product";
+import { useProducts } from "@/hooks/product";
 import { computePath } from "@/utilities/computePath";
 import { parseCursorData } from "@/utilities/parsePageData";
 import { Button, For, Spinner, Text } from "@chakra-ui/react";

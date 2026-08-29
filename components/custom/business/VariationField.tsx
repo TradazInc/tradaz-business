@@ -5,7 +5,7 @@ import {
   ProductData,
   ProductFormValues,
 } from "@/schema/product";
-import { SizeType } from "@/server/entities/sizeType";
+import { SizeType } from "@/entities/sizeType";
 import {
   Box,
   Button,

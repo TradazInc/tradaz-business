@@ -5,7 +5,7 @@ import EmptyPage from "@/components/custom/shared/EmptyPage";
 import { PageContainer } from "@/components/custom/shared/PageContainer";
 import PageHeader from "@/components/custom/shared/PageHeader";
 import Search from "@/components/custom/shared/Search";
-import { getBusiness } from "@/server/services/business";
+import { getBusiness } from "@/server/business";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";

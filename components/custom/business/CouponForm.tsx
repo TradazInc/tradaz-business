@@ -2,8 +2,8 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { couponSchema, emptyCoupon } from "@/schema/coupon";
-import { DiscountType } from "@/server/entities/coupons";
-import { useAddCoupon } from "@/server/hooks/coupon";
+import { DiscountType } from "@/entities/coupons";
+import { useAddCoupon } from "@/hooks/coupon";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,

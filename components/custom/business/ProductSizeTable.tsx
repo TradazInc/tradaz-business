@@ -2,8 +2,8 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { FetchResponse } from "@/lib/apiClient";
-import { SizeType } from "@/server/entities/sizeType";
-import { useRemoveSizeType, useSizeTypes } from "@/server/hooks/sizeType";
+import { SizeType } from "@/entities/sizeType";
+import { useRemoveSizeType, useSizeTypes } from "@/hooks/sizeType";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {

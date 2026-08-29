@@ -5,7 +5,7 @@ import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { emailSignInSchema } from "@/schema/auth";
-import { useEmailSignin, useGoogleSignin } from "@/server/hooks/auth";
+import { useEmailSignin, useGoogleSignin } from "@/hooks/auth";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";

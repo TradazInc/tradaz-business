@@ -3,8 +3,8 @@
 import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessFormSteps";
 import { businessSchema } from "@/schema/business";
-import { useAddBusiness } from "@/server/hooks/business";
-import { useBusinessCategories } from "@/server/hooks/businessCategory";
+import { useAddBusiness } from "@/hooks/business";
+import { useBusinessCategories } from "@/hooks/businessCategory";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";

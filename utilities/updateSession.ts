@@ -1,4 +1,4 @@
-import { CustomSession, Session } from "@/server/entities/session";
+import { CustomSession, Session } from "@/entities/session";
 
 export function updateSession(session: Partial<Session>) {
   return <S extends CustomSession>(customSession?: S) =>
