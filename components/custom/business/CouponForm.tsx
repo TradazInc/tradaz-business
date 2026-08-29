@@ -1,3 +1,5 @@
+"use client";
+
 import { toaster } from "@/components/ui/toaster";
 import { couponSchema, emptyCoupon } from "@/schema/coupon";
 import { DiscountType } from "@/server/entities/coupons";
