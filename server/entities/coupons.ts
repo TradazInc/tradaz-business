@@ -15,7 +15,7 @@ export interface Coupon {
   createdAt?: Date;
   updatedAt?: Date;
   organizationId?: string;
-  memberId?: string | null;
+  memberId?: string;
 }
 
 export enum DiscountType {

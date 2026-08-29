@@ -25,15 +25,11 @@ export const couponSchema = z
       .int({ error: "usage limit is required" })
       .nonnegative({ error: "usage limit cannot be negative" }),
 
-    usageCount: z
-      .int({ error: "usage count is required" })
-      .nonnegative({ error: "usage count cannot be negative" }),
-
     minOrderValue: z
       .number({ error: "minimum order value is required" })
       .nonnegative({ error: "minimum order value cannot be negative" }),
 
-    isActive: z.boolean({ error: "select a status" }),
+    isActive: z.boolean({ error: "select a status" }).default(true),
 
     startsAt: z
       .string({ error: "start date is required" })
@@ -45,7 +41,7 @@ export const couponSchema = z
       .min(1, { error: "end date is required" })
       .transform((value) => new Date(value)),
 
-    memberId: z.string().nullish(),
+    memberId: z.cuid2().optional(),
   })
   .superRefine((coupon, ctx) => {
     if (
@@ -74,12 +70,10 @@ export const emptyCoupon: CouponFormValues = {
   code: "",
   discountValue: 0,
   usageLimit: 0,
-  usageCount: 0,
   minOrderValue: 0,
   isActive: true,
   startsAt: "",
   endsAt: "",
-  memberId: null,
 };
 
 export function formCoupon(coupon: Coupon): CouponFormValues {
