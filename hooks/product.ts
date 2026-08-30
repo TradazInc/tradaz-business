@@ -33,3 +33,19 @@ export const useAddProduct = (organizationId: string | undefined) => {
     },
   );
 };
+
+export const useRemoveProduct = (organizationId: string | undefined) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    getScopedKey(PRODUCT_KEY, organizationId),
+    (key, { arg }: { arg: string }) =>
+      productService.delete(arg, { throw: true }),
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
+        ),
+    },
+  );
+};
