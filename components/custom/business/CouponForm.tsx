@@ -97,10 +97,11 @@ const CouponForm = () => {
           </Field.Root>
 
           <Field.Root required invalid={!!errors.code}>
-            <Field.Label>
-              Code <Field.RequiredIndicator />
-            </Field.Label>
+            <Field.Label>Code</Field.Label>
             <Input placeholder="e.g., ABC123" {...register("code")} />
+            <Field.HelperText>
+              Code will be generated if not provided
+            </Field.HelperText>
             <Field.ErrorText>{errors.code?.message}</Field.ErrorText>
           </Field.Root>
 

@@ -15,7 +15,8 @@ export const couponSchema = z
       .regex(/^[A-Za-z0-9-]+$/, {
         error: "code can only contain letters, numbers and hyphens",
       })
-      .transform((code) => code.toUpperCase()),
+      .transform((code) => code.toUpperCase())
+      .optional(),
 
     discountValue: z
       .number({ error: "discount value is required" })
