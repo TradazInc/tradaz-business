@@ -38,7 +38,7 @@ export default async function page({ params }: Props) {
         </HStack>
 
         {coupons.data.length > 0 ? (
-          <CouponTable initialPointsConfigs={coupons} businessId={businessId} />
+          <CouponTable initialCoupons={coupons} businessId={businessId} />
         ) : (
           <EmptyPage title="No coupons found" description="Create a new coupon">
             <DialogBox
