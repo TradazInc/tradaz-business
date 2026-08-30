@@ -74,7 +74,9 @@ const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
               each={pointsConfigs}
               fallback={
                 <Table.Row>
-                  <Table.Cell colSpan={3}>No categories available</Table.Cell>
+                  <Table.Cell colSpan={5}>
+                    No points configs available
+                  </Table.Cell>
                 </Table.Row>
               }
             >

@@ -57,7 +57,7 @@ const CouponForm = () => {
       },
       success: (coupon) => ({
         title: "Creation successful",
-        description: `${coupon.name} points config has been created`,
+        description: `${coupon.name} coupon has been created`,
       }),
       error: errorToastOptions,
     });
