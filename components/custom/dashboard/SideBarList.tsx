@@ -1,6 +1,6 @@
 "use client";
 
-import { businessItems, dashboardItems, storeItems } from "@/data/sideBarItems";
+import { businessItems, dashboardItems, storeItems } from "@/data/sideBarList";
 import { computePath } from "@/utilities/computePath";
 import { Accordion, Box, Icon } from "@chakra-ui/react";
 import NextLink from "next/link";
