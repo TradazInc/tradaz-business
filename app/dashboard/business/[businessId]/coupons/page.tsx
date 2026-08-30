@@ -21,7 +21,7 @@ export default async function page({ params }: Props) {
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>Loyalty Points</PageHeader>
+        <PageHeader>Coupons</PageHeader>
 
         <HStack w={"full"}>
           <Spacer />
@@ -29,7 +29,7 @@ export default async function page({ params }: Props) {
             trigger={
               <Button variant={"outline"} size={"xs"}>
                 <LuPlus />
-                New Configs
+                New Coupon
               </Button>
             }
           >
