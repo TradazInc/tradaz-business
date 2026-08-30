@@ -38,6 +38,7 @@ export const useRemoveMember = (organizationId: string | undefined) => {
       authClient.organization.removeMember({
         memberIdOrEmail: arg,
         organizationId,
+        fetchOptions: { throw: true },
       }),
     {
       onSuccess: () =>
