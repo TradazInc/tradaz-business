@@ -1,11 +1,11 @@
+import { COUPON_KEY } from "@/data/cacheKeys";
+import { Coupon, couponService } from "@/entities/coupons";
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { CouponData } from "@/schema/coupon";
-import { COUPON_KEY } from "@/data/cacheKeys";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
-import { Coupon, couponService } from "../entities/coupons";
 
 export const useCoupons = (
   organizationId: string | undefined,

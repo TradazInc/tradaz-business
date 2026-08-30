@@ -1,11 +1,11 @@
-import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { BUSINESS_CATEGORY_KEY } from "@/data/cacheKeys";
-import { getCursorKey } from "@/utilities/computeKey";
-import useSWRInfinite from "swr/infinite";
 import {
   BusinessCategory,
   businessCategoryService,
-} from "../entities/businessCategory";
+} from "@/entities/businessCategory";
+import { SWRInfiniteConfig } from "@/lib/apiClient";
+import { getCursorKey } from "@/utilities/computeKey";
+import useSWRInfinite from "swr/infinite";
 
 export const useBusinessCategories = (
   config?: SWRInfiniteConfig<BusinessCategory>,

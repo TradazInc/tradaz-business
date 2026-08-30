@@ -1,8 +1,8 @@
-import { authClient } from "@/lib/authClient";
 import { SESSION_KEY } from "@/data/cacheKeys";
+import { authClient } from "@/lib/authClient";
+import { getKey } from "@/utilities/computeKey";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { getKey } from "@/utilities/computeKey";
 
 export const useSession = () => {
   return useSWR(getKey(SESSION_KEY), () =>

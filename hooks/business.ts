@@ -1,9 +1,9 @@
+import { BUSINESS_KEY } from "@/data/cacheKeys";
 import { authClient } from "@/lib/authClient";
 import { BusinessData } from "@/schema/business";
-import { BUSINESS_KEY } from "@/data/cacheKeys";
+import { getKey, getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { getKey, getScopedKey } from "@/utilities/computeKey";
 
 export const useBusinesses = () => {
   return useSWR(getKey(BUSINESS_KEY), () =>

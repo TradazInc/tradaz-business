@@ -1,11 +1,11 @@
+import { SIZE_TYPE_KEY } from "@/data/cacheKeys";
+import { SizeType, sizeTypeService } from "@/entities/sizeType";
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { SizeTypeData } from "@/schema/sizeType";
-import { SIZE_TYPE_KEY } from "@/data/cacheKeys";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
-import { SizeType, sizeTypeService } from "../entities/sizeType";
 
 export const useSizeTypes = (
   organizationId: string | undefined,

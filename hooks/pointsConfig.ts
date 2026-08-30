@@ -1,11 +1,11 @@
+import { POINTS_CONFIG_KEY } from "@/data/cacheKeys";
+import { PointsConfig, pointsConfigService } from "@/entities/pointsConfig";
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { PointsConfigData } from "@/schema/pointsConfig";
-import { POINTS_CONFIG_KEY } from "@/data/cacheKeys";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
-import { PointsConfig, pointsConfigService } from "../entities/pointsConfig";
 
 export const usePointsConfigs = (
   organizationId: string | undefined,

@@ -1,11 +1,11 @@
+import { PRODUCT_KEY } from "@/data/cacheKeys";
+import { Product, productService } from "@/entities/product";
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { ProductData } from "@/schema/product";
-import { PRODUCT_KEY } from "@/data/cacheKeys";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
-import { Product, productService } from "../entities/product";
 
 export const useProducts = (
   organizationId: string | undefined,

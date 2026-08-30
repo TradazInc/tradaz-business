@@ -1,14 +1,14 @@
+import { PRODUCT_CATEGORY_KEY } from "@/data/cacheKeys";
+import {
+  ProductCategory,
+  productCategoryService,
+} from "@/entities/productCategory";
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { ProductCategoryData } from "@/schema/productCategory";
-import { PRODUCT_CATEGORY_KEY } from "@/data/cacheKeys";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
-import {
-  ProductCategory,
-  productCategoryService,
-} from "../entities/productCategory";
 
 export const useProductCategories = (
   organizationId: string | undefined,

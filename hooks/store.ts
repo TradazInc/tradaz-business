@@ -1,9 +1,9 @@
+import { STORE_KEY } from "@/data/cacheKeys";
 import { authClient } from "@/lib/authClient";
 import { StoreData } from "@/schema/store";
-import { STORE_KEY } from "@/data/cacheKeys";
+import { getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { getScopedKey } from "@/utilities/computeKey";
 
 export const useStores = (organizationId: string | undefined) => {
   return useSWR(getScopedKey(STORE_KEY, organizationId), () =>
