@@ -25,6 +25,7 @@ interface Props {
   initialMembers: FetchResponse<Member>;
   businessId: string | undefined;
 }
+
 const MemberTable = ({ businessId, initialMembers }: Props) => {
   const { data, error, mutate, setSize, size } = useMembers(businessId, {
     fallbackData: [initialMembers],

@@ -21,7 +21,8 @@ import { LuPlus, LuTrash2 } from "react-icons/lu";
 const ProductSizeForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddSizeTypes(businessId);
-  const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
+  // throws if the component is ever rendered outside a Dialog.Root
+  const { setOpen } = useDialogContext();
 
   const {
     reset,
