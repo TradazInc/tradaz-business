@@ -10,11 +10,11 @@ export const useMembers = (organizationId: string | undefined) => {
   const searchParams = useSearchParams();
   const query = {
     organizationId,
-    sortBy: searchParams.get("sortBy") ?? undefined,
+    sortBy: searchParams.get("sortBy"),
     sortDirection: searchParams.get("sortDirection") ?? "asc",
-    filterField: searchParams.get("filterField") ?? undefined,
+    filterField: searchParams.get("filterField"),
     filterOperator: "contains",
-    filterValue: searchParams.get("filterValue") ?? undefined,
+    filterValue: searchParams.get("filterValue"),
   };
 
   return useSWRInfinite(getIndexKey(MEMBER_KEY, query), ([key, query]) =>
