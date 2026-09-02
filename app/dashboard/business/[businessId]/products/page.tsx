@@ -27,7 +27,7 @@ export default async function page({ params }: Props) {
 
         <HStack w={"full"}>
           <Suspense>
-            <Search placeholder={"Search for a product"} filterBy={"name"} />
+            <Search placeholder={"Search for a product"} filterField={"name"} />
           </Suspense>
           <Spacer />
           {/* add dropdown */}

@@ -6,11 +6,11 @@ import { LuSearch } from "react-icons/lu";
 import { useDebouncedCallback } from "use-debounce";
 
 interface Props {
-  filterBy: string;
+  filterField: string;
   placeholder: string;
 }
 
-export default function Search({ filterBy, placeholder }: Props) {
+export default function Search({ filterField, placeholder }: Props) {
   const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -19,10 +19,10 @@ export default function Search({ filterBy, placeholder }: Props) {
     const params = new URLSearchParams(searchParams);
     if (filterValue) {
       params.set("filterValue", filterValue);
-      params.set("filterBy", filterBy);
+      params.set("filterField", filterField);
     } else {
       params.delete("filterValue");
-      params.delete("filterBy");
+      params.delete("filterField");
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
@@ -35,7 +35,7 @@ export default function Search({ filterBy, placeholder }: Props) {
         onChange={(e) => handleSearch(e.target.value)}
         color={"white"}
         borderRadius={"full"}
-        defaultValue={searchParams.get(filterBy)?.toString()}
+        defaultValue={searchParams.get("filterValue")?.toString()}
       />
     </InputGroup>
   );

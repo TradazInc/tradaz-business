@@ -11,9 +11,9 @@ export const useMembers = (organizationId: string | undefined) => {
   const query = {
     organizationId,
     sortBy: searchParams.get("sortBy") ?? undefined,
-    sortDirection: searchParams.has("sortBy") ? "desc" : undefined,
-    filterBy: searchParams.get("filterBy") ?? undefined,
-    filterOperator: searchParams.has("filterBy") ? "contains" : undefined,
+    sortDirection: searchParams.get("sortDirection") ?? "asc",
+    filterField: searchParams.get("filterField") ?? undefined,
+    filterOperator: "contains",
     filterValue: searchParams.get("filterValue") ?? undefined,
   };
 
