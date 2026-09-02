@@ -22,5 +22,3 @@ export function indexQuery<T>(
   if (previousPageData && !previousPageData.data.length) return null; // reached the end
   return { page: pageIndex, pageSize };
 }
-
-
