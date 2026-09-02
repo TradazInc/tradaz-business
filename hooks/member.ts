@@ -1,6 +1,7 @@
 import { MEMBER_KEY } from "@/data/cacheKeys";
 import { authClient } from "@/lib/authClient";
 import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
+import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
@@ -8,14 +9,7 @@ import useSWRMutation from "swr/mutation";
 
 export const useMembers = (organizationId: string | undefined) => {
   const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    sortBy: searchParams.get("sortBy"),
-    sortDirection: searchParams.get("sortDirection") ?? "asc",
-    filterField: searchParams.get("filterField"),
-    filterOperator: "contains",
-    filterValue: searchParams.get("filterValue"),
-  };
+  const query = { organizationId, ...searchQuery(searchParams) };
 
   return useSWRInfinite(getIndexKey(MEMBER_KEY, query), ([key, query]) =>
     authClient.organization.listMembers({
