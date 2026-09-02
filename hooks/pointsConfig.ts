@@ -3,6 +3,8 @@ import { PointsConfig, pointsConfigService } from "@/entities/pointsConfig";
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { PointsConfigData } from "@/schema/pointsConfig";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { searchQuery } from "@/utilities/searchQuery";
+import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
@@ -11,8 +13,11 @@ export const usePointsConfigs = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfig<PointsConfig>,
 ) => {
+  const searchParams = useSearchParams();
+  const query = { organizationId, ...searchQuery(searchParams) };
+
   return useSWRInfinite(
-    getCursorKey(POINTS_CONFIG_KEY, { organizationId }),
+    getCursorKey(POINTS_CONFIG_KEY, query),
     ([key, query]) => pointsConfigService.getAll({ query, throw: true }),
     config,
   );
