@@ -5,9 +5,8 @@ import {
   cursorQuery,
   IndexQuery,
   indexQuery,
-  isQueryValid,
-  SearchQuery,
 } from "./paginationQuery";
+import { isQueryValid, SearchQuery } from "./searchQuery";
 
 // Computed Cache Keys
 export const getKey = (cacheKey: string): [string] => [cacheKey];

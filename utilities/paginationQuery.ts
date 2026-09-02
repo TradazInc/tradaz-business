@@ -2,7 +2,6 @@ import { FetchResponse } from "@/lib/apiClient";
 
 export type CursorQuery = { cursor?: string; pageSize: number };
 export type IndexQuery = { page: number; pageSize: number };
-export type SearchQuery = Record<string, string | number | undefined | null>;
 
 // Pagination Queries
 export function cursorQuery<T>(
@@ -24,11 +23,4 @@ export function indexQuery<T>(
   return { page: pageIndex, pageSize };
 }
 
-// Search Query Validation
-const SCOPE_PARAMS = ["organizationId", "organizationSlug"] as const;
 
-export const isQueryValid = (query: SearchQuery) => {
-  return SCOPE_PARAMS.every(
-    (param) => !Object.hasOwn(query, param) || query[param] !== undefined,
-  );
-};
