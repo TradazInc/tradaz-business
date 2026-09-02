@@ -80,7 +80,7 @@ export const businessItems: SideMenuItem[] = [
     label: "Customers",
     icon: LuUsers,
     children: [
-      { label: "Customer List", icon: LuUsers, path: "" },
+      { label: "Customer List", icon: LuUsers, path: "/customers" },
       { label: "Reviews", icon: LuStar, path: "" },
     ],
   },
@@ -114,7 +114,7 @@ export const businessItems: SideMenuItem[] = [
     label: "Vendors",
     icon: LuStore,
     children: [
-      { label: "Vendor List", icon: LuUsers, path: "" },
+      { label: "Vendor List", icon: LuUsers, path: "/vendors" },
       { label: "Vendor Inventory", icon: LuPackage, path: "" },
       { label: "Vendor Sales", icon: LuFileText, path: "" },
     ],
@@ -123,7 +123,7 @@ export const businessItems: SideMenuItem[] = [
     label: "Partners",
     icon: LuHandshake,
     children: [
-      { label: "Partners List", icon: LuUsers, path: "" },
+      { label: "Partners List", icon: LuUsers, path: "/partners" },
       { label: "Partners Sales", icon: LuFileText, path: "" },
     ],
   },
@@ -171,7 +171,7 @@ export const businessItems: SideMenuItem[] = [
   {
     label: "Staff",
     icon: LuUserPlus,
-    children: [{ label: "Staff List", icon: LuUser, path: "" }],
+    children: [{ label: "Staff List", icon: LuUser, path: "/staff" }],
   },
   {
     label: "Settings",
@@ -206,7 +206,7 @@ export const storeItems: SideMenuItem[] = [
   {
     label: "Staff",
     icon: LuUserPlus,
-    children: [{ label: "Staff List", icon: LuUser, path: "" }],
+    children: [{ label: "Staff List", icon: LuUser, path: "/staff" }],
   },
   {
     label: "Settings",
