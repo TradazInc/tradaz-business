@@ -10,8 +10,8 @@ export function cursorQuery<T>(
   pageSize: number,
 ): CursorQuery | null {
   if (previousPageData && !previousPageData.meta?.next) return null; // reached the end
-  if (pageIndex === 0) return { pageSize }; // first page, no `previousPageData`
-  return { cursor: previousPageData?.meta?.next, pageSize };
+  if (pageIndex === 0) return { pageSize }; // first page, we don't have `previousPageData`
+  return { cursor: previousPageData?.meta?.next, pageSize }; // add the cursor to the API endpoint
 }
 
 export function indexQuery<T>(

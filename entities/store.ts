@@ -1,8 +1,3 @@
-export interface Store {
-  id: string;
-  name: string;
-  organizationId: string;
-  createdAt: Date;
-  updatedAt?: Date;
-  address: string;
-}
+import { authClient } from "@/lib/authClient";
+
+export type Store = typeof authClient.$Infer.Team;
