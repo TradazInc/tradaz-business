@@ -36,12 +36,12 @@ const SignUpForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      push(`${computePath({})}?signup=true`); // review after emailVerification
+      push(`${computePath()}?signup=true`); // review after emailVerification
     } catch {} // Error displayed by toaster
   });
 
   const handleGoogleSignup = async () => {
-    const promise = toaster.promise(trigger(`${computePath({})}?signup=true`), {
+    const promise = toaster.promise(trigger(`${computePath()}?signup=true`), {
       loading: { title: "Redirecting…", description: "Please wait" },
       success: {
         title: "Redirect successful",

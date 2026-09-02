@@ -5,18 +5,18 @@ import React from "react";
 
 interface Props {
   activeBusiness?: string;
+  children: React.ReactNode;
   data?: Array<{ name: string; id: string }> | null;
   dataType: "business" | "store";
   handleClick: (id: string) => Promise<unknown>;
-  children: React.ReactNode;
 }
 
 export const BusinessSelectorItem = ({
+  activeBusiness,
+  children,
   data,
   dataType,
   handleClick,
-  children,
-  activeBusiness,
 }: Props) => {
   return (
     <Menu.Root>
@@ -33,11 +33,10 @@ export const BusinessSelectorItem = ({
                   asChild
                 >
                   <NextLink
-                    href={computePath({
-                      businessId:
-                        dataType === "business" ? item.id : activeBusiness,
-                      storeId: dataType === "store" ? item.id : undefined,
-                    })}
+                    href={computePath(
+                      dataType === "business" ? item.id : activeBusiness,
+                      dataType === "store" ? item.id : undefined,
+                    )}
                   >
                     {item.name}
                   </NextLink>

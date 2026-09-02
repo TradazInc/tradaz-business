@@ -116,7 +116,7 @@ const ProductForm = ({ product }: Props) => {
     try {
       const product = await promise.unwrap();
       refresh();
-      push(`${computePath({ businessId })}/products/${product.id}`);
+      push(`${computePath(businessId)}/products/${product.id}`);
     } catch {} // Error displayed by toaster
   });
 

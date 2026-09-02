@@ -88,7 +88,7 @@ export const BusinessForm = ({ signup }: Props) => {
     try {
       const business = await promise.unwrap();
       refresh();
-      push(computePath({ businessId: business.id }));
+      push(computePath(business.id));
     } catch {} // Error displayed by toaster
   });
 

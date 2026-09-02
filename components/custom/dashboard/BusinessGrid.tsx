@@ -23,7 +23,7 @@ const BusinessGrid = ({ initialBusinesses }: Props) => {
             logo={business.logo}
             address={JSON.parse(business.metadata)?.address}
             createdAt={new Date(business.createdAt).toDateString()}
-            href={computePath({ businessId: business.id })}
+            href={computePath(business.id)}
           />
         )}
       </For>
