@@ -1,9 +1,4 @@
-export interface Business {
-  id: string;
-  name: string;
-  slug: string;
-  createdAt: Date;
-  logo?: string | null;
-  metadata?: any;
-  categoryId: string;
-}
+import { authClient } from "@/lib/authClient";
+
+export type Business = typeof authClient.$Infer.Organization;
+export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;

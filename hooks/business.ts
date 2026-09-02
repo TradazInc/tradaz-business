@@ -34,3 +34,9 @@ export const useAddBusiness = () => {
       }),
   );
 };
+
+export const useRemoveBusiness = () => {
+  return useSWRMutation(getKey(BUSINESS_KEY), (key, { arg }: { arg: string }) =>
+    authClient.organization.delete({ organizationId: arg }),
+  );
+};

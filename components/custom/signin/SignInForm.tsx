@@ -37,12 +37,12 @@ const SignInForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      push(computePath({}));
+      push(computePath());
     } catch {} // Error displayed by toaster
   });
 
   const handleGoogleSignIn = async () => {
-    const promise = toaster.promise(trigger(computePath({})), {
+    const promise = toaster.promise(trigger(computePath()), {
       loading: { title: "Redirecting…", description: "Please wait" },
       success: {
         title: "Redirect successful",

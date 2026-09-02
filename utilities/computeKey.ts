@@ -5,9 +5,8 @@ import {
   cursorQuery,
   IndexQuery,
   indexQuery,
-  isQueryValid,
-  QueryParams,
 } from "./paginationQuery";
+import { isQueryValid, SearchQuery } from "./searchQuery";
 
 // Computed Cache Keys
 export const getKey = (cacheKey: string): [string] => [cacheKey];
@@ -18,11 +17,11 @@ export const getScopedKey = (
 ): [string, string] | null => (scope ? [cacheKey, scope] : null);
 
 // Pagination Cache Keys
-export function getCursorKey(cacheKey: string, query: QueryParams) {
+export function getCursorKey(cacheKey: string, query: SearchQuery) {
   return <T>(
     pageIndex: number,
     previousPageData: FetchResponse<T> | null,
-  ): [string, QueryParams & CursorQuery] | null => {
+  ): [string, SearchQuery & CursorQuery] | null => {
     const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
 
     return cursor && isQueryValid(query)
@@ -31,11 +30,11 @@ export function getCursorKey(cacheKey: string, query: QueryParams) {
   };
 }
 
-export function getIndexKey(cacheKey: string, query: QueryParams) {
+export function getIndexKey(cacheKey: string, query: SearchQuery) {
   return <T>(
     pageIndex: number,
     previousPageData: FetchResponse<T> | null,
-  ): [string, QueryParams & IndexQuery] | null => {
+  ): [string, SearchQuery & IndexQuery] | null => {
     const index = indexQuery(pageIndex, previousPageData, PAGE_SIZE);
 
     return index && isQueryValid(query)

@@ -25,3 +25,11 @@ export const useAddStore = (organizationId: string | undefined) => {
       }),
   );
 };
+
+export const useRemoveStore = (organizationId: string | undefined) => {
+  return useSWRMutation(
+    getScopedKey(STORE_KEY, organizationId),
+    (key, { arg }: { arg: string }) =>
+      authClient.organization.removeTeam({ teamId: arg, organizationId }),
+  );
+};

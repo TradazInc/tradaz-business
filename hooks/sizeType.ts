@@ -3,6 +3,8 @@ import { SizeType, sizeTypeService } from "@/entities/sizeType";
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { SizeTypeData } from "@/schema/sizeType";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { searchQuery } from "@/utilities/searchQuery";
+import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
@@ -11,8 +13,11 @@ export const useSizeTypes = (
   organizationId: string | undefined,
   configs?: SWRInfiniteConfig<SizeType>,
 ) => {
+  const searchParams = useSearchParams();
+  const query = { organizationId, ...searchQuery(searchParams) };
+
   return useSWRInfinite(
-    getCursorKey(SIZE_TYPE_KEY, { organizationId }),
+    getCursorKey(SIZE_TYPE_KEY, query),
     ([key, query]) => sizeTypeService.getAll({ query, throw: true }),
     configs,
   );

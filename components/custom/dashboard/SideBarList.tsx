@@ -15,7 +15,7 @@ export const SideBarList = () => {
   }>();
 
   const basePath = useMemo(
-    () => computePath({ businessId, storeId }),
+    () => computePath(businessId, storeId),
     [businessId, storeId],
   );
 

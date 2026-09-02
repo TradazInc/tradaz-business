@@ -27,7 +27,7 @@ export default async function page({ searchParams }: Props) {
 
         <HStack w={"full"}>
           <Suspense>
-            <Search placeholder={"Search for a brand"} query={"business"} />
+            <Search placeholder={"Search for a brand"} filterField={"name"} />
           </Suspense>
           <Spacer />
           <DialogBox

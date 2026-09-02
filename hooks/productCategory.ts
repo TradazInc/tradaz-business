@@ -6,6 +6,8 @@ import {
 import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { ProductCategoryData } from "@/schema/productCategory";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { searchQuery } from "@/utilities/searchQuery";
+import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
@@ -14,8 +16,11 @@ export const useProductCategories = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfig<ProductCategory>,
 ) => {
+  const searchParams = useSearchParams();
+  const query = { organizationId, ...searchQuery(searchParams) };
+
   return useSWRInfinite(
-    getCursorKey(PRODUCT_CATEGORY_KEY, { organizationId }),
+    getCursorKey(PRODUCT_CATEGORY_KEY, query),
     ([key, query]) => productCategoryService.getAll({ query, throw: true }),
     config,
   );

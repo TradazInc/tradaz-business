@@ -38,7 +38,7 @@ const ProductGrid = ({ businessId, initialProducts }: Props) => {
             <ProductCard
               key={product.id}
               product={product}
-              href={`${computePath({ businessId })}/products/${product.id}`}
+              href={`${computePath(businessId)}/products/${product.id}`}
             />
           )}
         </For>

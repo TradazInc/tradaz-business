@@ -15,3 +15,5 @@ export const SIZE_TYPE_KEY = "size-types";
 export const POINTS_CONFIG_KEY = "points-configs";
 
 export const COUPON_KEY = "coupons";
+
+export const MEMBER_KEY = "members";

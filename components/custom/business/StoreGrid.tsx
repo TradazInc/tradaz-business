@@ -23,7 +23,7 @@ const StoreGrid = ({ businessId, initialStores }: Props) => {
             name={store.name}
             address={store.address}
             createdAt={new Date(store.createdAt).toDateString()}
-            href={computePath({ businessId, storeId: store.id })}
+            href={computePath(businessId, store.id)}
           />
         )}
       </For>

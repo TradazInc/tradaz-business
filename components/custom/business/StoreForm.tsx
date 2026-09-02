@@ -37,7 +37,7 @@ export const StoreForm = () => {
     try {
       const store = await promise.unwrap();
       refresh();
-      push(computePath({ businessId, storeId: store.id }));
+      push(computePath(businessId, store.id));
     } catch {} // Error displayed by toaster
   });
 
