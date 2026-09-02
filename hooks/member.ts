@@ -1,6 +1,6 @@
 import { MEMBER_KEY } from "@/data/cacheKeys";
 import { Member } from "@/entities/member";
-import { SWRInfiniteConfig } from "@/lib/apiClient";
+import { FetchResponse, SWRInfiniteConfig } from "@/lib/apiClient";
 import { authClient } from "@/lib/authClient";
 import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
 import { searchQuery } from "@/utilities/searchQuery";
@@ -18,7 +18,7 @@ export const useMembers = (
 
   return useSWRInfinite(
     getIndexKey(MEMBER_KEY, query),
-    async ([key, query]) => {
+    async ([key, query]): Promise<FetchResponse<Member>> => {
       const res = await authClient.organization.listMembers({
         query: {
           ...query,
