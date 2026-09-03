@@ -17,3 +17,5 @@ export const POINTS_CONFIG_KEY = "points-configs";
 export const COUPON_KEY = "coupons";
 
 export const MEMBER_KEY = "members";
+
+export const INVITATION_KEY = "invitations";
