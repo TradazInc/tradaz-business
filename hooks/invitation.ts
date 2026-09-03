@@ -16,7 +16,10 @@ export const useInvitations = (organizationId: string | undefined) => {
 
 export const useInvitation = (id: string) => {
   return useSWR(getScopedKey(INVITATION_KEY, id), () =>
-    authClient.organization.getInvitation({ query: { id } }),
+    authClient.organization.getInvitation({
+      query: { id },
+      fetchOptions: { throw: true },
+    }),
   );
 };
 
