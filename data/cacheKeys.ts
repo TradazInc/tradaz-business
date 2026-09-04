@@ -19,3 +19,5 @@ export const COUPON_KEY = "coupons";
 export const MEMBER_KEY = "members";
 
 export const INVITATION_KEY = "invitations";
+
+export const UICONFIG_KEY = "ui-configs";
