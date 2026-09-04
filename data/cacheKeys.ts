@@ -20,4 +20,8 @@ export const MEMBER_KEY = "members";
 
 export const INVITATION_KEY = "invitations";
 
-export const UICONFIG_KEY = "ui-configs";
+export const UI_CONFIG_KEY = "ui-configs";
+
+export const POS_CONFIG_KEY = "pos-configs";
+
+export const SHIPPING_CONFIG_KEY = "shipping-configs";
