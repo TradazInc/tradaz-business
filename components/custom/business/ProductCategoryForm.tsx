@@ -22,7 +22,8 @@ import { useForm } from "react-hook-form";
 const ProductCategoryForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddProductCategory(businessId);
-  const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
+  // throws if the component is ever rendered outside a Dialog.Root
+  const { setOpen } = useDialogContext();
 
   const {
     reset,

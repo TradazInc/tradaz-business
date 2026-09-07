@@ -9,10 +9,11 @@ export type SessionMember = Auth["member"];
 export enum OrgRole {
   owner = "owner",
   admin = "admin",
-  sales = "sales",
-  manager = "manager",
-  vendor = "vendor",
-  customer = "customer",
+  member = "member",
+  // sales = "sales",
+  // manager = "manager",
+  // vendor = "vendor",
+  // customer = "customer",
 }
 
 export enum Role {
