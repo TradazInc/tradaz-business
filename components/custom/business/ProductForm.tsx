@@ -2,11 +2,11 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { MAX_FILE_SIZE, MAX_FILES, SLIDES_PER_PAGE } from "@/data/constants";
-import { emptyProduct, formProduct, productSchema } from "@/schema/product";
 import { Gender, Product } from "@/entities/product";
 import { useAddProduct } from "@/hooks/product";
 import { useProductCategories } from "@/hooks/productCategory";
 import { useSizeTypes } from "@/hooks/sizeType";
+import { emptyProduct, formProduct, productSchema } from "@/schema/product";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
@@ -27,12 +27,12 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { LuPlus } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FormInputGrid from "../shared/FormInputGrid";
 import ImageUpload from "../shared/ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
-import { LuPackage } from "react-icons/lu";
 
 interface Props {
   product?: Product;
@@ -402,7 +402,7 @@ const ProductForm = ({ product }: Props) => {
           loading={isSubmitting || isMutating}
           disabled={!isValid || isSubmitting || isMutating}
         >
-          <LuPackage />
+          <LuPlus />
           {product ? "Update Product" : "Create Product"}
         </Button>
 
