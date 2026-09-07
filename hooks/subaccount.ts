@@ -9,7 +9,7 @@ import { useSWRConfig } from "swr";
 import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
-export const useProductCategories = (
+export const useSubaccounts = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfig<Subaccount>,
 ) => {

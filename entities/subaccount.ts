@@ -6,6 +6,9 @@ export interface Subaccount {
   subAccountId: string;
   createdAt: string;
   organizationId: string;
+}
+
+export interface SubaccountMsg {
   message?: string;
 }
 
@@ -15,4 +18,6 @@ export enum Gateway {
   paystack = "paystack",
 }
 
-export const subaccountService = new ApiClient<Subaccount>("/api/subaccounts");
+export const subaccountService = new ApiClient<Subaccount & SubaccountMsg>(
+  "/api/subaccounts",
+);
