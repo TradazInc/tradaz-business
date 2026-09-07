@@ -49,9 +49,7 @@ const ProductCategoryForm = () => {
       await promise.unwrap();
       reset(emptyProductCategory);
       setOpen(false);
-    } catch (error) {
-      return; // toast already surfaced it; keep the input for a retry
-    }
+    } catch {} // Error displayed by toaster
   });
 
   return (

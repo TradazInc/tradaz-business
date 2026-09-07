@@ -67,9 +67,7 @@ const CouponForm = () => {
       await promise.unwrap();
       reset(emptyCoupon);
       setOpen(false);
-    } catch (error) {
-      return; // toast already surfaced it; keep the input for a retry
-    }
+    } catch {} // Error displayed by toaster
   });
 
   return (

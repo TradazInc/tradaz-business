@@ -52,9 +52,7 @@ const PointsConfigForm = () => {
       await promise.unwrap();
       reset(emptyPointsConfig);
       setOpen(false);
-    } catch (error) {
-      return; // toast already surfaced it; keep the input for a retry
-    }
+    } catch {} // Error displayed by toaster
   });
 
   return (
