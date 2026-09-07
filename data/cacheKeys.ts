@@ -25,3 +25,5 @@ export const UI_CONFIG_KEY = "ui-configs";
 export const POS_CONFIG_KEY = "pos-configs";
 
 export const SHIPPING_CONFIG_KEY = "shipping-configs";
+
+export const SUBACCOUNT_KEY = "subaccounts";
