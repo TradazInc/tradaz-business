@@ -1,14 +1,11 @@
 import { ApiClient } from "@/lib/apiClient";
 
-interface Subaccount {
+export interface Subaccount {
   id: string;
   gateway: Gateway;
   subAccountId: string;
   createdAt: string;
   organizationId: string;
-}
-
-interface SubaccountMsg {
   message?: string;
 }
 
@@ -18,6 +15,4 @@ export enum Gateway {
   paystack = "paystack",
 }
 
-export const subaccountService = new ApiClient<Subaccount & SubaccountMsg>(
-  "/api/subaccounts",
-);
+export const subaccountService = new ApiClient<Subaccount>("/api/subaccounts");

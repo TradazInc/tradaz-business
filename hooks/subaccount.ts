@@ -1,10 +1,27 @@
 import { SUBACCOUNT_KEY } from "@/data/cacheKeys";
-import { subaccountService } from "@/entities/subaccount";
+import { Subaccount, subaccountService } from "@/entities/subaccount";
+import { SWRInfiniteConfig } from "@/lib/apiClient";
 import { SubaccountData } from "@/schema/subaccount";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { searchQuery } from "@/utilities/searchQuery";
+import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
-import { unstable_serialize } from "swr/infinite";
+import useSWRInfinite, { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+
+export const useProductCategories = (
+  organizationId: string | undefined,
+  config?: SWRInfiniteConfig<Subaccount>,
+) => {
+  const searchParams = useSearchParams();
+  const query = { organizationId, ...searchQuery(searchParams) };
+
+  return useSWRInfinite(
+    getCursorKey(SUBACCOUNT_KEY, query),
+    ([key, query]) => subaccountService.getAll({ query, throw: true }),
+    config,
+  );
+};
 
 export const useAddSubaccount = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
