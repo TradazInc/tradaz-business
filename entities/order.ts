@@ -1,6 +1,6 @@
 import { ApiClient } from "@/lib/apiClient";
-import { OrgRole } from "./member";
-import { Gateway } from "./subaccount";
+import { Member } from "./member";
+import { Transaction } from "./transaction";
 
 export interface Order {
   id: string;
@@ -18,18 +18,7 @@ export interface Order {
   discount: number;
   orderItems: OrderItem[];
   transactions: Transaction[];
-  member: {
-    id: string;
-    role: OrgRole;
-    approved: true;
-    createdAt: string;
-    organizationId: string;
-    userId: string;
-    user: {
-      name: string;
-      email: string;
-    };
-  };
+  member: Member;
 }
 
 export enum OrderStatus {}
@@ -45,19 +34,6 @@ export interface OrderItem {
   vendorId: string;
   totalPrice: number;
   discount: number;
-}
-
-export interface Transaction {
-  id: string;
-  externalTxId: string;
-  amount: number;
-  gateway: Gateway;
-  transactionStatus: "pending";
-  createdAt: string;
-  updatedAt: string;
-  orderId: string;
-  paymentConfigId: string;
-  terminalConfigId: string;
 }
 
 export const orderService = new ApiClient<Order>("/api/orders");
