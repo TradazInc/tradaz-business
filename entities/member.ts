@@ -8,3 +8,13 @@ export type Member = typeof authClient.$Infer.Member & {
     image: string | null | undefined;
   };
 };
+
+export enum OrgRole {
+  owner = "owner",
+  admin = "admin",
+  member = "member",
+  // sales = "sales",
+  // manager = "manager",
+  // vendor = "vendor",
+  // customer = "customer",
+}

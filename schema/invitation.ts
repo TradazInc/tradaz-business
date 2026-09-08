@@ -1,4 +1,4 @@
-import { OrgRole } from "@/entities/auth";
+import { OrgRole } from "@/entities/member";
 import { z } from "zod";
 
 const invitationSchema = z.object({
