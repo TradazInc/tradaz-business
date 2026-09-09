@@ -21,7 +21,12 @@ export interface Order {
   member: Member;
 }
 
-export enum OrderStatus {}
+export enum OrderStatus {
+  pending = "pending",
+  paid = "paid",
+  fulfilled = "fulfilled",
+  cancelled = "cancelled",
+}
 
 export interface OrderItem {
   id: string;
