@@ -1,8 +1,9 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { posConfigService } from "@/entities/posConfig";
+import { apiClient } from "@/lib/fetchClient";
 
-export async function getPosConfigs(organizationId?: string) {
-  return posConfigService.getAll({
-    query: { pageSize: PAGE_SIZE, organizationId },
+export async function getPosConfigs() {
+  return apiClient("@get/api/pos-configs", {
+    query: { pageSize: PAGE_SIZE },
+    throw: false as const,
   });
 }

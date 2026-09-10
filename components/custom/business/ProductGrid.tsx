@@ -1,8 +1,7 @@
 "use client";
 
-import { FetchResponse } from "@/lib/apiClient";
-import { Product } from "@/entities/product";
 import { useProducts } from "@/hooks/product";
+import { GetAllProductOutputData } from "@/schema/product";
 import { computePath } from "@/utilities/computePath";
 import { parseCursorData } from "@/utilities/parsePageData";
 import { Button, For, Spinner, Text } from "@chakra-ui/react";
@@ -12,7 +11,7 @@ import GridContainer from "../shared/GridContainer";
 import ProductCard from "./ProductCard";
 
 interface Props {
-  initialProducts: FetchResponse<Product>;
+  initialProducts: GetAllProductOutputData;
   businessId: string | undefined;
 }
 

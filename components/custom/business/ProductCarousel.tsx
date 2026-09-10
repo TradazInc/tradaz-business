@@ -1,12 +1,12 @@
 "use client";
 
-import { Product } from "@/entities/product";
+import { GetProductOutputData } from "@/schema/product";
 import { Box, Carousel, IconButton } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 interface Props {
-  product: Product;
+  product: GetProductOutputData;
 }
 
 const ProductCarousel = ({ product }: Props) => {

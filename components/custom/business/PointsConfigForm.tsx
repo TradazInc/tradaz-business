@@ -1,7 +1,10 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { emptyPointsConfig, pointsConfigSchema } from "@/schema/pointsConfig";
+import {
+  CreatePointsConfigInputSchema,
+  emptyPointsConfig,
+} from "@/schema/pointsConfig";
 import { useAddPointsConfig } from "@/hooks/pointsConfig";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
@@ -30,7 +33,7 @@ const PointsConfigForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(pointsConfigSchema),
+    resolver: standardSchemaResolver(CreatePointsConfigInputSchema),
     defaultValues: emptyPointsConfig,
     mode: "onBlur",
   });

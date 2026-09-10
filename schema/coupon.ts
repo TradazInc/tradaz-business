@@ -57,47 +57,49 @@ export const GetAllCouponOutputSchema = createFetchResponseSchema(
 export type GetAllCouponOutputData = z.infer<typeof GetAllCouponOutputSchema>;
 
 // Create
-export const CreateCouponInputSchema = z
-  .object({
-    discountType: z.enum(DiscountType, { error: "select a discount type" }),
+// kept unrefined so the update schema below can be derived with .partial()
+const CouponInputBaseSchema = z.object({
+  discountType: z.enum(DiscountType, { error: "select a discount type" }),
 
-    name: z
-      .string({ error: "name is required" })
-      .min(3, { error: "name must be at least 3 letters long" }),
+  name: z
+    .string({ error: "name is required" })
+    .min(3, { error: "name must be at least 3 letters long" }),
 
-    code: z
-      .string({ error: "code is required" })
-      .min(3, { error: "code must be at least 3 characters long" })
-      .regex(/^[A-Za-z0-9-]+$/, {
-        error: "code can only contain letters, numbers and hyphens",
-      })
-      .transform((code) => code.toUpperCase())
-      .optional(),
+  code: z
+    .string({ error: "code is required" })
+    .min(3, { error: "code must be at least 3 characters long" })
+    .regex(/^[A-Za-z0-9-]+$/, {
+      error: "code can only contain letters, numbers and hyphens",
+    })
+    .transform((code) => code.toUpperCase())
+    .optional(),
 
-    discountValue: z
-      .number({ error: "discount value is required" })
-      .positive({ error: "discount value cannot be negative or zero" }),
+  discountValue: z
+    .number({ error: "discount value is required" })
+    .positive({ error: "discount value cannot be negative or zero" }),
 
-    usageLimit: z
-      .int({ error: "usage limit is required" })
-      .nonnegative({ error: "usage limit cannot be negative" }),
+  usageLimit: z
+    .int({ error: "usage limit is required" })
+    .nonnegative({ error: "usage limit cannot be negative" }),
 
-    minOrderValue: z
-      .number({ error: "minimum order value is required" })
-      .nonnegative({ error: "minimum order value cannot be negative" }),
+  minOrderValue: z
+    .number({ error: "minimum order value is required" })
+    .nonnegative({ error: "minimum order value cannot be negative" }),
 
-    isActive: z.boolean({ error: "select a status" }).default(true),
+  isActive: z.boolean({ error: "select a status" }).default(true),
 
-    startsAt: z
-      .string({ error: "start date is required" })
-      .min(1, { error: "start date is required" }),
-    endsAt: z
-      .string({ error: "end date is required" })
-      .min(1, { error: "end date is required" }),
+  startsAt: z
+    .string({ error: "start date is required" })
+    .min(1, { error: "start date is required" }),
+  endsAt: z
+    .string({ error: "end date is required" })
+    .min(1, { error: "end date is required" }),
 
-    memberId: z.cuid2().optional(),
-  })
-  .superRefine((coupon, ctx) => {
+  memberId: z.cuid2().optional(),
+});
+
+export const CreateCouponInputSchema = CouponInputBaseSchema.superRefine(
+  (coupon, ctx) => {
     if (
       coupon.discountType === DiscountType.percentage &&
       coupon.discountValue > 100
@@ -114,12 +116,37 @@ export const CreateCouponInputSchema = z
         path: ["endsAt"],
         message: "end date must be after the start date",
       });
-  });
+  },
+);
 export type CreateCouponInputData = z.input<typeof CreateCouponInputSchema>;
 export const CreateCouponOutputSchema = GetCouponOutputSchema;
 
 // Update
-export const UpdateCouponInputSchema = CreateCouponInputSchema.partial();
+export const UpdateCouponParamSchema = z.object({
+  id: z.cuid2(),
+});
+
+export const UpdateCouponInputSchema = CouponInputBaseSchema.partial()
+  .superRefine((coupon, ctx) => {
+    if (
+      coupon.discountType === DiscountType.percentage &&
+      coupon.discountValue !== undefined &&
+      coupon.discountValue > 100
+    )
+      ctx.addIssue({
+        code: "custom",
+        path: ["discountValue"],
+        message: "discount can't exceed 100%",
+      });
+
+    if (coupon.startsAt && coupon.endsAt && coupon.endsAt <= coupon.startsAt)
+      ctx.addIssue({
+        code: "custom",
+        path: ["endsAt"],
+        message: "end date must be after the start date",
+      });
+  });
+export type UpdateCouponInputData = z.input<typeof UpdateCouponInputSchema>;
 export const UpdateCouponOutputSchema = GetCouponOutputSchema;
 
 // Delete

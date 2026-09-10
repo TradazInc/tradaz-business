@@ -1,8 +1,9 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { subaccountService } from "@/entities/subaccount";
+import { apiClient } from "@/lib/fetchClient";
 
 export async function getSubaccounts(organizationId?: string) {
-  return subaccountService.getAll({
+  return apiClient("@get/api/subaccounts", {
     query: { pageSize: PAGE_SIZE, organizationId },
+    throw: false as const,
   });
 }

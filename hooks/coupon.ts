@@ -47,7 +47,7 @@ export const useRemoveCoupon = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(COUPON_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      apiClient("@delete/api/coupons", { params: { id: arg } }),
+      apiClient("@delete/api/coupons/:id", { params: { id: arg } }),
     {
       onSuccess: () =>
         mutate(

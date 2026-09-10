@@ -5,7 +5,7 @@ import {
   ProductData,
   ProductFormValues,
 } from "@/schema/product";
-import { SizeType } from "@/entities/sizeType";
+import { GetAllSizeTypeOutputData } from "@/schema/sizeType";
 import {
   Box,
   Button,
@@ -38,7 +38,7 @@ import TeamVariationField from "./TeamVariationField";
 interface Props {
   control: Control<ProductFormValues, unknown, ProductData>;
   errors: FieldErrors<ProductFormValues>;
-  sizeTypes: SizeType[];
+  sizeTypes: GetAllSizeTypeOutputData["data"];
   isLoading: boolean;
 }
 

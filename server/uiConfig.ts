@@ -1,8 +1,5 @@
-import { PAGE_SIZE } from "@/data/constants";
-import { uiConfigService } from "@/entities/uiConfig";
+import { apiClient } from "@/lib/fetchClient";
 
-export async function getUIConfigs(organizationId?: string) {
-  return uiConfigService.getAll({
-    query: { pageSize: PAGE_SIZE, organizationId },
-  });
+export async function getUIConfig() {
+  return apiClient("@get/api/ui-configs", { throw: false as const });
 }

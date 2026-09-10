@@ -1,8 +1,9 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { sizeTypeService } from "@/entities/sizeType";
+import { apiClient } from "@/lib/fetchClient";
 
-export async function getSizeTypes(organizationId?: string) {
-  return sizeTypeService.getAll({
-    query: { pageSize: PAGE_SIZE, organizationId },
+export async function getSizeTypes() {
+  return apiClient("@get/api/size-types", {
+    query: { pageSize: PAGE_SIZE },
+    throw: false as const,
   });
 }

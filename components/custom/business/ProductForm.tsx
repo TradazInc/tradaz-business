@@ -2,11 +2,17 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { MAX_FILE_SIZE, MAX_FILES, SLIDES_PER_PAGE } from "@/data/constants";
-import { Gender, Product } from "@/entities/product";
+
 import { useAddProduct } from "@/hooks/product";
 import { useProductCategories } from "@/hooks/productCategory";
 import { useSizeTypes } from "@/hooks/sizeType";
-import { emptyProduct, formProduct, productSchema } from "@/schema/product";
+import {
+  emptyProduct,
+  formProduct,
+  Gender,
+  GetProductOutputData,
+  productFormSchema,
+} from "@/schema/product";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
@@ -35,7 +41,7 @@ import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
 
 interface Props {
-  product?: Product;
+  product?: GetProductOutputData;
 }
 
 const ProductForm = ({ product }: Props) => {
@@ -92,7 +98,7 @@ const ProductForm = ({ product }: Props) => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(productSchema),
+    resolver: standardSchemaResolver(productFormSchema),
     defaultValues: product ? formProduct(product) : emptyProduct,
     mode: "onBlur",
   });

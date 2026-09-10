@@ -14,7 +14,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: sizeTypes, error } = await getSizeTypes(businessId);
+  const { data: sizeTypes, error } = await getSizeTypes();
 
   if (error) return error.message;
 

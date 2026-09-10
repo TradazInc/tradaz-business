@@ -42,7 +42,7 @@ export const useRemoveBusinessCategory = () => {
   return useSWRMutation(
     getKey(BUSINESS_CATEGORY_KEY),
     (key, { arg }: { arg: string }) =>
-      apiClient("@delete/api/business-categories", {
+      apiClient("@delete/api/business-categories/:id", {
         params: { id: arg },
       }),
     {

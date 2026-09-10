@@ -1,8 +1,8 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { FetchResponse } from "@/lib/apiClient";
-import { ProductCategory } from "@/entities/productCategory";
+
+import { GetAllProductCategoryOutputData } from "@/schema/productCategory";
 import {
   useProductCategories,
   useRemoveProductCategory,
@@ -25,7 +25,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialCategories: FetchResponse<ProductCategory>;
+  initialCategories: GetAllProductCategoryOutputData;
   businessId: string | undefined;
 }
 

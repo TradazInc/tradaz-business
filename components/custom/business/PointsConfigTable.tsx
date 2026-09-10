@@ -1,10 +1,7 @@
 "use client";
 
-import { toaster } from "@/components/ui/toaster";
-import { FetchResponse } from "@/lib/apiClient";
-import { PointsConfig } from "@/entities/pointsConfig";
-import { usePointsConfigs, useRemovePointsConfig } from "@/hooks/pointsConfig";
-import { errorToastOptions } from "@/utilities/errorToastOptions";
+import { usePointsConfigs } from "@/hooks/pointsConfig";
+import { GetAllPointsConfigOutputData } from "@/schema/pointsConfig";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Box,
@@ -18,11 +15,11 @@ import {
 } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
-import { MdDeleteOutline } from "react-icons/md";
+
 import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialPointsConfigs: FetchResponse<PointsConfig>;
+  initialPointsConfigs: GetAllPointsConfigOutputData;
   businessId: string | undefined;
 }
 
@@ -34,22 +31,6 @@ const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
     () => parseCursorData(data),
     [data],
   );
-  const { trigger, isMutating } = useRemovePointsConfig(businessId);
-
-  const handleDelete = async (id: string) => {
-    toaster.promise(trigger(id), {
-      loading: {
-        title: "Deleting points config...",
-        description: "Please wait",
-      },
-      success: {
-        title: "Deletion successful",
-        description: "Points config has been deleted",
-      },
-      error: errorToastOptions,
-    });
-  };
-
   return (
     <Box w={"full"}>
       <InfiniteScroll
@@ -87,17 +68,10 @@ const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
                   <Table.Cell>{pointsConfig.maxOrderValue}</Table.Cell>
                   <Table.Cell>{pointsConfig.rewardPercentage}</Table.Cell>
                   <Table.Cell textAlign="end">
+                    {/* the API has no delete route for points configs */}
                     <ButtonGroup size="sm" variant="outline">
                       <IconButton>
                         <AiOutlineEdit />
-                      </IconButton>
-                      <IconButton
-                        color={"fg.error"}
-                        _hover={{ bg: "bg.error", color: "fg.error" }}
-                        onClick={() => handleDelete(pointsConfig.id)}
-                        disabled={isMutating}
-                      >
-                        <MdDeleteOutline />
                       </IconButton>
                     </ButtonGroup>
                   </Table.Cell>

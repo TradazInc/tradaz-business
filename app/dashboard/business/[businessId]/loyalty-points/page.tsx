@@ -14,7 +14,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: pointsConfigs, error } = await getPointsConfigs(businessId);
+  const { data: pointsConfigs, error } = await getPointsConfigs();
 
   if (error) return error.message;
 
