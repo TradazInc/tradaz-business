@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessForm";
-import { businessSchema } from "@/schema/business";
+import { CreateBusinessInputSchema } from "@/schema/business";
 import { useAddBusiness } from "@/hooks/business";
 import { useBusinessCategories } from "@/hooks/businessCategory";
 import { computePath } from "@/utilities/computePath";
@@ -69,7 +69,7 @@ export const BusinessForm = ({ signup }: Props) => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(businessSchema),
+    resolver: standardSchemaResolver(CreateBusinessInputSchema),
     mode: "onBlur",
   });
 

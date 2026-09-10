@@ -1,6 +1,6 @@
 import { STORE_KEY } from "@/data/cacheKeys";
 import { authClient } from "@/lib/authClient";
-import { StoreData } from "@/schema/store";
+import { CreateStoreInputData } from "@/schema/store";
 import { getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
@@ -17,7 +17,7 @@ export const useStores = (organizationId: string | undefined) => {
 export const useAddStore = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(STORE_KEY, organizationId),
-    (key, { arg }: { arg: StoreData }) =>
+    (key, { arg }: { arg: CreateStoreInputData }) =>
       authClient.organization.createTeam({
         ...arg,
         organizationId,

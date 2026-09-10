@@ -130,8 +130,8 @@ import {
 } from "@/schema/transaction";
 import {
   GetUIConfigOutputSchema,
-  UpsertUIConfigInputSchema,
-  UpsertUIConfigOutputSchema,
+  CreateUIConfigInputSchema,
+  CreateUIConfigOutputSchema,
 } from "@/schema/uiConfig";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import { createFetch, createSchema } from "@better-fetch/fetch";
@@ -381,8 +381,8 @@ export const schema = createSchema({
     output: GetUIConfigOutputSchema,
   },
   "@post/api/ui-configs": {
-    input: UpsertUIConfigInputSchema,
-    output: UpsertUIConfigOutputSchema,
+    input: CreateUIConfigInputSchema,
+    output: CreateUIConfigOutputSchema,
   },
   "@delete/api/ui-configs": {},
 });

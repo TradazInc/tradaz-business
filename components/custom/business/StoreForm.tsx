@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { storeSchema } from "@/schema/store";
+import { CreateStoreInputSchema } from "@/schema/store";
 import { useAddStore } from "@/hooks/store";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
@@ -20,7 +20,7 @@ export const StoreForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(storeSchema),
+    resolver: standardSchemaResolver(CreateStoreInputSchema),
     mode: "onBlur",
   });
 

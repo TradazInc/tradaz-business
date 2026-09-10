@@ -2,7 +2,7 @@ import { UI_CONFIG_KEY } from "@/data/cacheKeys";
 import { apiClient } from "@/lib/apiClient";
 import {
   GetUIConfigOutputData,
-  UpsertUIConfigInputData,
+  CreateUIConfigInputData,
 } from "@/schema/uiConfig";
 import { getScopedKey } from "@/utilities/computeKey";
 import useSWR, { SWRConfiguration, useSWRConfig } from "swr";
@@ -20,12 +20,12 @@ export const useUIConfig = (
   );
 };
 
-export const useUpsertUIConfig = (organizationId: string | undefined) => {
+export const useAddUIConfig = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
     getScopedKey(UI_CONFIG_KEY, organizationId),
-    (key, { arg }: { arg: UpsertUIConfigInputData }) =>
+    (key, { arg }: { arg: CreateUIConfigInputData }) =>
       apiClient("@post/api/ui-configs", { body: arg }),
     {
       onSuccess: () => mutate(getScopedKey(UI_CONFIG_KEY, organizationId)),
