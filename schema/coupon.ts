@@ -1,7 +1,54 @@
 import { Coupon, DiscountType } from "@/entities/coupons";
 import { z } from "zod";
 
-export const couponSchema = z
+// Get
+export const GetCouponParamSchema = z.object({
+  id: z.cuid2(),
+});
+
+export const GetCouponOutputSchema = z.object({
+  id: z.cuid2(),
+  name: z.string(),
+  code: z.string(),
+  discountValue: z.number(),
+  discountType: z.enum(DiscountType),
+  usageLimit: z.number(),
+  usageCount: z.number(),
+  minOrderValue: z.number(),
+  isActive: z.boolean(),
+  startsAt: z.string(),
+  endsAt: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  organizationId: z.string(),
+  memberId: z.string(),
+});
+
+// Get All
+export const GetAllCouponQuerySchema = z.object({
+  name: z.string().optional(),
+  code: z.string().optional(),
+  discountType: z.enum(DiscountType).optional(),
+  isActive: z.boolean().optional(),
+  organizationId: z.cuid2().optional(),
+  cursor: z.cuid2().optional(),
+  pageSize: z.number().positive().optional(),
+});
+
+export const GetAllCouponOutputSchema = z.object({
+  id: z.cuid2(),
+  name: z.string(),
+  code: z.string(),
+  discountType: z.enum(DiscountType),
+  minOrderValue: z.number(),
+  usageCount: z.number(),
+  usageLimit: z.number(),
+  discountValue: z.number(),
+  isActive: z.boolean(),
+});
+
+// Create
+export const CreateCouponInputSchema = z
   .object({
     discountType: z.enum(DiscountType, { error: "select a discount type" }),
 
@@ -62,10 +109,20 @@ export const couponSchema = z
         message: "end date must be after the start date",
       });
   });
-export type CouponData = z.infer<typeof couponSchema>;
-export type CouponFormValues = z.input<typeof couponSchema>;
+export type CreateCouponInputData = z.input<typeof CreateCouponInputSchema>;
+export const CreateCouponOutputSchema = GetCouponOutputSchema;
 
-export const emptyCoupon: CouponFormValues = {
+// Update
+export const UpdateCouponInputSchema = CreateCouponInputSchema.partial();
+export const UpdateCouponOutputSchema = GetCouponOutputSchema;
+
+// Delete
+export const DeleteCouponParamSchema = z.object({
+  id: z.cuid2(),
+});
+export type DeleteCouponParamData = z.infer<typeof DeleteCouponParamSchema>;
+
+export const emptyCoupon: CreateCouponInputData = {
   discountType: DiscountType.percentage,
   name: "",
   code: "",
@@ -77,7 +134,7 @@ export const emptyCoupon: CouponFormValues = {
   endsAt: "",
 };
 
-export function formCoupon(coupon: Coupon): CouponFormValues {
+export function formCoupon(coupon: Coupon): CreateCouponInputData {
   return {
     ...coupon,
     startsAt: coupon.startsAt?.toISOString() ?? "",

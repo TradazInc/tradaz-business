@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { couponSchema, emptyCoupon } from "@/schema/coupon";
+import { CreateCouponInputSchema, emptyCoupon } from "@/schema/coupon";
 import { DiscountType } from "@/entities/coupons";
 import { useAddCoupon } from "@/hooks/coupon";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
@@ -45,7 +45,7 @@ const CouponForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(couponSchema),
+    resolver: standardSchemaResolver(CreateCouponInputSchema),
     defaultValues: emptyCoupon,
     mode: "onBlur",
   });
