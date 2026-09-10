@@ -4,7 +4,9 @@ import {
   DeleteBusinessCategoryParamSchema,
   GetAllBusinessCategoryOutputSchema,
 } from "@/schema/businessCategory";
+import { setServerCookie } from "@/utilities/setServerCookie";
 import { createFetch, createSchema } from "@better-fetch/fetch";
+import { logger } from "@better-fetch/logger";
 
 export const schema = createSchema({
   "@get/api/business-categories": {
@@ -20,6 +22,9 @@ export const schema = createSchema({
 });
 
 export const apiClient = createFetch({
-  baseURL: "https://jsonplaceholder.typicode.com",
   schema: schema,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  credentials: "include",
+  onRequest: async (context) => setServerCookie(context),
+  plugins: [logger()],
 });
