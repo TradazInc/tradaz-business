@@ -14,3 +14,7 @@ export const createFetchResponseSchema = <T extends z.ZodTypeAny>(
       })
       .optional(),
   });
+
+export type FetchResponse<T> = z.infer<
+  ReturnType<typeof createFetchResponseSchema<z.ZodType<T>>>
+>;

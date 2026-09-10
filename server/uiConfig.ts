@@ -1,4 +1,4 @@
-import { apiClient } from "@/lib/fetchClient";
+import { apiClient } from "@/lib/apiClient";
 
 export async function getUIConfig() {
   return apiClient("@get/api/ui-configs", { throw: false as const });

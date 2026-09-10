@@ -1,5 +1,5 @@
 import { COUPON_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/fetchClient";
+import { apiClient } from "@/lib/apiClient";
 import { CreateCouponInputData, GetAllCouponOutputData } from "@/schema/coupon";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { searchQuery } from "@/utilities/searchQuery";

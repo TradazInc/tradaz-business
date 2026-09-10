@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Gateway } from "./gateway";
+import { createFetchResponseSchema } from "./fetchResponse";
 
 export enum OrderStatus {
   pending = "pending",
@@ -102,20 +103,16 @@ export const GetAllOrderQuerySchema = z.object({
   pageSize: z.number().positive().optional(),
 });
 
-export const GetAllOrderOutputSchema = z.object({
-  data: z.array(
-    OrderOutputBaseSchema.pick({
-      id: true,
-      orderStatus: true,
-      createdAt: true,
-      reference: true,
-      totalPrice: true,
-      paidPrice: true,
-    }),
-  ),
-  aggregate: z.coerce.number().nullable(),
-  meta: z.object({ next: z.cuid2().optional() }),
-});
+export const GetAllOrderOutputSchema = createFetchResponseSchema(
+  OrderOutputBaseSchema.pick({
+    id: true,
+    orderStatus: true,
+    createdAt: true,
+    reference: true,
+    totalPrice: true,
+    paidPrice: true,
+  }),
+);
 export type GetAllOrderOutputData = z.infer<typeof GetAllOrderOutputSchema>;
 
 // Update Status

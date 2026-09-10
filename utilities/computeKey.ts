@@ -1,10 +1,10 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { FetchResponse } from "@/lib/apiClient";
+import { FetchResponse } from "@/schema/fetchResponse";
 import {
-  CursorQuery,
-  cursorQuery,
-  IndexQuery,
-  indexQuery,
+    CursorQuery,
+    cursorQuery,
+    IndexQuery,
+    indexQuery,
 } from "./paginationQuery";
 import { isQueryValid, SearchQuery } from "./searchQuery";
 

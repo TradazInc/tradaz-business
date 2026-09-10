@@ -1,5 +1,5 @@
 import { UI_CONFIG_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/fetchClient";
+import { apiClient } from "@/lib/apiClient";
 import {
   GetUIConfigOutputData,
   UpsertUIConfigInputData,

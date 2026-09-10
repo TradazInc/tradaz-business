@@ -1,5 +1,5 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { FetchResponse } from "@/lib/apiClient";
+import { FetchResponse } from "@/schema/fetchResponse";
 
 export function parseCursorData<D>(data?: FetchResponse<D>[]) {
   const flatData = data?.flatMap((page) => page.data) ?? [];

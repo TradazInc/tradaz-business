@@ -3,7 +3,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { Member } from "@/entities/member";
 import { useMembers, useRemoveMember } from "@/hooks/member";
-import { FetchResponse } from "@/lib/apiClient";
+import { FetchResponse } from "@/schema/fetchResponse";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseIndexData } from "@/utilities/parsePageData";
 import {

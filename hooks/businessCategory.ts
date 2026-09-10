@@ -1,5 +1,5 @@
 import { BUSINESS_CATEGORY_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/fetchClient";
+import { apiClient } from "@/lib/apiClient";
 import {
   CreateBusinessCategoryInputData,
   GetAllBusinessCategoryOutputData,

@@ -1,7 +1,7 @@
 import { PAGE_SIZE } from "@/data/constants";
 import { Member } from "@/entities/member";
-import { FetchResponse } from "@/lib/apiClient";
 import { authClient } from "@/lib/authClient";
+import { FetchResponse } from "@/schema/fetchResponse";
 
 export async function getMembers(organizationId?: string) {
   const { data, error } = await authClient.organization.listMembers({
