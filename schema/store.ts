@@ -1,3 +1,4 @@
+import { authClient } from "@/lib/authClient";
 import { z } from "zod";
 
 export const storeSchema = z.object({
@@ -10,3 +11,5 @@ export const storeSchema = z.object({
     .min(5, { error: "address must be at least 5 letters long" }),
 });
 export type StoreData = z.infer<typeof storeSchema>;
+
+export type Store = typeof authClient.$Infer.Team;

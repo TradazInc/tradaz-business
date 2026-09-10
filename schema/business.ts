@@ -1,7 +1,8 @@
-import { checkBusinessSlug } from "@/server/business";
 import { toaster } from "@/components/ui/toaster";
-import { z } from "zod";
+import { authClient } from "@/lib/authClient";
+import { checkBusinessSlug } from "@/server/business";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
+import { z } from "zod";
 
 export const businessSchema = z.object({
   name: z
@@ -37,3 +38,6 @@ export const businessSchema = z.object({
     ),
 });
 export type BusinessData = z.infer<typeof businessSchema>;
+
+export type Business = typeof authClient.$Infer.Organization;
+export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;

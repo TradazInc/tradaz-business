@@ -1,7 +1,7 @@
 import { MEMBER_KEY } from "@/data/cacheKeys";
-import { Member } from "@/entities/member";
 import { authClient } from "@/lib/authClient";
 import { FetchResponse } from "@/schema/fetchResponse";
+import { Member } from "@/schema/member";
 import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
 import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";

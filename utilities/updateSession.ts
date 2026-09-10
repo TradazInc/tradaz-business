@@ -1,4 +1,4 @@
-import { Session } from "@/entities/auth";
+import { Session } from "@/schema/auth";
 import { CustomSession } from "@/lib/authClient";
 
 export function updateSession(session: Partial<Session>) {

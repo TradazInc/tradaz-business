@@ -1,4 +1,5 @@
-import { OrgRole } from "@/entities/member";
+import { authClient } from "@/lib/authClient";
+import { OrgRole } from "@/schema/member";
 import { z } from "zod";
 
 const invitationSchema = z.object({
@@ -16,3 +17,5 @@ export const emptyInvitation: InvitationFormValues = {
   organizationId: "",
   teamId: "",
 };
+
+export type Invitation = typeof authClient.$Infer.Invitation;
