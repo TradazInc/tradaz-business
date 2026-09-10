@@ -10,7 +10,7 @@ export const useTransaction = (
   organizationId: string | undefined,
 ) => {
   return useSWR(getScopedKey(TRANSACTION_KEY, organizationId), ([key, query]) =>
-    apiClient("@get/api/transactions/:id", { params: { id } }),
+    apiClient("@get/api/transactions/:id", { params: { id }, throw: true }),
   );
 };
 
@@ -18,6 +18,6 @@ export const useAddTransaction = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(TRANSACTION_KEY, organizationId),
     (_, { arg }: { arg: CreateTransactionInputData }) =>
-      apiClient("@post/api/transactions", { body: arg }),
+      apiClient("@post/api/transactions", { body: arg, throw: true }),
   );
 };

@@ -24,7 +24,8 @@ export const usePointsConfigs = (
 
   return useSWRInfinite(
     getCursorKey(POINTS_CONFIG_KEY, query),
-    ([key, query]) => apiClient("@get/api/points-config", { query }),
+    ([key, query]) =>
+      apiClient("@get/api/points-config", { query, throw: true }),
     config,
   );
 };
@@ -35,7 +36,7 @@ export const useAddPointsConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(POINTS_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: CreatePointsConfigInputData }) =>
-      apiClient("@post/api/points-config", { body: arg }),
+      apiClient("@post/api/points-config", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(
@@ -61,6 +62,7 @@ export const useUpdatePointsConfig = (organizationId: string | undefined) => {
       apiClient("@put/api/points-config/:id", {
         params: { id: arg.id },
         body: arg.pointsConfig,
+        throw: true,
       }),
     {
       onSuccess: () =>

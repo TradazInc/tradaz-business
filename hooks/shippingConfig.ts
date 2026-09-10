@@ -24,7 +24,8 @@ export const useShippingConfigs = (
 
   return useSWRInfinite(
     getCursorKey(SHIPPING_CONFIG_KEY, query),
-    ([key, query]) => apiClient("@get/api/shipping-configs", { query }),
+    ([key, query]) =>
+      apiClient("@get/api/shipping-configs", { query, throw: true }),
     config,
   );
 };
@@ -35,7 +36,7 @@ export const useAddShippingConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(SHIPPING_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: CreateShippingConfigInputData }) =>
-      apiClient("@post/api/shipping-configs", { body: arg }),
+      apiClient("@post/api/shipping-configs", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(
@@ -61,6 +62,7 @@ export const useUpdateShippingConfig = (organizationId: string | undefined) => {
       apiClient("@put/api/shipping-configs/:id", {
         params: { id: arg.id },
         body: arg.shippingConfig,
+        throw: true,
       }),
     {
       onSuccess: () =>
@@ -79,7 +81,10 @@ export const useRemoveShippingConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(SHIPPING_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      apiClient("@delete/api/shipping-configs/:id", { params: { id: arg } }),
+      apiClient("@delete/api/shipping-configs/:id", {
+        params: { id: arg },
+        throw: true,
+      }),
     {
       onSuccess: () =>
         mutate(

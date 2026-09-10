@@ -23,7 +23,7 @@ export const useSizeTypes = (
 
   return useSWRInfinite(
     getCursorKey(SIZE_TYPE_KEY, query),
-    ([key, query]) => apiClient("@get/api/size-types", { query }),
+    ([key, query]) => apiClient("@get/api/size-types", { query, throw: true }),
     config,
   );
 };
@@ -34,7 +34,7 @@ export const useAddSizeTypes = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(SIZE_TYPE_KEY, organizationId),
     (key, { arg }: { arg: CreateSizeTypeInputData }) =>
-      apiClient("@post/api/size-types", { body: arg }),
+      apiClient("@post/api/size-types", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(
@@ -50,7 +50,10 @@ export const useRemoveSizeType = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(SIZE_TYPE_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      apiClient("@delete/api/size-types/:id", { params: { id: arg } }),
+      apiClient("@delete/api/size-types/:id", {
+        params: { id: arg },
+        throw: true,
+      }),
     {
       onSuccess: () =>
         mutate(
@@ -66,7 +69,10 @@ export const useRemoveSize = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(SIZE_TYPE_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      apiClient("@delete/api/size-types/sizes/:id", { params: { id: arg } }),
+      apiClient("@delete/api/size-types/sizes/:id", {
+        params: { id: arg },
+        throw: true,
+      }),
     {
       onSuccess: () =>
         mutate(

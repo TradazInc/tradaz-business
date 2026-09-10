@@ -4,6 +4,5 @@ import { apiClient } from "@/lib/apiClient";
 export async function getShippingConfigs() {
   return apiClient("@get/api/shipping-configs", {
     query: { pageSize: PAGE_SIZE },
-    throw: false as const,
   });
 }

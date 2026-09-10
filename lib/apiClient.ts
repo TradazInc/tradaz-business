@@ -388,7 +388,6 @@ export const schema = createSchema({
 });
 
 export const apiClient = createFetch({
-  throw: true,
   schema: schema,
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",

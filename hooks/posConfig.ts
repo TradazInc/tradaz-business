@@ -24,7 +24,7 @@ export const usePosConfigs = (
 
   return useSWRInfinite(
     getCursorKey(POS_CONFIG_KEY, query),
-    ([key, query]) => apiClient("@get/api/pos-configs", { query }),
+    ([key, query]) => apiClient("@get/api/pos-configs", { query, throw: true }),
     config,
   );
 };
@@ -35,7 +35,7 @@ export const useAddPosConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(POS_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: CreatePosConfigInputData }) =>
-      apiClient("@post/api/pos-configs", { body: arg }),
+      apiClient("@post/api/pos-configs", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(
@@ -57,6 +57,7 @@ export const useUpdatePosConfig = (organizationId: string | undefined) => {
       apiClient("@put/api/pos-configs/:id", {
         params: { id: arg.id },
         body: arg.posConfig,
+        throw: true,
       }),
     {
       onSuccess: () =>
@@ -73,7 +74,10 @@ export const useRemovePosConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(POS_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      apiClient("@delete/api/pos-configs/:id", { params: { id: arg } }),
+      apiClient("@delete/api/pos-configs/:id", {
+        params: { id: arg },
+        throw: true,
+      }),
     {
       onSuccess: () =>
         mutate(

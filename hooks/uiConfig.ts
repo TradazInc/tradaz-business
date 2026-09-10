@@ -1,22 +1,13 @@
 import { UI_CONFIG_KEY } from "@/data/cacheKeys";
 import { apiClient } from "@/lib/apiClient";
-import {
-  GetUIConfigOutputData,
-  CreateUIConfigInputData,
-} from "@/schema/uiConfig";
+import { CreateUIConfigInputData } from "@/schema/uiConfig";
 import { getScopedKey } from "@/utilities/computeKey";
-import useSWR, { SWRConfiguration, useSWRConfig } from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import useSWRMutation from "swr/mutation";
 
-// The API returns the organization's single config, so this is not paginated
-export const useUIConfig = (
-  organizationId: string | undefined,
-  config?: SWRConfiguration<GetUIConfigOutputData, Error>,
-) => {
-  return useSWR(
-    getScopedKey(UI_CONFIG_KEY, organizationId),
-    () => apiClient("@get/api/ui-configs"),
-    config,
+export const useUIConfig = (organizationId: string | undefined) => {
+  return useSWR(getScopedKey(UI_CONFIG_KEY, organizationId), () =>
+    apiClient("@get/api/ui-configs", { throw: true }),
   );
 };
 
@@ -26,7 +17,7 @@ export const useAddUIConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(UI_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: CreateUIConfigInputData }) =>
-      apiClient("@post/api/ui-configs", { body: arg }),
+      apiClient("@post/api/ui-configs", { body: arg, throw: true }),
     {
       onSuccess: () => mutate(getScopedKey(UI_CONFIG_KEY, organizationId)),
     },
@@ -38,7 +29,7 @@ export const useRemoveUIConfig = (organizationId: string | undefined) => {
 
   return useSWRMutation(
     getScopedKey(UI_CONFIG_KEY, organizationId),
-    () => apiClient("@delete/api/ui-configs"),
+    () => apiClient("@delete/api/ui-configs", { throw: true }),
     {
       onSuccess: () => mutate(getScopedKey(UI_CONFIG_KEY, organizationId)),
     },

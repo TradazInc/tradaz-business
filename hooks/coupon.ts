@@ -20,7 +20,7 @@ export const useCoupons = (
 
   return useSWRInfinite(
     getCursorKey(COUPON_KEY, query),
-    ([key, query]) => apiClient("@get/api/coupons", { query }),
+    ([key, query]) => apiClient("@get/api/coupons", { query, throw: true }),
     config,
   );
 };

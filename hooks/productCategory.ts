@@ -23,7 +23,8 @@ export const useProductCategories = (
 
   return useSWRInfinite(
     getCursorKey(PRODUCT_CATEGORY_KEY, query),
-    ([key, query]) => apiClient("@get/api/product-categories", { query }),
+    ([key, query]) =>
+      apiClient("@get/api/product-categories", { query, throw: true }),
     config,
   );
 };
@@ -34,7 +35,7 @@ export const useAddProductCategory = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(PRODUCT_CATEGORY_KEY, organizationId),
     (key, { arg }: { arg: CreateProductCategoryInputData }) =>
-      apiClient("@post/api/product-categories", { body: arg }),
+      apiClient("@post/api/product-categories", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(
@@ -56,6 +57,7 @@ export const useRemoveProductCategory = (
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/product-categories/:id", {
         params: { id: arg },
+        throw: true,
       }),
     {
       onSuccess: () =>
