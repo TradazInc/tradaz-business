@@ -1,21 +1,24 @@
 import { BUSINESS_CATEGORY_KEY } from "@/data/cacheKeys";
+import { apiClient } from "@/lib/fetchClient";
 import {
-  BusinessCategory,
-  businessCategoryService,
-} from "@/entities/businessCategory";
-import { SWRInfiniteConfig } from "@/lib/apiClient";
-import { BusinessCategoryData } from "@/schema/businessCategory";
+  CreateBusinessCategoryInputData,
+  GetAllBusinessCategoryOutputData,
+} from "@/schema/businessCategory";
 import { getCursorKey, getKey } from "@/utilities/computeKey";
 import { useSWRConfig } from "swr";
-import useSWRInfinite, { unstable_serialize } from "swr/infinite";
+import useSWRInfinite, {
+  SWRInfiniteConfiguration,
+  unstable_serialize,
+} from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
 export const useBusinessCategories = (
-  config?: SWRInfiniteConfig<BusinessCategory>,
+  config?: SWRInfiniteConfiguration<GetAllBusinessCategoryOutputData, Error>,
 ) => {
   return useSWRInfinite(
     getCursorKey(BUSINESS_CATEGORY_KEY, {}),
-    ([key, query]) => businessCategoryService.getAll({ query, throw: true }),
+    ([key, query]) =>
+      apiClient("@get/api/business-categories", { query, throw: true }),
     config,
   );
 };
@@ -25,8 +28,8 @@ export const useAddBusinessCategory = () => {
 
   return useSWRMutation(
     getKey(BUSINESS_CATEGORY_KEY),
-    (key, { arg }: { arg: BusinessCategoryData }) =>
-      businessCategoryService.post({ body: arg, throw: true }),
+    (key, { arg }: { arg: CreateBusinessCategoryInputData }) =>
+      apiClient("@post/api/business-categories", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(unstable_serialize(getCursorKey(BUSINESS_CATEGORY_KEY, {}))),
@@ -40,7 +43,10 @@ export const useRemoveBusinessCategory = () => {
   return useSWRMutation(
     getKey(BUSINESS_CATEGORY_KEY),
     (key, { arg }: { arg: string }) =>
-      businessCategoryService.delete(arg, { throw: true }),
+      apiClient("@delete/api/business-categories", {
+        params: { id: arg },
+        throw: true,
+      }),
     {
       onSuccess: () =>
         mutate(unstable_serialize(getCursorKey(BUSINESS_CATEGORY_KEY, {}))),
