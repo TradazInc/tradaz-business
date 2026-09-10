@@ -14,7 +14,7 @@ import useSWRMutation from "swr/mutation";
 
 export const useMembers = (
   organizationId: string | undefined,
-  config?: SWRInfiniteConfiguration<FetchResponse<Member>>,
+  config?: SWRInfiniteConfiguration<FetchResponse<Member>, Error>,
 ) => {
   const searchParams = useSearchParams();
   const query = { organizationId, ...searchQuery(searchParams) };
