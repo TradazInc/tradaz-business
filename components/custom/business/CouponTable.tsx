@@ -1,9 +1,8 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { Coupon } from "@/entities/coupons";
 import { useCoupons, useRemoveCoupon } from "@/hooks/coupon";
-import { FetchResponse } from "@/lib/apiClient";
+import { GetAllCouponOutputData } from "@/schema/coupon";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
@@ -22,7 +21,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialCoupons: FetchResponse<Coupon>;
+  initialCoupons: GetAllCouponOutputData;
   businessId: string | undefined;
 }
 
@@ -91,7 +90,7 @@ const CouponTable = ({ initialCoupons, businessId }: Props) => {
                   <Table.Cell>{coupon.minOrderValue}</Table.Cell>
                   <Table.Cell>{coupon.usageLimit}</Table.Cell>
                   <Table.Cell>{coupon.isActive}</Table.Cell>
-                  <Table.Cell>
+                  {/* <Table.Cell>
                     {coupon?.startsAt
                       ? new Date(coupon.startsAt).toDateString()
                       : "-"}
@@ -100,7 +99,7 @@ const CouponTable = ({ initialCoupons, businessId }: Props) => {
                     {coupon?.endsAt
                       ? new Date(coupon.endsAt).toDateString()
                       : "-"}
-                  </Table.Cell>
+                  </Table.Cell> */}
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
                       <IconButton>

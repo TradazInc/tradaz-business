@@ -1,5 +1,10 @@
-import { Coupon, DiscountType } from "@/entities/coupons";
 import { z } from "zod";
+import { createFetchResponseSchema } from "./fetchResponse";
+
+export enum DiscountType {
+  percentage = "percentage",
+  fixed = "fixed",
+}
 
 // Get
 export const GetCouponParamSchema = z.object({
@@ -23,6 +28,7 @@ export const GetCouponOutputSchema = z.object({
   organizationId: z.string(),
   memberId: z.string(),
 });
+export type GetCouponOutputData = z.infer<typeof GetCouponOutputSchema>;
 
 // Get All
 export const GetAllCouponQuerySchema = z.object({
@@ -35,17 +41,20 @@ export const GetAllCouponQuerySchema = z.object({
   pageSize: z.number().positive().optional(),
 });
 
-export const GetAllCouponOutputSchema = z.object({
-  id: z.cuid2(),
-  name: z.string(),
-  code: z.string(),
-  discountType: z.enum(DiscountType),
-  minOrderValue: z.number(),
-  usageCount: z.number(),
-  usageLimit: z.number(),
-  discountValue: z.number(),
-  isActive: z.boolean(),
-});
+export const GetAllCouponOutputSchema = createFetchResponseSchema(
+  z.object({
+    id: z.cuid2(),
+    name: z.string(),
+    code: z.string(),
+    discountType: z.enum(DiscountType),
+    minOrderValue: z.number(),
+    usageCount: z.number(),
+    usageLimit: z.number(),
+    discountValue: z.number(),
+    isActive: z.boolean(),
+  }),
+);
+export type GetAllCouponOutputData = z.infer<typeof GetAllCouponOutputSchema>;
 
 // Create
 export const CreateCouponInputSchema = z
@@ -81,13 +90,10 @@ export const CreateCouponInputSchema = z
 
     startsAt: z
       .string({ error: "start date is required" })
-      .min(1, { error: "start date is required" })
-      .transform((value) => new Date(value)),
-
+      .min(1, { error: "start date is required" }),
     endsAt: z
       .string({ error: "end date is required" })
-      .min(1, { error: "end date is required" })
-      .transform((value) => new Date(value)),
+      .min(1, { error: "end date is required" }),
 
     memberId: z.cuid2().optional(),
   })
@@ -133,11 +139,3 @@ export const emptyCoupon: CreateCouponInputData = {
   startsAt: "",
   endsAt: "",
 };
-
-export function formCoupon(coupon: Coupon): CreateCouponInputData {
-  return {
-    ...coupon,
-    startsAt: coupon.startsAt?.toISOString() ?? "",
-    endsAt: coupon.endsAt?.toISOString() ?? "",
-  };
-}
