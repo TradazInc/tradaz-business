@@ -1,5 +1,5 @@
 import { authClient } from "@/lib/authClient";
-import { OrgRole } from "@/schema/member";
+import { OrgRole } from "@/schema/enums";
 import { z } from "zod";
 
 const invitationSchema = z.object({

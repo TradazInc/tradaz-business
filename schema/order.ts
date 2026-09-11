@@ -1,15 +1,6 @@
 import { z } from "zod";
-import { Gateway } from "./subaccount";
+import { Gateway, OrderStatus, OrgRole, TransactionStatus } from "./enums";
 import { createFetchResponseSchema } from "./fetchResponse";
-import { TransactionStatus } from "./transaction";
-import { OrgRole } from "./member";
-
-export enum OrderStatus {
-  pending = "pending",
-  paid = "paid",
-  fulfilled = "fulfilled",
-  cancelled = "cancelled",
-}
 
 /* Output Base Schemas */
 const OrderOutputBaseSchema = z.object({
