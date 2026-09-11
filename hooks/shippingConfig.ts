@@ -104,6 +104,7 @@ export const useRemoveShippingMethod = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/shipping-configs/shipping-methods/:id", {
         params: { id: arg },
+        ...apiConfig,
       }),
     {
       onSuccess: () =>

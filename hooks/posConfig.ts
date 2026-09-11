@@ -96,6 +96,7 @@ export const useRemoveTerminalConfig = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/pos-configs/terminal-configs/:id", {
         params: { id: arg },
+        ...apiConfig,
       }),
     {
       onSuccess: () =>
