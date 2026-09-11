@@ -135,7 +135,11 @@ import {
   DeleteUIConfigOutputSchema,
 } from "@/schema/uiConfig";
 import { setServerCookie } from "@/utilities/setServerCookie";
-import { createFetch, createSchema } from "@better-fetch/fetch";
+import {
+  BetterFetchOption,
+  createFetch,
+  createSchema,
+} from "@better-fetch/fetch";
 import { logger } from "@better-fetch/logger";
 
 export const schema = createSchema({
@@ -398,4 +402,4 @@ export const apiClient = createFetch({
   plugins: [logger()],
 });
 
-export const apiConfig = { throw: true as const };
+export const apiConfig = { throw: true as const } satisfies BetterFetchOption;

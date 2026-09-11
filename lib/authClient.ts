@@ -13,7 +13,7 @@ import {
   TeamMember,
   UserWithRole,
 } from "better-auth/plugins";
-import { createAuthClient } from "better-auth/react";
+import { BetterFetchOption, createAuthClient } from "better-auth/react";
 
 export interface CustomSession {
   user: UserWithRole;
@@ -52,4 +52,4 @@ export const authClient = createAuthClient({
   ],
 });
 
-export const authConfig = { throw: true as const };
+export const authConfig = { throw: true as const } satisfies BetterFetchOption;
