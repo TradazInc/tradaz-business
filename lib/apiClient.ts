@@ -10,6 +10,11 @@ import {
   GetAllBusinessCategoryQuerySchema,
 } from "@/schema/businessCategory";
 import {
+  CreateCheckoutInputSchema,
+  CreatePosCheckoutOutputSchema,
+  CreateWebCheckoutOutputSchema,
+} from "@/schema/checkout";
+import {
   CreateCouponInputSchema,
   CreateCouponOutputSchema,
   DeleteCouponParamSchema,
@@ -403,6 +408,16 @@ export const schema = createSchema({
   "@get/api/banks": {
     query: GetAllBanksQuerySchema,
     output: GetAllBanksOutputSchema,
+  },
+
+  // Checkout
+  "@post/api/checkout/web": {
+    input: CreateCheckoutInputSchema,
+    output: CreateWebCheckoutOutputSchema,
+  },
+  "@post/api/checkout/pos": {
+    input: CreateCheckoutInputSchema,
+    output: CreatePosCheckoutOutputSchema,
   },
 });
 
