@@ -1,8 +1,8 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { couponService } from "@/entities/coupons";
+import { apiClient } from "@/lib/apiClient";
 
 export async function getCoupons(organizationId?: string) {
-  return couponService.getAll({
+  return apiClient("@get/api/coupons", {
     query: { pageSize: PAGE_SIZE, organizationId },
   });
 }

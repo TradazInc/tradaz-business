@@ -1,8 +1,8 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { shippingConfigService } from "@/entities/shippingConfig";
+import { apiClient } from "@/lib/apiClient";
 
-export async function getShippingConfigs(organizationId?: string) {
-  return shippingConfigService.getAll({
-    query: { pageSize: PAGE_SIZE, organizationId },
+export async function getShippingConfigs() {
+  return apiClient("@get/api/shipping-configs", {
+    query: { pageSize: PAGE_SIZE },
   });
 }

@@ -1,7 +1,11 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { emptySize, emptySizeType, sizeTypeSchema } from "@/schema/sizeType";
+import {
+  CreateSizeTypeInputSchema,
+  emptySize,
+  emptySizeType,
+} from "@/schema/sizeType";
 import { useAddSizeTypes } from "@/hooks/sizeType";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
@@ -31,7 +35,7 @@ const ProductSizeForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(sizeTypeSchema),
+    resolver: standardSchemaResolver(CreateSizeTypeInputSchema),
     defaultValues: emptySizeType,
     mode: "onBlur",
   });
@@ -55,9 +59,7 @@ const ProductSizeForm = () => {
       await promise.unwrap();
       reset(emptySizeType);
       setOpen(false);
-    } catch (error) {
-      return; // toast already surfaced it; keep the input for a retry
-    }
+    } catch {} // Error displayed by toaster
   });
 
   return (

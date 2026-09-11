@@ -1,8 +1,8 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { FetchResponse } from "@/lib/apiClient";
-import { SizeType } from "@/entities/sizeType";
+
+import { GetAllSizeTypeOutputData } from "@/schema/sizeType";
 import { useRemoveSizeType, useSizeTypes } from "@/hooks/sizeType";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
@@ -24,7 +24,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialSizeTypes: FetchResponse<SizeType>;
+  initialSizeTypes: GetAllSizeTypeOutputData;
   businessId: string | undefined;
 }
 

@@ -1,4 +1,4 @@
-import { ProductStatus } from "@/entities/product";
+import { ProductStatus } from "@/schema/product";
 import { Status } from "@chakra-ui/react";
 
 interface Props {

@@ -1,17 +1,20 @@
 import { MEMBER_KEY } from "@/data/cacheKeys";
-import { Member } from "@/entities/member";
-import { FetchResponse, SWRInfiniteConfig } from "@/lib/apiClient";
 import { authClient } from "@/lib/authClient";
+import { FetchResponse } from "@/schema/fetchResponse";
+import { Member } from "@/schema/member";
 import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
 import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
-import useSWRInfinite, { unstable_serialize } from "swr/infinite";
+import useSWRInfinite, {
+  SWRInfiniteConfiguration,
+  unstable_serialize,
+} from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
 export const useMembers = (
   organizationId: string | undefined,
-  config?: SWRInfiniteConfig<Member>,
+  config?: SWRInfiniteConfiguration<FetchResponse<Member>, Error>,
 ) => {
   const searchParams = useSearchParams();
   const query = { organizationId, ...searchQuery(searchParams) };

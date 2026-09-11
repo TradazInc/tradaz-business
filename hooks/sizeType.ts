@@ -1,25 +1,30 @@
 import { SIZE_TYPE_KEY } from "@/data/cacheKeys";
-import { SizeType, sizeTypeService } from "@/entities/sizeType";
-import { SWRInfiniteConfig } from "@/lib/apiClient";
-import { SizeTypeData } from "@/schema/sizeType";
+import { apiClient } from "@/lib/apiClient";
+import {
+  CreateSizeTypeInputData,
+  GetAllSizeTypeOutputData,
+} from "@/schema/sizeType";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
-import useSWRInfinite, { unstable_serialize } from "swr/infinite";
+import useSWRInfinite, {
+  SWRInfiniteConfiguration,
+  unstable_serialize,
+} from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
 export const useSizeTypes = (
   organizationId: string | undefined,
-  configs?: SWRInfiniteConfig<SizeType>,
+  config?: SWRInfiniteConfiguration<GetAllSizeTypeOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
   const query = { organizationId, ...searchQuery(searchParams) };
 
   return useSWRInfinite(
     getCursorKey(SIZE_TYPE_KEY, query),
-    ([key, query]) => sizeTypeService.getAll({ query, throw: true }),
-    configs,
+    ([key, query]) => apiClient("@get/api/size-types", { query, throw: true }),
+    config,
   );
 };
 
@@ -28,8 +33,8 @@ export const useAddSizeTypes = (organizationId: string | undefined) => {
 
   return useSWRMutation(
     getScopedKey(SIZE_TYPE_KEY, organizationId),
-    (key, { arg }: { arg: SizeTypeData }) =>
-      sizeTypeService.post({ body: arg, throw: true }),
+    (key, { arg }: { arg: CreateSizeTypeInputData }) =>
+      apiClient("@post/api/size-types", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(
@@ -45,7 +50,29 @@ export const useRemoveSizeType = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(SIZE_TYPE_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      sizeTypeService.delete(arg, { throw: true }),
+      apiClient("@delete/api/size-types/:id", {
+        params: { id: arg },
+        throw: true,
+      }),
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+        ),
+    },
+  );
+};
+
+export const useRemoveSize = (organizationId: string | undefined) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    getScopedKey(SIZE_TYPE_KEY, organizationId),
+    (key, { arg }: { arg: string }) =>
+      apiClient("@delete/api/size-types/sizes/:id", {
+        params: { id: arg },
+        throw: true,
+      }),
     {
       onSuccess: () =>
         mutate(

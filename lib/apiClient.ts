@@ -1,73 +1,396 @@
+import {
+  CreateBusinessCategoryInputSchema,
+  CreateBusinessCategoryOutputSchema,
+  DeleteBusinessCategoryParamSchema,
+  GetAllBusinessCategoryOutputSchema,
+} from "@/schema/businessCategory";
+import {
+  CreateCouponInputSchema,
+  CreateCouponOutputSchema,
+  DeleteCouponParamSchema,
+  GetAllCouponOutputSchema,
+  GetAllCouponQuerySchema,
+  GetCouponOutputSchema,
+  GetCouponParamSchema,
+  UpdateCouponInputSchema,
+  UpdateCouponOutputSchema,
+  UpdateCouponParamSchema,
+} from "@/schema/coupon";
+import {
+  CreateExpenseInputSchema,
+  CreateExpenseOutputSchema,
+  DeleteExpenseParamSchema,
+  GetAllExpenseOutputSchema,
+  GetAllExpenseQuerySchema,
+  UpdateExpenseInputSchema,
+  UpdateExpenseOutputSchema,
+  UpdateExpenseParamSchema,
+} from "@/schema/expense";
+import {
+  GetFinanceSummaryOutputSchema,
+  GetFinanceSummaryQuerySchema,
+} from "@/schema/finance";
+import {
+  GetAllOrderOutputSchema,
+  GetAllOrderQuerySchema,
+  GetOrderOutputSchema,
+  GetOrderParamSchema,
+  UpdateOrderStatusInputSchema,
+  UpdateOrderStatusOutputSchema,
+  UpdateOrderStatusParamSchema,
+} from "@/schema/order";
+import {
+  CreatePointsConfigInputSchema,
+  CreatePointsConfigOutputSchema,
+  GetAllPointsConfigOutputSchema,
+  GetAllPointsConfigQuerySchema,
+  UpdatePointsConfigInputSchema,
+  UpdatePointsConfigOutputSchema,
+  UpdatePointsConfigParamSchema,
+} from "@/schema/pointsConfig";
+import {
+  CreatePosConfigInputSchema,
+  CreatePosConfigOutputSchema,
+  DeletePosConfigParamSchema,
+  DeleteTerminalConfigParamSchema,
+  GetAllPosConfigOutputSchema,
+  GetAllPosConfigQuerySchema,
+  UpdatePosConfigInputSchema,
+  UpdatePosConfigOutputSchema,
+  UpdatePosConfigParamSchema,
+} from "@/schema/posConfig";
+import {
+  CreateProductInputSchema,
+  CreateProductOutputSchema,
+  DeleteProductParamSchema,
+  DeleteTeamVariationParamSchema,
+  DeleteVariationParamSchema,
+  GetAllProductOutputSchema,
+  GetAllProductQuerySchema,
+  GetProductOutputSchema,
+  GetProductParamSchema,
+  UpdateProductInputSchema,
+  UpdateProductOutputSchema,
+  UpdateProductParamSchema,
+} from "@/schema/product";
+import {
+  CreateProductCategoryInputSchema,
+  CreateProductCategoryOutputSchema,
+  DeleteProductCategoryParamSchema,
+  GetAllProductCategoryOutputSchema,
+  GetAllProductCategoryQuerySchema,
+} from "@/schema/productCategory";
+import {
+  CreateRevenueInputSchema,
+  CreateRevenueOutputSchema,
+  DeleteRevenueParamSchema,
+  GetAllRevenueOutputSchema,
+  GetAllRevenueQuerySchema,
+  UpdateRevenueInputSchema,
+  UpdateRevenueOutputSchema,
+  UpdateRevenueParamSchema,
+} from "@/schema/revenue";
+import {
+  CreateShippingConfigInputSchema,
+  CreateShippingConfigOutputSchema,
+  DeleteShippingConfigParamSchema,
+  DeleteShippingMethodParamSchema,
+  GetAllShippingConfigOutputSchema,
+  GetAllShippingConfigQuerySchema,
+  UpdateShippingConfigInputSchema,
+  UpdateShippingConfigOutputSchema,
+  UpdateShippingConfigParamSchema,
+} from "@/schema/shippingConfig";
+import {
+  CreateSizeTypeInputSchema,
+  CreateSizeTypeOutputSchema,
+  DeleteSizeParamSchema,
+  DeleteSizeTypeParamSchema,
+  GetAllSizeTypeOutputSchema,
+  GetAllSizeTypeQuerySchema,
+  GetSizeTypeOutputSchema,
+  GetSizeTypeParamSchema,
+  UpdateSizeTypeInputSchema,
+  UpdateSizeTypeOutputSchema,
+  UpdateSizeTypeParamSchema,
+} from "@/schema/sizeType";
+import {
+  CreateSubaccountInputSchema,
+  CreateSubaccountOutputSchema,
+  GetAllSubaccountOutputSchema,
+  GetAllSubaccountQuerySchema,
+  UpdateSubaccountInputSchema,
+  UpdateSubaccountOutputSchema,
+} from "@/schema/subaccount";
+import {
+  CreateTransactionInputSchema,
+  CreateTransactionOutputSchema,
+  GetTransactionOutputSchema,
+  GetTransactionParamSchema,
+} from "@/schema/transaction";
+import {
+  GetUIConfigOutputSchema,
+  CreateUIConfigInputSchema,
+  CreateUIConfigOutputSchema,
+} from "@/schema/uiConfig";
 import { setServerCookie } from "@/utilities/setServerCookie";
-import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
+import { createFetch, createSchema } from "@better-fetch/fetch";
 import { logger } from "@better-fetch/logger";
-import { SWRInfiniteConfiguration } from "swr/infinite";
 
-const $fetch = createFetch({
+export const schema = createSchema({
+  // Business categories
+  "@get/api/business-categories": {
+    output: GetAllBusinessCategoryOutputSchema,
+  },
+  "@post/api/business-categories": {
+    input: CreateBusinessCategoryInputSchema,
+    output: CreateBusinessCategoryOutputSchema,
+  },
+  "@delete/api/business-categories/:id": {
+    params: DeleteBusinessCategoryParamSchema,
+  },
+
+  // Coupons
+  "@get/api/coupons": {
+    query: GetAllCouponQuerySchema.optional(),
+    output: GetAllCouponOutputSchema,
+  },
+  "@get/api/coupons/:id": {
+    params: GetCouponParamSchema,
+    output: GetCouponOutputSchema,
+  },
+  "@post/api/coupons": {
+    input: CreateCouponInputSchema,
+    output: CreateCouponOutputSchema,
+  },
+  "@put/api/coupons/:id": {
+    params: UpdateCouponParamSchema,
+    input: UpdateCouponInputSchema,
+    output: UpdateCouponOutputSchema,
+  },
+  "@delete/api/coupons/:id": {
+    params: DeleteCouponParamSchema,
+  },
+
+  // Expenses
+  "@get/api/expense": {
+    query: GetAllExpenseQuerySchema.optional(),
+    output: GetAllExpenseOutputSchema,
+  },
+  "@post/api/expense": {
+    input: CreateExpenseInputSchema,
+    output: CreateExpenseOutputSchema,
+  },
+  "@put/api/expense/:id": {
+    params: UpdateExpenseParamSchema,
+    input: UpdateExpenseInputSchema,
+    output: UpdateExpenseOutputSchema,
+  },
+  "@delete/api/expense/:id": {
+    params: DeleteExpenseParamSchema,
+  },
+
+  // Finance
+  "@get/api/finance/summary": {
+    query: GetFinanceSummaryQuerySchema.optional(),
+    output: GetFinanceSummaryOutputSchema,
+  },
+
+  // Orders
+  "@get/api/orders": {
+    query: GetAllOrderQuerySchema.optional(),
+    output: GetAllOrderOutputSchema,
+  },
+  "@get/api/orders/:id": {
+    params: GetOrderParamSchema,
+    output: GetOrderOutputSchema,
+  },
+  "@patch/api/orders/:id/status": {
+    params: UpdateOrderStatusParamSchema,
+    input: UpdateOrderStatusInputSchema,
+    output: UpdateOrderStatusOutputSchema,
+  },
+
+  // Points configs
+  "@get/api/points-config": {
+    query: GetAllPointsConfigQuerySchema.optional(),
+    output: GetAllPointsConfigOutputSchema,
+  },
+  "@post/api/points-config": {
+    input: CreatePointsConfigInputSchema,
+    output: CreatePointsConfigOutputSchema,
+  },
+  "@put/api/points-config/:id": {
+    params: UpdatePointsConfigParamSchema,
+    input: UpdatePointsConfigInputSchema,
+    output: UpdatePointsConfigOutputSchema,
+  },
+
+  // Pos configs
+  "@get/api/pos-configs": {
+    query: GetAllPosConfigQuerySchema.optional(),
+    output: GetAllPosConfigOutputSchema,
+  },
+  "@post/api/pos-configs": {
+    input: CreatePosConfigInputSchema,
+    output: CreatePosConfigOutputSchema,
+  },
+  "@put/api/pos-configs/:id": {
+    params: UpdatePosConfigParamSchema,
+    input: UpdatePosConfigInputSchema,
+    output: UpdatePosConfigOutputSchema,
+  },
+  "@delete/api/pos-configs/:id": {
+    params: DeletePosConfigParamSchema,
+  },
+  "@delete/api/pos-configs/terminal-configs/:id": {
+    params: DeleteTerminalConfigParamSchema,
+  },
+
+  // Product categories
+  "@get/api/product-categories": {
+    query: GetAllProductCategoryQuerySchema.optional(),
+    output: GetAllProductCategoryOutputSchema,
+  },
+  "@post/api/product-categories": {
+    input: CreateProductCategoryInputSchema,
+    output: CreateProductCategoryOutputSchema,
+  },
+  "@delete/api/product-categories/:id": {
+    params: DeleteProductCategoryParamSchema,
+  },
+
+  // Products
+  "@get/api/products": {
+    query: GetAllProductQuerySchema.optional(),
+    output: GetAllProductOutputSchema,
+  },
+  "@get/api/products/:id": {
+    params: GetProductParamSchema,
+    output: GetProductOutputSchema,
+  },
+  "@post/api/products": {
+    input: CreateProductInputSchema,
+    output: CreateProductOutputSchema,
+  },
+  "@put/api/products/:id": {
+    params: UpdateProductParamSchema,
+    input: UpdateProductInputSchema,
+    output: UpdateProductOutputSchema,
+  },
+  "@delete/api/products/:id": {
+    params: DeleteProductParamSchema,
+  },
+  "@delete/api/products/variations/:id": {
+    params: DeleteVariationParamSchema,
+  },
+  "@delete/api/products/team-variations/:id": {
+    params: DeleteTeamVariationParamSchema,
+  },
+
+  // Revenue
+  "@get/api/revenue": {
+    query: GetAllRevenueQuerySchema.optional(),
+    output: GetAllRevenueOutputSchema,
+  },
+  "@post/api/revenue": {
+    input: CreateRevenueInputSchema,
+    output: CreateRevenueOutputSchema,
+  },
+  "@put/api/revenue/:id": {
+    params: UpdateRevenueParamSchema,
+    input: UpdateRevenueInputSchema,
+    output: UpdateRevenueOutputSchema,
+  },
+  "@delete/api/revenue/:id": {
+    params: DeleteRevenueParamSchema,
+  },
+
+  // Shipping configs
+  "@get/api/shipping-configs": {
+    query: GetAllShippingConfigQuerySchema.optional(),
+    output: GetAllShippingConfigOutputSchema,
+  },
+  "@post/api/shipping-configs": {
+    input: CreateShippingConfigInputSchema,
+    output: CreateShippingConfigOutputSchema,
+  },
+  "@put/api/shipping-configs/:id": {
+    params: UpdateShippingConfigParamSchema,
+    input: UpdateShippingConfigInputSchema,
+    output: UpdateShippingConfigOutputSchema,
+  },
+  "@delete/api/shipping-configs/:id": {
+    params: DeleteShippingConfigParamSchema,
+  },
+  "@delete/api/shipping-configs/shipping-methods/:id": {
+    params: DeleteShippingMethodParamSchema,
+  },
+
+  // Size types
+  "@get/api/size-types": {
+    query: GetAllSizeTypeQuerySchema.optional(),
+    output: GetAllSizeTypeOutputSchema,
+  },
+  "@get/api/size-types/:id": {
+    params: GetSizeTypeParamSchema,
+    output: GetSizeTypeOutputSchema,
+  },
+  "@post/api/size-types": {
+    input: CreateSizeTypeInputSchema,
+    output: CreateSizeTypeOutputSchema,
+  },
+  "@put/api/size-types/:id": {
+    params: UpdateSizeTypeParamSchema,
+    input: UpdateSizeTypeInputSchema,
+    output: UpdateSizeTypeOutputSchema,
+  },
+  "@delete/api/size-types/:id": {
+    params: DeleteSizeTypeParamSchema,
+  },
+  "@delete/api/size-types/sizes/:id": {
+    params: DeleteSizeParamSchema,
+  },
+
+  // Subaccounts
+  "@get/api/subaccounts": {
+    query: GetAllSubaccountQuerySchema.optional(),
+    output: GetAllSubaccountOutputSchema,
+  },
+  "@post/api/subaccounts": {
+    input: CreateSubaccountInputSchema,
+    output: CreateSubaccountOutputSchema,
+  },
+  "@put/api/subaccounts": {
+    input: UpdateSubaccountInputSchema,
+    output: UpdateSubaccountOutputSchema,
+  },
+
+  // Transactions
+  "@get/api/transactions/:id": {
+    params: GetTransactionParamSchema,
+    output: GetTransactionOutputSchema,
+  },
+  "@post/api/transactions": {
+    input: CreateTransactionInputSchema,
+    output: CreateTransactionOutputSchema,
+  },
+
+  // UI configs
+  "@get/api/ui-configs": {
+    output: GetUIConfigOutputSchema,
+  },
+  "@post/api/ui-configs": {
+    input: CreateUIConfigInputSchema,
+    output: CreateUIConfigOutputSchema,
+  },
+  "@delete/api/ui-configs": {},
+});
+
+export const apiClient = createFetch({
+  schema: schema,
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",
   onRequest: async (context) => setServerCookie(context),
   plugins: [logger()],
 });
-
-export interface FetchResponse<D> {
-  data: D[];
-  aggregate?: number;
-  meta?: {
-    next?: string;
-    count?: number;
-    totalPages?: number;
-  };
-}
-
-export type SWRInfiniteConfig<T> = SWRInfiniteConfiguration<
-  FetchResponse<T>,
-  Error
->;
-
-export class ApiClient<T> {
-  constructor(private readonly endpoint: string) {}
-
-  getAll = <Throw extends boolean = false>(
-    options?: BetterFetchOption & { throw?: Throw },
-  ) =>
-    $fetch<FetchResponse<T>, Throw extends true ? false : unknown>(
-      this.endpoint,
-      { ...options, method: "GET" },
-    );
-
-  get = <Throw extends boolean = false>(
-    id: number | string,
-    options?: BetterFetchOption & { throw?: Throw },
-  ) =>
-    $fetch<T, Throw extends true ? false : unknown>(`${this.endpoint}/${id}`, {
-      ...options,
-      method: "GET",
-    });
-
-  post = <Throw extends boolean = false>(
-    options: BetterFetchOption & { throw?: Throw },
-  ) =>
-    $fetch<T, Throw extends true ? false : unknown>(this.endpoint, {
-      ...options,
-      method: "POST",
-    });
-
-  update = <Throw extends boolean = false>(
-    id: number | string,
-    options: BetterFetchOption & { throw?: Throw },
-  ) =>
-    $fetch<T, Throw extends true ? false : unknown>(`${this.endpoint}/${id}`, {
-      ...options,
-      method: "PUT",
-    });
-
-  delete = <Throw extends boolean = false>(
-    id: number | string,
-    options?: BetterFetchOption & { throw?: Throw },
-  ) =>
-    $fetch<void, Throw extends true ? false : unknown>(
-      `${this.endpoint}/${id}`,
-      { ...options, method: "DELETE" },
-    );
-}

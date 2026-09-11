@@ -1,24 +1,29 @@
 import { PRODUCT_KEY } from "@/data/cacheKeys";
-import { Product, productService } from "@/entities/product";
-import { SWRInfiniteConfig } from "@/lib/apiClient";
-import { ProductData } from "@/schema/product";
+import { apiClient } from "@/lib/apiClient";
+import {
+  CreateProductInputData,
+  GetAllProductOutputData,
+} from "@/schema/product";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
-import useSWRInfinite, { unstable_serialize } from "swr/infinite";
+import useSWRInfinite, {
+  SWRInfiniteConfiguration,
+  unstable_serialize,
+} from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
 export const useProducts = (
   organizationId: string | undefined,
-  config?: SWRInfiniteConfig<Product>,
+  config?: SWRInfiniteConfiguration<GetAllProductOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
   const query = { organizationId, ...searchQuery(searchParams) };
 
   return useSWRInfinite(
     getCursorKey(PRODUCT_KEY, query),
-    ([key, query]) => productService.getAll({ query, throw: true }),
+    ([key, query]) => apiClient("@get/api/products", { query, throw: true }),
     config,
   );
 };
@@ -28,8 +33,8 @@ export const useAddProduct = (organizationId: string | undefined) => {
 
   return useSWRMutation(
     getScopedKey(PRODUCT_KEY, organizationId),
-    (key, { arg }: { arg: ProductData }) =>
-      productService.post({ body: arg, throw: true }),
+    (key, { arg }: { arg: CreateProductInputData }) =>
+      apiClient("@post/api/products", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(
@@ -45,7 +50,10 @@ export const useRemoveProduct = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(PRODUCT_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      productService.delete(arg, { throw: true }),
+      apiClient("@delete/api/products/:id", {
+        params: { id: arg },
+        throw: true,
+      }),
     {
       onSuccess: () =>
         mutate(

@@ -1,8 +1,8 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { pointsConfigService } from "@/entities/pointsConfig";
+import { apiClient } from "@/lib/apiClient";
 
-export async function getPointsConfigs(organizationId?: string) {
-  return pointsConfigService.getAll({
-    query: { pageSize: PAGE_SIZE, organizationId },
+export async function getPointsConfigs() {
+  return apiClient("@get/api/points-config", {
+    query: { pageSize: PAGE_SIZE },
   });
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { couponSchema, emptyCoupon } from "@/schema/coupon";
-import { DiscountType } from "@/entities/coupons";
+import { CreateCouponInputSchema, emptyCoupon } from "@/schema/coupon";
+import { DiscountType } from "@/schema/coupon";
 import { useAddCoupon } from "@/hooks/coupon";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
@@ -45,7 +45,7 @@ const CouponForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(couponSchema),
+    resolver: standardSchemaResolver(CreateCouponInputSchema),
     defaultValues: emptyCoupon,
     mode: "onBlur",
   });
@@ -67,9 +67,7 @@ const CouponForm = () => {
       await promise.unwrap();
       reset(emptyCoupon);
       setOpen(false);
-    } catch (error) {
-      return; // toast already surfaced it; keep the input for a retry
-    }
+    } catch {} // Error displayed by toaster
   });
 
   return (

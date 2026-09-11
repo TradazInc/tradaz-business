@@ -2,8 +2,8 @@
 
 import { toaster } from "@/components/ui/toaster";
 import {
+  CreateProductCategoryInputSchema,
   emptyProductCategory,
-  productCategorySchema,
 } from "@/schema/productCategory";
 import { useAddProductCategory } from "@/hooks/productCategory";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
@@ -31,7 +31,7 @@ const ProductCategoryForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(productCategorySchema),
+    resolver: standardSchemaResolver(CreateProductCategoryInputSchema),
     mode: "onBlur",
   });
 
@@ -49,9 +49,7 @@ const ProductCategoryForm = () => {
       await promise.unwrap();
       reset(emptyProductCategory);
       setOpen(false);
-    } catch (error) {
-      return; // toast already surfaced it; keep the input for a retry
-    }
+    } catch {} // Error displayed by toaster
   });
 
   return (

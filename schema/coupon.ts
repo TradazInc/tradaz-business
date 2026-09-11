@@ -1,50 +1,105 @@
-import { Coupon, DiscountType } from "@/entities/coupons";
 import { z } from "zod";
+import { createFetchResponseSchema } from "./fetchResponse";
 
-export const couponSchema = z
-  .object({
-    discountType: z.enum(DiscountType, { error: "select a discount type" }),
+export enum DiscountType {
+  percentage = "percentage",
+  fixed = "fixed",
+}
 
-    name: z
-      .string({ error: "name is required" })
-      .min(3, { error: "name must be at least 3 letters long" }),
+// Get
+export const GetCouponParamSchema = z.object({
+  id: z.cuid2(),
+});
 
-    code: z
-      .string({ error: "code is required" })
-      .min(3, { error: "code must be at least 3 characters long" })
-      .regex(/^[A-Za-z0-9-]+$/, {
-        error: "code can only contain letters, numbers and hyphens",
-      })
-      .transform((code) => code.toUpperCase())
-      .optional(),
+export const GetCouponOutputSchema = z.object({
+  id: z.cuid2(),
+  name: z.string(),
+  code: z.string(),
+  discountValue: z.number(),
+  discountType: z.enum(DiscountType),
+  usageLimit: z.number(),
+  usageCount: z.number(),
+  minOrderValue: z.number(),
+  isActive: z.boolean(),
+  startsAt: z.string(),
+  endsAt: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  organizationId: z.string(),
+  memberId: z.string(),
+});
+export type GetCouponOutputData = z.infer<typeof GetCouponOutputSchema>;
 
-    discountValue: z
-      .number({ error: "discount value is required" })
-      .positive({ error: "discount value cannot be negative or zero" }),
+// Get All
+export const GetAllCouponQuerySchema = z.object({
+  name: z.string().optional(),
+  code: z.string().optional(),
+  discountType: z.enum(DiscountType).optional(),
+  isActive: z.boolean().optional(),
+  organizationId: z.cuid2().optional(),
+  cursor: z.cuid2().optional(),
+  pageSize: z.number().positive().optional(),
+});
 
-    usageLimit: z
-      .int({ error: "usage limit is required" })
-      .nonnegative({ error: "usage limit cannot be negative" }),
+export const GetAllCouponOutputSchema = createFetchResponseSchema(
+  z.object({
+    id: z.cuid2(),
+    name: z.string(),
+    code: z.string(),
+    discountType: z.enum(DiscountType),
+    minOrderValue: z.number(),
+    usageCount: z.number(),
+    usageLimit: z.number(),
+    discountValue: z.number(),
+    isActive: z.boolean(),
+  }),
+);
+export type GetAllCouponOutputData = z.infer<typeof GetAllCouponOutputSchema>;
 
-    minOrderValue: z
-      .number({ error: "minimum order value is required" })
-      .nonnegative({ error: "minimum order value cannot be negative" }),
+// Create
+// kept unrefined so the update schema below can be derived with .partial()
+const CouponInputBaseSchema = z.object({
+  discountType: z.enum(DiscountType, { error: "select a discount type" }),
 
-    isActive: z.boolean({ error: "select a status" }).default(true),
+  name: z
+    .string({ error: "name is required" })
+    .min(3, { error: "name must be at least 3 letters long" }),
 
-    startsAt: z
-      .string({ error: "start date is required" })
-      .min(1, { error: "start date is required" })
-      .transform((value) => new Date(value)),
+  code: z
+    .string({ error: "code is required" })
+    .min(3, { error: "code must be at least 3 characters long" })
+    .regex(/^[A-Za-z0-9-]+$/, {
+      error: "code can only contain letters, numbers and hyphens",
+    })
+    .transform((code) => code.toUpperCase())
+    .optional(),
 
-    endsAt: z
-      .string({ error: "end date is required" })
-      .min(1, { error: "end date is required" })
-      .transform((value) => new Date(value)),
+  discountValue: z
+    .number({ error: "discount value is required" })
+    .positive({ error: "discount value cannot be negative or zero" }),
 
-    memberId: z.cuid2().optional(),
-  })
-  .superRefine((coupon, ctx) => {
+  usageLimit: z
+    .int({ error: "usage limit is required" })
+    .nonnegative({ error: "usage limit cannot be negative" }),
+
+  minOrderValue: z
+    .number({ error: "minimum order value is required" })
+    .nonnegative({ error: "minimum order value cannot be negative" }),
+
+  isActive: z.boolean({ error: "select a status" }).default(true),
+
+  startsAt: z
+    .string({ error: "start date is required" })
+    .min(1, { error: "start date is required" }),
+  endsAt: z
+    .string({ error: "end date is required" })
+    .min(1, { error: "end date is required" }),
+
+  memberId: z.cuid2().optional(),
+});
+
+export const CreateCouponInputSchema = CouponInputBaseSchema.superRefine(
+  (coupon, ctx) => {
     if (
       coupon.discountType === DiscountType.percentage &&
       coupon.discountValue > 100
@@ -61,11 +116,46 @@ export const couponSchema = z
         path: ["endsAt"],
         message: "end date must be after the start date",
       });
-  });
-export type CouponData = z.infer<typeof couponSchema>;
-export type CouponFormValues = z.input<typeof couponSchema>;
+  },
+);
+export type CreateCouponInputData = z.input<typeof CreateCouponInputSchema>;
+export const CreateCouponOutputSchema = GetCouponOutputSchema;
 
-export const emptyCoupon: CouponFormValues = {
+// Update
+export const UpdateCouponParamSchema = z.object({
+  id: z.cuid2(),
+});
+
+export const UpdateCouponInputSchema = CouponInputBaseSchema.partial()
+  .superRefine((coupon, ctx) => {
+    if (
+      coupon.discountType === DiscountType.percentage &&
+      coupon.discountValue !== undefined &&
+      coupon.discountValue > 100
+    )
+      ctx.addIssue({
+        code: "custom",
+        path: ["discountValue"],
+        message: "discount can't exceed 100%",
+      });
+
+    if (coupon.startsAt && coupon.endsAt && coupon.endsAt <= coupon.startsAt)
+      ctx.addIssue({
+        code: "custom",
+        path: ["endsAt"],
+        message: "end date must be after the start date",
+      });
+  });
+export type UpdateCouponInputData = z.input<typeof UpdateCouponInputSchema>;
+export const UpdateCouponOutputSchema = GetCouponOutputSchema;
+
+// Delete
+export const DeleteCouponParamSchema = z.object({
+  id: z.cuid2(),
+});
+export type DeleteCouponParamData = z.infer<typeof DeleteCouponParamSchema>;
+
+export const emptyCoupon: CreateCouponInputData = {
   discountType: DiscountType.percentage,
   name: "",
   code: "",
@@ -76,11 +166,3 @@ export const emptyCoupon: CouponFormValues = {
   startsAt: "",
   endsAt: "",
 };
-
-export function formCoupon(coupon: Coupon): CouponFormValues {
-  return {
-    ...coupon,
-    startsAt: coupon.startsAt?.toISOString() ?? "",
-    endsAt: coupon.endsAt?.toISOString() ?? "",
-  };
-}

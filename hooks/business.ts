@@ -1,6 +1,6 @@
 import { BUSINESS_KEY } from "@/data/cacheKeys";
 import { authClient } from "@/lib/authClient";
-import { BusinessData } from "@/schema/business";
+import { CreateBusinessInputData } from "@/schema/business";
 import { getKey, getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
@@ -23,7 +23,7 @@ export const useBusiness = (organizationId: string | undefined) => {
 export const useAddBusiness = () => {
   return useSWRMutation(
     getKey(BUSINESS_KEY),
-    (key, { arg }: { arg: BusinessData }) =>
+    (key, { arg }: { arg: CreateBusinessInputData }) =>
       authClient.organization.create({
         name: arg.name,
         categoryId: arg.categoryId,

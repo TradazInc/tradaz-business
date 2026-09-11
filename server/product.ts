@@ -1,12 +1,12 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { productService } from "@/entities/product";
+import { apiClient } from "@/lib/apiClient";
 
 export async function getProduct(id: string) {
-  return productService.get(id);
+  return apiClient("@get/api/products/:id", { params: { id } });
 }
 
 export async function getProducts(organizationId?: string) {
-  return productService.getAll({
+  return apiClient("@get/api/products", {
     query: { pageSize: PAGE_SIZE, organizationId },
   });
 }

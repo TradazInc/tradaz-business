@@ -1,10 +1,10 @@
 import { InfoTip } from "@/components/ui/toggle-tip";
-import { Product } from "@/entities/product";
+import { GetProductOutputData } from "@/schema/product";
 import { DataList, Heading, HStack, Square, VStack } from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
 
 interface Props {
-  product: Product;
+  product: GetProductOutputData;
 }
 
 const ProductDescription = ({ product }: Props) => {

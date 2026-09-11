@@ -1,9 +1,10 @@
-import { checkBusinessSlug } from "@/server/business";
 import { toaster } from "@/components/ui/toaster";
-import { z } from "zod";
+import { authClient } from "@/lib/authClient";
+import { checkBusinessSlug } from "@/server/business";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
+import { z } from "zod";
 
-export const businessSchema = z.object({
+export const CreateBusinessInputSchema = z.object({
   name: z
     .string({ error: "name is required" })
     .min(3, { error: "name must be at least 3 letters long" }),
@@ -36,4 +37,7 @@ export const businessSchema = z.object({
       { error: "Slug is taken" },
     ),
 });
-export type BusinessData = z.infer<typeof businessSchema>;
+export type CreateBusinessInputData = z.infer<typeof CreateBusinessInputSchema>;
+
+export type Business = typeof authClient.$Infer.Organization;
+export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;

@@ -1,27 +1,30 @@
 import { PRODUCT_CATEGORY_KEY } from "@/data/cacheKeys";
+import { apiClient } from "@/lib/apiClient";
 import {
-  ProductCategory,
-  productCategoryService,
-} from "@/entities/productCategory";
-import { SWRInfiniteConfig } from "@/lib/apiClient";
-import { ProductCategoryData } from "@/schema/productCategory";
+  CreateProductCategoryInputData,
+  GetAllProductCategoryOutputData,
+} from "@/schema/productCategory";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
-import useSWRInfinite, { unstable_serialize } from "swr/infinite";
+import useSWRInfinite, {
+  SWRInfiniteConfiguration,
+  unstable_serialize,
+} from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
 export const useProductCategories = (
   organizationId: string | undefined,
-  config?: SWRInfiniteConfig<ProductCategory>,
+  config?: SWRInfiniteConfiguration<GetAllProductCategoryOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
   const query = { organizationId, ...searchQuery(searchParams) };
 
   return useSWRInfinite(
     getCursorKey(PRODUCT_CATEGORY_KEY, query),
-    ([key, query]) => productCategoryService.getAll({ query, throw: true }),
+    ([key, query]) =>
+      apiClient("@get/api/product-categories", { query, throw: true }),
     config,
   );
 };
@@ -31,8 +34,8 @@ export const useAddProductCategory = (organizationId: string | undefined) => {
 
   return useSWRMutation(
     getScopedKey(PRODUCT_CATEGORY_KEY, organizationId),
-    (key, { arg }: { arg: ProductCategoryData }) =>
-      productCategoryService.post({ body: arg, throw: true }),
+    (key, { arg }: { arg: CreateProductCategoryInputData }) =>
+      apiClient("@post/api/product-categories", { body: arg, throw: true }),
     {
       onSuccess: () =>
         mutate(
@@ -52,7 +55,10 @@ export const useRemoveProductCategory = (
   return useSWRMutation(
     getScopedKey(PRODUCT_CATEGORY_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      productCategoryService.delete(arg, { throw: true }),
+      apiClient("@delete/api/product-categories/:id", {
+        params: { id: arg },
+        throw: true,
+      }),
     {
       onSuccess: () =>
         mutate(
