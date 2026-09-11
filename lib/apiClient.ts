@@ -135,11 +135,7 @@ import {
   DeleteUIConfigOutputSchema,
 } from "@/schema/uiConfig";
 import { setServerCookie } from "@/utilities/setServerCookie";
-import {
-  BetterFetchOption,
-  createFetch,
-  createSchema,
-} from "@better-fetch/fetch";
+import { createFetch, createSchema } from "@better-fetch/fetch";
 import { logger } from "@better-fetch/logger";
 
 export const schema = createSchema({
