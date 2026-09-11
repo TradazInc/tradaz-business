@@ -1,11 +1,6 @@
 import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
-
-export enum Gateway {
-  opay = "opay",
-  moniepoint = "moniepoint",
-  paystack = "paystack",
-}
+import { Gateway } from "./enums";
 
 // Get
 export const GetSubaccountOutputSchema = z.object({
