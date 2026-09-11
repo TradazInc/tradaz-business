@@ -1,5 +1,5 @@
 import { TRANSACTION_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient, apiConfig } from "@/lib/apiClient";
 import { CreateTransactionInputData } from "@/schema/transaction";
 import { getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
@@ -10,7 +10,7 @@ export const useTransaction = (
   organizationId: string | undefined,
 ) => {
   return useSWR(getScopedKey(TRANSACTION_KEY, organizationId), ([key, query]) =>
-    apiClient("@get/api/transactions/:id", { params: { id }, throw: true }),
+    apiClient("@get/api/transactions/:id", { params: { id }, ...apiConfig }),
   );
 };
 
@@ -18,6 +18,6 @@ export const useAddTransaction = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(TRANSACTION_KEY, organizationId),
     (_, { arg }: { arg: CreateTransactionInputData }) =>
-      apiClient("@post/api/transactions", { body: arg, throw: true }),
+      apiClient("@post/api/transactions", { body: arg, ...apiConfig }),
   );
 };

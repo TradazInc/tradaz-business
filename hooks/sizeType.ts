@@ -1,5 +1,5 @@
 import { SIZE_TYPE_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreateSizeTypeInputData,
   GetAllSizeTypeOutputData,
@@ -23,7 +23,7 @@ export const useSizeTypes = (
 
   return useSWRInfinite(
     getCursorKey(SIZE_TYPE_KEY, query),
-    ([key, query]) => apiClient("@get/api/size-types", { query, throw: true }),
+    ([key, query]) => apiClient("@get/api/size-types", { query, ...apiConfig }),
     config,
   );
 };
@@ -34,7 +34,7 @@ export const useAddSizeTypes = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(SIZE_TYPE_KEY, organizationId),
     (key, { arg }: { arg: CreateSizeTypeInputData }) =>
-      apiClient("@post/api/size-types", { body: arg, throw: true }),
+      apiClient("@post/api/size-types", { body: arg, ...apiConfig }),
     {
       onSuccess: () =>
         mutate(
@@ -52,7 +52,7 @@ export const useRemoveSizeType = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/size-types/:id", {
         params: { id: arg },
-        throw: true,
+        ...apiConfig,
       }),
     {
       onSuccess: () =>
@@ -71,7 +71,7 @@ export const useRemoveSize = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/size-types/sizes/:id", {
         params: { id: arg },
-        throw: true,
+        ...apiConfig,
       }),
     {
       onSuccess: () =>

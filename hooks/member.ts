@@ -1,5 +1,5 @@
 import { MEMBER_KEY } from "@/data/cacheKeys";
-import { authClient } from "@/lib/authClient";
+import { authClient, authConfig } from "@/lib/authClient";
 import { FetchResponse } from "@/schema/fetchResponse";
 import { Member } from "@/schema/member";
 import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
@@ -28,7 +28,7 @@ export const useMembers = (
           limit: query.pageSize,
           offset: query.page * query.pageSize,
         },
-        fetchOptions: { throw: true },
+        fetchOptions: authConfig,
       });
       return { data: res.members, meta: { count: res.total } };
     },
@@ -45,7 +45,7 @@ export const useRemoveMember = (organizationId: string | undefined) => {
       authClient.organization.removeMember({
         memberIdOrEmail: arg,
         organizationId,
-        fetchOptions: { throw: true },
+        fetchOptions: authConfig,
       }),
     {
       onSuccess: () =>

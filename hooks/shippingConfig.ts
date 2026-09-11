@@ -1,5 +1,5 @@
 import { SHIPPING_CONFIG_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreateShippingConfigInputData,
   GetAllShippingConfigOutputData,
@@ -25,7 +25,7 @@ export const useShippingConfigs = (
   return useSWRInfinite(
     getCursorKey(SHIPPING_CONFIG_KEY, query),
     ([key, query]) =>
-      apiClient("@get/api/shipping-configs", { query, throw: true }),
+      apiClient("@get/api/shipping-configs", { query, ...apiConfig }),
     config,
   );
 };
@@ -36,7 +36,7 @@ export const useAddShippingConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(SHIPPING_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: CreateShippingConfigInputData }) =>
-      apiClient("@post/api/shipping-configs", { body: arg, throw: true }),
+      apiClient("@post/api/shipping-configs", { body: arg, ...apiConfig }),
     {
       onSuccess: () =>
         mutate(
@@ -62,7 +62,7 @@ export const useUpdateShippingConfig = (organizationId: string | undefined) => {
       apiClient("@put/api/shipping-configs/:id", {
         params: { id: arg.id },
         body: arg.shippingConfig,
-        throw: true,
+        ...apiConfig,
       }),
     {
       onSuccess: () =>
@@ -83,7 +83,7 @@ export const useRemoveShippingConfig = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/shipping-configs/:id", {
         params: { id: arg },
-        throw: true,
+        ...apiConfig,
       }),
     {
       onSuccess: () =>

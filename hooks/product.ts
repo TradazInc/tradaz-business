@@ -1,5 +1,5 @@
 import { PRODUCT_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreateProductInputData,
   GetAllProductOutputData,
@@ -23,7 +23,7 @@ export const useProducts = (
 
   return useSWRInfinite(
     getCursorKey(PRODUCT_KEY, query),
-    ([key, query]) => apiClient("@get/api/products", { query, throw: true }),
+    ([key, query]) => apiClient("@get/api/products", { query, ...apiConfig }),
     config,
   );
 };
@@ -34,7 +34,7 @@ export const useAddProduct = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(PRODUCT_KEY, organizationId),
     (key, { arg }: { arg: CreateProductInputData }) =>
-      apiClient("@post/api/products", { body: arg, throw: true }),
+      apiClient("@post/api/products", { body: arg, ...apiConfig }),
     {
       onSuccess: () =>
         mutate(
@@ -52,7 +52,7 @@ export const useRemoveProduct = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/products/:id", {
         params: { id: arg },
-        throw: true,
+        ...apiConfig,
       }),
     {
       onSuccess: () =>

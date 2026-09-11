@@ -1,5 +1,5 @@
 import { COUPON_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient, apiConfig } from "@/lib/apiClient";
 import { CreateCouponInputData, GetAllCouponOutputData } from "@/schema/coupon";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { searchQuery } from "@/utilities/searchQuery";
@@ -20,7 +20,7 @@ export const useCoupons = (
 
   return useSWRInfinite(
     getCursorKey(COUPON_KEY, query),
-    ([key, query]) => apiClient("@get/api/coupons", { query, throw: true }),
+    ([key, query]) => apiClient("@get/api/coupons", { query, ...apiConfig }),
     config,
   );
 };
@@ -31,7 +31,7 @@ export const useAddCoupon = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(COUPON_KEY, organizationId),
     (key, { arg }: { arg: CreateCouponInputData }) =>
-      apiClient("@post/api/coupons", { body: arg }),
+      apiClient("@post/api/coupons", { body: arg, ...apiConfig }),
     {
       onSuccess: () =>
         mutate(
@@ -47,7 +47,10 @@ export const useRemoveCoupon = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(COUPON_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
-      apiClient("@delete/api/coupons/:id", { params: { id: arg } }),
+      apiClient("@delete/api/coupons/:id", {
+        params: { id: arg },
+        ...apiConfig,
+      }),
     {
       onSuccess: () =>
         mutate(
