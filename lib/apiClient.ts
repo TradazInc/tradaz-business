@@ -3,6 +3,7 @@ import {
   CreateBusinessCategoryOutputSchema,
   DeleteBusinessCategoryParamSchema,
   GetAllBusinessCategoryOutputSchema,
+  GetAllBusinessCategoryQuerySchema,
 } from "@/schema/businessCategory";
 import {
   CreateCouponInputSchema,
@@ -145,6 +146,7 @@ import { logger } from "@better-fetch/logger";
 export const schema = createSchema({
   // Business categories
   "@get/api/business-categories": {
+    query: GetAllBusinessCategoryQuerySchema.optional(),
     output: GetAllBusinessCategoryOutputSchema,
   },
   "@post/api/business-categories": {
