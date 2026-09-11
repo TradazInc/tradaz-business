@@ -1,4 +1,8 @@
 import {
+  GetAllBanksOutputSchema,
+  GetAllBanksQuerySchema,
+} from "@/schema/banks";
+import {
   CreateBusinessCategoryInputSchema,
   CreateBusinessCategoryOutputSchema,
   DeleteBusinessCategoryParamSchema,
@@ -393,6 +397,12 @@ export const schema = createSchema({
   },
   "@delete/api/ui-configs": {
     output: DeleteUIConfigOutputSchema,
+  },
+
+  // Banks
+  "@get/api/banks": {
+    query: GetAllBanksQuerySchema,
+    output: GetAllBanksOutputSchema,
   },
 });
 
