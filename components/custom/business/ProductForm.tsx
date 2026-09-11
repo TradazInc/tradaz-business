@@ -2,16 +2,14 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { MAX_FILE_SIZE, MAX_FILES, SLIDES_PER_PAGE } from "@/data/constants";
-
 import { useAddProduct } from "@/hooks/product";
 import { useProductCategories } from "@/hooks/productCategory";
 import { useSizeTypes } from "@/hooks/sizeType";
 import {
   emptyProduct,
   formProduct,
-  Gender,
   GetProductOutputData,
-  productFormSchema,
+  CreateProductInputSchema,
 } from "@/schema/product";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
@@ -39,6 +37,7 @@ import FormInputGrid from "../shared/FormInputGrid";
 import ImageUpload from "../shared/ImageUpload";
 import TotalQuantity from "./TotalQuantity";
 import VariationField from "./VariationField";
+import { Gender } from "@/schema/enums";
 
 interface Props {
   product?: GetProductOutputData;
@@ -98,7 +97,7 @@ const ProductForm = ({ product }: Props) => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: standardSchemaResolver(productFormSchema),
+    resolver: standardSchemaResolver(CreateProductInputSchema),
     defaultValues: product ? formProduct(product) : emptyProduct,
     mode: "onBlur",
   });
@@ -106,7 +105,7 @@ const ProductForm = ({ product }: Props) => {
   // Clear sizes when size type changes
   const clearVariationSizes = () =>
     getValues("variations").forEach((_, index) =>
-      setValue(`variations.${index}.sizeId`, [], { shouldValidate: true }),
+      setValue(`variations.${index}.sizeId`, "", { shouldValidate: true }),
     );
 
   const onSubmit = handleSubmit(async (productData) => {
@@ -152,9 +151,9 @@ const ProductForm = ({ product }: Props) => {
                   maxFiles={MAX_FILES}
                   maxFileSize={MAX_FILE_SIZE}
                   slidesPerPage={SLIDES_PER_PAGE}
-                  value={field.value}
-                  onValueChange={(value) => {
-                    field.onChange(value);
+                  value={field.value.map(({ url }) => url)}
+                  onValueChange={(urls) => {
+                    field.onChange(urls.map((url) => ({ url })));
                     field.onBlur();
                   }}
                 />
@@ -275,9 +274,9 @@ const ProductForm = ({ product }: Props) => {
                 render={({ field }) => (
                   <Select.Root
                     name={field.name}
-                    value={field.value}
+                    value={[field.value]}
                     onValueChange={({ value }) => {
-                      field.onChange(value);
+                      field.onChange(value[0] ?? "");
                       field.onBlur();
                     }}
                     onInteractOutside={() => field.onBlur()}
@@ -337,9 +336,9 @@ const ProductForm = ({ product }: Props) => {
                 render={({ field }) => (
                   <Select.Root
                     name={field.name}
-                    value={field.value}
+                    value={field.value ? [field.value] : []}
                     onValueChange={({ value }) => {
-                      field.onChange(value);
+                      field.onChange(value[0] ?? "");
                       field.onBlur();
                       clearVariationSizes();
                     }}

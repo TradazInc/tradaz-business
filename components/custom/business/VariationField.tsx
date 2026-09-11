@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  emptyVariation,
-  ProductData,
-  ProductFormValues,
-} from "@/schema/product";
+import { emptyVariation, CreateProductInputData } from "@/schema/product";
 import { GetAllSizeTypeOutputData } from "@/schema/sizeType";
 import {
   Box,
@@ -36,8 +32,8 @@ import FormInputGrid from "../shared/FormInputGrid";
 import TeamVariationField from "./TeamVariationField";
 
 interface Props {
-  control: Control<ProductFormValues, unknown, ProductData>;
-  errors: FieldErrors<ProductFormValues>;
+  control: Control<CreateProductInputData>;
+  errors: FieldErrors<CreateProductInputData>;
   sizeTypes: GetAllSizeTypeOutputData["data"];
   isLoading: boolean;
 }
@@ -49,7 +45,7 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
   });
 
   // Recompute size collection when size type changes
-  const [selectedSizeTypeId] = useWatch({ control, name: "sizeTypeId" });
+  const selectedSizeTypeId = useWatch({ control, name: "sizeTypeId" });
   const sizeCollection = useMemo(
     () =>
       createListCollection({
@@ -95,10 +91,10 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
                 render={({ field }) => (
                   <Select.Root
                     name={field.name}
-                    value={field.value}
+                    value={field.value ? [field.value] : []}
                     disabled={!selectedSizeTypeId}
                     onValueChange={({ value }) => {
-                      field.onChange(value);
+                      field.onChange(value[0] ?? "");
                       field.onBlur();
                     }}
                     onInteractOutside={() => field.onBlur()}

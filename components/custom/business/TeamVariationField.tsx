@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  emptyTeamVariation,
-  ProductData,
-  ProductFormValues,
-} from "@/schema/product";
+import { emptyTeamVariation, CreateProductInputData } from "@/schema/product";
 import { useStores } from "@/hooks/store";
 import {
   Button,
@@ -28,8 +24,8 @@ import {
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 
 interface Props {
-  control: Control<ProductFormValues, unknown, ProductData>;
-  errors: FieldErrors<ProductFormValues>;
+  control: Control<CreateProductInputData>;
+  errors: FieldErrors<CreateProductInputData>;
   variationIndex: number;
 }
 
@@ -82,9 +78,9 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
               render={({ field }) => (
                 <Select.Root
                   name={field.name}
-                  value={field.value}
+                  value={field.value ? [field.value] : []}
                   onValueChange={({ value }) => {
-                    field.onChange(value);
+                    field.onChange(value[0] ?? "");
                     field.onBlur();
                   }}
                   onInteractOutside={() => field.onBlur()}

@@ -1,9 +1,9 @@
-import { ProductData, ProductFormValues } from "@/schema/product";
+import { CreateProductInputData } from "@/schema/product";
 import { FormatNumber, Stat } from "@chakra-ui/react";
 import { Control, useWatch } from "react-hook-form";
 
 interface Props {
-  control: Control<ProductFormValues, unknown, ProductData>;
+  control: Control<CreateProductInputData>;
 }
 
 export default function TotalQuantity({ control }: Props) {

@@ -4,7 +4,7 @@ import { Gateway } from "./enums";
 // Get All
 export const GetAllBanksQuerySchema = z.object({
   gateway: z.enum(Gateway, { error: "Gateway is required" }),
-  country: z.string({ error: "Country is required" }).min(3),
+  country: z.string({ error: "Country is required" }),
 });
 export type GetAllBanksQueryData = z.infer<typeof GetAllBanksQuerySchema>;
 

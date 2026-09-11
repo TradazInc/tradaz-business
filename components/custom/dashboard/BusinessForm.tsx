@@ -183,10 +183,10 @@ export const BusinessForm = ({ signup }: Props) => {
                     render={({ field }) => (
                       <Select.Root
                         name={field.name}
-                        value={field.value}
+                        value={field.value ? [field.value] : []}
                         collection={categoryCollection}
                         onValueChange={({ value }) => {
-                          field.onChange(value);
+                          field.onChange(value[0] ?? "");
                           field.onBlur();
                         }}
                         onInteractOutside={() => field.onBlur()}
