@@ -1,14 +1,10 @@
 import { MAX_FILES } from "@/data/constants";
 import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
-import { imageSchema } from "./image";
 import { SizeOutputSchema } from "./sizeType";
 import { Gender, ProductStatus } from "./enums";
 
-/*
-  Output Schemas
-  Base Schemas (Prisma returns null for nullable columns)
-*/
+/* Output Schemas */
 const ProductOutputBaseSchema = z.object({
   id: z.cuid2(),
   name: z.string(),
@@ -27,7 +23,7 @@ const ProductOutputBaseSchema = z.object({
 
 const ProductImageOutputSchema = z.object({
   id: z.cuid2(),
-  url: imageSchema,
+  url: z.url(),
   productId: z.string(),
 });
 
@@ -273,7 +269,7 @@ export const productFormSchema = z.object({
     .min(1, { error: "add at least one variation" }),
 
   images: z
-    .array(imageSchema)
+    .array(z.url({ error: "enter a valid image url" }))
     .min(1, { error: "add at least one image" })
     .max(MAX_FILES, { error: `at most ${MAX_FILES} images` })
     .transform((urls) => urls.map((url) => ({ url }))),
