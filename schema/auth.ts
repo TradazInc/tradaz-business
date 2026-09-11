@@ -19,8 +19,3 @@ export type User = Auth["user"];
 export type Session = Auth["session"];
 export type TeamMember = Auth["teammember"];
 export type SessionMember = Auth["member"];
-
-export enum Role {
-  admin = "admin",
-  user = "user",
-}

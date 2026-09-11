@@ -1,10 +1,6 @@
 import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
-
-export enum DiscountType {
-  percentage = "percentage",
-  fixed = "fixed",
-}
+import { DiscountType } from "./enums";
 
 // Get
 export const GetCouponParamSchema = z.object({
@@ -126,8 +122,8 @@ export const UpdateCouponParamSchema = z.object({
   id: z.cuid2(),
 });
 
-export const UpdateCouponInputSchema = CouponInputBaseSchema.partial()
-  .superRefine((coupon, ctx) => {
+export const UpdateCouponInputSchema =
+  CouponInputBaseSchema.partial().superRefine((coupon, ctx) => {
     if (
       coupon.discountType === DiscountType.percentage &&
       coupon.discountValue !== undefined &&

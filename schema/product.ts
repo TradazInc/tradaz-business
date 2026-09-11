@@ -3,18 +3,7 @@ import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
 import { imageSchema } from "./image";
 import { SizeOutputSchema } from "./sizeType";
-
-export enum Gender {
-  male = "male",
-  female = "female",
-  unisex = "unisex",
-}
-
-export enum ProductStatus {
-  approved = "approved",
-  pending = "pending",
-  rejected = "rejected",
-}
+import { Gender, ProductStatus } from "./enums";
 
 /*
   Output Schemas
@@ -38,7 +27,7 @@ const ProductOutputBaseSchema = z.object({
 
 const ProductImageOutputSchema = z.object({
   id: z.cuid2(),
-  url: z.url(),
+  url: imageSchema,
   productId: z.string(),
 });
 

@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { CreateCouponInputSchema, emptyCoupon } from "@/schema/coupon";
-import { DiscountType } from "@/schema/coupon";
+import { DiscountType } from "@/schema/enums";
 import { useAddCoupon } from "@/hooks/coupon";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {

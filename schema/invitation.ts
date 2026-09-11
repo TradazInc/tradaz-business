@@ -2,14 +2,14 @@ import { authClient } from "@/lib/authClient";
 import { OrgRole } from "@/schema/enums";
 import { z } from "zod";
 
-const invitationSchema = z.object({
+const InvitationSchema = z.object({
   email: z.string(),
   role: z.enum(OrgRole),
   organizationId: z.string(),
   teamId: z.string().optional(),
 });
-export type InvitationData = z.infer<typeof invitationSchema>;
-export type InvitationFormValues = z.input<typeof invitationSchema>;
+export type InvitationData = z.infer<typeof InvitationSchema>;
+export type InvitationFormValues = z.input<typeof InvitationSchema>;
 
 export const emptyInvitation: InvitationFormValues = {
   email: "",

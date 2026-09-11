@@ -1,3 +1,8 @@
+export enum Role {
+  admin = "admin",
+  user = "user",
+}
+
 export enum OrgRole {
   owner = "owner",
   admin = "admin",
@@ -24,4 +29,21 @@ export enum Gateway {
   opay = "opay",
   moniepoint = "moniepoint",
   paystack = "paystack",
+}
+
+export enum Gender {
+  male = "male",
+  female = "female",
+  unisex = "unisex",
+}
+
+export enum ProductStatus {
+  approved = "approved",
+  pending = "pending",
+  rejected = "rejected",
+}
+
+export enum DiscountType {
+  percentage = "percentage",
+  fixed = "fixed",
 }
