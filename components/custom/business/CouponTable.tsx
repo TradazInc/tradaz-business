@@ -90,7 +90,7 @@ const CouponTable = ({ initialCoupons, businessId }: Props) => {
                   <Table.Cell>{coupon.minOrderValue}</Table.Cell>
                   <Table.Cell>{coupon.usageLimit}</Table.Cell>
                   <Table.Cell>{coupon.isActive}</Table.Cell>
-                  {/* <Table.Cell>
+                  <Table.Cell>
                     {coupon?.startsAt
                       ? new Date(coupon.startsAt).toDateString()
                       : "-"}
@@ -99,7 +99,7 @@ const CouponTable = ({ initialCoupons, businessId }: Props) => {
                     {coupon?.endsAt
                       ? new Date(coupon.endsAt).toDateString()
                       : "-"}
-                  </Table.Cell> */}
+                  </Table.Cell>
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
                       <IconButton>

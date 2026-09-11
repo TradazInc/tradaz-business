@@ -48,6 +48,8 @@ export const GetAllCouponOutputSchema = createFetchResponseSchema(
     usageLimit: z.number(),
     discountValue: z.number(),
     isActive: z.boolean(),
+    startsAt: z.date(),
+    endsAt: z.date(),
   }),
 );
 export type GetAllCouponOutputData = z.infer<typeof GetAllCouponOutputSchema>;
@@ -87,6 +89,7 @@ const CouponInputBaseSchema = z.object({
   startsAt: z
     .string({ error: "start date is required" })
     .min(1, { error: "start date is required" }),
+
   endsAt: z
     .string({ error: "end date is required" })
     .min(1, { error: "end date is required" }),
