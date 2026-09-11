@@ -1,5 +1,5 @@
 import { PRODUCT_CATEGORY_KEY } from "@/data/cacheKeys";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreateProductCategoryInputData,
   GetAllProductCategoryOutputData,
@@ -24,7 +24,7 @@ export const useProductCategories = (
   return useSWRInfinite(
     getCursorKey(PRODUCT_CATEGORY_KEY, query),
     ([key, query]) =>
-      apiClient("@get/api/product-categories", { query, throw: true }),
+      apiClient("@get/api/product-categories", { query, ...apiConfig }),
     config,
   );
 };
@@ -35,7 +35,7 @@ export const useAddProductCategory = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(PRODUCT_CATEGORY_KEY, organizationId),
     (key, { arg }: { arg: CreateProductCategoryInputData }) =>
-      apiClient("@post/api/product-categories", { body: arg, throw: true }),
+      apiClient("@post/api/product-categories", { body: arg, ...apiConfig }),
     {
       onSuccess: () =>
         mutate(
@@ -57,7 +57,7 @@ export const useRemoveProductCategory = (
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/product-categories/:id", {
         params: { id: arg },
-        throw: true,
+        ...apiConfig,
       }),
     {
       onSuccess: () =>

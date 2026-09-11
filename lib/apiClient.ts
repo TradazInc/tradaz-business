@@ -394,3 +394,5 @@ export const apiClient = createFetch({
   onRequest: async (context) => setServerCookie(context),
   plugins: [logger()],
 });
+
+export const apiConfig = { throw: true as const };
