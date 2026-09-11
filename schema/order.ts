@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { Gateway } from "./gateway";
+import { Gateway } from "./subaccount";
 import { createFetchResponseSchema } from "./fetchResponse";
+import { TransactionStatus } from "./transaction";
+import { OrgRole } from "./member";
 
 export enum OrderStatus {
   pending = "pending",
@@ -9,25 +11,7 @@ export enum OrderStatus {
   cancelled = "cancelled",
 }
 
-export enum TransactionStatus {
-  pending = "pending",
-  paid = "paid",
-}
-
-export enum OrgRole {
-  owner = "owner",
-  admin = "admin",
-  sales = "sales",
-  manager = "manager",
-  vendor = "vendor",
-  customer = "customer",
-}
-
-/*
-  Output Schemas
-  Base Schemas (discount and totalPrice are computed by the Prisma client,
-  every Decimal is serialized as a string over JSON)
-*/
+/* Output Base Schemas */
 const OrderOutputBaseSchema = z.object({
   id: z.cuid2(),
   couponCode: z.string().nullable(),

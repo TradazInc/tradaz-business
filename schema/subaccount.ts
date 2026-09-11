@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
-import { Gateway } from "./gateway";
 
-export { Gateway };
+export enum Gateway {
+  opay = "opay",
+  moniepoint = "moniepoint",
+  paystack = "paystack",
+}
 
 // Get
 export const GetSubaccountOutputSchema = z.object({
@@ -12,9 +15,7 @@ export const GetSubaccountOutputSchema = z.object({
   createdAt: z.string(),
   organizationId: z.cuid2(),
 });
-export type GetSubaccountOutputData = z.infer<
-  typeof GetSubaccountOutputSchema
->;
+export type GetSubaccountOutputData = z.infer<typeof GetSubaccountOutputSchema>;
 
 // Get All
 export const GetAllSubaccountQuerySchema = z.object({

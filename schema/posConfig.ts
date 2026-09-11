@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
-import { Gateway } from "./gateway";
+import { Gateway } from "./subaccount";
 
 /*
   Output Schemas

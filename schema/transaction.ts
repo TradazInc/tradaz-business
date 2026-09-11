@@ -1,8 +1,11 @@
 import { z } from "zod";
-import { Gateway } from "./gateway";
-import { OrderStatus, TransactionStatus } from "./order";
+import { Gateway } from "./subaccount";
+import { OrderStatus } from "./order";
 
-export { TransactionStatus };
+export enum TransactionStatus {
+  pending = "pending",
+  paid = "paid",
+}
 
 // Get (normalised details from the payment gateway)
 export const GetTransactionParamSchema = z.object({
