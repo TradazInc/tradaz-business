@@ -38,6 +38,11 @@ export const CreateUIConfigOutputSchema = z.object({
   organizationId: z.cuid2(),
 });
 
+// Delete
+export const DeleteUIConfigOutputSchema = CreateUIConfigOutputSchema.pick({
+  id: true,
+});
+
 export const emptyUIConfig: CreateUIConfigInputData = {
   primaryColor: "#000000",
   secondaryColor: "#000000",

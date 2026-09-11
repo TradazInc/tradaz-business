@@ -132,6 +132,7 @@ import {
   GetUIConfigOutputSchema,
   CreateUIConfigInputSchema,
   CreateUIConfigOutputSchema,
+  DeleteUIConfigOutputSchema,
 } from "@/schema/uiConfig";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import {
@@ -388,7 +389,9 @@ export const schema = createSchema({
     input: CreateUIConfigInputSchema,
     output: CreateUIConfigOutputSchema,
   },
-  "@delete/api/ui-configs": {},
+  "@delete/api/ui-configs": {
+    output: DeleteUIConfigOutputSchema,
+  },
 });
 
 export const apiClient = createFetch({
