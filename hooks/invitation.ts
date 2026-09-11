@@ -1,5 +1,5 @@
 import { INVITATION_KEY } from "@/data/cacheKeys";
-import { authClient } from "@/lib/authClient";
+import { authClient, authConfig } from "@/lib/authClient";
 import { InvitationData } from "@/schema/invitation";
 import { getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
@@ -9,7 +9,7 @@ export const useInvitations = (organizationId: string | undefined) => {
   return useSWR(getScopedKey(INVITATION_KEY, organizationId), ([key, query]) =>
     authClient.organization.listInvitations({
       query: { organizationId },
-      fetchOptions: { throw: true },
+      fetchOptions: authConfig,
     }),
   );
 };
@@ -18,7 +18,7 @@ export const useInvitation = (id: string) => {
   return useSWR(getScopedKey(INVITATION_KEY, id), () =>
     authClient.organization.getInvitation({
       query: { id },
-      fetchOptions: { throw: true },
+      fetchOptions: authConfig,
     }),
   );
 };
@@ -29,7 +29,7 @@ export const useCancelInvitation = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       authClient.organization.cancelInvitation({
         invitationId: arg,
-        fetchOptions: { throw: true },
+        fetchOptions: authConfig,
       }),
   );
 };
@@ -41,7 +41,7 @@ export const useSendInvitation = (organizationId: string | undefined) => {
       authClient.organization.inviteMember({
         ...arg,
         resend: true,
-        fetchOptions: { throw: true },
+        fetchOptions: authConfig,
       }),
   );
 };

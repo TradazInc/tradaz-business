@@ -51,3 +51,5 @@ export const authClient = createAuthClient({
     }),
   ],
 });
+
+export const authConfig = { throw: true as const };

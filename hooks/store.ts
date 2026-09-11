@@ -1,5 +1,5 @@
 import { STORE_KEY } from "@/data/cacheKeys";
-import { authClient } from "@/lib/authClient";
+import { authClient, authConfig } from "@/lib/authClient";
 import { CreateStoreInputData } from "@/schema/store";
 import { getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
@@ -9,7 +9,7 @@ export const useStores = (organizationId: string | undefined) => {
   return useSWR(getScopedKey(STORE_KEY, organizationId), () =>
     authClient.organization.listTeams({
       query: { organizationId },
-      fetchOptions: { throw: true },
+      fetchOptions: authConfig,
     }),
   );
 };
@@ -21,7 +21,7 @@ export const useAddStore = (organizationId: string | undefined) => {
       authClient.organization.createTeam({
         ...arg,
         organizationId,
-        fetchOptions: { throw: true },
+        fetchOptions: authConfig,
       }),
   );
 };
@@ -33,7 +33,7 @@ export const useRemoveStore = (organizationId: string | undefined) => {
       authClient.organization.removeTeam({
         teamId: arg,
         organizationId,
-        fetchOptions: { throw: true },
+        fetchOptions: authConfig,
       }),
   );
 };

@@ -1,5 +1,5 @@
 import { BUSINESS_KEY } from "@/data/cacheKeys";
-import { authClient } from "@/lib/authClient";
+import { authClient, authConfig } from "@/lib/authClient";
 import { CreateBusinessInputData } from "@/schema/business";
 import { getKey, getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
@@ -7,7 +7,7 @@ import useSWRMutation from "swr/mutation";
 
 export const useBusinesses = () => {
   return useSWR(getKey(BUSINESS_KEY), () =>
-    authClient.organization.list({ fetchOptions: { throw: true } }),
+    authClient.organization.list({ fetchOptions: authConfig }),
   );
 };
 
@@ -15,7 +15,7 @@ export const useBusiness = (organizationId: string | undefined) => {
   return useSWR(getScopedKey(BUSINESS_KEY, organizationId), () =>
     authClient.organization.getFullOrganization({
       query: { organizationId, membersLimit: 100 },
-      fetchOptions: { throw: true },
+      fetchOptions: authConfig,
     }),
   );
 };
@@ -30,7 +30,7 @@ export const useAddBusiness = () => {
         slug: arg.slug,
         metadata: { phone: arg.phone, address: arg.address },
         keepCurrentActiveOrganization: false,
-        fetchOptions: { throw: true },
+        fetchOptions: authConfig,
       }),
   );
 };
@@ -39,7 +39,7 @@ export const useRemoveBusiness = () => {
   return useSWRMutation(getKey(BUSINESS_KEY), (key, { arg }: { arg: string }) =>
     authClient.organization.delete({
       organizationId: arg,
-      fetchOptions: { throw: true },
+      fetchOptions: authConfig,
     }),
   );
 };
