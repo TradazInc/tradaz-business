@@ -15,6 +15,10 @@ import {
   CreateWebCheckoutOutputSchema,
 } from "@/schema/checkout";
 import {
+  GetAllCountriesOutputSchema,
+  GetAllCountriesQuerySchema,
+} from "@/schema/country";
+import {
   CreateCouponInputSchema,
   CreateCouponOutputSchema,
   DeleteCouponParamSchema,
@@ -139,10 +143,10 @@ import {
   GetTransactionParamSchema,
 } from "@/schema/transaction";
 import {
-  GetUIConfigOutputSchema,
   CreateUIConfigInputSchema,
   CreateUIConfigOutputSchema,
   DeleteUIConfigOutputSchema,
+  GetUIConfigOutputSchema,
 } from "@/schema/uiConfig";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import {
@@ -418,6 +422,12 @@ export const schema = createSchema({
   "@post/api/checkout/pos": {
     input: CreateCheckoutInputSchema,
     output: CreatePosCheckoutOutputSchema,
+  },
+
+  // Country
+  "@get/api/country": {
+    query: GetAllCountriesQuerySchema,
+    output: GetAllCountriesOutputSchema,
   },
 });
 
