@@ -4,7 +4,7 @@ import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
 import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
-import { emailSignUpSchema } from "@/schema/auth";
+import { EmailSignUpSchema } from "@/schema/auth";
 import { useEmailSignup, useGoogleSignin } from "@/hooks/auth";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
@@ -22,7 +22,7 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm({ resolver: zodResolver(emailSignUpSchema) });
+  } = useForm({ resolver: zodResolver(EmailSignUpSchema) });
 
   const onSubmit = handleSubmit(async (signUpData) => {
     const promise = toaster.promise(emailTrigger({ signUpData }), {
