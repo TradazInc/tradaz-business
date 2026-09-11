@@ -1,11 +1,8 @@
 import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
-import { Gateway } from "./subaccount";
+import { Gateway } from "./enums";
 
-/*
-  Output Schemas
-  The encryption columns (iv, salt, authTag) are omitted by the Prisma client
-*/
+/* Output Schemas */
 const TerminalConfigOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string().nullable(),
@@ -81,8 +78,8 @@ export const UpdatePosConfigParamSchema = z.object({
   id: z.cuid2(),
 });
 
-export const UpdatePosConfigInputSchema = CreatePosConfigInputSchema.partial()
-  .extend({
+export const UpdatePosConfigInputSchema =
+  CreatePosConfigInputSchema.partial().extend({
     terminalConfigs: z
       .array(
         CreateTerminalConfigInputSchema.extend({ id: z.cuid2().optional() }),
