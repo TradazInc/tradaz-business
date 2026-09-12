@@ -6,7 +6,7 @@ import { createFetchResponseSchema } from "./fetchResponse";
 export const GetAllBanksQuerySchema = z
   .object({
     gateway: z.enum(Gateway, { error: "Gateway is required" }),
-    country: z.string().optional(),
+    country: z.string().min(2, { error: "Invalid country name" }).optional(),
   })
   .refine((ctx) => ctx.gateway === Gateway.paystack && !ctx.country, {
     error: "Country is required",
