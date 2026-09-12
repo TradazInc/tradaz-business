@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Gateway } from "./enums";
+import { createFetchResponseSchema } from "./fetchResponse";
 
 // Get All
 export const GetAllCountriesQuerySchema = z.object({
@@ -9,13 +10,13 @@ export type GetAllCountriesQueryData = z.infer<
   typeof GetAllCountriesQuerySchema
 >;
 
-export const GetAllCountriesOutputSchema = z
-  .object({
+export const GetAllCountriesOutputSchema = createFetchResponseSchema(
+  z.object({
     id: z.number(),
     name: z.string(),
     isoCode: z.string(),
-  })
-  .array();
+  }),
+);
 export type GetAllCountriesOutputData = z.infer<
   typeof GetAllCountriesOutputSchema
 >;

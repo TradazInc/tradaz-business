@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Gateway } from "./enums";
+import { createFetchResponseSchema } from "./fetchResponse";
 
 // Get All
 export const GetAllBanksQuerySchema = z.object({
@@ -8,10 +9,10 @@ export const GetAllBanksQuerySchema = z.object({
 });
 export type GetAllBanksQueryData = z.infer<typeof GetAllBanksQuerySchema>;
 
-export const GetAllBanksOutputSchema = z
-  .object({
+export const GetAllBanksOutputSchema = createFetchResponseSchema(
+  z.object({
     name: z.string(),
     code: z.string(),
-  })
-  .array();
+  }),
+);
 export type GetAllBanksOutputData = z.infer<typeof GetAllBanksOutputSchema>;
