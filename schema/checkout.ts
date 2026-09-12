@@ -7,8 +7,9 @@ export const CreateCheckoutInputSchema = z.object({
 export type CreateCheckoutInputData = z.infer<typeof CreateCheckoutInputSchema>;
 
 export const CreateWebCheckoutOutputSchema = z.object({
-  accessCode: z.string().optional(),
   url: z.url(),
+  accessCode: z.string().optional(),
+  externalTxId: z.string().optional(),
 });
 export type CreateWebCheckoutOutputData = z.infer<
   typeof CreateWebCheckoutOutputSchema
