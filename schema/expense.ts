@@ -9,8 +9,8 @@ export const ExpenseOutputSchema = z.object({
   description: z.string(),
   amount: z.coerce.number(),
   recieptUrl: z.url(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
   organizationId: z.cuid2(),
   teamId: z.cuid2().nullable(),
 });

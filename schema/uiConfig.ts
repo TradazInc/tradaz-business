@@ -7,7 +7,7 @@ export const GetUIConfigOutputSchema = z
     primaryColor: z.string().nullable(),
     secondaryColor: z.string().nullable(),
     tertiaryColor: z.string().nullable(),
-    createdAt: z.string(),
+    createdAt: z.iso.datetime(),
     organizationId: z.cuid2(),
   })
   .nullable();
@@ -34,7 +34,7 @@ export const CreateUIConfigOutputSchema = z.object({
   primaryColor: z.string().nullable(),
   secondaryColor: z.string().nullable(),
   tertiaryColor: z.string().nullable(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   organizationId: z.cuid2(),
 });
 

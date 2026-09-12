@@ -7,7 +7,7 @@ export const GetPointsConfigOutputSchema = z.object({
   name: z.string(),
   minOrderValue: z.number(),
   maxOrderValue: z.number(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   rewardPercentage: z.number(),
   organizationId: z.cuid2(),
 });

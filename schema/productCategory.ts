@@ -5,7 +5,7 @@ import { createFetchResponseSchema } from "./fetchResponse";
 export const GetProductCategoryOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   organizationId: z.cuid2(),
 });
 export type GetProductCategoryOutputData = z.infer<
@@ -25,7 +25,7 @@ export const GetAllProductCategoryOutputSchema = createFetchResponseSchema(
   z.object({
     id: z.cuid2(),
     name: z.string(),
-    createdAt: z.string(),
+    createdAt: z.iso.datetime(),
   }),
 );
 export type GetAllProductCategoryOutputData = z.infer<

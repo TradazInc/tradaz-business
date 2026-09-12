@@ -11,7 +11,7 @@ export const GetTransactionOutputSchema = z.object({
   transactionId: z.string(),
   amount: z.string(),
   status: z.string(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
 });
 export type GetTransactionOutputData = z.infer<
   typeof GetTransactionOutputSchema
@@ -44,7 +44,7 @@ export const CreateTransactionOutputSchema = z.object({
   totalPrice: z.coerce.number(),
   discount: z.coerce.number(),
   orderStatus: z.enum(OrderStatus),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   organizationId: z.cuid2(),
   teamId: z.cuid2().nullable(),
   memberId: z.cuid2(),

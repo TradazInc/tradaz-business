@@ -17,10 +17,10 @@ export const GetCouponOutputSchema = z.object({
   usageCount: z.number(),
   minOrderValue: z.number(),
   isActive: z.boolean(),
-  startsAt: z.string(),
-  endsAt: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  startsAt: z.iso.datetime(),
+  endsAt: z.iso.datetime(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
   organizationId: z.string(),
   memberId: z.string(),
 });
@@ -48,8 +48,8 @@ export const GetAllCouponOutputSchema = createFetchResponseSchema(
     usageLimit: z.number(),
     discountValue: z.number(),
     isActive: z.boolean(),
-    startsAt: z.date(),
-    endsAt: z.date(),
+    startsAt: z.iso.datetime(),
+    endsAt: z.iso.datetime(),
   }),
 );
 export type GetAllCouponOutputData = z.infer<typeof GetAllCouponOutputSchema>;
@@ -86,12 +86,12 @@ const CouponInputBaseSchema = z.object({
 
   isActive: z.boolean({ error: "select a status" }).default(true),
 
-  startsAt: z
-    .string({ error: "start date is required" })
+  startsAt: z.iso
+    .datetime({ error: "start date is required" })
     .min(1, { error: "start date is required" }),
 
-  endsAt: z
-    .string({ error: "end date is required" })
+  endsAt: z.iso
+    .datetime({ error: "end date is required" })
     .min(1, { error: "end date is required" }),
 
   memberId: z.cuid2().optional(),

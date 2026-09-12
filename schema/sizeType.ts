@@ -9,7 +9,7 @@ export const GetSizeTypeParamSchema = z.object({
 export const SizeOutputSchema = z.object({
   id: z.cuid2(),
   value: z.string(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   sizeTypeId: z.cuid2(),
 });
 export type SizeOutputData = z.infer<typeof SizeOutputSchema>;
@@ -18,7 +18,7 @@ export const GetSizeTypeOutputSchema = z
   .object({
     id: z.cuid2(),
     name: z.string(),
-    createdAt: z.string(),
+    createdAt: z.iso.datetime(),
     organizationId: z.cuid2(),
     sizes: z.array(SizeOutputSchema),
   })
@@ -35,7 +35,7 @@ export const GetAllSizeTypeOutputSchema = createFetchResponseSchema(
   z.object({
     id: z.cuid2(),
     name: z.string(),
-    createdAt: z.string(),
+    createdAt: z.iso.datetime(),
     organizationId: z.cuid2(),
     sizes: z.array(SizeOutputSchema),
   }),
@@ -66,7 +66,7 @@ export type CreateSizeTypeInputData = z.input<typeof CreateSizeTypeInputSchema>;
 export const CreateSizeTypeOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   organizationId: z.cuid2(),
 });
 
@@ -93,9 +93,7 @@ export const UpdateSizeTypeOutputSchema = CreateSizeTypeOutputSchema;
 export const DeleteSizeTypeParamSchema = z.object({
   id: z.cuid2(),
 });
-export type DeleteSizeTypeParamData = z.infer<
-  typeof DeleteSizeTypeParamSchema
->;
+export type DeleteSizeTypeParamData = z.infer<typeof DeleteSizeTypeParamSchema>;
 
 export const DeleteSizeParamSchema = z.object({
   id: z.cuid2(),

@@ -7,7 +7,7 @@ export const GetSubaccountOutputSchema = z.object({
   id: z.cuid2(),
   gateway: z.enum(Gateway),
   subAccountId: z.string(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   organizationId: z.cuid2(),
 });
 export type GetSubaccountOutputData = z.infer<typeof GetSubaccountOutputSchema>;

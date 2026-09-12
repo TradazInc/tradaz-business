@@ -13,8 +13,8 @@ const ProductOutputBaseSchema = z.object({
   description: z.string(),
   productStatus: z.enum(ProductStatus),
   discountPercentage: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
   categoryId: z.cuid2(),
   sizeTypeId: z.cuid2().nullable(),
   organizationId: z.cuid2(),
@@ -32,8 +32,8 @@ const TeamOutputSchema = z.object({
   name: z.string(),
   address: z.string(),
   organizationId: z.cuid2(),
-  createdAt: z.string(),
-  updatedAt: z.string().nullable(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime().nullable(),
 });
 
 const TeamVariationOutputSchema = z.object({
@@ -49,7 +49,7 @@ const VariationOutputSchema = z.object({
   sku: z.string(),
   color: z.string(),
   price: z.coerce.number(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   productId: z.cuid2(),
   sizeId: z.cuid2().nullable(),
 });

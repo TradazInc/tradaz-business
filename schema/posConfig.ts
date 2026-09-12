@@ -7,7 +7,7 @@ const TerminalConfigOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string().nullable(),
   serialNumber: z.string(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   posconfigId: z.cuid2(),
 });
 export type TerminalConfigOutputData = z.infer<
@@ -20,7 +20,7 @@ export const GetPosConfigOutputSchema = z.object({
   gateway: z.enum(Gateway),
   merchantId: z.string().nullable(),
   privateKey: z.string(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   teamId: z.cuid2(),
   terminalConfigs: z.array(TerminalConfigOutputSchema),
 });

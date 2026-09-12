@@ -19,7 +19,7 @@ export type GetShippingMethodOutputData = z.infer<
 export const GetShippingConfigOutputSchema = z.object({
   id: z.cuid2(),
   carrier: z.string(),
-  createdAt: z.string(),
+  createdAt: z.iso.datetime(),
   organizationId: z.cuid2(),
   shippingMethods: z.array(GetShippingMethodOutputSchema),
 });
