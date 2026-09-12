@@ -10,6 +10,18 @@ import {
   GetAllBusinessCategoryQuerySchema,
 } from "@/schema/businessCategory";
 import {
+  CreateCartItemInputSchema,
+  CreateCartItemOutputData,
+  DecrementCartItemInputSchema,
+  DecrementCartItemOuputSchema,
+  DeleteCartItemOutputSchema,
+  GetCartItemOutputSchema,
+  IncrementCartItemInputSchema,
+  IncrementCartItemOuputSchema,
+  UpdateCartItemInputSchema,
+  UpdateCartItemOutputSchema,
+} from "@/schema/cart";
+import {
   CreateCheckoutInputSchema,
   CreatePosCheckoutOutputSchema,
   CreateWebCheckoutOutputSchema,
@@ -429,6 +441,31 @@ export const schema = createSchema(
     "@get/api/country": {
       query: GetAllCountriesQuerySchema,
       output: GetAllCountriesOutputSchema,
+    },
+
+    // Cart
+    "@get/api/cart": {
+      output: GetCartItemOutputSchema,
+    },
+    "@post/api/cart": {
+      input: CreateCartItemInputSchema,
+      output: CreateCartItemOutputData,
+    },
+    "@post/api/cart/item/increment": {
+      input: IncrementCartItemInputSchema,
+      output: IncrementCartItemOuputSchema,
+    },
+    "@post/api/cart/item/decrement": {
+      input: DecrementCartItemInputSchema,
+      output: DecrementCartItemOuputSchema,
+    },
+    "@put/api/cart/:id": {
+      input: UpdateCartItemInputSchema,
+      output: UpdateCartItemOutputSchema,
+    },
+    "@delete/api/cart/item/:id": {
+      params: DeleteCouponParamSchema,
+      output: DeleteCartItemOutputSchema,
     },
   },
   { strict: true },
