@@ -10,6 +10,7 @@ export const GetAllBanksQuerySchema = z
   })
   .refine((query) => query.gateway === Gateway.paystack && query.country, {
     error: "Country is required",
+    path: ["country"],
   });
 export type GetAllBanksQueryData = z.infer<typeof GetAllBanksQuerySchema>;
 
