@@ -8,7 +8,7 @@ export const GetAllBanksQuerySchema = z
     gateway: z.enum(Gateway, { error: "Gateway is required" }),
     country: z.string().min(2, { error: "Invalid country name" }).optional(),
   })
-  .refine((query) => query.gateway === Gateway.paystack && !query.country, {
+  .refine((query) => query.gateway === Gateway.paystack && query.country, {
     error: "Country is required",
   });
 export type GetAllBanksQueryData = z.infer<typeof GetAllBanksQuerySchema>;
