@@ -1,6 +1,6 @@
 import { INVITATION_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
-import { InvitationData } from "@/schema/invitation";
+import { CreateInvitationInputData } from "@/schema/invitation";
 import { getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
@@ -37,7 +37,7 @@ export const useCancelInvitation = (organizationId: string | undefined) => {
 export const useSendInvitation = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(INVITATION_KEY, organizationId),
-    (key, { arg }: { arg: InvitationData }) =>
+    (key, { arg }: { arg: CreateInvitationInputData }) =>
       authClient.organization.inviteMember({
         ...arg,
         resend: true,
