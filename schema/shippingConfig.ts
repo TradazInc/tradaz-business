@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
 
+// Get
 // price is a Prisma Decimal, serialized as a string over JSON
-const ShippingMethodOutputSchema = z.object({
+const GetShippingMethodOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string(),
   price: z.coerce.number(),
@@ -11,17 +12,16 @@ const ShippingMethodOutputSchema = z.object({
   createdAt: z.string(),
   shippingConfigId: z.string(),
 });
-export type ShippingMethodOutputData = z.infer<
-  typeof ShippingMethodOutputSchema
+export type GetShippingMethodOutputData = z.infer<
+  typeof GetShippingMethodOutputSchema
 >;
 
-// Get
 export const GetShippingConfigOutputSchema = z.object({
   id: z.cuid2(),
   carrier: z.string(),
   createdAt: z.string(),
   organizationId: z.cuid2(),
-  shippingMethods: z.array(ShippingMethodOutputSchema),
+  shippingMethods: z.array(GetShippingMethodOutputSchema),
 });
 export type GetShippingConfigOutputData = z.infer<
   typeof GetShippingConfigOutputSchema

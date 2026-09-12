@@ -1,7 +1,9 @@
 import { z } from "zod";
+import { createFetchResponseSchema } from "./fetchResponse";
 
+/* Output Base Schemas */
 // amount is a Prisma Decimal, serialized as a string over JSON
-export const GetRevenueOutputSchema = z.object({
+export const RevenueOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string(),
   description: z.string(),
@@ -12,7 +14,7 @@ export const GetRevenueOutputSchema = z.object({
   organizationId: z.cuid2(),
   teamId: z.cuid2().nullable(),
 });
-export type GetRevenueOutputData = z.infer<typeof GetRevenueOutputSchema>;
+export type GetRevenueOutputData = z.infer<typeof RevenueOutputSchema>;
 
 // Get All
 export const GetAllRevenueQuerySchema = z.object({
@@ -23,11 +25,8 @@ export const GetAllRevenueQuerySchema = z.object({
   pageSize: z.number().positive().optional(),
 });
 
-export const GetAllRevenueOutputSchema = z.object({
-  data: z.array(GetRevenueOutputSchema),
-  aggregate: z.coerce.number().nullable(),
-  meta: z.object({ next: z.cuid2().optional() }),
-});
+export const GetAllRevenueOutputSchema =
+  createFetchResponseSchema(RevenueOutputSchema);
 export type GetAllRevenueOutputData = z.infer<typeof GetAllRevenueOutputSchema>;
 
 // Create
@@ -49,7 +48,7 @@ export const CreateRevenueInputSchema = z.object({
   teamId: z.cuid2().optional(),
 });
 export type CreateRevenueInputData = z.input<typeof CreateRevenueInputSchema>;
-export const CreateRevenueOutputSchema = GetRevenueOutputSchema;
+export const CreateRevenueOutputSchema = RevenueOutputSchema;
 
 // Update
 export const UpdateRevenueParamSchema = z.object({
@@ -58,7 +57,7 @@ export const UpdateRevenueParamSchema = z.object({
 
 export const UpdateRevenueInputSchema = CreateRevenueInputSchema.partial();
 export type UpdateRevenueInputData = z.input<typeof UpdateRevenueInputSchema>;
-export const UpdateRevenueOutputSchema = GetRevenueOutputSchema;
+export const UpdateRevenueOutputSchema = RevenueOutputSchema;
 
 // Delete
 export const DeleteRevenueParamSchema = z.object({

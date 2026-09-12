@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
 
+/* Output Base Schemas */
+// amount is a Prisma Decimal, serialized as a string over JSON
 export const ExpenseOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string(),
