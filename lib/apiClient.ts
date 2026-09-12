@@ -435,7 +435,7 @@ export const schema = createSchema(
 );
 
 export const apiClient = createFetch({
-  schema: schema,
+  schema,
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   credentials: "include",
   onRequest: async (context) => setServerCookie(context),
