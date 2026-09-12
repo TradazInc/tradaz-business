@@ -1,7 +1,7 @@
 import { z } from "zod";
+import { createFetchResponseSchema } from "./fetchResponse";
 
-// amount is a Prisma Decimal, serialized as a string over JSON
-export const GetExpenseOutputSchema = z.object({
+export const ExpenseOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string(),
   description: z.string(),
@@ -12,7 +12,6 @@ export const GetExpenseOutputSchema = z.object({
   organizationId: z.cuid2(),
   teamId: z.cuid2().nullable(),
 });
-export type GetExpenseOutputData = z.infer<typeof GetExpenseOutputSchema>;
 
 // Get All (index paginated)
 export const GetAllExpenseQuerySchema = z.object({
@@ -24,14 +23,8 @@ export const GetAllExpenseQuerySchema = z.object({
   pageSize: z.number().positive().optional(),
 });
 
-export const GetAllExpenseOutputSchema = z.object({
-  data: z.array(GetExpenseOutputSchema),
-  aggregate: z.coerce.number().nullable(),
-  meta: z.object({
-    count: z.number(),
-    totalPages: z.number(),
-  }),
-});
+export const GetAllExpenseOutputSchema =
+  createFetchResponseSchema(ExpenseOutputSchema);
 export type GetAllExpenseOutputData = z.infer<typeof GetAllExpenseOutputSchema>;
 
 // Create
@@ -53,7 +46,7 @@ export const CreateExpenseInputSchema = z.object({
   teamId: z.cuid2().optional(),
 });
 export type CreateExpenseInputData = z.input<typeof CreateExpenseInputSchema>;
-export const CreateExpenseOutputSchema = GetExpenseOutputSchema;
+export const CreateExpenseOutputSchema = ExpenseOutputSchema;
 
 // Update
 export const UpdateExpenseParamSchema = z.object({
@@ -62,7 +55,7 @@ export const UpdateExpenseParamSchema = z.object({
 
 export const UpdateExpenseInputSchema = CreateExpenseInputSchema.partial();
 export type UpdateExpenseInputData = z.input<typeof UpdateExpenseInputSchema>;
-export const UpdateExpenseOutputSchema = GetExpenseOutputSchema;
+export const UpdateExpenseOutputSchema = ExpenseOutputSchema;
 
 // Delete
 export const DeleteExpenseParamSchema = z.object({
