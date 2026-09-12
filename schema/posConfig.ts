@@ -2,19 +2,15 @@ import { z } from "zod";
 import { createFetchResponseSchema } from "./fetchResponse";
 import { Gateway } from "./enums";
 
-/* Output Schemas */
-const TerminalConfigOutputSchema = z.object({
+// Get
+const GetTerminalConfigOutputSchema = z.object({
   id: z.cuid2(),
   name: z.string().nullable(),
   serialNumber: z.string(),
   createdAt: z.iso.datetime(),
   posconfigId: z.cuid2(),
 });
-export type TerminalConfigOutputData = z.infer<
-  typeof TerminalConfigOutputSchema
->;
 
-// Get
 export const GetPosConfigOutputSchema = z.object({
   id: z.cuid2(),
   gateway: z.enum(Gateway),
@@ -22,7 +18,7 @@ export const GetPosConfigOutputSchema = z.object({
   privateKey: z.string(),
   createdAt: z.iso.datetime(),
   teamId: z.cuid2(),
-  terminalConfigs: z.array(TerminalConfigOutputSchema),
+  terminalConfigs: z.array(GetTerminalConfigOutputSchema),
 });
 export type GetPosConfigOutputData = z.infer<typeof GetPosConfigOutputSchema>;
 

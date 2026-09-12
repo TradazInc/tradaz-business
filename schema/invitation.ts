@@ -2,6 +2,7 @@ import { authClient } from "@/lib/authClient";
 import { OrgRole } from "@/schema/enums";
 import { z } from "zod";
 
+// Create
 const CreateInvitationInputSchema = z.object({
   email: z.string(),
   role: z.enum(OrgRole),

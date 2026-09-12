@@ -1,6 +1,7 @@
 import { authClient } from "@/lib/authClient";
 import { z } from "zod";
 
+// Create
 export const CreateStoreInputSchema = z.object({
   name: z
     .string({ error: "name is required" })

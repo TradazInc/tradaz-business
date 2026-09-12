@@ -4,6 +4,7 @@ import { checkBusinessSlug } from "@/server/business";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { z } from "zod";
 
+// Create
 export const CreateBusinessInputSchema = z.object({
   name: z
     .string({ error: "name is required" })
