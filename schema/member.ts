@@ -1,5 +1,6 @@
 import { authClient } from "@/lib/authClient";
 import { z } from "zod";
+import { FetchResponse } from "./fetchResponse";
 
 export type Member = typeof authClient.$Infer.Member & {
   user: {
@@ -40,3 +41,5 @@ export const GetAllMembersQuerySchema = z.object({
   ]),
 });
 export type GetAllMembersQueryData = z.infer<typeof GetAllMembersQuerySchema>;
+
+export type GetAllMembersOutputData = FetchResponse<Member>;

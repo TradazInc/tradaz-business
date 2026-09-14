@@ -1,7 +1,9 @@
 import { MEMBER_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
-import { FetchResponse } from "@/schema/fetchResponse";
-import { GetAllMembersQuerySchema, Member } from "@/schema/member";
+import {
+  GetAllMembersOutputData,
+  GetAllMembersQuerySchema,
+} from "@/schema/member";
 import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
@@ -13,7 +15,7 @@ import useSWRMutation from "swr/mutation";
 
 export const useMembers = (
   organizationId: string | undefined,
-  config?: SWRInfiniteConfiguration<FetchResponse<Member>, Error>,
+  config?: SWRInfiniteConfiguration<GetAllMembersOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
   const query = {
@@ -23,7 +25,7 @@ export const useMembers = (
 
   return useSWRInfinite(
     getIndexKey(MEMBER_KEY, query),
-    async ([key, query]): Promise<FetchResponse<Member>> => {
+    async ([key, query]): Promise<GetAllMembersOutputData> => {
       const res = await authClient.organization.listMembers({
         query: {
           ...query,
