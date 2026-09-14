@@ -31,3 +31,5 @@ export const SUBACCOUNT_KEY = "subaccounts";
 export const TRANSACTION_KEY = "transactions";
 
 export const BANK_KEY = "banks";
+
+export const COUNTRY_KEY = "countries";
