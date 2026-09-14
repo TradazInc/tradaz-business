@@ -37,3 +37,7 @@ export const COUNTRY_KEY = "countries";
 export const CHECKOUT_KEY = "checkout";
 
 export const ORDER_KEY = "orders";
+
+export const REVENUE_KEY = "revenue";
+
+export const EXPENSES_KEY = "expenses";
