@@ -1,7 +1,6 @@
 import { PAGE_SIZE } from "@/data/constants";
 import { authClient } from "@/lib/authClient";
-import { FetchResponse } from "@/schema/fetchResponse";
-import { Member } from "@/schema/member";
+import { GetAllMembersOutputData } from "@/schema/member";
 
 export async function getMembers(organizationId?: string) {
   const { data, error } = await authClient.organization.listMembers({
@@ -13,7 +12,7 @@ export async function getMembers(organizationId?: string) {
       ? ({
           data: data.members,
           meta: { count: data.total },
-        } satisfies FetchResponse<Member>)
+        } satisfies GetAllMembersOutputData)
       : null,
     error,
   };
