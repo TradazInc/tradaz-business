@@ -33,3 +33,7 @@ export const TRANSACTION_KEY = "transactions";
 export const BANK_KEY = "banks";
 
 export const COUNTRY_KEY = "countries";
+
+export const CHECKOUT_KEY = "checkout";
+
+export const ORDER_KEY = "orders";
