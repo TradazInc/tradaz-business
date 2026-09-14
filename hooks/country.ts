@@ -9,14 +9,10 @@ import { useSearchParams } from "next/navigation";
 import useSWRInfinite, { SWRInfiniteConfiguration } from "swr/infinite";
 
 export const useCountries = (
-  organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllCountriesOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllCountriesQuerySchema.parse(searchParams),
-  };
+  const query = GetAllCountriesQuerySchema.parse(searchParams);
 
   return useSWRInfinite(
     getCursorKey(COUNTRY_KEY, query),

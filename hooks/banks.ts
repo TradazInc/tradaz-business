@@ -6,14 +6,10 @@ import { useSearchParams } from "next/navigation";
 import useSWRInfinite, { SWRInfiniteConfiguration } from "swr/infinite";
 
 export const useBanks = (
-  organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllBanksOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllBanksQuerySchema.parse(searchParams),
-  };
+  const query = GetAllBanksQuerySchema.parse(searchParams);
 
   return useSWRInfinite(
     getCursorKey(BANK_KEY, query),

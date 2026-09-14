@@ -3,8 +3,10 @@ import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreateBusinessCategoryInputData,
   GetAllBusinessCategoryOutputData,
+  GetAllBusinessCategoryQuerySchema,
 } from "@/schema/businessCategory";
 import { getCursorKey, getKey } from "@/utilities/computeKey";
+import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -15,8 +17,11 @@ import useSWRMutation from "swr/mutation";
 export const useBusinessCategories = (
   config?: SWRInfiniteConfiguration<GetAllBusinessCategoryOutputData, Error>,
 ) => {
+  const searchParams = useSearchParams();
+  const query = GetAllBusinessCategoryQuerySchema.parse(searchParams);
+
   return useSWRInfinite(
-    getCursorKey(BUSINESS_CATEGORY_KEY, {}),
+    getCursorKey(BUSINESS_CATEGORY_KEY, query),
     ([key, query]) =>
       apiClient("@get/api/business-categories", {
         query,
