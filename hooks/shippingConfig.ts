@@ -3,10 +3,10 @@ import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreateShippingConfigInputData,
   GetAllShippingConfigOutputData,
+  GetAllShippingConfigQuerySchema,
   UpdateShippingConfigInputData,
 } from "@/schema/shippingConfig";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -20,7 +20,10 @@ export const useShippingConfigs = (
   config?: SWRInfiniteConfiguration<GetAllShippingConfigOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = { organizationId, ...searchQuery(searchParams) };
+  const query = {
+    organizationId,
+    ...GetAllShippingConfigQuerySchema.parse(searchParams),
+  };
 
   return useSWRInfinite(
     getCursorKey(SHIPPING_CONFIG_KEY, query),

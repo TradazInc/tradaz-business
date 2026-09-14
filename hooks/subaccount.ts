@@ -3,10 +3,10 @@ import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreateSubaccountInputData,
   GetAllSubaccountOutputData,
+  GetAllSubaccountQuerySchema,
   UpdateSubaccountInputData,
 } from "@/schema/subaccount";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -20,7 +20,10 @@ export const useSubaccounts = (
   config?: SWRInfiniteConfiguration<GetAllSubaccountOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = { organizationId, ...searchQuery(searchParams) };
+  const query = {
+    organizationId,
+    ...GetAllSubaccountQuerySchema.parse(searchParams),
+  };
 
   return useSWRInfinite(
     getCursorKey(SUBACCOUNT_KEY, query),

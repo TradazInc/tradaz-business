@@ -1,9 +1,8 @@
 import { MEMBER_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
 import { FetchResponse } from "@/schema/fetchResponse";
-import { Member } from "@/schema/member";
+import { GetAllMembersQuerySchema, Member } from "@/schema/member";
 import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
-import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -17,7 +16,10 @@ export const useMembers = (
   config?: SWRInfiniteConfiguration<FetchResponse<Member>, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = { organizationId, ...searchQuery(searchParams) };
+  const query = {
+    ...GetAllMembersQuerySchema.parse(searchParams),
+    organizationId,
+  };
 
   return useSWRInfinite(
     getIndexKey(MEMBER_KEY, query),

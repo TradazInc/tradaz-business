@@ -1,12 +1,12 @@
 import { PAGE_SIZE } from "@/data/constants";
 import { FetchResponse } from "@/schema/fetchResponse";
 import {
-    CursorQuery,
-    cursorQuery,
-    IndexQuery,
-    indexQuery,
+  CursorQuery,
+  cursorQuery,
+  IndexQuery,
+  indexQuery,
 } from "./paginationQuery";
-import { isQueryValid, SearchQuery } from "./searchQuery";
+import { isQueryValid } from "./searchQuery";
 
 // Computed Cache Keys
 export const getKey = (cacheKey: string): [string] => [cacheKey];
@@ -17,11 +17,11 @@ export const getScopedKey = (
 ): [string, string] | null => (scope ? [cacheKey, scope] : null);
 
 // Pagination Cache Keys
-export function getCursorKey(cacheKey: string, query: SearchQuery) {
+export function getCursorKey<K>(cacheKey: string, query: K) {
   return <T>(
     pageIndex: number,
     previousPageData: FetchResponse<T> | null,
-  ): [string, SearchQuery & CursorQuery] | null => {
+  ): [string, K & CursorQuery] | null => {
     const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
 
     return cursor && isQueryValid(query)
@@ -30,11 +30,11 @@ export function getCursorKey(cacheKey: string, query: SearchQuery) {
   };
 }
 
-export function getIndexKey(cacheKey: string, query: SearchQuery) {
+export function getIndexKey<K>(cacheKey: string, query: K) {
   return <T>(
     pageIndex: number,
     previousPageData: FetchResponse<T> | null,
-  ): [string, SearchQuery & IndexQuery] | null => {
+  ): [string, K & IndexQuery] | null => {
     const index = indexQuery(pageIndex, previousPageData, PAGE_SIZE);
 
     return index && isQueryValid(query)

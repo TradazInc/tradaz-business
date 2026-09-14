@@ -1,8 +1,11 @@
 import { COUPON_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
-import { CreateCouponInputData, GetAllCouponOutputData } from "@/schema/coupon";
+import {
+  CreateCouponInputData,
+  GetAllCouponOutputData,
+  GetAllCouponQuerySchema,
+} from "@/schema/coupon";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -16,7 +19,10 @@ export const useCoupons = (
   config?: SWRInfiniteConfiguration<GetAllCouponOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = { organizationId, ...searchQuery(searchParams) };
+  const query = {
+    organizationId,
+    ...GetAllCouponQuerySchema.parse(searchParams),
+  };
 
   return useSWRInfinite(
     getCursorKey(COUPON_KEY, query),

@@ -3,10 +3,10 @@ import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreatePointsConfigInputData,
   GetAllPointsConfigOutputData,
+  GetAllPointsConfigQuerySchema,
   UpdatePointsConfigInputData,
 } from "@/schema/pointsConfig";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -20,7 +20,10 @@ export const usePointsConfigs = (
   config?: SWRInfiniteConfiguration<GetAllPointsConfigOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = { organizationId, ...searchQuery(searchParams) };
+  const query = {
+    organizationId,
+    ...GetAllPointsConfigQuerySchema.parse(searchParams),
+  };
 
   return useSWRInfinite(
     getCursorKey(POINTS_CONFIG_KEY, query),

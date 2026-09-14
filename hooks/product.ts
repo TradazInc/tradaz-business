@@ -3,9 +3,9 @@ import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreateProductInputData,
   GetAllProductOutputData,
+  GetAllProductQuerySchema,
 } from "@/schema/product";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -19,7 +19,10 @@ export const useProducts = (
   config?: SWRInfiniteConfiguration<GetAllProductOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = { organizationId, ...searchQuery(searchParams) };
+  const query = {
+    organizationId,
+    ...GetAllProductQuerySchema.parse(searchParams),
+  };
 
   return useSWRInfinite(
     getCursorKey(PRODUCT_KEY, query),

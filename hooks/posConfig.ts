@@ -3,10 +3,10 @@ import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
   CreatePosConfigInputData,
   GetAllPosConfigOutputData,
+  GetAllPosConfigQuerySchema,
   UpdatePosConfigInputData,
 } from "@/schema/posConfig";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { searchQuery } from "@/utilities/searchQuery";
 import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -20,7 +20,10 @@ export const usePosConfigs = (
   config?: SWRInfiniteConfiguration<GetAllPosConfigOutputData, Error>,
 ) => {
   const searchParams = useSearchParams();
-  const query = { organizationId, ...searchQuery(searchParams) };
+  const query = {
+    organizationId,
+    ...GetAllPosConfigQuerySchema.parse(searchParams),
+  };
 
   return useSWRInfinite(
     getCursorKey(POS_CONFIG_KEY, query),
