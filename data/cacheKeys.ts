@@ -29,3 +29,5 @@ export const SHIPPING_CONFIG_KEY = "shipping-configs";
 export const SUBACCOUNT_KEY = "subaccounts";
 
 export const TRANSACTION_KEY = "transactions";
+
+export const BANK_KEY = "banks";
