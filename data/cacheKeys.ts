@@ -41,3 +41,5 @@ export const ORDER_KEY = "orders";
 export const REVENUE_KEY = "revenue";
 
 export const EXPENSES_KEY = "expenses";
+
+export const FINANCE_KEY = "finanace";
