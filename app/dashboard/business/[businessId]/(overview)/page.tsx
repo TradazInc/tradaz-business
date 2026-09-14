@@ -1,10 +1,10 @@
-import { StoreForm } from "@/components/custom/business/StoreForm";
-import StoreGrid from "@/components/custom/business/StoreGrid";
-import { DialogBox } from "@/components/custom/shared/DialogBox";
-import EmptyPage from "@/components/custom/shared/EmptyPage";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
-import PageHeader from "@/components/custom/shared/PageHeader";
-import Search from "@/components/custom/shared/Search";
+import { StoreForm } from "@/components/business/StoreForm";
+import StoreGrid from "@/components/business/StoreGrid";
+import { DialogBox } from "@/components/shared/DialogBox";
+import EmptyPage from "@/components/shared/EmptyPage";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
+import Search from "@/components/shared/Search";
 import { getBusiness } from "@/server/business";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";

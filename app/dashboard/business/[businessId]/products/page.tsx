@@ -1,8 +1,8 @@
-import ProductGrid from "@/components/custom/business/ProductGrid";
-import EmptyPage from "@/components/custom/shared/EmptyPage";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
-import PageHeader from "@/components/custom/shared/PageHeader";
-import Search from "@/components/custom/shared/Search";
+import ProductGrid from "@/components/business/ProductGrid";
+import EmptyPage from "@/components/shared/EmptyPage";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
+import Search from "@/components/shared/Search";
 import { getProducts } from "@/server/product";
 import { computePath } from "@/utilities/computePath";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";

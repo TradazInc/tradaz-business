@@ -1,9 +1,9 @@
-import CouponForm from "@/components/custom/business/CouponForm";
-import CouponTable from "@/components/custom/business/CouponTable";
-import { DialogBox } from "@/components/custom/shared/DialogBox";
-import EmptyPage from "@/components/custom/shared/EmptyPage";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
-import PageHeader from "@/components/custom/shared/PageHeader";
+import CouponForm from "@/components/business/CouponForm";
+import CouponTable from "@/components/business/CouponTable";
+import { DialogBox } from "@/components/shared/DialogBox";
+import EmptyPage from "@/components/shared/EmptyPage";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
 import { getCoupons } from "@/server/coupon";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";

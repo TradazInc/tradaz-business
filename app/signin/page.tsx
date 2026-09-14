@@ -1,6 +1,6 @@
-import SignInForm from "@/components/custom/signin/SignInForm";
-import SignUpForm from "@/components/custom/signin/SignUpForm";
-import TradazLogo from "@/components/custom/shared/TradazLogo";
+import SignInForm from "@/components/signin/SignInForm";
+import SignUpForm from "@/components/signin/SignUpForm";
+import TradazLogo from "@/components/shared/TradazLogo";
 import { Center, Tabs, VStack } from "@chakra-ui/react";
 
 const SigninPage = () => {

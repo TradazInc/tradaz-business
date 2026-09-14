@@ -1,8 +1,8 @@
-import MemberTable from "@/components/custom/business/MemberTable";
-import EmptyPage from "@/components/custom/shared/EmptyPage";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
-import PageHeader from "@/components/custom/shared/PageHeader";
-import Search from "@/components/custom/shared/Search";
+import MemberTable from "@/components/business/MemberTable";
+import EmptyPage from "@/components/shared/EmptyPage";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
+import Search from "@/components/shared/Search";
 import { getMembers } from "@/server/member";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";

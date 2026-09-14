@@ -1,4 +1,4 @@
-import StatusPage from "@/components/custom/shared/StatusPage";
+import StatusPage from "@/components/shared/StatusPage";
 import { Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { PiUserCircleDashedDuotone } from "react-icons/pi";

@@ -1,5 +1,5 @@
-import ProductForm from "@/components/custom/business/ProductForm";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
+import ProductForm from "@/components/business/ProductForm";
+import { PageContainer } from "@/components/shared/PageContainer";
 import { getProduct } from "@/server/product";
 import { notFound } from "next/navigation";
 

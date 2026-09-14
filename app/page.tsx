@@ -13,7 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import TradazLogo from "@/components/custom/shared/TradazLogo";
+import TradazLogo from "@/components/shared/TradazLogo";
 
 const page = () => {
   return (

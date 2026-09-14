@@ -1,9 +1,9 @@
-import ProductCategoryForm from "@/components/custom/business/ProductCategoryForm";
-import ProductCategoryTable from "@/components/custom/business/ProductCategoryTable";
-import { DialogBox } from "@/components/custom/shared/DialogBox";
-import EmptyPage from "@/components/custom/shared/EmptyPage";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
-import PageHeader from "@/components/custom/shared/PageHeader";
+import ProductCategoryForm from "@/components/business/ProductCategoryForm";
+import ProductCategoryTable from "@/components/business/ProductCategoryTable";
+import { DialogBox } from "@/components/shared/DialogBox";
+import EmptyPage from "@/components/shared/EmptyPage";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
 import { getProductCategories } from "@/server/productCategory";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";

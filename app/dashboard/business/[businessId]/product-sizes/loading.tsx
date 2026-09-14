@@ -1,4 +1,4 @@
-import { PageContainer } from "@/components/custom/shared/PageContainer";
+import { PageContainer } from "@/components/shared/PageContainer";
 
 const loading = () => {
   return <PageContainer>loading...</PageContainer>;

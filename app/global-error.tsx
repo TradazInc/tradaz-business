@@ -1,6 +1,6 @@
 "use client";
 
-import StatusPage from "@/components/custom/shared/StatusPage";
+import StatusPage from "@/components/shared/StatusPage";
 import { Provider } from "@/components/ui/provider";
 import { Button, Code, Text } from "@chakra-ui/react";
 import { useEffect } from "react";

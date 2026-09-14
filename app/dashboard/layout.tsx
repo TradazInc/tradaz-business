@@ -1,5 +1,5 @@
-import { NavBar } from "@/components/custom/dashboard/NavBar";
-import { LayoutContainer } from "@/components/custom/dashboard/LayoutContainer";
+import { NavBar } from "@/components/dashboard/NavBar";
+import { LayoutContainer } from "@/components/dashboard/LayoutContainer";
 import { BUSINESS_KEY, SESSION_KEY } from "@/data/cacheKeys";
 import { getSession } from "@/server/auth";
 import { getBusinesses } from "@/server/business";

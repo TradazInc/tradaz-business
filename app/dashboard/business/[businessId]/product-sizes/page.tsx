@@ -1,9 +1,9 @@
-import ProductSizeForm from "@/components/custom/business/ProductSizeForm";
-import ProductSizeTable from "@/components/custom/business/ProductSizeTable";
-import { DialogBox } from "@/components/custom/shared/DialogBox";
-import EmptyPage from "@/components/custom/shared/EmptyPage";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
-import PageHeader from "@/components/custom/shared/PageHeader";
+import ProductSizeForm from "@/components/business/ProductSizeForm";
+import ProductSizeTable from "@/components/business/ProductSizeTable";
+import { DialogBox } from "@/components/shared/DialogBox";
+import EmptyPage from "@/components/shared/EmptyPage";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
 import { getSizeTypes } from "@/server/sizeType";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";

@@ -1,9 +1,9 @@
-import PointsConfigForm from "@/components/custom/business/PointsConfigForm";
-import PointsConfigTable from "@/components/custom/business/PointsConfigTable";
-import { DialogBox } from "@/components/custom/shared/DialogBox";
-import EmptyPage from "@/components/custom/shared/EmptyPage";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
-import PageHeader from "@/components/custom/shared/PageHeader";
+import PointsConfigForm from "@/components/business/PointsConfigForm";
+import PointsConfigTable from "@/components/business/PointsConfigTable";
+import { DialogBox } from "@/components/shared/DialogBox";
+import EmptyPage from "@/components/shared/EmptyPage";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
 import { getPointsConfigs } from "@/server/pointsConfig";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";

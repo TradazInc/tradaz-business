@@ -1,4 +1,4 @@
-import { SWRProvider } from "@/components/custom/shared/SWRProvider";
+import { SWRProvider } from "@/components/shared/SWRProvider";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";

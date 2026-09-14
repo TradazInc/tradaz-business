@@ -1,10 +1,10 @@
-import { BusinessForm } from "@/components/custom/dashboard/BusinessForm";
-import BusinessGrid from "@/components/custom/dashboard/BusinessGrid";
-import { DialogBox } from "@/components/custom/shared/DialogBox";
-import EmptyPage from "@/components/custom/shared/EmptyPage";
-import { PageContainer } from "@/components/custom/shared/PageContainer";
-import PageHeader from "@/components/custom/shared/PageHeader";
-import Search from "@/components/custom/shared/Search";
+import { BusinessForm } from "@/components/dashboard/BusinessForm";
+import BusinessGrid from "@/components/dashboard/BusinessGrid";
+import { DialogBox } from "@/components/shared/DialogBox";
+import EmptyPage from "@/components/shared/EmptyPage";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
+import Search from "@/components/shared/Search";
 import { getBusinesses } from "@/server/business";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
