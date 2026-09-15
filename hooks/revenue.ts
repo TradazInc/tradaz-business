@@ -48,18 +48,18 @@ export const useAddRevenue = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateRevenue = (organizationId: string | undefined) => {
+export const useUpdateRevenue = (
+  id: string,
+  organizationId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
     getScopedKey(REVENUE_KEY, organizationId),
-    (
-      key,
-      { arg }: { arg: { id: string; posConfig: UpdateRevenueInputData } },
-    ) =>
+    (key, { arg }: { arg: UpdateRevenueInputData }) =>
       apiClient("@put/api/revenue/:id", {
-        params: { id: arg.id },
-        body: arg.posConfig,
+        params: { id },
+        body: arg,
         ...apiConfig,
       }),
     {

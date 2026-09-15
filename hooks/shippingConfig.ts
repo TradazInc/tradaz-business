@@ -51,20 +51,18 @@ export const useAddShippingConfig = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateShippingConfig = (organizationId: string | undefined) => {
+export const useUpdateShippingConfig = (
+  id: string,
+  organizationId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(SHIPPING_CONFIG_KEY, organizationId),
-    (
-      key,
-      {
-        arg,
-      }: { arg: { id: string; shippingConfig: UpdateShippingConfigInputData } },
-    ) =>
+    getScopedKey(SHIPPING_CONFIG_KEY, id),
+    (key, { arg }: { arg: UpdateShippingConfigInputData }) =>
       apiClient("@put/api/shipping-configs/:id", {
-        params: { id: arg.id },
-        body: arg.shippingConfig,
+        params: { id },
+        body: arg,
         ...apiConfig,
       }),
     {

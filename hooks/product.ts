@@ -56,7 +56,7 @@ export const useUpdateProduct = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(PRODUCT_KEY, organizationId),
+    getScopedKey(PRODUCT_KEY, id),
     (key, { arg }: { arg: UpdateProductInputData }) =>
       apiClient("@put/api/products/:id", {
         params: { id },
@@ -79,7 +79,7 @@ export const useUpdateProductStatus = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(PRODUCT_KEY, organizationId),
+    getScopedKey(PRODUCT_KEY, id),
     (key, { arg }: { arg: UpdateProductStatusInputData }) =>
       apiClient("@patch/api/products/:id/status", {
         params: { id },

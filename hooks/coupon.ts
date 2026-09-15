@@ -4,6 +4,7 @@ import {
   CreateCouponInputData,
   GetAllCouponOutputData,
   GetAllCouponQuerySchema,
+  UpdateCouponInputData,
 } from "@/schema/coupon";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSearchParams } from "next/navigation";
@@ -38,6 +39,29 @@ export const useAddCoupon = (organizationId: string | undefined) => {
     getScopedKey(COUPON_KEY, organizationId),
     (key, { arg }: { arg: CreateCouponInputData }) =>
       apiClient("@post/api/coupons", { body: arg, ...apiConfig }),
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
+        ),
+    },
+  );
+};
+
+export const useUpdateCoupon = (
+  id: string,
+  organizationId: string | undefined,
+) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    getScopedKey(COUPON_KEY, id),
+    (key, { arg }: { arg: UpdateCouponInputData }) =>
+      apiClient("@put/api/coupons/:id", {
+        params: { id },
+        body: arg,
+        ...apiConfig,
+      }),
     {
       onSuccess: () =>
         mutate(

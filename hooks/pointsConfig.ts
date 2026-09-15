@@ -51,20 +51,18 @@ export const useAddPointsConfig = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdatePointsConfig = (organizationId: string | undefined) => {
+export const useUpdatePointsConfig = (
+  id: string,
+  organizationId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(POINTS_CONFIG_KEY, organizationId),
-    (
-      key,
-      {
-        arg,
-      }: { arg: { id: string; pointsConfig: UpdatePointsConfigInputData } },
-    ) =>
+    getScopedKey(POINTS_CONFIG_KEY, id),
+    (key, { arg }: { arg: UpdatePointsConfigInputData }) =>
       apiClient("@put/api/points-config/:id", {
-        params: { id: arg.id },
-        body: arg.pointsConfig,
+        params: { id },
+        body: arg,
         ...apiConfig,
       }),
     {

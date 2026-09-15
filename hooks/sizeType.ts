@@ -4,6 +4,7 @@ import {
   CreateSizeTypeInputData,
   GetAllSizeTypeOutputData,
   GetAllSizeTypeQuerySchema,
+  UpdateSizeTypeInputData,
 } from "@/schema/sizeType";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSearchParams } from "next/navigation";
@@ -38,6 +39,29 @@ export const useAddSizeTypes = (organizationId: string | undefined) => {
     getScopedKey(SIZE_TYPE_KEY, organizationId),
     (key, { arg }: { arg: CreateSizeTypeInputData }) =>
       apiClient("@post/api/size-types", { body: arg, ...apiConfig }),
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+        ),
+    },
+  );
+};
+
+export const useUpdateSizeType = (
+  id: string,
+  organizationId: string | undefined,
+) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    getScopedKey(SIZE_TYPE_KEY, id),
+    (key, { arg }: { arg: UpdateSizeTypeInputData }) =>
+      apiClient("@put/api/size-types/:id", {
+        params: { id },
+        body: arg,
+        ...apiConfig,
+      }),
     {
       onSuccess: () =>
         mutate(

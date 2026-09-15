@@ -48,18 +48,18 @@ export const useAddExpense = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateExpense = (organizationId: string | undefined) => {
+export const useUpdateExpense = (
+  id: string,
+  organizationId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(EXPENSES_KEY, organizationId),
-    (
-      key,
-      { arg }: { arg: { id: string; posConfig: UpdateExpenseInputData } },
-    ) =>
+    getScopedKey(EXPENSES_KEY, id),
+    (key, { arg }: { arg: UpdateExpenseInputData }) =>
       apiClient("@put/api/expense/:id", {
-        params: { id: arg.id },
-        body: arg.posConfig,
+        params: { id },
+        body: arg,
         ...apiConfig,
       }),
     {
