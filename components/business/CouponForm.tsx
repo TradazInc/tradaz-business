@@ -245,6 +245,9 @@ const CouponForm = () => {
                   invalid={!!errors.isActive}
                   disabled={field.disabled}
                 >
+                  <Field.Label>
+                    Coupon Active <Field.RequiredIndicator />
+                  </Field.Label>
                   <Checkbox.Root
                     py={2}
                     gap={"4"}
@@ -254,12 +257,7 @@ const CouponForm = () => {
                   >
                     <Checkbox.HiddenInput />
                     <Checkbox.Control />
-                    <Stack gap="1">
-                      <Checkbox.Label>Active</Checkbox.Label>
-                      <Box textStyle="sm" color="fg.muted">
-                        Check for coupon to go live
-                      </Box>
-                    </Stack>
+                    <Checkbox.Label>Active</Checkbox.Label>
                   </Checkbox.Root>
                   <Field.ErrorText>{errors.isActive?.message}</Field.ErrorText>
                 </Field.Root>
