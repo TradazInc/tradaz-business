@@ -98,6 +98,9 @@ import {
   UpdateProductInputSchema,
   UpdateProductOutputSchema,
   UpdateProductParamSchema,
+  UpdateProductStatusInputSchema,
+  UpdateProductStatusOutputSchema,
+  UpdateProductStatusParamSchema,
 } from "@/schema/product";
 import {
   CreateProductCategoryInputSchema,
@@ -305,6 +308,11 @@ export const schema = createSchema(
     "@post/api/products": {
       input: CreateProductInputSchema,
       output: CreateProductOutputSchema,
+    },
+    "@patch/api/products/:id/status": {
+      params: UpdateProductStatusParamSchema,
+      input: UpdateProductStatusInputSchema,
+      output: UpdateProductStatusOutputSchema,
     },
     "@put/api/products/:id": {
       params: UpdateProductParamSchema,

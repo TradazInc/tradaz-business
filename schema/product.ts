@@ -210,6 +210,17 @@ export const UpdateProductInputSchema = CreateProductInputSchema.partial();
 export type UpdateProductInputData = z.infer<typeof UpdateProductInputSchema>;
 export const UpdateProductOutputSchema = ProductOutputBaseSchema;
 
+// Update Status
+export const UpdateProductStatusParamSchema = UpdateProductParamSchema;
+
+export const UpdateProductStatusInputSchema = z.object({
+  productStatus: z.enum(ProductStatus),
+});
+export type UpdateProductStatusInputData = z.infer<
+  typeof UpdateProductStatusInputSchema
+>;
+export const UpdateProductStatusOutputSchema = ProductOutputBaseSchema;
+
 // Delete
 export const DeleteProductParamSchema = z.object({
   id: z.cuid2(),

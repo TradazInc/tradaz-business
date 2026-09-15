@@ -4,6 +4,8 @@ import {
   CreateProductInputData,
   GetAllProductOutputData,
   GetAllProductQuerySchema,
+  UpdateProductInputData,
+  UpdateProductStatusInputData,
 } from "@/schema/product";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
 import { useSearchParams } from "next/navigation";
@@ -47,6 +49,52 @@ export const useAddProduct = (organizationId: string | undefined) => {
   );
 };
 
+export const useUpdateProduct = (
+  id: string,
+  organizationId: string | undefined,
+) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    getScopedKey(PRODUCT_KEY, organizationId),
+    (key, { arg }: { arg: UpdateProductInputData }) =>
+      apiClient("@put/api/products/:id", {
+        params: { id },
+        body: arg,
+        ...apiConfig,
+      }),
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
+        ),
+    },
+  );
+};
+
+export const useUpdateProductStatus = (
+  id: string,
+  organizationId: string | undefined,
+) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    getScopedKey(PRODUCT_KEY, organizationId),
+    (key, { arg }: { arg: UpdateProductStatusInputData }) =>
+      apiClient("@patch/api/products/:id/status", {
+        params: { id },
+        body: arg,
+        ...apiConfig,
+      }),
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
+        ),
+    },
+  );
+};
+
 export const useRemoveProduct = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
@@ -54,6 +102,44 @@ export const useRemoveProduct = (organizationId: string | undefined) => {
     getScopedKey(PRODUCT_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/products/:id", {
+        params: { id: arg },
+        ...apiConfig,
+      }),
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
+        ),
+    },
+  );
+};
+
+export const useRemoveVariation = (organizationId: string | undefined) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    getScopedKey(PRODUCT_KEY, organizationId),
+    (key, { arg }: { arg: string }) =>
+      apiClient("@delete/api/products/variations/:id", {
+        params: { id: arg },
+        ...apiConfig,
+      }),
+    {
+      onSuccess: () =>
+        mutate(
+          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
+        ),
+    },
+  );
+};
+
+export const useRemoveStoreVariation = (organizationId: string | undefined) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    getScopedKey(PRODUCT_KEY, organizationId),
+    (key, { arg }: { arg: string }) =>
+      apiClient("@delete/api/products/team-variations/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
