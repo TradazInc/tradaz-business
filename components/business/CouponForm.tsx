@@ -6,6 +6,7 @@ import { DiscountType } from "@/schema/enums";
 import { useAddCoupon } from "@/hooks/coupon";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
+  Box,
   Button,
   Checkbox,
   createListCollection,
@@ -245,12 +246,18 @@ const CouponForm = () => {
                   disabled={field.disabled}
                 >
                   <Checkbox.Root
+                    py={1}
                     checked={field.value}
                     onCheckedChange={({ checked }) => field.onChange(checked)}
                   >
                     <Checkbox.HiddenInput />
                     <Checkbox.Control />
-                    <Checkbox.Label>Active</Checkbox.Label>
+                    <Stack gap="1">
+                      <Checkbox.Label>Active</Checkbox.Label>
+                      <Box textStyle="sm" color="fg.muted">
+                        Check for coupon to go live
+                      </Box>
+                    </Stack>
                   </Checkbox.Root>
                   <Field.ErrorText>{errors.isActive?.message}</Field.ErrorText>
                 </Field.Root>
