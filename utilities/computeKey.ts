@@ -6,7 +6,6 @@ import {
   IndexQuery,
   indexQuery,
 } from "./paginationQuery";
-import { isQueryValid } from "./searchQuery";
 
 // Computed Cache Keys
 export const getKey = (cacheKey: string): [string] => [cacheKey];
@@ -24,9 +23,7 @@ export function getCursorKey<K>(cacheKey: string, query: K) {
   ): [string, K & CursorQuery] | null => {
     const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
 
-    return cursor && isQueryValid(query)
-      ? [cacheKey, { ...query, ...cursor }]
-      : null;
+    return cursor ? [cacheKey, { ...query, ...cursor }] : null;
   };
 }
 
@@ -37,8 +34,6 @@ export function getIndexKey<K>(cacheKey: string, query: K) {
   ): [string, K & IndexQuery] | null => {
     const index = indexQuery(pageIndex, previousPageData, PAGE_SIZE);
 
-    return index && isQueryValid(query)
-      ? [cacheKey, { ...query, ...index }]
-      : null;
+    return index ? [cacheKey, { ...query, ...index }] : null;
   };
 }
