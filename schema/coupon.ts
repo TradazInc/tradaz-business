@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { CalendarDateSchema } from "./calendarDate";
 import { DiscountType } from "./enums";
+import { createFetchResponseSchema } from "./fetchResponse";
 
 // Get
 export const GetCouponParamSchema = z.object({
@@ -55,22 +56,27 @@ export const GetAllCouponOutputSchema = createFetchResponseSchema(
 export type GetAllCouponOutputData = z.infer<typeof GetAllCouponOutputSchema>;
 
 // Create
-// kept unrefined so the update schema below can be derived with .partial()
+// Kept unrefined so the update schema below can be derived with .partial()
 const CouponInputBaseSchema = z.object({
-  discountType: z.enum(DiscountType, { error: "select a discount type" }),
-
   name: z
     .string({ error: "name is required" })
     .min(3, { error: "name must be at least 3 letters long" }),
 
+  // an empty string means "not provided", so the server generates the code
   code: z
-    .string({ error: "code is required" })
-    .min(3, { error: "code must be at least 3 characters long" })
-    .regex(/^[A-Za-z0-9-]+$/, {
-      error: "code can only contain letters, numbers and hyphens",
-    })
-    .transform((code) => code.toUpperCase())
+    .union([
+      z.literal(""),
+      z
+        .string({ error: "code is required" })
+        .min(3, { error: "code must be at least 3 characters long" })
+        .regex(/^[A-Za-z0-9-]+$/, {
+          error: "code can only contain letters, numbers and hyphens",
+        }),
+    ])
+    .transform((code) => (code.length > 0 ? code.toUpperCase() : undefined))
     .optional(),
+
+  discountType: z.enum(DiscountType, { error: "select a discount type" }),
 
   discountValue: z
     .number({ error: "discount value is required" })
@@ -86,13 +92,9 @@ const CouponInputBaseSchema = z.object({
 
   isActive: z.boolean({ error: "select a status" }).default(true),
 
-  startsAt: z.iso
-    .datetime({ error: "start date is required" })
-    .min(1, { error: "start date is required" }),
+  startsAt: CalendarDateSchema("start date"),
 
-  endsAt: z.iso
-    .datetime({ error: "end date is required" })
-    .min(1, { error: "end date is required" }),
+  endsAt: CalendarDateSchema("end date"),
 
   memberId: z.cuid2().optional(),
 });

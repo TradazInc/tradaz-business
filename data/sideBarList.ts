@@ -165,7 +165,7 @@ export const businessItems: SideMenuItem[] = [
     children: [
       { label: "Loyalty Points", icon: LuHeart, path: "/loyalty-points" },
       { label: "Vouchers", icon: LuTicket, path: "" },
-      { label: "Set Coupon", icon: LuTag, path: "/coupons" },
+      { label: "Coupons", icon: LuTag, path: "/coupons" },
     ],
   },
   {

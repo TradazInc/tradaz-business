@@ -259,14 +259,18 @@ const CouponForm = () => {
               <Field.Root invalid={!!errors.startsAt}>
                 <DatePicker.Root
                   value={field.value ? [parseDate(field.value)] : []}
-                  onValueChange={(e) =>
-                    field.onChange(e.value[0]?.toString() ?? "")
-                  }
+                  onValueChange={(e) => {
+                    field.onChange(e.value[0]?.toString() ?? "");
+                    field.onBlur();
+                  }}
                   invalid={!!errors.startsAt}
                 >
                   <DatePicker.Label>Start date</DatePicker.Label>
                   <DatePicker.Control>
-                    <DatePicker.Input placeholder="Select date" />
+                    <DatePicker.Input
+                      placeholder="Select date"
+                      onBlur={field.onBlur}
+                    />
                     <DatePicker.IndicatorGroup>
                       <DatePicker.Trigger>
                         <LuCalendar />
@@ -304,14 +308,18 @@ const CouponForm = () => {
               <Field.Root invalid={!!errors.endsAt}>
                 <DatePicker.Root
                   value={field.value ? [parseDate(field.value)] : []}
-                  onValueChange={(e) =>
-                    field.onChange(e.value[0]?.toString() ?? "")
-                  }
+                  onValueChange={(e) => {
+                    field.onChange(e.value[0]?.toString() ?? "");
+                    field.onBlur();
+                  }}
                   invalid={!!errors.endsAt}
                 >
                   <DatePicker.Label>End date</DatePicker.Label>
                   <DatePicker.Control>
-                    <DatePicker.Input placeholder="Select date" />
+                    <DatePicker.Input
+                      placeholder="Select date"
+                      onBlur={field.onBlur}
+                    />
                     <DatePicker.IndicatorGroup>
                       <DatePicker.Trigger>
                         <LuCalendar />
