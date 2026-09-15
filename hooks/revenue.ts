@@ -7,26 +7,22 @@ import {
   UpdateRevenueInputData,
 } from "@/schema/revenue";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useRevenues = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllRevenueOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllRevenueQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllRevenueQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(REVENUE_KEY, query),
+    getCursorKey(REVENUE_KEY, { ...query, organizationId }),
     ([key, query]) => apiClient("@get/api/revenue", { query, ...apiConfig }),
     config,
   );

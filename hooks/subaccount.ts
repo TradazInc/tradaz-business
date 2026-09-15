@@ -7,26 +7,22 @@ import {
   UpdateSubaccountInputData,
 } from "@/schema/subaccount";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useSubaccounts = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllSubaccountOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllSubaccountQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllSubaccountQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(SUBACCOUNT_KEY, query),
+    getCursorKey(SUBACCOUNT_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/subaccounts", { query, ...apiConfig }),
     config,

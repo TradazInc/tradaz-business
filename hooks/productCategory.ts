@@ -6,26 +6,22 @@ import {
   GetAllProductCategoryQuerySchema,
 } from "@/schema/productCategory";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useProductCategories = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllProductCategoryOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllProductCategoryQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllProductCategoryQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(PRODUCT_CATEGORY_KEY, query),
+    getCursorKey(PRODUCT_CATEGORY_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/product-categories", { query, ...apiConfig }),
     config,

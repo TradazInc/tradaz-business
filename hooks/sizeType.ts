@@ -7,26 +7,22 @@ import {
   UpdateSizeTypeInputData,
 } from "@/schema/sizeType";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useSizeTypes = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllSizeTypeOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllSizeTypeQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllSizeTypeQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(SIZE_TYPE_KEY, query),
+    getCursorKey(SIZE_TYPE_KEY, { ...query, organizationId }),
     ([key, query]) => apiClient("@get/api/size-types", { query, ...apiConfig }),
     config,
   );

@@ -7,26 +7,22 @@ import {
   UpdatePointsConfigInputData,
 } from "@/schema/pointsConfig";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const usePointsConfigs = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllPointsConfigOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllPointsConfigQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllPointsConfigQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(POINTS_CONFIG_KEY, query),
+    getCursorKey(POINTS_CONFIG_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/points-config", { query, ...apiConfig }),
     config,

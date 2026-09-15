@@ -7,26 +7,22 @@ import {
   UpdateShippingConfigInputData,
 } from "@/schema/shippingConfig";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useShippingConfigs = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllShippingConfigOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllShippingConfigQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllShippingConfigQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(SHIPPING_CONFIG_KEY, query),
+    getCursorKey(SHIPPING_CONFIG_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/shipping-configs", { query, ...apiConfig }),
     config,

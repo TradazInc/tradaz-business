@@ -7,26 +7,22 @@ import {
   UpdatePosConfigInputData,
 } from "@/schema/posConfig";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const usePosConfigs = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllPosConfigOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllPosConfigQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllPosConfigQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(POS_CONFIG_KEY, query),
+    getCursorKey(POS_CONFIG_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/pos-configs", { query, ...apiConfig }),
     config,

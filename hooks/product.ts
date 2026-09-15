@@ -8,26 +8,22 @@ import {
   UpdateProductStatusInputData,
 } from "@/schema/product";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useProducts = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllProductOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllProductQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllProductQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(PRODUCT_KEY, query),
+    getCursorKey(PRODUCT_KEY, { ...query, organizationId }),
     ([key, query]) => apiClient("@get/api/products", { query, ...apiConfig }),
     config,
   );

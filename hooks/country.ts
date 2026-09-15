@@ -5,14 +5,13 @@ import {
   GetAllCountriesQuerySchema,
 } from "@/schema/country";
 import { getCursorKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import useSWRInfinite, { SWRInfiniteConfiguration } from "swr/infinite";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useCountries = (
   config?: SWRInfiniteConfiguration<GetAllCountriesOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = GetAllCountriesQuerySchema.parse(searchParams);
+  const query = useSearchQuery(GetAllCountriesQuerySchema);
 
   return useSWRInfinite(
     getCursorKey(COUNTRY_KEY, query),

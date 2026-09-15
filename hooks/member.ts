@@ -5,26 +5,22 @@ import {
   GetAllMembersQuerySchema,
 } from "@/schema/member";
 import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useMembers = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllMembersOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    ...GetAllMembersQuerySchema.parse(searchParams),
-    organizationId,
-  };
+  const query = useSearchQuery(GetAllMembersQuerySchema);
 
   return useSWRInfinite(
-    getIndexKey(MEMBER_KEY, query),
+    getIndexKey(MEMBER_KEY, { ...query, organizationId }),
     async ([key, query]): Promise<GetAllMembersOutputData> => {
       const res = await authClient.organization.listMembers({
         query: {

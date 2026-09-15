@@ -7,26 +7,22 @@ import {
   UpdateExpenseInputData,
 } from "@/schema/expense";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useExpenses = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllExpenseOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllExpenseQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllExpenseQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(EXPENSES_KEY, query),
+    getCursorKey(EXPENSES_KEY, { ...query, organizationId }),
     ([key, query]) => apiClient("@get/api/expense", { query, ...apiConfig }),
     config,
   );

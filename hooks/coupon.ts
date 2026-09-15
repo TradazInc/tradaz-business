@@ -7,26 +7,22 @@ import {
   UpdateCouponInputData,
 } from "@/schema/coupon";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useCoupons = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllCouponOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllCouponQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllCouponQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(COUPON_KEY, query),
+    getCursorKey(COUPON_KEY, { ...query, organizationId }),
     ([key, query]) => apiClient("@get/api/coupons", { query, ...apiConfig }),
     config,
   );

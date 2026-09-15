@@ -6,19 +6,18 @@ import {
   GetAllBusinessCategoryQuerySchema,
 } from "@/schema/businessCategory";
 import { getCursorKey, getKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useBusinessCategories = (
   config?: SWRInfiniteConfiguration<GetAllBusinessCategoryOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = GetAllBusinessCategoryQuerySchema.parse(searchParams);
+  const query = useSearchQuery(GetAllBusinessCategoryQuerySchema);
 
   return useSWRInfinite(
     getCursorKey(BUSINESS_CATEGORY_KEY, query),

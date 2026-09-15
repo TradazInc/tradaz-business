@@ -6,26 +6,22 @@ import {
   UpdateOrderStatusInputData,
 } from "@/schema/order";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSearchParams } from "next/navigation";
 import useSWR, { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
+import { useSearchQuery } from "./useSearchQuery";
 
 export const useOrders = (
   organizationId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllOrderOutputData, Error>,
 ) => {
-  const searchParams = useSearchParams();
-  const query = {
-    organizationId,
-    ...GetAllOrderQuerySchema.parse(searchParams),
-  };
+  const query = useSearchQuery(GetAllOrderQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(ORDER_KEY, query),
+    getCursorKey(ORDER_KEY, { ...query, organizationId }),
     ([key, query]) => apiClient("@get/api/orders", { query, ...apiConfig }),
     config,
   );
