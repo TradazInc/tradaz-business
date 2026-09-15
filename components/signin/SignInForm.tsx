@@ -1,11 +1,9 @@
 "use client";
 
-import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
-import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
-import { EmailSignInSchema } from "@/schema/auth";
 import { useEmailSignin, useGoogleSignin } from "@/hooks/auth";
+import { EmailSignInSchema } from "@/schema/auth";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
@@ -13,6 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { GoogleIcon } from "./GoogleIcon";
+import SeparatorText from "./SeparatorText";
 
 const SignInForm = () => {
   const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignin();

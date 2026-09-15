@@ -1,17 +1,17 @@
 "use client";
 
-import { GoogleIcon } from "@/components/custom/signin/GoogleIcon";
-import SeparatorText from "@/components/custom/signin/SeparatorText";
 import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
-import { EmailSignUpSchema } from "@/schema/auth";
 import { useEmailSignup, useGoogleSignin } from "@/hooks/auth";
+import { EmailSignUpSchema } from "@/schema/auth";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { GoogleIcon } from "./GoogleIcon";
+import SeparatorText from "./SeparatorText";
 
 const SignUpForm = () => {
   const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignup();

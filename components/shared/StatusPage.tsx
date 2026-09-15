@@ -1,4 +1,4 @@
-import TradazLogo from "@/components/custom/shared/TradazLogo";
+import TradazLogo from "./TradazLogo";
 import {
   Box,
   Center,
