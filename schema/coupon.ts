@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { CalendarDateSchema } from "./calendarDate";
 import { DiscountType } from "./enums";
 import { createFetchResponseSchema } from "./fetchResponse";
 
@@ -92,9 +91,9 @@ const CouponInputBaseSchema = z.object({
 
   isActive: z.boolean({ error: "select a status" }).default(true),
 
-  startsAt: CalendarDateSchema("start date"),
+  startsAt: z.iso.date({ error: "start date is required" }),
 
-  endsAt: CalendarDateSchema("end date"),
+  endsAt: z.iso.date({ error: "end date is required" }),
 
   memberId: z.cuid2().optional(),
 });
