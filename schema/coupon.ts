@@ -22,7 +22,7 @@ export const GetCouponOutputSchema = z.object({
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
   organizationId: z.string(),
-  memberId: z.string(),
+  memberId: z.cuid2().nullable(),
 });
 export type GetCouponOutputData = z.infer<typeof GetCouponOutputSchema>;
 
