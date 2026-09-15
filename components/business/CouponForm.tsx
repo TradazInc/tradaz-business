@@ -1,12 +1,11 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
+import { useAddCoupon } from "@/hooks/coupon";
 import { CreateCouponInputSchema, emptyCoupon } from "@/schema/coupon";
 import { DiscountType } from "@/schema/enums";
-import { useAddCoupon } from "@/hooks/coupon";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
-  Box,
   Button,
   Checkbox,
   createListCollection,
