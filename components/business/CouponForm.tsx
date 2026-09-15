@@ -245,6 +245,8 @@ const CouponForm = () => {
                   disabled={field.disabled}
                 >
                   <Checkbox.Root
+                    gap={"4"}
+                    alignItems={"flex-start"}
                     checked={field.value}
                     onCheckedChange={({ checked }) => field.onChange(checked)}
                   >
