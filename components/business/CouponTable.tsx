@@ -91,14 +91,10 @@ const CouponTable = ({ initialCoupons, businessId }: Props) => {
                   <Table.Cell>{coupon.usageLimit}</Table.Cell>
                   <Table.Cell>{coupon.isActive}</Table.Cell>
                   <Table.Cell>
-                    {coupon?.startsAt
-                      ? new Date(coupon.startsAt).toDateString()
-                      : "-"}
+                    {new Date(coupon.startsAt).toDateString()}
                   </Table.Cell>
                   <Table.Cell>
-                    {coupon?.endsAt
-                      ? new Date(coupon.endsAt).toDateString()
-                      : "-"}
+                    {new Date(coupon.endsAt).toDateString()}
                   </Table.Cell>
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
