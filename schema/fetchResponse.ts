@@ -3,7 +3,7 @@ import { z } from "zod";
 export const createFetchResponseSchema = <T extends z.ZodType>(dataSchema: T) =>
   z.object({
     data: z.array(dataSchema),
-    aggregate: z.number().optional(),
+    aggregate: z.coerce.number().nullish(),
     meta: z
       .object({
         next: z.string().optional(),
