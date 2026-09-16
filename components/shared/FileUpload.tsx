@@ -2,7 +2,7 @@
 
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
-import { darkModePalette, lightModePalette } from "@/data/imageUpload";
+import { darkModePalette, lightModePalette } from "@/data/fileUpload";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Box,
@@ -26,7 +26,7 @@ interface Props {
   slidesPerPage: number;
 }
 
-const ImageUpload = ({
+const FileUpload = ({
   disabled,
   maxFiles,
   maxFileSize,
@@ -35,16 +35,16 @@ const ImageUpload = ({
   value,
 }: Props) => {
   const palette = useColorModeValue(lightModePalette, darkModePalette);
-  const [imageURLs, setImageURLs] = useState<string[]>([]);
+  const [fileURLs, setFileURLs] = useState<string[]>([]);
   const toastId = useId();
   const items = Array.from({ length: maxFiles });
 
   useEffect(() => {
     // Trigger controller events after render
-    if (imageURLs.length === 0) return;
-    onValueChange([...value, ...imageURLs]);
-    setImageURLs([]);
-  }, [imageURLs, value, onValueChange]);
+    if (fileURLs.length === 0) return;
+    onValueChange([...value, ...fileURLs]);
+    setFileURLs([]);
+  }, [fileURLs, value, onValueChange]);
 
   return (
     <VStack gapY={5} w={"full"}>
@@ -65,7 +65,7 @@ const ImageUpload = ({
                       src={url}
                       aspectRatio={4 / 3}
                       crop={"fill"}
-                      alt={`Product image ${index + 1}`}
+                      alt={`File ${index + 1}`}
                     />
                   </Box>
                 </Carousel.Item>
@@ -113,12 +113,12 @@ const ImageUpload = ({
         onSuccess={(result) => {
           const info = result.info;
           if (!info || typeof info === "string") return;
-          setImageURLs((prev) => [...prev, info.secure_url]);
+          setFileURLs((prev) => [...prev, info.secure_url]);
         }}
         onQueuesStart={() =>
           toaster.loading({
             id: toastId,
-            title: "Uploading images...",
+            title: "Uploading files...",
             description: "This may take a moment",
           })
         }
@@ -126,7 +126,7 @@ const ImageUpload = ({
           toaster.success({
             id: toastId,
             title: "Upload successful",
-            description: "Images have been uploaded",
+            description: "Files have been uploaded",
           })
         }
         onRetry={() =>
@@ -142,7 +142,7 @@ const ImageUpload = ({
           toaster.error({
             id: toastId,
             title: "Upload cancelled",
-            description: info?.reason ?? "Image upload was cancelled",
+            description: info?.reason ?? "File upload was cancelled",
           });
         }}
         onError={(error) =>
@@ -152,7 +152,7 @@ const ImageUpload = ({
           toaster.warning({
             id: toastId,
             title: "Upload aborted",
-            description: "Image upload was aborted",
+            description: "File upload was aborted",
           })
         }
       >
@@ -163,7 +163,7 @@ const ImageUpload = ({
             disabled={disabled || value.length >= maxFiles}
             onClick={() => open()}
           >
-            <HiUpload /> Upload images
+            <HiUpload /> Upload files
           </Button>
         )}
       </CldUploadWidget>
@@ -171,4 +171,4 @@ const ImageUpload = ({
   );
 };
 
-export default ImageUpload;
+export default FileUpload;
