@@ -134,8 +134,8 @@ export const businessItems: SideMenuItem[] = [
     children: [
       { label: "Sales Record", icon: LuFileText, path: "" },
       { label: "Staff Salary", icon: LuWallet, path: "" },
-      { label: "Expenses", icon: LuTrendingDown, path: "" },
-      { label: "Revenue", icon: LuTrendingUp, path: "" },
+      { label: "Expenses", icon: LuTrendingDown, path: "/expenses" },
+      { label: "Revenue", icon: LuTrendingUp, path: "/revenue" },
       { label: "Tax Calculation", icon: LuCalculator, path: "" },
     ],
   },
