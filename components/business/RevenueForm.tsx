@@ -20,16 +20,18 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import FileUpload from "../shared/FileUpload";
 import FormInputGrid from "../shared/FormInputGrid";
+import { computePath } from "@/utilities/computePath";
 
 const RevenueForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddRevenue(businessId);
   const { data, isLoading, error, mutate } = useStores(businessId);
+  const { refresh, push } = useRouter();
 
   const storeCollection = useMemo(
     () =>
@@ -69,6 +71,8 @@ const RevenueForm = () => {
     try {
       await promise.unwrap();
       reset(emptyRevenue);
+      refresh();
+      push(`${computePath(businessId)}/revenue`);
     } catch {} // Error displayed by toaster
   });
 

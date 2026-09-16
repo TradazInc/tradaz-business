@@ -5,6 +5,7 @@ import { MAX_FILE_SIZE } from "@/data/constants";
 import { useAddExpense } from "@/hooks/expense";
 import { useStores } from "@/hooks/store";
 import { CreateExpenseInputSchema, emptyExpense } from "@/schema/expense";
+import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
@@ -20,7 +21,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import FileUpload from "../shared/FileUpload";
@@ -30,6 +31,7 @@ const ExpenseForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddExpense(businessId);
   const { data, isLoading, error, mutate } = useStores(businessId);
+  const { refresh, push } = useRouter();
 
   const storeCollection = useMemo(
     () =>
@@ -69,6 +71,8 @@ const ExpenseForm = () => {
     try {
       await promise.unwrap();
       reset(emptyExpense);
+      refresh();
+      push(`${computePath(businessId)}/expenses`);
     } catch {} // Error displayed by toaster
   });
 
