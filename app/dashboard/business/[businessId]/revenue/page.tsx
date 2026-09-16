@@ -1,12 +1,12 @@
-import RevenueForm from "@/components/business/RevenueForm";
 import RevenueTable from "@/components/business/RevenueTable";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getRevenues } from "@/server/revenue";
+import { computePath } from "@/utilities/computePath";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
@@ -36,16 +36,12 @@ export default async function page({ params }: Props) {
           <RevenueTable initialRevenues={revenues} businessId={businessId} />
         ) : (
           <EmptyPage title="No revenue found" description="Create revenue">
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  New Expense
-                </Button>
-              }
-            >
-              <RevenueForm />
-            </DialogBox>
+            <Button asChild>
+              <NextLink href={`${computePath(businessId)}/revenue/new`}>
+                <LuPlus />
+                Create Revenue
+              </NextLink>
+            </Button>
           </EmptyPage>
         )}
       </VStack>

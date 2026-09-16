@@ -1,12 +1,12 @@
-import ExpenseForm from "@/components/business/ExpenseForm";
 import ExpenseTable from "@/components/business/ExpenseTable";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getExpenses } from "@/server/expense";
+import { computePath } from "@/utilities/computePath";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
 
@@ -39,16 +39,12 @@ export default async function page({ params }: Props) {
           <ExpenseTable initialExpenses={expenses} businessId={businessId} />
         ) : (
           <EmptyPage title="No expesnes found" description="Create expense">
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  New Expense
-                </Button>
-              }
-            >
-              <ExpenseForm />
-            </DialogBox>
+            <Button asChild>
+              <NextLink href={`${computePath(businessId)}/expenses/new`}>
+                <LuPlus />
+                Create Expense
+              </NextLink>
+            </Button>
           </EmptyPage>
         )}
       </VStack>
