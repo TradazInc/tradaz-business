@@ -1,11 +1,14 @@
+import ExpenseForm from "@/components/business/ExpenseForm";
 import ExpenseTable from "@/components/business/ExpenseTable";
+import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getExpenses } from "@/server/expense";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
+import { LuPlus } from "react-icons/lu";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -35,7 +38,18 @@ export default async function page({ params }: Props) {
         {expenses && expenses.data.length > 0 ? (
           <ExpenseTable initialExpenses={expenses} businessId={businessId} />
         ) : (
-          <EmptyPage title="No expesnes found" description="Create expense" />
+          <EmptyPage title="No expesnes found" description="Create expense">
+            <DialogBox
+              trigger={
+                <Button>
+                  <LuPlus />
+                  New Expense
+                </Button>
+              }
+            >
+              <ExpenseForm />
+            </DialogBox>
+          </EmptyPage>
         )}
       </VStack>
     </PageContainer>
