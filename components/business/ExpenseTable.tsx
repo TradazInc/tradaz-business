@@ -91,7 +91,9 @@ const ExpenseTable = ({ initialExpenses, businessId }: Props) => {
                       currency="NGN"
                     />
                   </Table.Cell>
-                  <Table.Cell>{expense.createdAt}</Table.Cell>
+                  <Table.Cell>
+                    {new Date(expense.createdAt).toDateString()}
+                  </Table.Cell>
                   <Table.Cell>
                     {expense.teamId
                       ? (stores?.find((s) => s.id === expense.teamId)?.name ??
