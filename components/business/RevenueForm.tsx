@@ -18,7 +18,6 @@ import {
   Spinner,
   Stack,
   Textarea,
-  useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
@@ -31,8 +30,6 @@ const RevenueForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddRevenue(businessId);
   const { data, isLoading, error, mutate } = useStores(businessId);
-  // throws if the component is ever rendered outside a Dialog.Root
-  const { setOpen } = useDialogContext();
 
   const storeCollection = useMemo(
     () =>
@@ -72,7 +69,6 @@ const RevenueForm = () => {
     try {
       await promise.unwrap();
       reset(emptyRevenue);
-      setOpen(false);
     } catch {} // Error displayed by toaster
   });
 
