@@ -7,7 +7,7 @@ import {
   indexQuery,
 } from "./paginationQuery";
 
-// Computed Cache Keys
+// Computed Cache Keys (scoped and unscoped)
 export const getKey = (cacheKey: string): [string] => [cacheKey];
 
 export const getScopedKey = (
@@ -15,7 +15,7 @@ export const getScopedKey = (
   scope: string | undefined,
 ): [string, string] | null => (scope ? [cacheKey, scope] : null);
 
-// Pagination Cache Keys
+// Pagination Cache Keys (combine pagination and search query)
 export function getCursorKey<K>(cacheKey: string, query: K) {
   return <T>(
     pageIndex: number,
