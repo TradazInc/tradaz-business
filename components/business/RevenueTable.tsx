@@ -2,6 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { useRemoveRevenue, useRevenues } from "@/hooks/revenue";
+import { useStores } from "@/hooks/store";
 import { GetAllRevenueOutputData } from "@/schema/revenue";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
@@ -26,6 +27,7 @@ interface Props {
 }
 
 const RevenueTable = ({ initialRevenues, businessId }: Props) => {
+  const { data: stores } = useStores(businessId);
   const { data, error, mutate, setSize, size } = useRevenues(businessId, {
     fallbackData: [initialRevenues],
   });
@@ -63,7 +65,6 @@ const RevenueTable = ({ initialRevenues, businessId }: Props) => {
               <Table.ColumnHeader>Name</Table.ColumnHeader>
               <Table.ColumnHeader>Description</Table.ColumnHeader>
               <Table.ColumnHeader>Amount</Table.ColumnHeader>
-              <Table.ColumnHeader>Reciept</Table.ColumnHeader>
               <Table.ColumnHeader>Created At</Table.ColumnHeader>
               <Table.ColumnHeader>Store</Table.ColumnHeader>
               <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
@@ -83,9 +84,13 @@ const RevenueTable = ({ initialRevenues, businessId }: Props) => {
                   <Table.Cell>{revenue.name}</Table.Cell>
                   <Table.Cell>{revenue.description}</Table.Cell>
                   <Table.Cell>{revenue.amount}</Table.Cell>
-                  <Table.Cell>{revenue.recieptUrl}</Table.Cell>
                   <Table.Cell>{revenue.createdAt}</Table.Cell>
-                  <Table.Cell>{revenue.teamId ?? "-"}</Table.Cell>
+                  <Table.Cell>
+                    {revenue.teamId
+                      ? (stores?.find((s) => s.id === revenue.teamId)?.name ??
+                        "-")
+                      : "-"}
+                  </Table.Cell>{" "}
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
                       <IconButton>
