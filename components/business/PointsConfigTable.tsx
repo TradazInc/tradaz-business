@@ -8,6 +8,7 @@ import {
   Button,
   ButtonGroup,
   For,
+  FormatNumber,
   IconButton,
   Spinner,
   Table,
@@ -64,11 +65,22 @@ const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
               {(pointsConfig) => (
                 <Table.Row key={pointsConfig.id} w={"full"}>
                   <Table.Cell>{pointsConfig.name}</Table.Cell>
-                  <Table.Cell>{pointsConfig.minOrderValue}</Table.Cell>
-                  <Table.Cell>{pointsConfig.maxOrderValue}</Table.Cell>
+                  <Table.Cell>
+                    <FormatNumber
+                      value={pointsConfig.minOrderValue}
+                      style="currency"
+                      currency="NGN"
+                    />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <FormatNumber
+                      value={pointsConfig.maxOrderValue}
+                      style="currency"
+                      currency="NGN"
+                    />
+                  </Table.Cell>
                   <Table.Cell>{pointsConfig.rewardPercentage}</Table.Cell>
                   <Table.Cell textAlign="end">
-                    {/* the API has no delete route for points configs */}
                     <ButtonGroup size="sm" variant="outline">
                       <IconButton>
                         <AiOutlineEdit />

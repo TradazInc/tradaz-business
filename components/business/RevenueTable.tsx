@@ -11,6 +11,7 @@ import {
   Button,
   ButtonGroup,
   For,
+  FormatNumber,
   IconButton,
   Spinner,
   Table,
@@ -83,7 +84,13 @@ const RevenueTable = ({ initialRevenues, businessId }: Props) => {
                 <Table.Row key={revenue.id} w={"full"}>
                   <Table.Cell>{revenue.name}</Table.Cell>
                   <Table.Cell>{revenue.description}</Table.Cell>
-                  <Table.Cell>{revenue.amount}</Table.Cell>
+                  <Table.Cell>
+                    <FormatNumber
+                      value={revenue.amount}
+                      style="currency"
+                      currency="NGN"
+                    />
+                  </Table.Cell>
                   <Table.Cell>{revenue.createdAt}</Table.Cell>
                   <Table.Cell>
                     {revenue.teamId

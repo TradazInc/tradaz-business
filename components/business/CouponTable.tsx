@@ -10,6 +10,7 @@ import {
   Button,
   ButtonGroup,
   For,
+  FormatNumber,
   IconButton,
   Spinner,
   Table,
@@ -87,7 +88,13 @@ const CouponTable = ({ initialCoupons, businessId }: Props) => {
                   <Table.Cell>{coupon.code}</Table.Cell>
                   <Table.Cell>{coupon.discountType}</Table.Cell>
                   <Table.Cell>{coupon.discountValue}</Table.Cell>
-                  <Table.Cell>{coupon.minOrderValue}</Table.Cell>
+                  <Table.Cell>
+                    <FormatNumber
+                      value={coupon.minOrderValue}
+                      style="currency"
+                      currency="NGN"
+                    />
+                  </Table.Cell>
                   <Table.Cell>{coupon.usageLimit}</Table.Cell>
                   <Table.Cell>{coupon.isActive}</Table.Cell>
                   <Table.Cell>
