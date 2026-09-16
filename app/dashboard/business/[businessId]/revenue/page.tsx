@@ -1,11 +1,14 @@
+import RevenueForm from "@/components/business/RevenueForm";
 import RevenueTable from "@/components/business/RevenueTable";
+import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getRevenues } from "@/server/revenue";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
+import { LuPlus } from "react-icons/lu";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -32,7 +35,18 @@ export default async function page({ params }: Props) {
         {revenues && revenues.data.length > 0 ? (
           <RevenueTable initialRevenues={revenues} businessId={businessId} />
         ) : (
-          <EmptyPage title="No revenue found" description="Create revenue" />
+          <EmptyPage title="No revenue found" description="Create revenue">
+            <DialogBox
+              trigger={
+                <Button>
+                  <LuPlus />
+                  New Expense
+                </Button>
+              }
+            >
+              <RevenueForm />
+            </DialogBox>
+          </EmptyPage>
         )}
       </VStack>
     </PageContainer>
