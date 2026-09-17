@@ -76,7 +76,7 @@ const RevenueTable = ({ initialRevenues, businessId }: Props) => {
               each={revenues}
               fallback={
                 <Table.Row>
-                  <Table.Cell colSpan={10}>No revenue available</Table.Cell>
+                  <Table.Cell colSpan={6}>No revenue available</Table.Cell>
                 </Table.Row>
               }
             >

@@ -95,9 +95,10 @@ export const UpdateOrderStatusParamSchema = z.object({
   id: z.cuid2(),
 });
 
-export const UpdateOrderStatusInputSchema = z.object({
-  orderStatus: z.enum(OrderStatus, { error: "select an order status" }),
+export const UpdateOrderStatusInputSchema = z.enum(OrderStatus, {
+  error: "select an order status",
 });
+
 export type UpdateOrderStatusInputData = z.input<
   typeof UpdateOrderStatusInputSchema
 >;
