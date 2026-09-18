@@ -43,7 +43,8 @@ export const BusinessForm = ({ signup }: Props) => {
   const { refresh, push, replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { setOpen } = useDialogContext(); // throws if the component is ever rendered outside a Dialog.Root
+  // throws if the component is ever rendered outside a Dialog.Root
+  const { setOpen } = useDialogContext();
 
   // Parse paged data
   const { flatData, hasMore } = useMemo(() => parseCursorData(data), [data]);
