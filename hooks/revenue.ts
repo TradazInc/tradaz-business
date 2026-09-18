@@ -44,25 +44,19 @@ export const useAddRevenue = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateRevenue = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdateRevenue = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(REVENUE_KEY, organizationId),
-    (key, { arg }: { arg: UpdateRevenueInputData }) =>
+    unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
+    (key, { arg }: { arg: { id: string; data: UpdateRevenueInputData } }) =>
       apiClient("@put/api/revenue/:id", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(REVENUE_KEY, data.id)),
     },
   );
 };

@@ -44,25 +44,19 @@ export const useAddExpense = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateExpense = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdateExpense = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(EXPENSES_KEY, id),
-    (key, { arg }: { arg: UpdateExpenseInputData }) =>
+    unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
+    (key, { arg }: { arg: { id: string; data: UpdateExpenseInputData } }) =>
       apiClient("@put/api/expense/:id", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(EXPENSES_KEY, data.id)),
     },
   );
 };

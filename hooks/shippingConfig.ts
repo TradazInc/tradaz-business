@@ -47,27 +47,22 @@ export const useAddShippingConfig = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateShippingConfig = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdateShippingConfig = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(SHIPPING_CONFIG_KEY, id),
-    (key, { arg }: { arg: UpdateShippingConfigInputData }) =>
+    unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
+    (
+      key,
+      { arg }: { arg: { id: string; data: UpdateShippingConfigInputData } },
+    ) =>
       apiClient("@put/api/shipping-configs/:id", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(
-            getCursorKey(SHIPPING_CONFIG_KEY, { organizationId }),
-          ),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(SHIPPING_CONFIG_KEY, data.id)),
     },
   );
 };

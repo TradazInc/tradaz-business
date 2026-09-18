@@ -45,25 +45,19 @@ export const useAddPosConfig = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdatePosConfig = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdatePosConfig = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(POS_CONFIG_KEY, id),
-    (key, { arg }: { arg: UpdatePosConfigInputData }) =>
+    unstable_serialize(getCursorKey(POS_CONFIG_KEY, { organizationId })),
+    (key, { arg }: { arg: { id: string; data: UpdatePosConfigInputData } }) =>
       apiClient("@put/api/pos-configs/:id", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(POS_CONFIG_KEY, { organizationId })),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(POS_CONFIG_KEY, data.id)),
     },
   );
 };

@@ -47,27 +47,22 @@ export const useAddPointsConfig = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdatePointsConfig = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdatePointsConfig = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(POINTS_CONFIG_KEY, id),
-    (key, { arg }: { arg: UpdatePointsConfigInputData }) =>
+    unstable_serialize(getCursorKey(POINTS_CONFIG_KEY, { organizationId })),
+    (
+      key,
+      { arg }: { arg: { id: string; data: UpdatePointsConfigInputData } },
+    ) =>
       apiClient("@put/api/points-config/:id", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(
-            getCursorKey(POINTS_CONFIG_KEY, { organizationId }),
-          ),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(POINTS_CONFIG_KEY, data.id)),
     },
   );
 };

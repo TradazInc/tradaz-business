@@ -44,25 +44,19 @@ export const useAddCoupon = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateCoupon = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdateCoupon = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(COUPON_KEY, id),
-    (key, { arg }: { arg: UpdateCouponInputData }) =>
+    unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
+    (key, { arg }: { arg: { id: string; data: UpdateCouponInputData } }) =>
       apiClient("@put/api/coupons/:id", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(COUPON_KEY, data.id)),
     },
   );
 };

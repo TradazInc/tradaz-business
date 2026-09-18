@@ -45,25 +45,19 @@ export const useAddProduct = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateProduct = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdateProduct = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(PRODUCT_KEY, id),
-    (key, { arg }: { arg: UpdateProductInputData }) =>
+    unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
+    (key, { arg }: { arg: { id: string; data: UpdateProductInputData } }) =>
       apiClient("@put/api/products/:id", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(PRODUCT_KEY, data.id)),
     },
   );
 };
