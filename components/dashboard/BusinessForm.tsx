@@ -2,9 +2,9 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { lastStep, steps } from "@/data/businessForm";
-import { CreateBusinessInputSchema } from "@/schema/business";
 import { useAddBusiness } from "@/hooks/business";
 import { useBusinessCategories } from "@/hooks/businessCategory";
+import { CreateBusinessInputSchema } from "@/schema/business";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
@@ -12,11 +12,9 @@ import {
   Box,
   Button,
   ButtonGroup,
-  CloseButton,
   createListCollection,
   Field,
   Fieldset,
-  FileUpload,
   Input,
   InputGroup,
   Select,
@@ -28,7 +26,6 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useId, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { LuFileUp } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useHookFormMask } from "use-mask-input";
 
@@ -142,36 +139,6 @@ export const BusinessForm = ({ signup }: Props) => {
                   <Input placeholder="e.g., Tradaz" {...register("name")} />
                   <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
                 </Field.Root>
-
-                <FileUpload.Root
-                  gap={"1.5"}
-                  maxFiles={1}
-                  accept={["image/png"]}
-                >
-                  <FileUpload.HiddenInput />
-                  <FileUpload.Label>Upload logo</FileUpload.Label>
-                  <InputGroup
-                    startElement={<LuFileUp />}
-                    endElement={
-                      <FileUpload.ClearTrigger asChild>
-                        <CloseButton
-                          me="-1"
-                          size="xs"
-                          variant="plain"
-                          focusVisibleRing="inside"
-                          focusRingWidth="2px"
-                          pointerEvents="auto"
-                        />
-                      </FileUpload.ClearTrigger>
-                    }
-                  >
-                    <Input asChild>
-                      <FileUpload.Trigger>
-                        <FileUpload.FileText lineClamp={1} />
-                      </FileUpload.Trigger>
-                    </Input>
-                  </InputGroup>
-                </FileUpload.Root>
 
                 <Field.Root required invalid={!!(errors.categoryId || error)}>
                   <Field.Label>
