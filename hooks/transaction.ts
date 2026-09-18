@@ -7,7 +7,7 @@ import { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
 export const useTransaction = (id: string) => {
-  return useSWR(getScopedKey(TRANSACTION_KEY, id), ([key, query]) =>
+  return useSWR(getScopedKey(TRANSACTION_KEY, id), ([key, id]) =>
     apiClient("@get/api/transactions/:id", { params: { id }, ...apiConfig }),
   );
 };
