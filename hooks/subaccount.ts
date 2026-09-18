@@ -49,14 +49,11 @@ export const useUpdateSubaccount = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(SUBACCOUNT_KEY, organizationId),
+    unstable_serialize(getCursorKey(SUBACCOUNT_KEY, { organizationId })),
     (key, { arg }: { arg: UpdateSubaccountInputData }) =>
       apiClient("@put/api/subaccounts", { body: arg, ...apiConfig }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(SUBACCOUNT_KEY, { organizationId })),
-        ),
+      onSuccess: () => mutate(getScopedKey(SUBACCOUNT_KEY, organizationId)),
     },
   );
 };

@@ -44,25 +44,19 @@ export const useAddSizeTypes = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateSizeType = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdateSizeType = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(SIZE_TYPE_KEY, id),
-    (key, { arg }: { arg: UpdateSizeTypeInputData }) =>
+    unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+    (key, { arg }: { arg: { id: string; data: UpdateSizeTypeInputData } }) =>
       apiClient("@put/api/size-types/:id", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(SIZE_TYPE_KEY, data.id)),
     },
   );
 };

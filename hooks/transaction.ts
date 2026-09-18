@@ -17,7 +17,7 @@ export const useTransaction = (
 export const useAddTransaction = (organizationId: string | undefined) => {
   return useSWRMutation(
     getScopedKey(TRANSACTION_KEY, organizationId),
-    (_, { arg }: { arg: CreateTransactionInputData }) =>
+    (key, { arg }: { arg: CreateTransactionInputData }) =>
       apiClient("@post/api/transactions", { body: arg, ...apiConfig }),
   );
 };
