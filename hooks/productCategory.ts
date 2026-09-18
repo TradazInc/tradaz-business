@@ -5,8 +5,7 @@ import {
   GetAllProductCategoryOutputData,
   GetAllProductCategoryQuerySchema,
 } from "@/schema/productCategory";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSWRConfig } from "swr";
+import { getCursorKey } from "@/utilities/computeKey";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
@@ -29,42 +28,22 @@ export const useProductCategories = (
 };
 
 export const useAddProductCategory = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(PRODUCT_CATEGORY_KEY, organizationId),
+    unstable_serialize(getCursorKey(PRODUCT_CATEGORY_KEY, { organizationId })),
     (key, { arg }: { arg: CreateProductCategoryInputData }) =>
       apiClient("@post/api/product-categories", { body: arg, ...apiConfig }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(
-            getCursorKey(PRODUCT_CATEGORY_KEY, { organizationId }),
-          ),
-        ),
-    },
   );
 };
 
 export const useRemoveProductCategory = (
   organizationId: string | undefined,
 ) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(PRODUCT_CATEGORY_KEY, organizationId),
+    unstable_serialize(getCursorKey(PRODUCT_CATEGORY_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/product-categories/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(
-            getCursorKey(PRODUCT_CATEGORY_KEY, { organizationId }),
-          ),
-        ),
-    },
   );
 };

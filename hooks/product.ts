@@ -30,18 +30,10 @@ export const useProducts = (
 };
 
 export const useAddProduct = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(PRODUCT_KEY, organizationId),
+    unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
     (key, { arg }: { arg: CreateProductInputData }) =>
       apiClient("@post/api/products", { body: arg, ...apiConfig }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
-        ),
-    },
   );
 };
 
@@ -69,7 +61,7 @@ export const useUpdateProductStatus = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(PRODUCT_KEY, id),
+    unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
     (key, { arg }: { arg: UpdateProductStatusInputData }) =>
       apiClient("@patch/api/products/:id/status", {
         params: { id },
@@ -77,67 +69,40 @@ export const useUpdateProductStatus = (
         ...apiConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
-        ),
+      onSuccess: (data) => mutate(getScopedKey(PRODUCT_KEY, data.id)),
     },
   );
 };
 
 export const useRemoveProduct = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(PRODUCT_KEY, organizationId),
+    unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/products/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
-        ),
-    },
   );
 };
 
 export const useRemoveVariation = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(PRODUCT_KEY, organizationId),
+    unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/products/variations/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
-        ),
-    },
   );
 };
 
 export const useRemoveStoreVariation = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(PRODUCT_KEY, organizationId),
+    unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/products/team-variations/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
-        ),
-    },
   );
 };

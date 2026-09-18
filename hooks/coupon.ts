@@ -29,18 +29,10 @@ export const useCoupons = (
 };
 
 export const useAddCoupon = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(COUPON_KEY, organizationId),
+    unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
     (key, { arg }: { arg: CreateCouponInputData }) =>
       apiClient("@post/api/coupons", { body: arg, ...apiConfig }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
-        ),
-    },
   );
 };
 
@@ -62,20 +54,12 @@ export const useUpdateCoupon = (organizationId: string | undefined) => {
 };
 
 export const useRemoveCoupon = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(COUPON_KEY, organizationId),
+    unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/coupons/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
-        ),
-    },
   );
 };

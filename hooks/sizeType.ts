@@ -29,18 +29,10 @@ export const useSizeTypes = (
 };
 
 export const useAddSizeTypes = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(SIZE_TYPE_KEY, organizationId),
+    unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
     (key, { arg }: { arg: CreateSizeTypeInputData }) =>
       apiClient("@post/api/size-types", { body: arg, ...apiConfig }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
-        ),
-    },
   );
 };
 
@@ -62,39 +54,23 @@ export const useUpdateSizeType = (organizationId: string | undefined) => {
 };
 
 export const useRemoveSizeType = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(SIZE_TYPE_KEY, organizationId),
+    unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/size-types/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
-        ),
-    },
   );
 };
 
 export const useRemoveSize = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(SIZE_TYPE_KEY, organizationId),
+    unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/size-types/sizes/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
-        ),
-    },
   );
 };

@@ -29,18 +29,10 @@ export const useRevenues = (
 };
 
 export const useAddRevenue = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(REVENUE_KEY, organizationId),
+    unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
     (key, { arg }: { arg: CreateRevenueInputData }) =>
       apiClient("@post/api/revenue", { body: arg, ...apiConfig }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
-        ),
-    },
   );
 };
 
@@ -62,20 +54,12 @@ export const useUpdateRevenue = (organizationId: string | undefined) => {
 };
 
 export const useRemoveRevenue = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(REVENUE_KEY, organizationId),
+    unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/revenue/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
-        ),
-    },
   );
 };

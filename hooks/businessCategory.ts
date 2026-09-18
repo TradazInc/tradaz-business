@@ -5,8 +5,7 @@ import {
   GetAllBusinessCategoryOutputData,
   GetAllBusinessCategoryQuerySchema,
 } from "@/schema/businessCategory";
-import { getCursorKey, getKey } from "@/utilities/computeKey";
-import { useSWRConfig } from "swr";
+import { getCursorKey } from "@/utilities/computeKey";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
@@ -31,35 +30,23 @@ export const useBusinessCategories = (
 };
 
 export const useAddBusinessCategory = () => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getKey(BUSINESS_CATEGORY_KEY),
+    unstable_serialize(getCursorKey(BUSINESS_CATEGORY_KEY, {})),
     (key, { arg }: { arg: CreateBusinessCategoryInputData }) =>
       apiClient("@post/api/business-categories", {
         body: arg,
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(unstable_serialize(getCursorKey(BUSINESS_CATEGORY_KEY, {}))),
-    },
   );
 };
 
 export const useRemoveBusinessCategory = () => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getKey(BUSINESS_CATEGORY_KEY),
+    unstable_serialize(getCursorKey(BUSINESS_CATEGORY_KEY, {})),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/business-categories/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(unstable_serialize(getCursorKey(BUSINESS_CATEGORY_KEY, {}))),
-    },
   );
 };

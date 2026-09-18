@@ -30,20 +30,10 @@ export const usePointsConfigs = (
 };
 
 export const useAddPointsConfig = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(POINTS_CONFIG_KEY, organizationId),
+    unstable_serialize(getCursorKey(POINTS_CONFIG_KEY, { organizationId })),
     (key, { arg }: { arg: CreatePointsConfigInputData }) =>
       apiClient("@post/api/points-config", { body: arg, ...apiConfig }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(
-            getCursorKey(POINTS_CONFIG_KEY, { organizationId }),
-          ),
-        ),
-    },
   );
 };
 

@@ -30,20 +30,10 @@ export const useShippingConfigs = (
 };
 
 export const useAddShippingConfig = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(SHIPPING_CONFIG_KEY, organizationId),
+    unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
     (key, { arg }: { arg: CreateShippingConfigInputData }) =>
       apiClient("@post/api/shipping-configs", { body: arg, ...apiConfig }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(
-            getCursorKey(SHIPPING_CONFIG_KEY, { organizationId }),
-          ),
-        ),
-    },
   );
 };
 
@@ -68,43 +58,23 @@ export const useUpdateShippingConfig = (organizationId: string | undefined) => {
 };
 
 export const useRemoveShippingConfig = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(SHIPPING_CONFIG_KEY, organizationId),
+    unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/shipping-configs/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(
-            getCursorKey(SHIPPING_CONFIG_KEY, { organizationId }),
-          ),
-        ),
-    },
   );
 };
 
 export const useRemoveShippingMethod = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(SHIPPING_CONFIG_KEY, organizationId),
+    unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/shipping-configs/shipping-methods/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(
-            getCursorKey(SHIPPING_CONFIG_KEY, { organizationId }),
-          ),
-        ),
-    },
   );
 };

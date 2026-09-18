@@ -29,18 +29,10 @@ export const useExpenses = (
 };
 
 export const useAddExpense = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(EXPENSES_KEY, organizationId),
+    unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
     (key, { arg }: { arg: CreateExpenseInputData }) =>
       apiClient("@post/api/expense", { body: arg, ...apiConfig }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
-        ),
-    },
   );
 };
 
@@ -62,20 +54,12 @@ export const useUpdateExpense = (organizationId: string | undefined) => {
 };
 
 export const useRemoveExpense = (organizationId: string | undefined) => {
-  const { mutate } = useSWRConfig();
-
   return useSWRMutation(
-    getScopedKey(EXPENSES_KEY, organizationId),
+    unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/expense/:id", {
         params: { id: arg },
         ...apiConfig,
       }),
-    {
-      onSuccess: () =>
-        mutate(
-          unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
-        ),
-    },
   );
 };
