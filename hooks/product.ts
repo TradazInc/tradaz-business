@@ -54,18 +54,18 @@ export const useUpdateProduct = (organizationId: string | undefined) => {
   );
 };
 
-export const useUpdateProductStatus = (
-  id: string,
-  organizationId: string | undefined,
-) => {
+export const useUpdateProductStatus = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
     unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
-    (key, { arg }: { arg: UpdateProductStatusInputData }) =>
+    (
+      key,
+      { arg }: { arg: { id: string; data: UpdateProductStatusInputData } },
+    ) =>
       apiClient("@patch/api/products/:id/status", {
-        params: { id },
-        body: arg,
+        params: { id: arg.id },
+        body: arg.data,
         ...apiConfig,
       }),
     {
