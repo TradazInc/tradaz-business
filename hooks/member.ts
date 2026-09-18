@@ -40,7 +40,7 @@ export const useRemoveMember = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    getScopedKey(MEMBER_KEY, organizationId),
+    unstable_serialize(getIndexKey(MEMBER_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       authClient.organization.removeMember({
         memberIdOrEmail: arg,
@@ -48,8 +48,7 @@ export const useRemoveMember = (organizationId: string | undefined) => {
         fetchOptions: authConfig,
       }),
     {
-      onSuccess: () =>
-        mutate(unstable_serialize(getIndexKey(MEMBER_KEY, { organizationId }))),
+      onSuccess: (data) => mutate(getScopedKey(MEMBER_KEY, data.member.id)),
     },
   );
 };
