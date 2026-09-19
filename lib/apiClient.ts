@@ -15,11 +15,15 @@ import {
   DecrementCartItemInputSchema,
   DecrementCartItemOuputSchema,
   DeleteCartItemOutputSchema,
-  GetCartItemOutputSchema,
+  GetAllCartsOutputSchema,
+  GetAllCartsQuerySchema,
+  GetCartOutputSchema,
+  GetCartParamSchema,
   IncrementCartItemInputSchema,
   IncrementCartItemOuputSchema,
   UpdateCartItemInputSchema,
   UpdateCartItemOutputSchema,
+  UpdateCartParamSchema,
 } from "@/schema/cart";
 import {
   CreateCheckoutInputSchema,
@@ -453,7 +457,12 @@ export const schema = createSchema(
 
     // Cart
     "@get/api/cart": {
-      output: GetCartItemOutputSchema,
+      query: GetAllCartsQuerySchema.optional(),
+      output: GetAllCartsOutputSchema,
+    },
+    "@get/api/cart/:id": {
+      params: GetCartParamSchema,
+      output: GetCartOutputSchema,
     },
     "@post/api/cart": {
       input: CreateCartItemInputSchema,
@@ -468,6 +477,7 @@ export const schema = createSchema(
       output: DecrementCartItemOuputSchema,
     },
     "@put/api/cart/:id": {
+      params: UpdateCartParamSchema,
       input: UpdateCartItemInputSchema,
       output: UpdateCartItemOutputSchema,
     },
