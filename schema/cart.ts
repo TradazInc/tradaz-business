@@ -59,8 +59,9 @@ export const CreateCartItemInputSchema = z.object({
   quantity: z.number().positive({ error: "Increase cart item quantity" }),
   cartId: z.cuid2(),
 });
+export type CreateCartItemInputData = z.infer<typeof CreateCartItemInputSchema>;
 
-export const CreateCartItemOutputData = z.object({
+export const CreateCartItemOutputSchema = z.object({
   id: z.cuid2(),
   quantity: z.number(),
   addedAt: z.iso.datetime(),
@@ -90,7 +91,7 @@ export const DecrementCartItemOuputSchema = IncrementCartItemOuputSchema;
 // Update
 export const UpdateCartParamSchema = z.object({ id: z.cuid2() });
 
-export const UpdateCartItemInputSchema = z.object({
+export const UpdateCartInputSchema = z.object({
   couponCode: z.string().min(3),
   points: z.number(),
   depositAmount: z.number(),
@@ -98,8 +99,9 @@ export const UpdateCartItemInputSchema = z.object({
   terminalConfigId: z.cuid2(),
   shippingMethodId: z.cuid2(),
 });
+export type UpdateCartInputData = z.infer<typeof UpdateCartInputSchema>;
 
-export const UpdateCartItemOutputSchema = z.object({
+export const UpdateCartOutputSchema = z.object({
   id: z.cuid2(),
   couponCode: z.string(),
   depositAmount: z.number(),
@@ -113,4 +115,7 @@ export const UpdateCartItemOutputSchema = z.object({
 
 // Delete
 export const DeleteCartItemParamSchema = z.object({ id: z.cuid2() });
-export const DeleteCartItemOutputSchema = z.object({ id: z.cuid2() });
+export const DeleteCartItemOutputSchema = z.object({
+  id: z.cuid2(),
+  cartId: z.cuid2(),
+});

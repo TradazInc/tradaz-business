@@ -11,7 +11,7 @@ import {
 } from "@/schema/businessCategory";
 import {
   CreateCartItemInputSchema,
-  CreateCartItemOutputData,
+  CreateCartItemOutputSchema,
   DecrementCartItemInputSchema,
   DecrementCartItemOuputSchema,
   DeleteCartItemOutputSchema,
@@ -21,8 +21,8 @@ import {
   GetCartParamSchema,
   IncrementCartItemInputSchema,
   IncrementCartItemOuputSchema,
-  UpdateCartItemInputSchema,
-  UpdateCartItemOutputSchema,
+  UpdateCartInputSchema,
+  UpdateCartOutputSchema,
   UpdateCartParamSchema,
 } from "@/schema/cart";
 import {
@@ -464,9 +464,14 @@ export const schema = createSchema(
       params: GetCartParamSchema,
       output: GetCartOutputSchema,
     },
-    "@post/api/cart": {
+    "@put/api/cart/:id": {
+      params: UpdateCartParamSchema,
+      input: UpdateCartInputSchema,
+      output: UpdateCartOutputSchema,
+    },
+    "@post/api/cart/item": {
       input: CreateCartItemInputSchema,
-      output: CreateCartItemOutputData,
+      output: CreateCartItemOutputSchema,
     },
     "@post/api/cart/item/increment": {
       input: IncrementCartItemInputSchema,
@@ -475,11 +480,6 @@ export const schema = createSchema(
     "@post/api/cart/item/decrement": {
       input: DecrementCartItemInputSchema,
       output: DecrementCartItemOuputSchema,
-    },
-    "@put/api/cart/:id": {
-      params: UpdateCartParamSchema,
-      input: UpdateCartItemInputSchema,
-      output: UpdateCartItemOutputSchema,
     },
     "@delete/api/cart/item/:id": {
       params: DeleteCouponParamSchema,
