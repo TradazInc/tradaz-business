@@ -57,7 +57,7 @@ export const GetCartParamSchema = z.object({ id: z.cuid2() });
 export const CreateCartItemInputSchema = z.object({
   variationId: z.cuid2(),
   quantity: z.number().positive({ error: "Increase cart item quantity" }),
-  cartId: z.cuid2(),
+  cartId: z.cuid2().optional(),
 });
 export type CreateCartItemInputData = z.infer<typeof CreateCartItemInputSchema>;
 
