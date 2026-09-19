@@ -34,7 +34,7 @@ export default async function page({ params }: Props) {
         ) : (
           <EmptyPage
             title="No orders found"
-            description="Get your first order"
+            description="Make a sale to get your first order"
           />
         )}
       </VStack>
