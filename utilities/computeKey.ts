@@ -24,10 +24,7 @@ export function getCursorKey<K, T>(
   FetchResponse<T> | null,
   [string, K & CursorQuery] | null
 > {
-  return <T>(
-    pageIndex: number,
-    previousPageData: FetchResponse<T> | null,
-  ): [string, K & CursorQuery] | null => {
+  return <T>(pageIndex: number, previousPageData: FetchResponse<T> | null) => {
     const cursor = cursorQuery(pageIndex, previousPageData, PAGE_SIZE);
 
     return cursor ? [cacheKey, { ...query, ...cursor }] : null;
@@ -41,10 +38,7 @@ export function getIndexKey<K, T>(
   FetchResponse<T> | null,
   [string, K & IndexQuery] | null
 > {
-  return <T>(
-    pageIndex: number,
-    previousPageData: FetchResponse<T> | null,
-  ): [string, K & IndexQuery] | null => {
+  return <T>(pageIndex: number, previousPageData: FetchResponse<T> | null) => {
     const index = indexQuery(pageIndex, previousPageData, PAGE_SIZE);
 
     return index ? [cacheKey, { ...query, ...index }] : null;
