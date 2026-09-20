@@ -1,5 +1,6 @@
 import { PAGE_SIZE } from "@/data/constants";
 import { FetchResponse } from "@/schema/fetchResponse";
+import { SWRInfiniteKeyLoader } from "swr/infinite";
 import {
   CursorQuery,
   cursorQuery,
@@ -16,7 +17,13 @@ export const getScopedKey = (
 ): [string, string] | null => (scope ? [cacheKey, scope] : null);
 
 // Pagination Cache Keys (combine pagination and search query)
-export function getCursorKey<K>(cacheKey: string, query: K) {
+export function getCursorKey<K, T>(
+  cacheKey: string,
+  query: K,
+): SWRInfiniteKeyLoader<
+  FetchResponse<T> | null,
+  [string, K & CursorQuery] | null
+> {
   return <T>(
     pageIndex: number,
     previousPageData: FetchResponse<T> | null,
@@ -27,7 +34,13 @@ export function getCursorKey<K>(cacheKey: string, query: K) {
   };
 }
 
-export function getIndexKey<K>(cacheKey: string, query: K) {
+export function getIndexKey<K, T>(
+  cacheKey: string,
+  query: K,
+): SWRInfiniteKeyLoader<
+  FetchResponse<T> | null,
+  [string, K & IndexQuery] | null
+> {
   return <T>(
     pageIndex: number,
     previousPageData: FetchResponse<T> | null,
