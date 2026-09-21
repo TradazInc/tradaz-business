@@ -27,7 +27,7 @@ interface Props {
   businessId: string | undefined;
 }
 
-const ProductSizeTable = ({ initialPosConfigs, businessId }: Props) => {
+const PosConfigTable = ({ initialPosConfigs, businessId }: Props) => {
   const { data: stores } = useStores(businessId);
   const { data, error, mutate, setSize, size } = usePosConfigs(businessId, {
     fallbackData: [initialPosConfigs],
@@ -142,4 +142,4 @@ const ProductSizeTable = ({ initialPosConfigs, businessId }: Props) => {
   );
 };
 
-export default ProductSizeTable;
+export default PosConfigTable;
