@@ -1,7 +1,6 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-
 import { GetAllProductCategoryOutputData } from "@/schema/productCategory";
 import {
   useProductCategories,

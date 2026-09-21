@@ -1,8 +1,9 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { GetAllSizeTypeOutputData } from "@/schema/sizeType";
-import { useRemoveSizeType, useSizeTypes } from "@/hooks/sizeType";
+import { usePosConfigs, useRemovePosConfig } from "@/hooks/posConfig";
+import { useStores } from "@/hooks/store";
+import { GetAllPosConfigOutputData } from "@/schema/posConfig";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
@@ -10,12 +11,11 @@ import {
   Button,
   ButtonGroup,
   For,
-  HStack,
   IconButton,
   Spinner,
-  Square,
   Table,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -23,26 +23,27 @@ import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialSizeTypes: GetAllSizeTypeOutputData;
+  initialPosConfigs: GetAllPosConfigOutputData;
   businessId: string | undefined;
 }
 
-const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
-  const { data, error, mutate, setSize, size } = useSizeTypes(businessId, {
-    fallbackData: [initialSizeTypes],
+const ProductSizeTable = ({ initialPosConfigs, businessId }: Props) => {
+  const { data: stores } = useStores(businessId);
+  const { data, error, mutate, setSize, size } = usePosConfigs(businessId, {
+    fallbackData: [initialPosConfigs],
   });
-  const { flatData: sizeTypes, hasMore } = useMemo(
+  const { flatData: posConfigs, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
-  const { trigger, isMutating } = useRemoveSizeType(businessId);
+  const { trigger, isMutating } = useRemovePosConfig(businessId);
 
   const handleDelete = async (id: string) => {
     toaster.promise(trigger(id), {
-      loading: { title: "Deleting size type...", description: "Please wait" },
+      loading: { title: "Deleting pos config...", description: "Please wait" },
       success: {
         title: "Deletion successful",
-        description: "Size type has been deleted",
+        description: "Pos config has been deleted",
       },
       error: errorToastOptions,
     });
@@ -51,7 +52,7 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
   return (
     <Box w={"full"}>
       <InfiniteScroll
-        dataLength={sizeTypes.length}
+        dataLength={posConfigs.length}
         next={() => setSize(size + 1)}
         hasMore={hasMore && !error}
         loader={<Spinner />}
@@ -60,36 +61,48 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
         <Table.Root>
           <Table.Header>
             <Table.Row>
-              <Table.ColumnHeader>Name</Table.ColumnHeader>
-              <Table.ColumnHeader>Code</Table.ColumnHeader>
+              <Table.ColumnHeader>Gateway</Table.ColumnHeader>
+              <Table.ColumnHeader>Terminals</Table.ColumnHeader>
+              <Table.ColumnHeader>Merchant ID</Table.ColumnHeader>
+              <Table.ColumnHeader>Private Key</Table.ColumnHeader>
+              <Table.ColumnHeader>Store</Table.ColumnHeader>
+              <Table.ColumnHeader>Created At</Table.ColumnHeader>
               <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
             <For
-              each={sizeTypes}
+              each={posConfigs}
               fallback={
                 <Table.Row>
-                  <Table.Cell colSpan={3}>No size types available</Table.Cell>
+                  <Table.Cell colSpan={7}>No pos configs available</Table.Cell>
                 </Table.Row>
               }
             >
-              {(sizeType) => (
-                <Table.Row key={sizeType.id} w={"full"}>
-                  <Table.Cell>{sizeType.name}</Table.Cell>
+              {(posConfig) => (
+                <Table.Row key={posConfig.id} w={"full"}>
+                  <Table.Cell>{posConfig.gateway}</Table.Cell>
                   <Table.Cell>
-                    <HStack gapX={2}>
-                      {sizeType.sizes?.map((size) => (
-                        <Square
-                          key={size.id}
-                          size={8}
+                    <VStack gapX={2}>
+                      {posConfig.terminalConfigs?.map((terminal) => (
+                        <Box
+                          key={terminal.id}
                           bg={"bg.inverted"}
                           color={"fg.inverted"}
                         >
-                          {size.value}
-                        </Square>
+                          {terminal.serialNumber}
+                        </Box>
                       ))}
-                    </HStack>
+                    </VStack>
+                  </Table.Cell>
+                  <Table.Cell>{posConfig.merchantId}</Table.Cell>
+                  <Table.Cell>{posConfig.privateKey}</Table.Cell>
+                  <Table.Cell>
+                    {stores?.find((s) => s.id === posConfig.teamId)?.name ??
+                      "-"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {new Date(posConfig.createdAt).toDateString()}
                   </Table.Cell>
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
@@ -99,7 +112,7 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
                       <IconButton
                         color={"fg.error"}
                         _hover={{ bg: "bg.error", color: "fg.error" }}
-                        onClick={() => handleDelete(sizeType.id)}
+                        onClick={() => handleDelete(posConfig.id)}
                         disabled={isMutating}
                       >
                         <MdDeleteOutline />
@@ -122,7 +135,7 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
           >
             Click to retry
           </Button>
-          <Text>Size types unavailable. Retry to continue.</Text>
+          <Text>Pos configs unavailable. Retry to continue.</Text>
         </>
       )}
     </Box>
