@@ -1,32 +1,78 @@
 "use client";
 
+import { useCarts } from "@/hooks/cart";
+import { GetAllCartsOutputData } from "@/schema/cart";
 import { computePath } from "@/utilities/computePath";
-import { For } from "@chakra-ui/react";
-import GridCard from "../shared/GridCard";
+import { parseCursorData } from "@/utilities/parsePageData";
+import { Button, For, Spinner, Text } from "@chakra-ui/react";
+import { useMemo } from "react";
 import GridContainer from "../shared/GridContainer";
-import { Business } from "@/schema/business";
+import CartCard from "./CartCard";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialBusinesses: Business[];
+  initialCarts: GetAllCartsOutputData;
+  businessId: string | undefined;
 }
 
-const CartGrid = ({ initialBusinesses }: Props) => {
-  // Implement infinite scroll
+const CartGrid = ({ initialCarts, businessId }: Props) => {
+  const { data, error, mutate, setSize, size } = useCarts(businessId, {
+    fallbackData: [initialCarts],
+  });
+  const { flatData: carts, hasMore } = useMemo(
+    () => parseCursorData(data),
+    [data],
+  );
+
+  // const { trigger, isMutating } = useRemoveCart(businessId);
+
+  // const handleDelete = async (id: string) => {
+  //   toaster.promise(trigger(id), {
+  //     loading: {
+  //       title: "Deleting cart...",
+  //       description: "Please wait",
+  //     },
+  //     success: {
+  //       title: "Deletion successful",
+  //       description: "Cart has been deleted",
+  //     },
+  //     error: errorToastOptions,
+  //   });
+  // };
 
   return (
     <GridContainer pb={12}>
-      <For each={initialBusinesses}>
-        {(business) => (
-          <GridCard
-            key={business.id}
-            name={business.name}
-            logo={business.logo}
-            address={JSON.parse(business.metadata)?.address}
-            createdAt={new Date(business.createdAt).toDateString()}
-            href={computePath(business.id)}
-          />
-        )}
-      </For>
+      <InfiniteScroll
+        dataLength={carts.length}
+        next={() => setSize(size + 1)}
+        hasMore={hasMore && !error}
+        loader={<Spinner />}
+        style={{ width: "100%", overflow: "visible" }}
+      >
+        <For each={carts}>
+          {(cart) => (
+            <CartCard
+              key={cart.id}
+              name={cart.couponCode}
+              createdAt={new Date(cart.createdAt).toDateString()}
+              href={computePath(cart.id)}
+            />
+          )}
+        </For>{" "}
+      </InfiniteScroll>
+      {error && (
+        <>
+          <Button
+            w={"full"}
+            size={"md"}
+            variant={"subtle"}
+            onClick={() => mutate()}
+          >
+            Click to retry
+          </Button>
+          <Text>Expenses unavailable. Retry to continue.</Text>
+        </>
+      )}
     </GridContainer>
   );
 };
