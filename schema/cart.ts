@@ -119,3 +119,6 @@ export const DeleteCartItemOutputSchema = z.object({
   id: z.cuid2(),
   cartId: z.cuid2(),
 });
+
+export const DeleteCartParamSchema = z.object({ id: z.cuid2() });
+export const DeleteCartOutputSchema = z.object({ id: z.cuid2() });

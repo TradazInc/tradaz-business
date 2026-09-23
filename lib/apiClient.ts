@@ -15,6 +15,8 @@ import {
   DecrementCartItemInputSchema,
   DecrementCartItemOuputSchema,
   DeleteCartItemOutputSchema,
+  DeleteCartOutputSchema,
+  DeleteCartParamSchema,
   GetAllCartsOutputSchema,
   GetAllCartsQuerySchema,
   GetCartOutputSchema,
@@ -468,6 +470,10 @@ export const schema = createSchema(
       params: UpdateCartParamSchema,
       input: UpdateCartInputSchema,
       output: UpdateCartOutputSchema,
+    },
+    "@delete/api/cart/:id": {
+      params: DeleteCartParamSchema,
+      output: DeleteCartOutputSchema,
     },
     "@post/api/cart/item": {
       input: CreateCartItemInputSchema,

@@ -51,6 +51,22 @@ export const useUpdateCart = (organizationId: string | undefined) => {
   );
 };
 
+export const useRemoveCart = (organizationId: string | undefined) => {
+  const { mutate } = useSWRConfig();
+
+  return useSWRMutation(
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    (key, { arg }: { arg: string }) =>
+      apiClient("@delete/api/cart/:id", {
+        params: { id: arg },
+        ...apiConfig,
+      }),
+    {
+      onSuccess: (data) => mutate(getScopedKey(CART_KEY, data.id)),
+    },
+  );
+};
+
 export const useAddCartItem = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 

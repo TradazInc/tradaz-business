@@ -1,21 +1,24 @@
 "use client";
 
-import { useCarts } from "@/hooks/cart";
+import { useCarts, useRemoveCart } from "@/hooks/cart";
 import { GetAllCartsOutputData } from "@/schema/cart";
 import { computePath } from "@/utilities/computePath";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import { Button, For, Spinner, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
-import GridContainer from "../shared/GridContainer";
-import CartCard from "./CartCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import GridContainer from "../shared/GridContainer";
+import { toaster } from "../ui/toaster";
+import CartCard from "./CartCard";
 
 interface Props {
   initialCarts: GetAllCartsOutputData;
   businessId: string | undefined;
+  storeId: string | undefined;
 }
 
-const CartGrid = ({ initialCarts, businessId }: Props) => {
+const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
   const { data, error, mutate, setSize, size } = useCarts(businessId, {
     fallbackData: [initialCarts],
   });
@@ -24,21 +27,21 @@ const CartGrid = ({ initialCarts, businessId }: Props) => {
     [data],
   );
 
-  // const { trigger, isMutating } = useRemoveCart(businessId);
+  const { trigger, isMutating } = useRemoveCart(businessId);
 
-  // const handleDelete = async (id: string) => {
-  //   toaster.promise(trigger(id), {
-  //     loading: {
-  //       title: "Deleting cart...",
-  //       description: "Please wait",
-  //     },
-  //     success: {
-  //       title: "Deletion successful",
-  //       description: "Cart has been deleted",
-  //     },
-  //     error: errorToastOptions,
-  //   });
-  // };
+  const handleDelete = async (id: string) => {
+    toaster.promise(trigger(id), {
+      loading: {
+        title: "Deleting cart...",
+        description: "Please wait",
+      },
+      success: {
+        title: "Deletion successful",
+        description: "Cart has been deleted",
+      },
+      error: errorToastOptions,
+    });
+  };
 
   return (
     <GridContainer pb={12}>
@@ -50,15 +53,17 @@ const CartGrid = ({ initialCarts, businessId }: Props) => {
         style={{ width: "100%", overflow: "visible" }}
       >
         <For each={carts}>
-          {(cart) => (
+          {(cart, index) => (
             <CartCard
               key={cart.id}
-              name={cart.couponCode}
-              createdAt={new Date(cart.createdAt).toDateString()}
-              href={computePath(cart.id)}
+              id={cart.id}
+              name={`Cart ${index + 1}`}
+              onClick={handleDelete}
+              disabled={isMutating}
+              href={`${computePath(businessId, storeId)}/cart/${cart.id}`}
             />
           )}
-        </For>{" "}
+        </For>
       </InfiniteScroll>
       {error && (
         <>
@@ -70,7 +75,7 @@ const CartGrid = ({ initialCarts, businessId }: Props) => {
           >
             Click to retry
           </Button>
-          <Text>Expenses unavailable. Retry to continue.</Text>
+          <Text>Carts unavailable. Retry to continue.</Text>
         </>
       )}
     </GridContainer>

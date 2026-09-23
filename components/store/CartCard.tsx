@@ -1,20 +1,38 @@
-import { Card, Heading, LinkOverlay, Text, VStack } from "@chakra-ui/react";
+"use client";
+
+import { Button, Card, Heading, LinkOverlay } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface Props {
-  logo?: null;
+  id: string;
   name: string;
-  createdAt?: string;
   href: string;
+  disabled: boolean;
+  onClick: (id: string) => void;
 }
 
-const CartCard = ({ name, createdAt, href }: Props) => {
+const CartCard = ({ id, name, href, onClick, disabled }: Props) => {
   return (
     <Card.Root size={"sm"}>
       <Card.Header>
         <Heading size={"sm"}>{name}</Heading>
       </Card.Header>
-      <Card.Footer>{createdAt}</Card.Footer>
+
+      <Card.Body>Card body</Card.Body>
+
+      <Card.Footer>
+        <Button
+          variant={"subtle"}
+          colorPalette={"red"}
+          flex={"1"}
+          onClick={() => onClick(id)}
+          disabled={disabled}
+        >
+          <MdDeleteOutline />
+          Delete
+        </Button>
+      </Card.Footer>
 
       <LinkOverlay asChild>
         <NextLink href={href} />
