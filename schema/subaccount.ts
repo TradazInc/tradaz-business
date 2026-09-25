@@ -33,7 +33,7 @@ export const CreateSubaccountInputSchema = z.object({
 
   bankCode: z
     .string({ error: "bank code is required" })
-    .length(3, { error: "bank code must be 3 digits" }),
+    .min(3, { error: "bank code must be at least 3 digits" }),
 
   accountNumber: z
     .string({ error: "account number is required" })

@@ -4,8 +4,11 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getSubaccounts } from "@/server/subaccount";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { computePath } from "@/utilities/computePath";
+import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { Suspense } from "react";
+import { LuPlus } from "react-icons/lu";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -30,6 +33,12 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
+          <Button asChild>
+            <NextLink href={`${computePath(businessId)}/subaccounts/new`}>
+              <LuPlus />
+              Add Subaccount
+            </NextLink>
+          </Button>
         </HStack>
 
         {Subaccounts && Subaccounts.data.length > 0 ? (
@@ -40,7 +49,7 @@ export default async function page({ params }: Props) {
         ) : (
           <EmptyPage
             title="No subaccount found"
-            description="Invite new subaccount"
+            description="Add a subaccount to receive payments"
           />
         )}
       </VStack>
