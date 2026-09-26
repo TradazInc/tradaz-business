@@ -53,7 +53,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
         style={{ width: "100%", overflow: "visible" }}
       >
         <For each={carts}>
-          {(cart, index) => (
+          {(cart) => (
             <CartCard
               key={cart.id}
               cart={cart}
