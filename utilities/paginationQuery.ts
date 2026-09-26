@@ -1,4 +1,4 @@
-import { FetchResponse } from "@/schema/fetchResponse";
+import { FetchResponse } from "@/utilities/fetchResponse";
 
 export type CursorQuery = { cursor?: string; pageSize: number };
 export type IndexQuery = { page: number; pageSize: number };

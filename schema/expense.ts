@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
 /* Output Base Schemas */
 // amount is a Prisma Decimal, serialized as a string over JSON

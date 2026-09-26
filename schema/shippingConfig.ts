@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
 // Get
 // price is a Prisma Decimal, serialized as a string over JSON

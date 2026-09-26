@@ -1,5 +1,5 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { FetchResponse } from "@/schema/fetchResponse";
+import { FetchResponse } from "@/utilities/fetchResponse";
 import { SWRInfiniteKeyLoader } from "swr/infinite";
 import {
   CursorQuery,

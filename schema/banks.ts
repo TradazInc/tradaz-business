@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Gateway } from "./enums";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
 // Get All
 export const GetAllBanksQuerySchema = z

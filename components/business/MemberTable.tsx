@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { useMembers, useRemoveMember } from "@/hooks/member";
-import { FetchResponse } from "@/schema/fetchResponse";
+import { FetchResponse } from "@/utilities/fetchResponse";
 import { Member } from "@/schema/member";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseIndexData } from "@/utilities/parsePageData";

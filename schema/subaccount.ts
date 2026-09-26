@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 import { Gateway } from "./enums";
 
 // Get

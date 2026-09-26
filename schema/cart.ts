@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
 // Get All
 export const GetAllCartsQuerySchema = z.object({

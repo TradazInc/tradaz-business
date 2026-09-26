@@ -1,7 +1,7 @@
 import { PAGE_SIZE } from "@/data/constants";
 import { authClient } from "@/lib/authClient";
 import { z } from "zod";
-import { FetchResponse } from "./fetchResponse";
+import { FetchResponse } from "../utilities/fetchResponse";
 
 // Get All
 export type Member = typeof authClient.$Infer.Member & {

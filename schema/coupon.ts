@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { DiscountType } from "./enums";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
 // Get
 export const GetCouponParamSchema = z.object({

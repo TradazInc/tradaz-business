@@ -1,6 +1,6 @@
 import { MAX_FILES } from "@/data/constants";
 import { z } from "zod";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 import { SizeOutputSchema } from "./sizeType";
 import { Gender, ProductStatus } from "./enums";
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Gateway, OrderStatus, OrgRole, TransactionStatus } from "./enums";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
 /* Output Base Schemas */
 const OrderOutputBaseSchema = z.object({

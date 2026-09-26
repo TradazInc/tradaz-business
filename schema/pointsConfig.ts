@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createFetchResponseSchema } from "./fetchResponse";
+import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
 // Get
 export const GetPointsConfigOutputSchema = z.object({
