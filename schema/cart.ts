@@ -12,28 +12,29 @@ export type GetAllCartsQueryData = z.infer<typeof GetAllCartsQuerySchema>;
 export const GetAllCartsOutputSchema = createFetchResponseSchema(
   z.object({
     id: z.cuid2(),
-    couponCode: z.string(),
-    depositAmount: z.coerce.number(),
-    points: z.coerce.number(),
+    couponCode: z.string().nullable(),
+    depositAmount: z.coerce.number().nullable(),
+    points: z.coerce.number().nullable(),
     createdAt: z.iso.datetime(),
-    paymentConfigId: z.cuid2(),
-    terminalConfigId: z.cuid2(),
-    shippingMethodId: z.cuid2(),
+    paymentConfigId: z.cuid2().nullable(),
+    terminalConfigId: z.cuid2().nullable(),
+    shippingMethodId: z.cuid2().nullable(),
     memberId: z.cuid2(),
   }),
 );
 export type GetAllCartsOutputData = z.infer<typeof GetAllCartsOutputSchema>;
+export type CartListItemData = GetAllCartsOutputData["data"][number];
 
 // Get
 export const GetCartOutputSchema = z.object({
   id: z.cuid2(),
-  couponCode: z.string(),
-  depositAmount: z.coerce.number(),
-  points: z.coerce.number(),
+  couponCode: z.string().nullable(),
+  depositAmount: z.coerce.number().nullable(),
+  points: z.coerce.number().nullable(),
   createdAt: z.iso.duration(),
-  paymentConfigId: z.cuid2(),
-  terminalConfigId: z.cuid2(),
-  shippingMethodId: z.cuid2(),
+  paymentConfigId: z.cuid2().nullable(),
+  terminalConfigId: z.cuid2().nullable(),
+  shippingMethodId: z.cuid2().nullable(),
   memberId: z.cuid2(),
   cartItems: z
     .object({
@@ -103,13 +104,13 @@ export type UpdateCartInputData = z.infer<typeof UpdateCartInputSchema>;
 
 export const UpdateCartOutputSchema = z.object({
   id: z.cuid2(),
-  couponCode: z.string(),
-  depositAmount: z.number(),
-  points: z.number(),
+  couponCode: z.string().nullable(),
+  depositAmount: z.number().nullable(),
+  points: z.number().nullable(),
   createdAt: z.iso.date(),
-  paymentConfigId: z.cuid2(),
-  terminalConfigId: z.cuid2(),
-  shippingMethodId: z.cuid2(),
+  paymentConfigId: z.cuid2().nullable(),
+  terminalConfigId: z.cuid2().nullable(),
+  shippingMethodId: z.cuid2().nullable(),
   memberId: z.cuid2(),
 });
 

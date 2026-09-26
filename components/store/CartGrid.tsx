@@ -56,8 +56,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
           {(cart, index) => (
             <CartCard
               key={cart.id}
-              id={cart.id}
-              name={`Cart ${index + 1}`}
+              cart={cart}
               onClick={handleDelete}
               disabled={isMutating}
               href={`${computePath(businessId, storeId)}/cart/${cart.id}`}
