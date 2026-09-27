@@ -27,6 +27,7 @@ import { useParams } from "next/navigation";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 import FormInputGrid from "../shared/FormInputGrid";
+import { useMemo } from "react";
 
 const PosConfigForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -34,13 +35,17 @@ const PosConfigForm = () => {
   // throws if the component is ever rendered outside a Dialog.Root
   const { setOpen } = useDialogContext();
 
-  const gatewayCollection = createListCollection({
-    items: [
-      { label: "Opay", value: Gateway.opay },
-      { label: "Moniepoint", value: Gateway.moniepoint },
-      { label: "Paystack", value: Gateway.paystack },
-    ],
-  });
+  const gatewayCollection = useMemo(
+    () =>
+      createListCollection({
+        items: [
+          { label: "Paystack", value: Gateway.paystack },
+          { label: "Moniepoint", value: Gateway.moniepoint },
+          { label: "Opay", value: Gateway.opay },
+        ],
+      }),
+    [],
+  );
 
   const {
     reset,
