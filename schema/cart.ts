@@ -23,7 +23,7 @@ export const GetAllCartsOutputSchema = createFetchResponseSchema(
   }),
 );
 export type GetAllCartsOutputData = z.infer<typeof GetAllCartsOutputSchema>;
-export type CartListItemData = GetAllCartsOutputData["data"][number];
+export type GetAllCartsOutputItemData = GetAllCartsOutputData["data"][number];
 
 // Get
 export const GetCartOutputSchema = z.object({

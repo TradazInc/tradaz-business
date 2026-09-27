@@ -1,5 +1,5 @@
 import noImage from "@/public/no-image-placeholder.webp";
-import { ProductListItemData } from "@/schema/product";
+import { GetAllProductOutputItemData } from "@/schema/product";
 import { Button, Card, DataList, HStack, Image } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import NextImage from "next/image";
@@ -8,7 +8,7 @@ import { MdDeleteOutline, MdOutlineViewInAr } from "react-icons/md";
 import StatusIndicator from "./StatusIndicator";
 
 interface Props {
-  product: ProductListItemData;
+  product: GetAllProductOutputItemData;
   href: string;
 }
 

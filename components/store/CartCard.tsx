@@ -1,7 +1,7 @@
 "use client";
 
 import noImage from "@/public/no-image-placeholder.webp";
-import { CartListItemData } from "@/schema/cart";
+import { GetAllCartsOutputItemData } from "@/schema/cart";
 import {
   Box,
   Button,
@@ -16,7 +16,7 @@ import { MdDeleteOutline, MdOutlineViewInAr } from "react-icons/md";
 
 interface Props {
   href: string;
-  cart: CartListItemData;
+  cart: GetAllCartsOutputItemData;
   disabled: boolean;
   onClick: (id: string) => void;
 }

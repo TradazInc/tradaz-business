@@ -112,7 +112,7 @@ export const GetAllProductOutputSchema = createFetchResponseSchema(
   }),
 );
 export type GetAllProductOutputData = z.infer<typeof GetAllProductOutputSchema>;
-export type ProductListItemData = GetAllProductOutputData["data"][number];
+export type GetAllProductOutputItemData = GetAllProductOutputData["data"][number];
 
 // Create
 export const CreateProductOutputSchema = ProductOutputBaseSchema.extend({
