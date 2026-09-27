@@ -11,6 +11,7 @@ import {
 } from "@/schema/subaccount";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
+import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Button,
   createListCollection,
@@ -28,21 +29,11 @@ import { useMemo, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import FormInputGrid from "../shared/FormInputGrid";
 
-const DEFAULT_COUNTRY = "nigeria";
-
-const gatewayCollection = createListCollection({
-  items: [
-    { label: "Paystack", value: Gateway.paystack },
-    { label: "Moniepoint", value: Gateway.moniepoint },
-    { label: "Opay", value: Gateway.opay },
-  ],
-});
-
 const SubaccountForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddSubaccount(businessId);
   const { refresh, push } = useRouter();
-  const [country, setCountry] = useState(DEFAULT_COUNTRY);
+  const [country, setCountry] = useState("nigeria");
 
   const {
     reset,
@@ -62,31 +53,44 @@ const SubaccountForm = () => {
 
   // Countries are only needed to narrow down Paystack banks
   const countries = useCountries(isPaystack ? { gateway } : null);
-  const banks = useBanks(
-    gateway ? { gateway, country: isPaystack ? country : undefined } : null,
-  );
+  const banks = useBanks(gateway ? { gateway, country } : null);
 
+  // Parse paged data
+  const parsedCountries = useMemo(
+    () => parseCursorData(countries.data),
+    [countries.data],
+  );
+  const parsedBanks = useMemo(() => parseCursorData(banks.data), [banks.data]);
+
+  const gatewayCollection = useMemo(
+    () =>
+      createListCollection({
+        items: [
+          { label: "Paystack", value: Gateway.paystack },
+          { label: "Moniepoint", value: Gateway.moniepoint },
+          { label: "Opay", value: Gateway.opay },
+        ],
+      }),
+    [],
+  );
   const countryCollection = useMemo(
     () =>
       createListCollection({
-        items: countries.data?.flatMap((page) => page.data) ?? [],
+        items: parsedCountries.flatData,
         itemToValue: (item) => item.name.toLowerCase(),
         itemToString: (item) => item.name,
       }),
     [countries.data],
   );
-
   const bankCollection = useMemo(
     () =>
       createListCollection({
-        items: banks.data?.flatMap((page) => page.data) ?? [],
+        items: parsedBanks.flatData,
         itemToValue: (item) => item.code,
         itemToString: (item) => item.name,
       }),
     [banks.data],
   );
-
-  const hasMoreBanks = !!banks.data?.at(-1)?.meta?.next;
 
   const clearBank = () =>
     setValue("bankCode", "", { shouldValidate: false, shouldDirty: true });
@@ -107,7 +111,6 @@ const SubaccountForm = () => {
     try {
       await promise.unwrap();
       reset(emptySubaccount);
-      setCountry(DEFAULT_COUNTRY);
       refresh();
       push(`${computePath(businessId)}/subaccounts`);
     } catch {} // Error displayed by toaster
@@ -189,7 +192,7 @@ const SubaccountForm = () => {
                 <Select.Root
                   value={[country]}
                   onValueChange={({ value }) => {
-                    setCountry(value[0] ?? DEFAULT_COUNTRY);
+                    setCountry(value[0]);
                     clearBank();
                   }}
                   collection={countryCollection}
@@ -282,7 +285,7 @@ const SubaccountForm = () => {
                               <Select.ItemIndicator />
                             </Select.Item>
                           ))}
-                          {hasMoreBanks && (
+                          {parsedBanks.hasMore && (
                             <Button
                               w={"full"}
                               size={"sm"}

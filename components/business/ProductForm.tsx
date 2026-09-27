@@ -81,13 +81,17 @@ const ProductForm = ({ product }: Props) => {
       }),
     [parsedSizeTypes.flatData],
   );
-  const genderCollection = createListCollection({
-    items: [
-      { label: "Male", value: Gender.male },
-      { label: "Female", value: Gender.female },
-      { label: "Unisex", value: Gender.unisex },
-    ],
-  });
+  const genderCollection = useMemo(
+    () =>
+      createListCollection({
+        items: [
+          { label: "Male", value: Gender.male },
+          { label: "Female", value: Gender.female },
+          { label: "Unisex", value: Gender.unisex },
+        ],
+      }),
+    [],
+  );
 
   const {
     control,

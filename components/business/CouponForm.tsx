@@ -25,6 +25,7 @@ import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { LuCalendar } from "react-icons/lu";
 import FormInputGrid from "../shared/FormInputGrid";
+import { useMemo } from "react";
 
 const CouponForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -32,12 +33,16 @@ const CouponForm = () => {
   // throws if the component is ever rendered outside a Dialog.Root
   const { setOpen } = useDialogContext();
 
-  const discountTypeCollection = createListCollection({
-    items: [
-      { label: "Fixed", value: DiscountType.fixed },
-      { label: "Percentage", value: DiscountType.percentage },
-    ],
-  });
+  const discountTypeCollection = useMemo(
+    () =>
+      createListCollection({
+        items: [
+          { label: "Fixed", value: DiscountType.fixed },
+          { label: "Percentage", value: DiscountType.percentage },
+        ],
+      }),
+    [],
+  );
 
   const {
     reset,
