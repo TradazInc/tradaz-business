@@ -3,6 +3,7 @@ import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
+import { GetAllMembersQuerySchema } from "@/schema/member";
 import { getMembers } from "@/server/member";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -26,7 +27,12 @@ export default async function page({ params }: Props) {
           <Suspense>
             <Search
               placeholder={"Search for a customer"}
-              filterField={"name"}
+              filterFields={
+                GetAllMembersQuerySchema.pick({
+                  filterField: true,
+                  filterValue: true,
+                }).keyof().options
+              }
             />
           </Suspense>
           <Spacer />

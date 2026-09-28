@@ -3,6 +3,7 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import PosConfigTable from "@/components/store/PosConfigTable";
+import { GetAllPosConfigQuerySchema } from "@/schema/posConfig";
 import { getPosConfigs } from "@/server/posConfig";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -26,7 +27,7 @@ export default async function page({ params }: Props) {
           <Suspense>
             <Search
               placeholder={"Search for a configuration"}
-              filterField={"name"}
+              filterFields={GetAllPosConfigQuerySchema.keyof().options}
             />
           </Suspense>
           <Spacer />

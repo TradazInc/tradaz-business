@@ -3,6 +3,7 @@ import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
+import { GetAllProductQuerySchema } from "@/schema/product";
 import { getProducts } from "@/server/product";
 import { computePath } from "@/utilities/computePath";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
@@ -27,7 +28,10 @@ export default async function page({ params }: Props) {
 
         <HStack w={"full"}>
           <Suspense>
-            <Search placeholder={"Search for a product"} filterField={"name"} />
+            <Search
+              placeholder={"Search for a product"}
+              filterFields={GetAllProductQuerySchema.keyof().options}
+            />
           </Suspense>
           <Spacer />
           {/* add dropdown */}
