@@ -25,8 +25,9 @@ import {
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
+import InfiniteScroll from "react-infinite-scroll-component";
 import FormInputGrid from "../shared/FormInputGrid";
 
 const SubaccountForm = () => {
@@ -36,6 +37,7 @@ const SubaccountForm = () => {
   // throws if the component is ever rendered outside a Dialog.Root
   const { setOpen } = useDialogContext();
   const [country, setCountry] = useState("nigeria");
+  const bankScrollId = useId();
 
   const {
     reset,
@@ -280,25 +282,21 @@ const SubaccountForm = () => {
                     </Select.Control>
                     <Portal>
                       <Select.Positioner>
-                        <Select.Content>
-                          {bankCollection.items.map((bank) => (
-                            <Select.Item item={bank} key={bank.code}>
-                              {bank.name}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))}
-                          {parsedBanks.hasMore && (
-                            <Button
-                              w={"full"}
-                              size={"sm"}
-                              type={"button"}
-                              variant={"ghost"}
-                              loading={banks.isValidating}
-                              onClick={() => banks.setSize(banks.size + 1)}
-                            >
-                              Load more banks
-                            </Button>
-                          )}
+                        <Select.Content id={bankScrollId}>
+                          <InfiniteScroll
+                            dataLength={parsedBanks.flatData.length}
+                            hasMore={parsedBanks.hasMore && !banks.error}
+                            next={() => banks.setSize(banks.size + 1)}
+                            loader={<Spinner size={"xs"} />}
+                            scrollableTarget={bankScrollId}
+                          >
+                            {bankCollection.items.map((bank) => (
+                              <Select.Item item={bank} key={bank.code}>
+                                {bank.name}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))}
+                          </InfiniteScroll>
                         </Select.Content>
                       </Select.Positioner>
                     </Portal>
