@@ -214,18 +214,16 @@ const SubaccountForm = () => {
                       )}
                     </Select.IndicatorGroup>
                   </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content>
-                        {countryCollection.items.map((item) => (
-                          <Select.Item item={item} key={item.id}>
-                            {item.name}
-                            <Select.ItemIndicator />
-                          </Select.Item>
-                        ))}
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
+                  <Select.Positioner>
+                    <Select.Content>
+                      {countryCollection.items.map((item) => (
+                        <Select.Item item={item} key={item.id}>
+                          {item.name}
+                          <Select.ItemIndicator />
+                        </Select.Item>
+                      ))}
+                    </Select.Content>
+                  </Select.Positioner>
                 </Select.Root>
                 {countries.error && (
                   <Button
