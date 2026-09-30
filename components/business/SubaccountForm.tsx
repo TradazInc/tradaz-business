@@ -9,7 +9,6 @@ import {
   CreateSubaccountInputSchema,
   emptySubaccount,
 } from "@/schema/subaccount";
-import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
@@ -22,6 +21,7 @@ import {
   Select,
   Spinner,
   Stack,
+  useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
@@ -32,7 +32,9 @@ import FormInputGrid from "../shared/FormInputGrid";
 const SubaccountForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddSubaccount(businessId);
-  const { refresh, push } = useRouter();
+  const { refresh } = useRouter();
+  // throws if the component is ever rendered outside a Dialog.Root
+  const { setOpen } = useDialogContext();
   const [country, setCountry] = useState("nigeria");
 
   const {
@@ -111,8 +113,8 @@ const SubaccountForm = () => {
     try {
       await promise.unwrap();
       reset(emptySubaccount);
+      setOpen(false);
       refresh();
-      push(`${computePath(businessId)}/subaccounts`);
     } catch {} // Error displayed by toaster
   });
 

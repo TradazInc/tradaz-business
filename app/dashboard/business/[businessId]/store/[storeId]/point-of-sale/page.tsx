@@ -33,6 +33,16 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
+          <DialogBox
+            trigger={
+              <Button>
+                <LuPlus />
+                Add POS config
+              </Button>
+            }
+          >
+            <PosConfigForm />
+          </DialogBox>
         </HStack>
 
         {posConfigs && posConfigs.data.length > 0 ? (
@@ -49,7 +59,7 @@ export default async function page({ params }: Props) {
               trigger={
                 <Button>
                   <LuPlus />
-                  New pos config
+                  New POS config
                 </Button>
               }
             >
