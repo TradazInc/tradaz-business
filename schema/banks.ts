@@ -7,6 +7,8 @@ export const GetAllBanksQuerySchema = z
   .object({
     gateway: z.enum(Gateway, { error: "Gateway is required" }),
     country: z.string().min(2, { error: "Invalid country name" }).optional(),
+    cursor: z.string().optional(),
+    pageSize: z.number().positive().optional(),
   })
   .refine((query) => query.gateway !== Gateway.paystack || !!query.country, {
     error: "Country is required",
