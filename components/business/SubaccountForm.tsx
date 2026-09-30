@@ -188,64 +188,66 @@ const SubaccountForm = () => {
               <Field.ErrorText>{errors.gateway?.message}</Field.ErrorText>
             </Field.Root>
 
-            {isPaystack && (
-              <Field.Root required invalid={!!countries.error}>
-                <Field.Label>
-                  Country <Field.RequiredIndicator />
-                </Field.Label>
-                <Select.Root
-                  value={[country]}
-                  onValueChange={({ value }) => {
-                    setCountry(value[0]);
-                    clearBank();
-                  }}
-                  collection={countryCollection}
+            <Field.Root
+              required
+              disabled={!isPaystack}
+              invalid={!!countries.error}
+            >
+              <Field.Label>
+                Country <Field.RequiredIndicator />
+              </Field.Label>
+              <Select.Root
+                value={[country]}
+                onValueChange={({ value }) => {
+                  setCountry(value[0]);
+                  clearBank();
+                }}
+                collection={countryCollection}
+              >
+                <Select.HiddenSelect />
+                <Select.Control>
+                  <Select.Trigger>
+                    <Select.ValueText placeholder="Select country" />
+                  </Select.Trigger>
+                  <Select.IndicatorGroup>
+                    {countries.isLoading ? (
+                      <Spinner size="sm" />
+                    ) : (
+                      <Select.Indicator />
+                    )}
+                  </Select.IndicatorGroup>
+                </Select.Control>
+                <Portal>
+                  <Select.Positioner>
+                    <Select.Content>
+                      {countryCollection.items.map((item) => (
+                        <Select.Item item={item} key={item.id}>
+                          {item.name}
+                          <Select.ItemIndicator />
+                        </Select.Item>
+                      ))}
+                    </Select.Content>
+                  </Select.Positioner>
+                </Portal>
+              </Select.Root>
+              {countries.error && (
+                <Button
+                  w={"full"}
+                  size={"sm"}
+                  type={"button"}
+                  variant={"subtle"}
+                  onClick={() => countries.mutate()}
                 >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder="Select country" />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      {countries.isLoading ? (
-                        <Spinner size="sm" />
-                      ) : (
-                        <Select.Indicator />
-                      )}
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content>
-                        {countryCollection.items.map((item) => (
-                          <Select.Item item={item} key={item.id}>
-                            {item.name}
-                            <Select.ItemIndicator />
-                          </Select.Item>
-                        ))}
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
-                </Select.Root>
-                {countries.error && (
-                  <Button
-                    w={"full"}
-                    size={"sm"}
-                    type={"button"}
-                    variant={"subtle"}
-                    onClick={() => countries.mutate()}
-                  >
-                    Click to retry
-                  </Button>
-                )}
-                <Field.HelperText>
-                  Country the bank is located in
-                </Field.HelperText>
-                <Field.ErrorText>
-                  Countries unavailable. Retry to continue.
-                </Field.ErrorText>
-              </Field.Root>
-            )}
+                  Click to retry
+                </Button>
+              )}
+              <Field.HelperText>
+                Country the bank is located in
+              </Field.HelperText>
+              <Field.ErrorText>
+                Countries unavailable. Retry to continue.
+              </Field.ErrorText>
+            </Field.Root>
 
             <Field.Root required invalid={!!errors.bankCode || !!banks.error}>
               <Field.Label>
