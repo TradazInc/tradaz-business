@@ -214,16 +214,18 @@ const SubaccountForm = () => {
                       )}
                     </Select.IndicatorGroup>
                   </Select.Control>
-                  <Select.Positioner>
-                    <Select.Content>
-                      {countryCollection.items.map((item) => (
-                        <Select.Item item={item} key={item.id}>
-                          {item.name}
-                          <Select.ItemIndicator />
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Positioner>
+                  <Portal>
+                    <Select.Positioner>
+                      <Select.Content>
+                        {countryCollection.items.map((item) => (
+                          <Select.Item item={item} key={item.id}>
+                            {item.name}
+                            <Select.ItemIndicator />
+                          </Select.Item>
+                        ))}
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Portal>
                 </Select.Root>
                 {countries.error && (
                   <Button
@@ -278,26 +280,24 @@ const SubaccountForm = () => {
                         )}
                       </Select.IndicatorGroup>
                     </Select.Control>
-                    <Portal>
-                      <Select.Positioner>
-                        <Select.Content id={bankScrollId}>
-                          <InfiniteScroll
-                            dataLength={parsedBanks.flatData.length}
-                            hasMore={parsedBanks.hasMore && !banks.error}
-                            next={() => banks.setSize(banks.size + 1)}
-                            loader={<Spinner size={"xs"} />}
-                            scrollableTarget={bankScrollId}
-                          >
-                            {bankCollection.items.map((bank) => (
-                              <Select.Item item={bank} key={bank.code}>
-                                {bank.name}
-                                <Select.ItemIndicator />
-                              </Select.Item>
-                            ))}
-                          </InfiniteScroll>
-                        </Select.Content>
-                      </Select.Positioner>
-                    </Portal>
+                    <Select.Positioner>
+                      <Select.Content id={bankScrollId}>
+                        <InfiniteScroll
+                          dataLength={parsedBanks.flatData.length}
+                          hasMore={parsedBanks.hasMore && !banks.error}
+                          next={() => banks.setSize(banks.size + 1)}
+                          loader={<Spinner size={"xs"} />}
+                          scrollableTarget={bankScrollId}
+                        >
+                          {bankCollection.items.map((bank) => (
+                            <Select.Item item={bank} key={bank.code}>
+                              {bank.name}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))}
+                        </InfiniteScroll>
+                      </Select.Content>
+                    </Select.Positioner>
                   </Select.Root>
                 )}
               />
