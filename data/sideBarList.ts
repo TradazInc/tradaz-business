@@ -1,4 +1,5 @@
 import { IconType } from "react-icons";
+import { AiOutlineAccountBook } from "react-icons/ai";
 import {
   LuCalculator,
   LuCheck,
@@ -137,6 +138,11 @@ export const businessItems: SideMenuItem[] = [
       { label: "Expenses", icon: LuTrendingDown, path: "/expenses" },
       { label: "Revenue", icon: LuTrendingUp, path: "/revenue" },
       { label: "Tax Calculation", icon: LuCalculator, path: "" },
+      {
+        label: "Subaccounts",
+        icon: AiOutlineAccountBook,
+        path: "/subaccounts",
+      },
     ],
   },
   {
@@ -190,7 +196,7 @@ export const storeItems: SideMenuItem[] = [
   {
     label: "Point of Sale",
     icon: LuScanLine,
-    children: [{ label: "POS", icon: LuTerminal, path: "" }],
+    children: [{ label: "POS", icon: LuTerminal, path: "/point-of-sale" }],
   },
   {
     label: "Finance",

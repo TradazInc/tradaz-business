@@ -1,11 +1,14 @@
+import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
+import PosConfigForm from "@/components/store/PosConfigForm";
 import PosConfigTable from "@/components/store/PosConfigTable";
 import { getPosConfigs } from "@/server/posConfig";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
+import { LuPlus } from "react-icons/lu";
 
 interface Props {
   params: Promise<{ businessId?: string; storeId?: string }>;
@@ -41,7 +44,18 @@ export default async function page({ params }: Props) {
           <EmptyPage
             title="No configurations found"
             description="Create a POS configuration"
-          />
+          >
+            <DialogBox
+              trigger={
+                <Button>
+                  <LuPlus />
+                  New pos config
+                </Button>
+              }
+            >
+              <PosConfigForm />
+            </DialogBox>
+          </EmptyPage>
         )}
       </VStack>
     </PageContainer>
