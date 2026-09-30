@@ -17,6 +17,7 @@ export const RevenueOutputBaseSchema = z.object({
 
 // Get All
 export const GetAllRevenueQuerySchema = z.object({
+  search: z.string().optional(),
   teamId: z.cuid2().optional(),
   from: z.string().optional(),
   to: z.string().optional(),
@@ -24,8 +25,9 @@ export const GetAllRevenueQuerySchema = z.object({
   pageSize: z.number().positive().optional(),
 });
 
-export const GetAllRevenueOutputSchema =
-  createFetchResponseSchema(RevenueOutputBaseSchema);
+export const GetAllRevenueOutputSchema = createFetchResponseSchema(
+  RevenueOutputBaseSchema,
+);
 export type GetAllRevenueOutputData = z.infer<typeof GetAllRevenueOutputSchema>;
 
 // Create

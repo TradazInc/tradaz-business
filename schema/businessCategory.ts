@@ -9,7 +9,7 @@ export const GetBusinessCategoryOuputSchema = z.object({
 
 // Get All
 export const GetAllBusinessCategoryQuerySchema = z.object({
-  name: z.string().optional(),
+  search: z.string().optional(),
   cursor: z.cuid2().optional(),
   pageSize: z.number().positive().optional(),
 });

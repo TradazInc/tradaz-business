@@ -17,7 +17,7 @@ export const ExpenseOutputSchema = z.object({
 
 // Get All (index paginated)
 export const GetAllExpenseQuerySchema = z.object({
-  name: z.string().optional(),
+  search: z.string().optional(),
   teamId: z.cuid2().optional(),
   from: z.string().optional(),
   to: z.string().optional(),

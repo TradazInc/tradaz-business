@@ -28,7 +28,7 @@ export type GetCouponOutputData = z.infer<typeof GetCouponOutputSchema>;
 
 // Get All
 export const GetAllCouponQuerySchema = z.object({
-  name: z.string().optional(),
+  search: z.string().optional(),
   code: z.string().optional(),
   discountType: z.enum(DiscountType).optional(),
   isActive: z.boolean().optional(),

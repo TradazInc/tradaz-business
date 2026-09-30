@@ -1,83 +1,40 @@
 "use client";
 
-import {
-  createListCollection,
-  Group,
-  Input,
-  Portal,
-  Select,
-} from "@chakra-ui/react";
+import { Input, InputGroup } from "@chakra-ui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { LuSearch } from "react-icons/lu";
 import { useDebouncedCallback } from "use-debounce";
 
 interface Props {
-  filterFields: string[];
   placeholder: string;
+  searchField: string;
 }
 
-export default function Search({ filterFields, placeholder }: Props) {
+export default function Search({ searchField, placeholder }: Props) {
   const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [filterField, setFilterField] = useState(filterFields[0]);
 
-  const handleSearch = useDebouncedCallback((filterValue: string) => {
+  const handleSearch = useDebouncedCallback((searchValue: string) => {
     const params = new URLSearchParams(searchParams);
-    if (filterValue) {
-      params.set(filterField, filterValue);
+    if (searchValue) {
+      params.set(searchField, searchValue);
     } else {
-      params.delete(filterField);
+      params.delete(searchField);
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
 
-  const filterFieldCollection = useMemo(
-    () =>
-      createListCollection({
-        items: filterFields.map((f) => ({ label: f, value: f })),
-      }),
-    [filterFields],
-  );
-
   return (
-    <Group attached w={"full"} maxW={"sm"}>
+    <InputGroup startElement={<LuSearch />} w={72}>
       <Input
-        flex={"1"}
+        size={"xs"}
         color={"white"}
+        borderRadius={"full"}
         placeholder={placeholder}
         onChange={(e) => handleSearch(e.target.value)}
-        defaultValue={searchParams.get(filterField)?.toString()}
+        defaultValue={searchParams.get(searchField)?.toString()}
       />
-      <Select.Root
-        maxW={20}
-        bg={"bg.subtle"}
-        value={[filterField]}
-        collection={filterFieldCollection}
-        onValueChange={(e) => setFilterField(e.value[0])}
-      >
-        <Select.HiddenSelect />
-        <Select.Control>
-          <Select.Trigger>
-            <Select.ValueText placeholder="Select filter" />
-          </Select.Trigger>
-          <Select.IndicatorGroup>
-            <Select.Indicator />
-          </Select.IndicatorGroup>
-        </Select.Control>
-        <Portal>
-          <Select.Positioner>
-            <Select.Content>
-              {filterFieldCollection.items.map((filterField) => (
-                <Select.Item item={filterField} key={filterField.value}>
-                  {filterField.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
-        </Portal>
-      </Select.Root>
-    </Group>
+    </InputGroup>
   );
 }

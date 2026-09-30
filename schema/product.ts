@@ -87,7 +87,7 @@ export type VariationOutputData = GetProductOutputData["variations"][number];
 
 // Get All
 export const GetAllProductQuerySchema = z.object({
-  name: z.string().optional(),
+  search: z.string().optional(),
   categoryId: z.cuid2().optional(),
   teamId: z.cuid2().optional(),
   organizationId: z.cuid2().optional(),
@@ -112,7 +112,8 @@ export const GetAllProductOutputSchema = createFetchResponseSchema(
   }),
 );
 export type GetAllProductOutputData = z.infer<typeof GetAllProductOutputSchema>;
-export type GetAllProductOutputItemData = GetAllProductOutputData["data"][number];
+export type GetAllProductOutputItemData =
+  GetAllProductOutputData["data"][number];
 
 // Create
 export const CreateProductOutputSchema = ProductOutputBaseSchema.extend({
