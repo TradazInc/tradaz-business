@@ -1,6 +1,7 @@
 import { CART_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
+  CreateCartInputData,
   CreateCartItemInputData,
   GetAllCartsOutputData,
   GetAllCartsQuerySchema,
@@ -31,6 +32,14 @@ export const useCarts = (
 export const useCart = (id: string) => {
   return useSWR(getScopedKey(CART_KEY, id), ([key, id]) =>
     apiClient("@get/api/cart/:id", { params: { id }, ...apiConfig }),
+  );
+};
+
+export const useAddCart = (organizationId: string | undefined) => {
+  return useSWRMutation(
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    (key, { arg }: { arg: { id: string; data: CreateCartInputData } }) =>
+      apiClient("@post/api/cart", { body: arg.data, ...apiConfig }),
   );
 };
 

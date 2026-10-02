@@ -1,6 +1,31 @@
 import { z } from "zod";
 import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
+// Base Schemas
+export const BaseCartParamSchema = z.object({ id: z.cuid2() });
+export const BaseCartInputSchema = z
+  .object({
+    couponCode: z.string(),
+    depositAmount: z.coerce.number(),
+    points: z.coerce.number(),
+    paymentConfigId: z.cuid2(),
+    terminalConfigId: z.cuid2(),
+    shippingMethodId: z.cuid2(),
+  })
+  .partial();
+
+export const BaseCartOutputSchema = z.object({
+  id: z.cuid2(),
+  couponCode: z.string().nullable(),
+  depositAmount: z.number().nullable(),
+  points: z.number().nullable(),
+  createdAt: z.iso.date(),
+  paymentConfigId: z.cuid2().nullable(),
+  terminalConfigId: z.cuid2().nullable(),
+  shippingMethodId: z.cuid2().nullable(),
+  memberId: z.cuid2(),
+});
+
 // Get All
 export const GetAllCartsQuerySchema = z.object({
   memberId: z.cuid2().optional(),
@@ -52,9 +77,15 @@ export const GetCartOutputSchema = z.object({
     .array(),
 });
 
-export const GetCartParamSchema = z.object({ id: z.cuid2() });
+export const GetCartParamSchema = BaseCartParamSchema;
 
 // Create
+export const CreateCartInputSchema = BaseCartInputSchema;
+export type CreateCartInputData = z.infer<typeof CreateCartInputSchema>;
+
+export const CreateCartOutputSchema = BaseCartOutputSchema;
+export type CreateCartOutputData = z.infer<typeof CreateCartInputSchema>;
+
 export const CreateCartItemInputSchema = z.object({
   variationId: z.cuid2(),
   quantity: z.number().positive({ error: "Increase cart item quantity" }),
@@ -90,32 +121,15 @@ export const DecrementCartItemInputSchema = IncrementCartItemInputSchema;
 export const DecrementCartItemOuputSchema = IncrementCartItemOuputSchema;
 
 // Update
-export const UpdateCartParamSchema = z.object({ id: z.cuid2() });
+export const UpdateCartParamSchema = BaseCartParamSchema;
 
-export const UpdateCartInputSchema = z.object({
-  couponCode: z.string().min(3),
-  points: z.number(),
-  depositAmount: z.number(),
-  paymentConfigId: z.cuid2(),
-  terminalConfigId: z.cuid2(),
-  shippingMethodId: z.cuid2(),
-});
+export const UpdateCartInputSchema = BaseCartInputSchema;
 export type UpdateCartInputData = z.infer<typeof UpdateCartInputSchema>;
 
-export const UpdateCartOutputSchema = z.object({
-  id: z.cuid2(),
-  couponCode: z.string().nullable(),
-  depositAmount: z.number().nullable(),
-  points: z.number().nullable(),
-  createdAt: z.iso.date(),
-  paymentConfigId: z.cuid2().nullable(),
-  terminalConfigId: z.cuid2().nullable(),
-  shippingMethodId: z.cuid2().nullable(),
-  memberId: z.cuid2(),
-});
+export const UpdateCartOutputSchema = BaseCartOutputSchema;
 
 // Delete
-export const DeleteCartItemParamSchema = z.object({ id: z.cuid2() });
+export const DeleteCartItemParamSchema = BaseCartParamSchema;
 export const DeleteCartItemOutputSchema = z.object({
   id: z.cuid2(),
   cartId: z.cuid2(),
