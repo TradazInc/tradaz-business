@@ -1,4 +1,4 @@
-import { VariationOutputData } from "@/schema/product";
+import { GetProductVariationOutputData } from "@/schema/product";
 import {
   Badge,
   Card,
@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 interface Props {
-  variation: VariationOutputData;
+  variation: GetProductVariationOutputData;
   index: number;
 }
 

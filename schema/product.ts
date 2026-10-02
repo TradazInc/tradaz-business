@@ -83,7 +83,8 @@ export const GetProductOutputSchema = ProductOutputBaseSchema.extend({
   vendor: VendorOutputSchema,
 });
 export type GetProductOutputData = z.infer<typeof GetProductOutputSchema>;
-export type VariationOutputData = GetProductOutputData["variations"][number];
+export type GetProductVariationOutputData =
+  GetProductOutputData["variations"][number];
 
 // Get All
 export const GetAllProductQuerySchema = z.object({
@@ -107,6 +108,19 @@ export const GetAllProductOutputSchema = createFetchResponseSchema(
     brand: true,
   }).extend({
     images: z.array(ProductImageOutputSchema),
+    variations: VariationOutputSchema.pick({
+      id: true,
+      sku: true,
+      color: true,
+      price: true,
+    })
+      .extend({
+        size: z.object({ value: z.string() }).nullable(),
+        teamVariations: TeamVariationOutputSchema.pick({
+          quantity: true,
+        }).array(),
+      })
+      .array(),
     vendor: VendorOutputSchema,
     _count: ProductCountSchema,
   }),
