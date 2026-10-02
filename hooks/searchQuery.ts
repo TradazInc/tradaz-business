@@ -9,6 +9,6 @@ export const useSearchQuery = <T extends z.ZodType>(dataSchema: T) => {
     const { data, success } = dataSchema.safeParse(
       Object.fromEntries(searchParams),
     );
-    return success ? (data as z.infer<T>) : null;
+    return success ? data : null;
   }, [searchParams, dataSchema]);
 };
