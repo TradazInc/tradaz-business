@@ -13,7 +13,7 @@ import useSWRInfinite, {
   unstable_serialize,
 } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
-import { useSearchQuery } from "./useSearchQuery";
+import { useSearchQuery } from "./searchQuery";
 
 export const useRevenues = (
   organizationId: string | undefined,

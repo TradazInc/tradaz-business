@@ -3,7 +3,7 @@ import { apiClient, apiConfig } from "@/lib/apiClient";
 import { GetFinanceSummaryQuerySchema } from "@/schema/finance";
 import { getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
-import { useSearchQuery } from "./useSearchQuery";
+import { useSearchQuery } from "./searchQuery";
 
 export const useFinanceSummary = (organizationId: string | undefined) => {
   const query = useSearchQuery(GetFinanceSummaryQuerySchema);
