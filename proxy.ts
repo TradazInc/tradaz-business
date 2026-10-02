@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
+import { verifySession } from "./middleware/session";
 
 export async function proxy(request: NextRequest) {
-  // Optimistic cookie check (Fast & non-blocking)
-  const sessionCookie = getSessionCookie(request);
-
-  if (!sessionCookie)
-    return NextResponse.redirect(new URL("/signin", request.url));
+  verifySession(request);
 
   return NextResponse.next();
 }
