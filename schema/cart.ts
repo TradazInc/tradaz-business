@@ -137,7 +137,7 @@ export const DecrementCartItemOuputSchema = IncrementCartItemOuputSchema;
 // Update
 export const UpdateCartParamSchema = BaseCartParamSchema;
 
-export const UpdateCartInputSchema = CreateCartInputSchema.partial();
+export const UpdateCartInputSchema = CreateCartInputSchema;
 export type UpdateCartInputData = z.infer<typeof UpdateCartInputSchema>;
 
 export const UpdateCartOutputSchema = BaseCartOutputSchema;
