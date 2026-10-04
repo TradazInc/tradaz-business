@@ -59,7 +59,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
               cart={cart}
               onClick={handleDelete}
               disabled={isMutating}
-              href={`${computePath(businessId, storeId)}/cart/${cart.id}`}
+              href={`${computePath(businessId, storeId)}/carts/${cart.id}`}
             />
           )}
         </For>

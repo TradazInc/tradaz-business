@@ -5,10 +5,11 @@ import {
   CreateCartItemInputData,
   GetAllCartsOutputData,
   GetAllCartsQuerySchema,
+  GetCartOutputData,
   UpdateCartInputData,
 } from "@/schema/cart";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR, { SWRConfiguration, useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
@@ -29,17 +30,23 @@ export const useCarts = (
   );
 };
 
-export const useCart = (id: string) => {
-  return useSWR(getScopedKey(CART_KEY, id), ([key, id]) =>
-    apiClient("@get/api/cart/:id", { params: { id }, ...apiConfig }),
+export const useCart = (
+  id: string,
+  config?: SWRConfiguration<GetCartOutputData, Error>,
+) => {
+  return useSWR(
+    getScopedKey(CART_KEY, id),
+    ([key, id]) =>
+      apiClient("@get/api/cart/:id", { params: { id }, ...apiConfig }),
+    config,
   );
 };
 
 export const useAddCart = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
-    (key, { arg }: { arg: { id: string; data: CreateCartInputData } }) =>
-      apiClient("@post/api/cart", { body: arg.data, ...apiConfig }),
+    (key, { arg }: { arg: CreateCartInputData }) =>
+      apiClient("@post/api/cart", { body: arg, ...apiConfig }),
   );
 };
 

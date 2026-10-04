@@ -3,6 +3,7 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import CartGrid from "@/components/store/CartGrid";
+import NewCartButton from "@/components/store/NewCartButton";
 import { getCarts } from "@/server/cart";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -27,6 +28,7 @@ export default async function page({ params }: Props) {
             <Search placeholder={"Search for a cart"} searchField={"search"} />
           </Suspense>
           <Spacer />
+          <NewCartButton businessId={businessId} storeId={storeId} />
         </HStack>
 
         {carts && carts.data.length > 0 ? (

@@ -70,12 +70,24 @@ export const GetCartOutputSchema = z.object({
       variationId: z.cuid2(),
       totalPrice: z.coerce.number(),
       variation: z.object({
+        id: z.cuid2(),
+        sku: z.string(),
+        color: z.string(),
         price: z.coerce.number(),
-        product: z.object({ name: z.string() }),
+        size: z.object({ id: z.cuid2(), value: z.string() }).nullable(),
+        product: z.object({ id: z.cuid2(), name: z.string() }),
+        teamVariations: z
+          .object({
+            id: z.cuid2(),
+            quantity: z.coerce.number(),
+            teamId: z.cuid2(),
+          })
+          .array(),
       }),
     })
     .array(),
 });
+export type GetCartOutputData = z.infer<typeof GetCartOutputSchema>;
 
 export const GetCartParamSchema = BaseCartParamSchema;
 
