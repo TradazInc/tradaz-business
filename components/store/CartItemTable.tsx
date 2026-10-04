@@ -11,10 +11,8 @@ import {
 import { GetCartOutputData } from "@/schema/cart";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
-  Badge,
   Box,
   Button,
-  ColorSwatch,
   For,
   FormatNumber,
   HStack,
@@ -23,9 +21,10 @@ import {
   Table,
   Text,
 } from "@chakra-ui/react";
-import { MdDeleteOutline } from "react-icons/md";
-import ProductSearch from "../shared/ProductSearch";
 import { LuMinus, LuPlus } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
+import ProductColorBadge from "../shared/ProductColorBadge";
+import ProductSearch from "../shared/ProductSearch";
 
 interface Props {
   cart: GetCartOutputData;
@@ -109,10 +108,7 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
                   <Table.Cell>{cartItem.variation.product.name}</Table.Cell>
                   <Table.Cell>{cartItem.variation.size?.value}</Table.Cell>
                   <Table.Cell>
-                    <Badge size={{ base: "md", md: "lg" }}>
-                      <ColorSwatch value={cartItem.variation.color} />
-                      {cartItem.variation.color}
-                    </Badge>
+                    <ProductColorBadge color={cartItem.variation.color} />
                   </Table.Cell>
                   <Table.Cell>
                     <HStack gap={2}>

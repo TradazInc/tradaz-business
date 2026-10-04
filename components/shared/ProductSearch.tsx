@@ -9,6 +9,7 @@ import {
   createListCollection,
   FormatNumber,
   HStack,
+  InputGroup,
   Portal,
   Span,
   Spinner,
@@ -16,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useId, useMemo } from "react";
+import { LuScanLine } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDebouncedCallback } from "use-debounce";
 
@@ -81,7 +83,9 @@ const ProductSearch = ({
       positioning={{ sameWidth: false, placement: "bottom-start" }}
     >
       <Combobox.Control>
-        <Combobox.Input placeholder={placeholder} />
+        <InputGroup startElement={<LuScanLine />}>
+          <Combobox.Input placeholder={placeholder} borderRadius={"full"} />
+        </InputGroup>
         <Combobox.IndicatorGroup>
           <Combobox.ClearTrigger />
           <Combobox.Trigger />

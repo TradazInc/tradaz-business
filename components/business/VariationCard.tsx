@@ -10,6 +10,7 @@ import {
   Square,
   Text,
 } from "@chakra-ui/react";
+import ProductColorBadge from "../shared/ProductColorBadge";
 
 interface Props {
   variation: GetProductVariationOutputData;
@@ -42,10 +43,7 @@ const VariationCard = ({ variation, index }: Props) => {
             <DataList.Item>
               <DataList.ItemLabel>Color</DataList.ItemLabel>
               <DataList.ItemValue>
-                <Badge size={{ base: "md", md: "lg" }}>
-                  <ColorSwatch value={variation.color} />
-                  {variation.color}
-                </Badge>
+                <ProductColorBadge color={variation.color} />
               </DataList.ItemValue>
             </DataList.Item>
           </DataList.Root>
