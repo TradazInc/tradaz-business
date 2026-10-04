@@ -115,7 +115,7 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
                     </Badge>
                   </Table.Cell>
                   <Table.Cell>
-                    <HStack gap={1}>
+                    <HStack gap={2}>
                       <IconButton
                         size={"xs"}
                         onClick={() => incrementItem.trigger(cartItem.id)}
