@@ -125,11 +125,17 @@ const CartForm = ({ cart, businessId }: Props) => {
 
   return (
     <form onSubmit={onSubmit} style={{ width: "100%" }}>
-      <Fieldset.Root bg={"bg.panel"} size={"md"} w={"full"} borderRadius={'md'}>
+      <Fieldset.Root
+        p={"3"}
+        w={"full"}
+        size={"md"}
+        bg={"bg.panel"}
+        borderRadius={"md"}
+      >
         <Stack>
-          <Fieldset.Legend>Checkout</Fieldset.Legend>
+          <Fieldset.Legend>Checkout Summary</Fieldset.Legend>
           <Fieldset.HelperText>
-            Select how this cart will be paid for.
+            Fill in the relevant checkout information.
           </Fieldset.HelperText>
         </Stack>
 
