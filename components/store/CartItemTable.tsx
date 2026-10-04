@@ -11,8 +11,10 @@ import {
 import { GetCartOutputData } from "@/schema/cart";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
+  Badge,
   Box,
   Button,
+  ColorSwatch,
   For,
   FormatNumber,
   HStack,
@@ -106,7 +108,12 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
                 <Table.Row key={cartItem.id} w={"full"}>
                   <Table.Cell>{cartItem.variation.product.name}</Table.Cell>
                   <Table.Cell>{cartItem.variation.size?.value}</Table.Cell>
-                  <Table.Cell>{cartItem.variation.color}</Table.Cell>
+                  <Table.Cell>
+                    <Badge size={{ base: "md", md: "lg" }}>
+                      <ColorSwatch value={cartItem.variation.color} />
+                      {cartItem.variation.color}
+                    </Badge>
+                  </Table.Cell>
                   <Table.Cell>
                     <HStack gap={1}>
                       <IconButton
