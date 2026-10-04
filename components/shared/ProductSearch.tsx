@@ -75,9 +75,9 @@ const ProductSearch = ({
       invalid={!!error}
       collection={collection}
       selectionBehavior={"clear"}
-      onValueChange={(e) => onSelect?.(e?.items[0])}
-      onInputValueChange={(e) => handleSearch(e.inputValue)}
       defaultInputValue={searchParams.get(searchField) ?? ""}
+      onInputValueChange={(e) => handleSearch(e.inputValue)}
+      onValueChange={(e) => e.items[0] && onSelect?.(e.items[0])}
       positioning={{ sameWidth: false, placement: "bottom-start" }}
     >
       <Combobox.Control>
