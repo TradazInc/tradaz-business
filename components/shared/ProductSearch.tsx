@@ -10,7 +10,6 @@ import {
   FormatNumber,
   HStack,
   Portal,
-  Spacer,
   Span,
   Spinner,
   Stack,
