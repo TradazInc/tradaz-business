@@ -91,10 +91,10 @@ export const CreateCartInputSchema = z
     terminalConfigId: z.cuid2(),
     shippingMethodId: z.cuid2(),
   })
+  .partial()
   .refine((data) => data.paymentConfigId || data.terminalConfigId, {
     error: "Select a terminal or payment gateway",
-  })
-  .partial();
+  });
 export type CreateCartInputData = z.infer<typeof CreateCartInputSchema>;
 
 export const CreateCartOutputSchema = BaseCartOutputSchema;
