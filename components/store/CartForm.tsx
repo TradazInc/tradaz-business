@@ -2,6 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { useAddCart, useUpdateCart } from "@/hooks/cart";
+import { usePosCheckout, useWebCheckout } from "@/hooks/checkout";
 import { usePosConfigs } from "@/hooks/posConfig";
 import { useSubaccounts } from "@/hooks/subaccount";
 import {
@@ -42,6 +43,8 @@ const CartForm = ({ cart, businessId }: Props) => {
   const updateCart = useUpdateCart(businessId);
   const subaccounts = useSubaccounts(businessId);
   const posConfigs = usePosConfigs(businessId);
+  const webCheckout = useWebCheckout(businessId);
+  const posCheckout = usePosCheckout(businessId);
   const { push } = useRouter();
 
   const terminalCollection = useMemo(
@@ -75,7 +78,8 @@ const CartForm = ({ cart, businessId }: Props) => {
     control,
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid },
+    getValues,
+    formState: { errors, isSubmitting, isValid, isDirty, isSubmitSuccessful },
   } = useForm({
     resolver: standardSchemaResolver(
       cart ? UpdateCartInputSchema : CreateCartInputSchema,
@@ -119,9 +123,57 @@ const CartForm = ({ cart, businessId }: Props) => {
     try {
       const cart = await promise.unwrap();
       reset({ ...cartData, paymentConfigId: cart.paymentConfigId ?? "" });
-      push(`${computePath(businessId)}/sales-record`);
     } catch {} // Error displayed by toaster
   });
+
+  const handleCheckout = async (id: string) => {
+    const subaccount = getValues("paymentConfigId");
+    const terminal = getValues("terminalConfigId");
+
+    let promise;
+    if (subaccount) {
+      promise = toaster.promise(webCheckout.trigger({ id }), {
+        loading: {
+          title: "Initializing Web checkout...",
+          description: "Please wait",
+        },
+        success: {
+          title: "Checkout successful",
+          description: "Order has been created",
+        },
+        error: errorToastOptions,
+      });
+
+      if (!promise) return;
+      try {
+        const session = await promise.unwrap();
+        push(session.url);
+      } catch {} // Error displayed by toaster
+    } else if (terminal) {
+      promise = toaster.promise(posCheckout.trigger({ id }), {
+        loading: {
+          title: "Initializing POS checkout...",
+          description: "Please wait",
+        },
+        success: {
+          title: "Checkout successful",
+          description: "Order has been created",
+        },
+        error: errorToastOptions,
+      });
+
+      if (!promise) return;
+      try {
+        await promise.unwrap();
+        push(`${computePath(businessId)}/sales-record`);
+      } catch {} // Error displayed by toaster
+    } else {
+      toaster.error({
+        title: "Checkout failed",
+        description: "Select a payment method",
+      });
+    }
+  };
 
   return (
     <form onSubmit={onSubmit} style={{ width: "100%" }}>
@@ -370,6 +422,23 @@ const CartForm = ({ cart, businessId }: Props) => {
         >
           {cart ? "Update" : "Create"}
         </Button>
+
+        {cart && (
+          <Button
+            w={"full"}
+            disabled={
+              !isValid ||
+              isSubmitting ||
+              addCart.isMutating ||
+              updateCart.isMutating ||
+              (isDirty && !isSubmitSuccessful)
+            }
+            loading={webCheckout.isMutating || posCheckout.isMutating}
+            onClick={() => handleCheckout(cart.id)}
+          >
+            Checkout
+          </Button>
+        )}
       </Fieldset.Root>
     </form>
   );
