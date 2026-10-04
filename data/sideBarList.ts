@@ -27,7 +27,6 @@ import {
   LuStar,
   LuStore,
   LuTag,
-  LuTerminal,
   LuTicket,
   LuTicketPercent,
   LuTrendingDown,
@@ -42,6 +41,7 @@ import {
 import {
   MdDevices,
   MdOutlinePassword,
+  MdOutlinePointOfSale,
   MdOutlineRoomPreferences,
   MdOutlineShoppingCartCheckout,
 } from "react-icons/md";
@@ -203,7 +203,7 @@ export const storeItems: SideMenuItem[] = [
         icon: MdOutlineShoppingCartCheckout,
         path: "/carts",
       },
-      { label: "POS", icon: LuTerminal, path: "/point-of-sale" },
+      { label: "POS", icon: MdOutlinePointOfSale, path: "/point-of-sale" },
     ],
   },
   {
