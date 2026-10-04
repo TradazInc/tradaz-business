@@ -10,6 +10,7 @@ import {
   FormatNumber,
   HStack,
   Portal,
+  Spacer,
   Span,
   Spinner,
   Stack,
@@ -117,9 +118,11 @@ const ProductSearch = ({
                 >
                   {collection.items.map((variation) => (
                     <Combobox.Item key={variation.id} item={variation}>
-                      <Stack>
+                      <Stack w={"full"}>
                         <HStack justify={"space-between"} textStyle={"sm"}>
-                          <Span truncate>{variation.productName}</Span>
+                          <Span fontWeight={"medium"} truncate>
+                            {variation.productName}
+                          </Span>
                           <Span>
                             <FormatNumber
                               value={variation.price}
