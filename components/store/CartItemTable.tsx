@@ -1,7 +1,13 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { useCart, useRemoveCartItem } from "@/hooks/cart";
+import {
+  useAddCartItem,
+  useCart,
+  useDecrementCartItem,
+  useIncrementCartItem,
+  useRemoveCartItem,
+} from "@/hooks/cart";
 import { GetCartOutputData } from "@/schema/cart";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
@@ -9,11 +15,15 @@ import {
   Button,
   For,
   FormatNumber,
+  HStack,
   IconButton,
+  Spacer,
   Table,
   Text,
 } from "@chakra-ui/react";
 import { MdDeleteOutline } from "react-icons/md";
+import ProductSearch from "../shared/ProductSearch";
+import { LuMinus, LuPlus } from "react-icons/lu";
 
 interface Props {
   cart: GetCartOutputData;
@@ -23,10 +33,13 @@ interface Props {
 
 const CartItemTable = ({ cart, businessId, storeId }: Props) => {
   const { data, error, mutate } = useCart(cart.id, { fallbackData: cart });
-  const { trigger, isMutating } = useRemoveCartItem(businessId);
+  const addToCart = useAddCartItem(businessId);
+  const removeFromCart = useRemoveCartItem(businessId);
+  const decrementItem = useIncrementCartItem(businessId);
+  const incrementItem = useDecrementCartItem(businessId);
 
-  const handleDelete = async (id: string) => {
-    toaster.promise(trigger(id), {
+  const handleDeleteItem = async (id: string) => {
+    toaster.promise(removeFromCart.trigger(id), {
       loading: {
         title: "Deleting cart item...",
         description: "Please wait",
@@ -38,78 +51,125 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  const handleAddItem = async (id: string) => {
+    toaster.promise(
+      addToCart.trigger({ variationId: id, cartId: cart.id, quantity: 1 }),
+      {
+        loading: {
+          title: "Adding cart item...",
+          description: "Please wait",
+        },
+        success: {
+          title: "Addition successful",
+          description: "Cart item has been added",
+        },
+        error: errorToastOptions,
+      },
+    );
+  };
+
   return (
-    <Box w={"full"}>
-      <Table.Root>
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeader>Name</Table.ColumnHeader>
-            <Table.ColumnHeader>Size</Table.ColumnHeader>
-            <Table.ColumnHeader>Color</Table.ColumnHeader>
-            <Table.ColumnHeader>Quantity</Table.ColumnHeader>
-            <Table.ColumnHeader>Total Price</Table.ColumnHeader>
-            <Table.ColumnHeader>Stock</Table.ColumnHeader>
-            <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          <For
-            each={data?.cartItems}
-            fallback={
-              <Table.Row>
-                <Table.Cell colSpan={7}>No cart items available</Table.Cell>
-              </Table.Row>
-            }
-          >
-            {(cartItem) => (
-              <Table.Row key={cartItem.id} w={"full"}>
-                <Table.Cell>{cartItem.variation.product.name}</Table.Cell>
-                <Table.Cell>{cartItem.variation.size?.value}</Table.Cell>
-                <Table.Cell>{cartItem.variation.color}</Table.Cell>
-                <Table.Cell>{cartItem.quantity}</Table.Cell>
-                <Table.Cell>
-                  <FormatNumber
-                    value={cartItem.totalPrice}
-                    style="currency"
-                    currency="NGN"
-                  />
-                </Table.Cell>
-                <Table.Cell>
-                  {cartItem.variation.teamVariations.find(
-                    (tv) => tv.teamId === storeId,
-                  )?.quantity ?? "N/A"}
-                </Table.Cell>
-                <Table.Cell textAlign="end">
-                  <IconButton
-                    size="sm"
-                    variant="outline"
-                    color={"fg.error"}
-                    _hover={{ bg: "bg.error", color: "fg.error" }}
-                    onClick={() => handleDelete(cartItem.id)}
-                    disabled={isMutating}
-                  >
-                    <MdDeleteOutline />
-                  </IconButton>
-                </Table.Cell>
-              </Table.Row>
-            )}
-          </For>
-        </Table.Body>
-      </Table.Root>
-      {error && (
-        <>
-          <Button
-            w={"full"}
-            size={"md"}
-            variant={"subtle"}
-            onClick={() => mutate()}
-          >
-            Click to retry
-          </Button>
-          <Text w={"full"}>Cart unavailable. Retry to continue.</Text>
-        </>
-      )}
-    </Box>
+    <>
+      <HStack w={"full"}>
+        <ProductSearch
+          placeholder={"Search for a product"}
+          searchField={"search"}
+          businessId={businessId}
+          onSelect={(item) => handleAddItem(item.id)}
+        />
+        <Spacer />
+      </HStack>
+      <Box w={"full"}>
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader>Name</Table.ColumnHeader>
+              <Table.ColumnHeader>Size</Table.ColumnHeader>
+              <Table.ColumnHeader>Color</Table.ColumnHeader>
+              <Table.ColumnHeader>Quantity</Table.ColumnHeader>
+              <Table.ColumnHeader>Total Price</Table.ColumnHeader>
+              <Table.ColumnHeader>Stock</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <For
+              each={data?.cartItems}
+              fallback={
+                <Table.Row>
+                  <Table.Cell colSpan={7}>No cart items available</Table.Cell>
+                </Table.Row>
+              }
+            >
+              {(cartItem) => (
+                <Table.Row key={cartItem.id} w={"full"}>
+                  <Table.Cell>{cartItem.variation.product.name}</Table.Cell>
+                  <Table.Cell>{cartItem.variation.size?.value}</Table.Cell>
+                  <Table.Cell>{cartItem.variation.color}</Table.Cell>
+                  <Table.Cell>
+                    <HStack gap={1}>
+                      <IconButton
+                        size="sm"
+                        onClick={() => incrementItem.trigger(cartItem.id)}
+                        disabled={incrementItem.isMutating}
+                      >
+                        <LuPlus />
+                      </IconButton>
+                      {cartItem.quantity}
+                      <IconButton
+                        size="sm"
+                        onClick={() => decrementItem.trigger(cartItem.id)}
+                        disabled={decrementItem.isMutating}
+                      >
+                        <LuMinus />
+                      </IconButton>
+                    </HStack>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <FormatNumber
+                      value={cartItem.totalPrice}
+                      style="currency"
+                      currency="NGN"
+                    />
+                  </Table.Cell>
+                  <Table.Cell>
+                    {cartItem.variation.teamVariations.find(
+                      (tv) => tv.teamId === storeId,
+                    )?.quantity ?? "N/A"}
+                  </Table.Cell>
+                  <Table.Cell textAlign="end">
+                    <IconButton
+                      size="sm"
+                      variant="outline"
+                      color={"fg.error"}
+                      _hover={{ bg: "bg.error", color: "fg.error" }}
+                      onClick={() => handleDeleteItem(cartItem.id)}
+                      disabled={removeFromCart.isMutating}
+                    >
+                      <MdDeleteOutline />
+                    </IconButton>
+                  </Table.Cell>
+                </Table.Row>
+              )}
+            </For>
+          </Table.Body>
+        </Table.Root>
+        {error && (
+          <>
+            <Button
+              w={"full"}
+              size={"md"}
+              variant={"subtle"}
+              onClick={() => mutate()}
+            >
+              Click to retry
+            </Button>
+            <Text w={"full"}>Cart unavailable. Retry to continue.</Text>
+          </>
+        )}
+      </Box>
+    </>
   );
 };
 
