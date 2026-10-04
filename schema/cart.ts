@@ -107,11 +107,11 @@ export type CreateCartItemInputData = z.infer<typeof CreateCartItemInputSchema>;
 
 export const CreateCartItemOutputSchema = z.object({
   id: z.cuid2(),
-  quantity: z.number(),
+  quantity: z.coerce.number(),
   addedAt: z.iso.datetime(),
   cartId: z.string(),
   variationId: z.string(),
-  totalPrice: z.number(),
+  totalPrice: z.coerce.number(),
 });
 
 // Increment
@@ -121,11 +121,11 @@ export const IncrementCartItemInputSchema = z.object({
 
 export const IncrementCartItemOuputSchema = z.object({
   id: z.cuid2(),
-  quantity: z.number(),
+  quantity: z.coerce.number(),
   addedAt: z.iso.datetime(),
   cartId: z.cuid2(),
   variationId: z.cuid2(),
-  totalPrice: z.number(),
+  totalPrice: z.coerce.number(),
 });
 
 // Decrement
