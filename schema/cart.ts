@@ -3,16 +3,6 @@ import { createFetchResponseSchema } from "../utilities/fetchResponse";
 
 // Base Schemas
 export const BaseCartParamSchema = z.object({ id: z.cuid2() });
-export const BaseCartInputSchema = z
-  .object({
-    couponCode: z.string(),
-    depositAmount: z.coerce.number(),
-    points: z.coerce.number(),
-    paymentConfigId: z.cuid2(),
-    terminalConfigId: z.cuid2(),
-    shippingMethodId: z.cuid2(),
-  })
-  .partial();
 
 export const BaseCartOutputSchema = z.object({
   id: z.cuid2(),
@@ -92,7 +82,19 @@ export type GetCartOutputData = z.infer<typeof GetCartOutputSchema>;
 export const GetCartParamSchema = BaseCartParamSchema;
 
 // Create
-export const CreateCartInputSchema = BaseCartInputSchema;
+export const CreateCartInputSchema = z
+  .object({
+    couponCode: z.string().trim(),
+    depositAmount: z.number().nonnegative(),
+    points: z.number().int().nonnegative(),
+    paymentConfigId: z.cuid2(),
+    terminalConfigId: z.cuid2(),
+    shippingMethodId: z.cuid2(),
+  })
+  .refine((data) => data.paymentConfigId || data.terminalConfigId, {
+    error: "Select a terminal or payment gateway",
+  })
+  .partial();
 export type CreateCartInputData = z.infer<typeof CreateCartInputSchema>;
 
 export const CreateCartOutputSchema = BaseCartOutputSchema;
@@ -135,7 +137,7 @@ export const DecrementCartItemOuputSchema = IncrementCartItemOuputSchema;
 // Update
 export const UpdateCartParamSchema = BaseCartParamSchema;
 
-export const UpdateCartInputSchema = BaseCartInputSchema;
+export const UpdateCartInputSchema = CreateCartInputSchema.partial();
 export type UpdateCartInputData = z.infer<typeof UpdateCartInputSchema>;
 
 export const UpdateCartOutputSchema = BaseCartOutputSchema;
@@ -149,3 +151,20 @@ export const DeleteCartItemOutputSchema = z.object({
 
 export const DeleteCartParamSchema = z.object({ id: z.cuid2() });
 export const DeleteCartOutputSchema = z.object({ id: z.cuid2() });
+
+export const emptyCart: CreateCartInputData = {
+  couponCode: "",
+  depositAmount: 0,
+  paymentConfigId: "",
+  points: 0,
+  shippingMethodId: "",
+  terminalConfigId: "",
+};
+
+export const formCart = (cart: GetCartOutputData): UpdateCartInputData => ({
+  paymentConfigId: cart.paymentConfigId ?? "",
+  terminalConfigId: cart.terminalConfigId ?? undefined,
+  couponCode: cart.couponCode ?? "",
+  points: cart.points ?? 0,
+  depositAmount: cart.depositAmount ?? 0,
+});

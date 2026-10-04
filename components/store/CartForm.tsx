@@ -1,0 +1,378 @@
+"use client";
+
+import { toaster } from "@/components/ui/toaster";
+import { useAddCart, useUpdateCart } from "@/hooks/cart";
+import { usePosConfigs } from "@/hooks/posConfig";
+import { useSubaccounts } from "@/hooks/subaccount";
+import {
+  CreateCartInputSchema,
+  emptyCart,
+  formCart,
+  GetCartOutputData,
+  UpdateCartInputSchema,
+} from "@/schema/cart";
+import { computePath } from "@/utilities/computePath";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
+import { parseCursorData } from "@/utilities/parsePageData";
+import {
+  Box,
+  Button,
+  createListCollection,
+  Field,
+  Fieldset,
+  Input,
+  NumberInput,
+  Portal,
+  Select,
+  Spinner,
+  Stack,
+} from "@chakra-ui/react";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
+import { Controller, useForm } from "react-hook-form";
+
+interface Props {
+  cart?: GetCartOutputData;
+  businessId: string | undefined;
+}
+
+const CartForm = ({ cart, businessId }: Props) => {
+  const addCart = useAddCart(businessId);
+  const updateCart = useUpdateCart(businessId);
+  const subaccounts = useSubaccounts(businessId);
+  const posConfigs = usePosConfigs(businessId);
+  const { push } = useRouter();
+
+  const terminalCollection = useMemo(
+    () =>
+      createListCollection({
+        items: parseCursorData(posConfigs.data).flatData.flatMap((posConfig) =>
+          posConfig.terminalConfigs.map((terminal) => ({
+            ...terminal,
+            gateway: posConfig.gateway,
+          })),
+        ),
+        itemToValue: (item) => item.id,
+        itemToString: (item) =>
+          `${item.name ?? item.serialNumber} (${item.gateway})`,
+      }),
+    [posConfigs.data],
+  );
+
+  const subaccountCollection = useMemo(
+    () =>
+      createListCollection({
+        items: parseCursorData(subaccounts.data).flatData,
+        itemToValue: (account) => account.id,
+        itemToString: (account) => account.gateway,
+      }),
+    [subaccounts.data],
+  );
+
+  const {
+    reset,
+    control,
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({
+    resolver: standardSchemaResolver(
+      cart ? UpdateCartInputSchema : CreateCartInputSchema,
+    ),
+    defaultValues: cart ? formCart(cart) : emptyCart,
+    mode: "onBlur",
+  });
+
+  const onSubmit = handleSubmit(async (cartData) => {
+    let promise;
+    if (cart) {
+      promise = toaster.promise(
+        updateCart.trigger({ id: cart.id, data: cartData }),
+        {
+          loading: {
+            title: "Updating cart...",
+            description: "Please wait",
+          },
+          success: {
+            title: "Update successful",
+            description: "Cart has been updated",
+          },
+          error: errorToastOptions,
+        },
+      );
+    } else {
+      promise = toaster.promise(addCart.trigger(cartData), {
+        loading: {
+          title: "Creating cart...",
+          description: "Please wait",
+        },
+        success: {
+          title: "Creation successful",
+          description: "Cart has been created",
+        },
+        error: errorToastOptions,
+      });
+    }
+
+    if (!promise) return;
+    try {
+      const cart = await promise.unwrap();
+      reset({ ...cartData, paymentConfigId: cart.paymentConfigId ?? "" });
+      push(`${computePath(businessId)}/sales-record`);
+    } catch {} // Error displayed by toaster
+  });
+
+  return (
+    <form onSubmit={onSubmit} style={{ width: "100%" }}>
+      <Fieldset.Root size="md" w="full">
+        <Stack>
+          <Fieldset.Legend>Checkout</Fieldset.Legend>
+          <Fieldset.HelperText>
+            Select how this cart will be paid for.
+          </Fieldset.HelperText>
+        </Stack>
+
+        <Fieldset.Content>
+          <Field.Root invalid={!!errors.couponCode}>
+            <Field.Label>Coupon code</Field.Label>
+            <Input placeholder="e.g., SAVE10" {...register("couponCode")} />
+            <Field.ErrorText>{errors.couponCode?.message}</Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root invalid={!!errors.points}>
+            <Field.Label>Points</Field.Label>
+            <Controller
+              control={control}
+              name={"points"}
+              render={({ field }) => (
+                <NumberInput.Root
+                  min={0}
+                  step={1}
+                  w={"full"}
+                  name={field.name}
+                  disabled={field.disabled}
+                  value={field.value?.toString()}
+                  onValueChange={({ valueAsNumber }) =>
+                    field.onChange(
+                      Number.isNaN(valueAsNumber) ? 0 : valueAsNumber,
+                    )
+                  }
+                >
+                  <NumberInput.Control />
+                  <NumberInput.Input onBlur={field.onBlur} />
+                </NumberInput.Root>
+              )}
+            />
+            <Field.HelperText>Loyalty points to redeem</Field.HelperText>
+            <Field.ErrorText>{errors.points?.message}</Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root invalid={!!errors.depositAmount}>
+            <Field.Label>Deposit amount</Field.Label>
+            <Controller
+              control={control}
+              name={"depositAmount"}
+              render={({ field }) => (
+                <NumberInput.Root
+                  min={0}
+                  step={0.01}
+                  w={"full"}
+                  name={field.name}
+                  disabled={field.disabled}
+                  formatOptions={{
+                    style: "currency",
+                    currency: "NGN",
+                    currencyDisplay: "symbol",
+                    currencySign: "accounting",
+                    maximumFractionDigits: 2,
+                  }}
+                  value={field.value?.toString()}
+                  onValueChange={({ valueAsNumber }) =>
+                    field.onChange(
+                      Number.isNaN(valueAsNumber) ? 0 : valueAsNumber,
+                    )
+                  }
+                >
+                  <NumberInput.Control />
+                  <NumberInput.Input onBlur={field.onBlur} />
+                </NumberInput.Root>
+              )}
+            />
+            <Field.HelperText>
+              Leave at zero to charge the full amount
+            </Field.HelperText>
+            <Field.ErrorText>{errors.depositAmount?.message}</Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root invalid={!!errors.terminalConfigId || !!posConfigs.error}>
+            <Field.Label>POS terminal</Field.Label>
+            <Controller
+              control={control}
+              name={"terminalConfigId"}
+              render={({ field }) => (
+                <Select.Root
+                  name={field.name}
+                  disabled={field.disabled}
+                  value={field.value ? [field.value] : []}
+                  onValueChange={({ value }) => {
+                    field.onChange(value[0]);
+                    field.onBlur();
+                  }}
+                  onInteractOutside={() => field.onBlur()}
+                  collection={terminalCollection}
+                >
+                  <Select.HiddenSelect />
+                  <Select.Control>
+                    <Select.Trigger>
+                      <Select.ValueText placeholder="Select terminal" />
+                    </Select.Trigger>
+                    <Select.IndicatorGroup>
+                      <Select.ClearTrigger />
+                      {posConfigs.isLoading ? (
+                        <Spinner size="sm" />
+                      ) : (
+                        <Select.Indicator />
+                      )}
+                    </Select.IndicatorGroup>
+                  </Select.Control>
+                  <Portal>
+                    <Select.Positioner>
+                      <Select.Content>
+                        {terminalCollection.size > 0 ? (
+                          terminalCollection.items.map((terminal) => (
+                            <Select.Item item={terminal} key={terminal.id}>
+                              {terminal.name ??
+                                [terminal.gateway, terminal.serialNumber]
+                                  .filter(Boolean)
+                                  .join(" · ")}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))
+                        ) : (
+                          <Box>No terminals found</Box>
+                        )}
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Portal>
+                </Select.Root>
+              )}
+            />
+            {posConfigs.error && (
+              <Button
+                w={"full"}
+                size={"sm"}
+                type={"button"}
+                variant={"subtle"}
+                onClick={() => posConfigs.mutate()}
+              >
+                Click to retry
+              </Button>
+            )}
+            <Field.HelperText>
+              Terminal to push the payment to for POS checkout. Leave empty for
+              web checkout
+            </Field.HelperText>
+            <Field.ErrorText>
+              {posConfigs.error
+                ? "Terminals unavailable. Retry to continue."
+                : errors.terminalConfigId?.message}
+            </Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root
+            required
+            invalid={!!errors.paymentConfigId || !!subaccounts.error}
+          >
+            <Field.Label>
+              Subaccount <Field.RequiredIndicator />
+            </Field.Label>
+            <Controller
+              control={control}
+              name={"paymentConfigId"}
+              render={({ field }) => (
+                <Select.Root
+                  name={field.name}
+                  disabled={field.disabled}
+                  value={field.value ? [field.value] : []}
+                  onValueChange={({ value }) => {
+                    field.onChange(value[0] ?? "");
+                    field.onBlur();
+                  }}
+                  onInteractOutside={() => field.onBlur()}
+                  collection={subaccountCollection}
+                >
+                  <Select.HiddenSelect />
+                  <Select.Control>
+                    <Select.Trigger>
+                      <Select.ValueText placeholder="Select subaccount" />
+                    </Select.Trigger>
+                    <Select.IndicatorGroup>
+                      {subaccounts.isLoading ? (
+                        <Spinner size="sm" />
+                      ) : (
+                        <Select.Indicator />
+                      )}
+                    </Select.IndicatorGroup>
+                  </Select.Control>
+                  <Portal>
+                    <Select.Positioner>
+                      <Select.Content>
+                        {subaccountCollection.size > 0 ? (
+                          subaccountCollection.items.map((subaccount) => (
+                            <Select.Item item={subaccount} key={subaccount.id}>
+                              {subaccount.gateway}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))
+                        ) : (
+                          <Box>No subaccounts found</Box>
+                        )}
+                      </Select.Content>
+                    </Select.Positioner>
+                  </Portal>
+                </Select.Root>
+              )}
+            />
+            {subaccounts.error && (
+              <Button
+                w={"full"}
+                size={"sm"}
+                type={"button"}
+                variant={"subtle"}
+                onClick={() => subaccounts.mutate()}
+              >
+                Click to retry
+              </Button>
+            )}
+            <Field.HelperText>
+              Payment gateway subaccount that receives this payment
+            </Field.HelperText>
+            <Field.ErrorText>
+              {subaccounts.error
+                ? "Subaccounts unavailable. Retry to continue."
+                : errors.paymentConfigId?.message}
+            </Field.ErrorText>
+          </Field.Root>
+        </Fieldset.Content>
+
+        <Button
+          type={"submit"}
+          variant={"outline"}
+          alignSelf={"flex-start"}
+          disabled={
+            !isValid ||
+            isSubmitting ||
+            addCart.isMutating ||
+            updateCart.isMutating
+          }
+          loading={isSubmitting || addCart.isMutating || updateCart.isMutating}
+        >
+          {cart ? "Update" : "Create"}
+        </Button>
+      </Fieldset.Root>
+    </form>
+  );
+};
+
+export default CartForm;

@@ -18,13 +18,16 @@ import {
   HStack,
   IconButton,
   Spacer,
+  Stack,
   Table,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { LuMinus, LuPlus } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductColorBadge from "../shared/ProductColorBadge";
 import ProductSearch from "../shared/ProductSearch";
+import CartForm from "./CartForm";
 
 interface Props {
   cart: GetCartOutputData;
@@ -74,104 +77,109 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
     <>
       <HStack w={"full"}>
         <ProductSearch
-          placeholder={"Search for a product"}
           searchField={"search"}
           businessId={businessId}
+          placeholder={"Search for a product"}
           onSelect={(item) => handleAddItem(item.id)}
         />
         <Spacer />
       </HStack>
-      <Box w={"full"}>
-        <Table.Root>
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeader>Name</Table.ColumnHeader>
-              <Table.ColumnHeader>Size</Table.ColumnHeader>
-              <Table.ColumnHeader>Color</Table.ColumnHeader>
-              <Table.ColumnHeader>Quantity</Table.ColumnHeader>
-              <Table.ColumnHeader>Total Price</Table.ColumnHeader>
-              <Table.ColumnHeader>Stock</Table.ColumnHeader>
-              <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            <For
-              each={data?.cartItems}
-              fallback={
-                <Table.Row>
-                  <Table.Cell colSpan={7}>No cart items available</Table.Cell>
-                </Table.Row>
-              }
-            >
-              {(cartItem) => (
-                <Table.Row key={cartItem.id} w={"full"}>
-                  <Table.Cell>{cartItem.variation.product.name}</Table.Cell>
-                  <Table.Cell>{cartItem.variation.size?.value}</Table.Cell>
-                  <Table.Cell>
-                    <ProductColorBadge color={cartItem.variation.color} />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <HStack gap={2}>
+      <Stack direction={{ base: "column", md: "row" }}>
+        <Box w={"full"}>
+          <Table.Root>
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeader>Name</Table.ColumnHeader>
+                <Table.ColumnHeader>Size</Table.ColumnHeader>
+                <Table.ColumnHeader>Color</Table.ColumnHeader>
+                <Table.ColumnHeader>Quantity</Table.ColumnHeader>
+                <Table.ColumnHeader>Total Price</Table.ColumnHeader>
+                <Table.ColumnHeader>Stock</Table.ColumnHeader>
+                <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              <For
+                each={data?.cartItems}
+                fallback={
+                  <Table.Row>
+                    <Table.Cell colSpan={7}>No cart items available</Table.Cell>
+                  </Table.Row>
+                }
+              >
+                {(cartItem) => (
+                  <Table.Row key={cartItem.id} w={"full"}>
+                    <Table.Cell>{cartItem.variation.product.name}</Table.Cell>
+                    <Table.Cell>{cartItem.variation.size?.value}</Table.Cell>
+                    <Table.Cell>
+                      <ProductColorBadge color={cartItem.variation.color} />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <HStack gap={2}>
+                        <IconButton
+                          size={"xs"}
+                          onClick={() => incrementItem.trigger(cartItem.id)}
+                          disabled={incrementItem.isMutating}
+                        >
+                          <LuPlus />
+                        </IconButton>
+                        {cartItem.quantity}
+                        <IconButton
+                          size={"xs"}
+                          onClick={() => decrementItem.trigger(cartItem.id)}
+                          disabled={decrementItem.isMutating}
+                        >
+                          <LuMinus />
+                        </IconButton>
+                      </HStack>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <FormatNumber
+                        value={cartItem.totalPrice}
+                        style="currency"
+                        currency="NGN"
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      {cartItem.variation.teamVariations.find(
+                        (tv) => tv.teamId === storeId,
+                      )?.quantity ?? "N/A"}
+                    </Table.Cell>
+                    <Table.Cell textAlign="end">
                       <IconButton
-                        size={"xs"}
-                        onClick={() => incrementItem.trigger(cartItem.id)}
-                        disabled={incrementItem.isMutating}
+                        size="sm"
+                        variant="outline"
+                        color={"fg.error"}
+                        _hover={{ bg: "bg.error", color: "fg.error" }}
+                        onClick={() => handleDeleteItem(cartItem.id)}
+                        disabled={removeFromCart.isMutating}
                       >
-                        <LuPlus />
+                        <MdDeleteOutline />
                       </IconButton>
-                      {cartItem.quantity}
-                      <IconButton
-                        size={"xs"}
-                        onClick={() => decrementItem.trigger(cartItem.id)}
-                        disabled={decrementItem.isMutating}
-                      >
-                        <LuMinus />
-                      </IconButton>
-                    </HStack>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <FormatNumber
-                      value={cartItem.totalPrice}
-                      style="currency"
-                      currency="NGN"
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    {cartItem.variation.teamVariations.find(
-                      (tv) => tv.teamId === storeId,
-                    )?.quantity ?? "N/A"}
-                  </Table.Cell>
-                  <Table.Cell textAlign="end">
-                    <IconButton
-                      size="sm"
-                      variant="outline"
-                      color={"fg.error"}
-                      _hover={{ bg: "bg.error", color: "fg.error" }}
-                      onClick={() => handleDeleteItem(cartItem.id)}
-                      disabled={removeFromCart.isMutating}
-                    >
-                      <MdDeleteOutline />
-                    </IconButton>
-                  </Table.Cell>
-                </Table.Row>
-              )}
-            </For>
-          </Table.Body>
-        </Table.Root>
-        {error && (
-          <>
-            <Button
-              w={"full"}
-              size={"md"}
-              variant={"subtle"}
-              onClick={() => mutate()}
-            >
-              Click to retry
-            </Button>
-            <Text w={"full"}>Cart unavailable. Retry to continue.</Text>
-          </>
-        )}
-      </Box>
+                    </Table.Cell>
+                  </Table.Row>
+                )}
+              </For>
+            </Table.Body>
+          </Table.Root>
+          {error && (
+            <>
+              <Button
+                w={"full"}
+                size={"md"}
+                variant={"subtle"}
+                onClick={() => mutate()}
+              >
+                Click to retry
+              </Button>
+              <Text w={"full"}>Cart unavailable. Retry to continue.</Text>
+            </>
+          )}
+        </Box>
+        <VStack w={{ base: "full", md: "1/3" }}>
+          <CartForm cart={data ?? cart} businessId={businessId} />
+        </VStack>
+      </Stack>
     </>
   );
 };
