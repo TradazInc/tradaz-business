@@ -44,7 +44,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
   };
 
   return (
-    <GridContainer pb={12} columns={1}>
+    <GridContainer pb={12} columns={{ base: 1, md: 2 }} gap={2}>
       <InfiniteScroll
         dataLength={carts.length}
         next={() => setSize(size + 1)}
