@@ -17,9 +17,9 @@ export const BaseCartInputSchema = z
 export const BaseCartOutputSchema = z.object({
   id: z.cuid2(),
   couponCode: z.string().nullable(),
-  depositAmount: z.number().nullable(),
+  depositAmount: z.coerce.number().nullable(),
   points: z.number().nullable(),
-  createdAt: z.iso.date(),
+  createdAt: z.iso.datetime(),
   paymentConfigId: z.cuid2().nullable(),
   terminalConfigId: z.cuid2().nullable(),
   shippingMethodId: z.cuid2().nullable(),
@@ -56,7 +56,7 @@ export const GetCartOutputSchema = z.object({
   couponCode: z.string().nullable(),
   depositAmount: z.coerce.number().nullable(),
   points: z.coerce.number().nullable(),
-  createdAt: z.iso.duration(),
+  createdAt: z.iso.datetime(),
   paymentConfigId: z.cuid2().nullable(),
   terminalConfigId: z.cuid2().nullable(),
   shippingMethodId: z.cuid2().nullable(),
@@ -96,7 +96,7 @@ export const CreateCartInputSchema = BaseCartInputSchema;
 export type CreateCartInputData = z.infer<typeof CreateCartInputSchema>;
 
 export const CreateCartOutputSchema = BaseCartOutputSchema;
-export type CreateCartOutputData = z.infer<typeof CreateCartInputSchema>;
+export type CreateCartOutputData = z.infer<typeof CreateCartOutputSchema>;
 
 export const CreateCartItemInputSchema = z.object({
   variationId: z.cuid2(),
