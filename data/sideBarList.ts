@@ -43,6 +43,7 @@ import {
   MdDevices,
   MdOutlinePassword,
   MdOutlineRoomPreferences,
+  MdOutlineShoppingCartCheckout,
 } from "react-icons/md";
 
 interface SideMenuItem {
@@ -196,7 +197,14 @@ export const storeItems: SideMenuItem[] = [
   {
     label: "Point of Sale",
     icon: LuScanLine,
-    children: [{ label: "POS", icon: LuTerminal, path: "/point-of-sale" }],
+    children: [
+      {
+        label: "Checkout",
+        icon: MdOutlineShoppingCartCheckout,
+        path: "/carts",
+      },
+      { label: "POS", icon: LuTerminal, path: "/point-of-sale" },
+    ],
   },
   {
     label: "Finance",
