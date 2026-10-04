@@ -24,10 +24,9 @@ export default async function page({ params }: Props) {
         <HStack w={"full"}>
           <Suspense>
             <ProductSearch
-              placeholder={"Search for a cart"}
+              placeholder={"Search for a product"}
               searchField={"search"}
               businessId={businessId}
-              storeId={storeId}
             />
           </Suspense>
           <Spacer />

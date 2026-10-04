@@ -57,7 +57,7 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
             each={data?.cartItems}
             fallback={
               <Table.Row>
-                <Table.Cell colSpan={6}>No cart items available</Table.Cell>
+                <Table.Cell colSpan={7}>No cart items available</Table.Cell>
               </Table.Row>
             }
           >

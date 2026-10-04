@@ -128,6 +128,8 @@ export const GetAllProductOutputSchema = createFetchResponseSchema(
 export type GetAllProductOutputData = z.infer<typeof GetAllProductOutputSchema>;
 export type GetAllProductOutputItemData =
   GetAllProductOutputData["data"][number];
+export type GetAllProductOutputVariationData =
+  GetAllProductOutputData["data"][number]["variations"][number];
 
 // Create
 export const CreateProductOutputSchema = ProductOutputBaseSchema.extend({

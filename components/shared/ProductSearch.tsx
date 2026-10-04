@@ -1,15 +1,18 @@
 "use client";
 
 import { useProducts } from "@/hooks/product";
+import { GetAllProductOutputVariationData } from "@/schema/product";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Button,
   Combobox,
   createListCollection,
+  FormatNumber,
   HStack,
   Portal,
   Span,
   Spinner,
+  Stack,
 } from "@chakra-ui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useId, useMemo } from "react";
@@ -18,33 +21,37 @@ import { useDebouncedCallback } from "use-debounce";
 
 interface Props {
   businessId: string | undefined;
-  storeId: string | undefined;
   placeholder: string;
   searchField: string;
+  onSelect?: (variation: GetAllProductOutputVariationData) => void;
 }
 
-const ProductSearch = ({ businessId, placeholder, searchField }: Props) => {
+const ProductSearch = ({
+  businessId,
+  placeholder,
+  searchField,
+  onSelect,
+}: Props) => {
   const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const scrollId = useId();
 
   const handleSearch = useDebouncedCallback((searchValue: string) => {
     const params = new URLSearchParams(searchParams);
-    if (searchValue) {
-      params.set(searchField, searchValue);
-    } else {
-      params.delete(searchField);
-    }
+    if (searchValue) params.set(searchField, searchValue);
+    else params.delete(searchField);
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+  }, 200);
 
-  const { data, error, isLoading, setSize, size, mutate } =
-    useProducts(businessId);
+  const { data, error, isLoading, setSize, size, mutate } = useProducts(
+    businessId,
+    { keepPreviousData: true },
+  );
   const { flatData: products, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
-  const scrollId = useId();
 
   const collection = useMemo(
     () =>
@@ -63,68 +70,86 @@ const ProductSearch = ({ businessId, placeholder, searchField }: Props) => {
 
   return (
     <Combobox.Root
-      width="320px"
+      maxW={"sm"}
+      width={"full"}
       invalid={!!error}
       collection={collection}
-      placeholder={placeholder}
+      selectionBehavior={"clear"}
+      onValueChange={(e) => onSelect?.(e?.items[0])}
       onInputValueChange={(e) => handleSearch(e.inputValue)}
+      defaultInputValue={searchParams.get(searchField) ?? ""}
       positioning={{ sameWidth: false, placement: "bottom-start" }}
     >
-      <Combobox.Label>Search Products</Combobox.Label>
-
       <Combobox.Control>
-        <Combobox.Input placeholder="Type to search" />
+        <Combobox.Input placeholder={placeholder} />
         <Combobox.IndicatorGroup>
-          {isLoading ? (
-            <Spinner size="sm" />
-          ) : (
-            <>
-              <Combobox.ClearTrigger />
-              <Combobox.Trigger />
-            </>
-          )}
+          <Combobox.ClearTrigger />
+          <Combobox.Trigger />
         </Combobox.IndicatorGroup>
       </Combobox.Control>
 
       <Portal>
         <Combobox.Positioner>
-          <Combobox.Content minW="sm" id={scrollId}>
-            <InfiniteScroll
-              dataLength={products.length}
-              hasMore={hasMore && !error}
-              next={() => setSize(size + 1)}
-              loader={<Spinner size={"xs"} />}
-              scrollableTarget={scrollId}
-            >
-              {collection.items?.map((variation) => (
-                <Combobox.Item key={variation.id} item={variation}>
-                  <HStack justify="space-between" textStyle="sm">
-                    <Span fontWeight="medium" truncate>
-                      {variation.productName}
-                    </Span>
-                    <Span color="fg.muted" truncate>
-                      {variation.price}price / {variation.sku}sku /
-                      {variation.color}
-                      color / {variation?.size?.value ?? "n/a"}size
-                    </Span>
-                  </HStack>
-                  <Combobox.ItemIndicator />
-                </Combobox.Item>
-              ))}
-            </InfiniteScroll>
+          <Combobox.Content id={scrollId} minW="sm" maxH="xs" overflowY="auto">
+            {isLoading ? (
+              <HStack p="2">
+                <Spinner size="xs" borderWidth="1px" />
+                <Span>Loading products...</Span>
+              </HStack>
+            ) : (
+              <>
+                <Combobox.Empty>No products found</Combobox.Empty>
+                <InfiniteScroll
+                  dataLength={collection.items.length}
+                  hasMore={hasMore && !error}
+                  next={() => setSize(size + 1)}
+                  loader={<Spinner size="xs" />}
+                  scrollableTarget={scrollId}
+                >
+                  {collection.items.map((variation) => (
+                    <Combobox.Item key={variation.id} item={variation}>
+                      <Stack gap="0" flex="1" minW="0">
+                        <HStack justify="space-between" textStyle="sm">
+                          <Span fontWeight="medium" truncate>
+                            {variation.productName}
+                          </Span>
+                          <Span fontWeight="semibold">
+                            <FormatNumber
+                              value={variation.price}
+                              style="currency"
+                              currency="NGN"
+                            />
+                          </Span>
+                        </HStack>
+                        <Span color="fg.muted" textStyle="xs" truncate>
+                          {[
+                            variation.sku && `SKU ${variation.sku}`,
+                            variation.color,
+                            variation.size?.value,
+                          ]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </Span>
+                      </Stack>
+                      <Combobox.ItemIndicator />
+                    </Combobox.Item>
+                  ))}
+                </InfiniteScroll>
+              </>
+            )}
+            {error && (
+              <Stack p="2" gap="2">
+                <Span color="fg.error" textStyle="sm">
+                  Couldn&apos;t load products
+                </Span>
+                <Button size="xs" variant="subtle" onClick={() => mutate()}>
+                  Retry
+                </Button>
+              </Stack>
+            )}
           </Combobox.Content>
         </Combobox.Positioner>
       </Portal>
-      {error && (
-        <Button
-          w={"full"}
-          size={"sm"}
-          variant={"subtle"}
-          onClick={() => mutate()}
-        >
-          Click to retry
-        </Button>
-      )}
     </Combobox.Root>
   );
 };
