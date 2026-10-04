@@ -1,6 +1,7 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import ProductSearch from "@/components/shared/ProductSearch";
+import ProductsSearch from "@/components/shared/ProductsSearch";
 import CartItemTable from "@/components/store/CartItemTable";
 import { getCart } from "@/server/cart";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
@@ -24,6 +25,11 @@ export default async function page({ params }: Props) {
         <HStack w={"full"}>
           <Suspense>
             <ProductSearch
+              placeholder={"Search for a product"}
+              searchField={"search"}
+              businessId={businessId}
+            />
+            <ProductsSearch
               placeholder={"Search for a product"}
               searchField={"search"}
               businessId={businessId}

@@ -6,27 +6,29 @@ import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Button,
   Combobox,
-  createListCollection,
   FormatNumber,
   HStack,
   Portal,
   Span,
   Spinner,
   Stack,
+  useListCollection,
 } from "@chakra-ui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useId, useMemo } from "react";
+import { useEffect, useId, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDebouncedCallback } from "use-debounce";
+
+type VariationItem = GetAllProductOutputVariationData & { productName: string };
 
 interface Props {
   businessId: string | undefined;
   placeholder: string;
   searchField: string;
-  onSelect?: (variation: GetAllProductOutputVariationData) => void;
+  onSelect?: (variation: VariationItem) => void;
 }
 
-const ProductSearch = ({
+const ProductsSearch = ({
   businessId,
   placeholder,
   searchField,
@@ -37,36 +39,40 @@ const ProductSearch = ({
   const searchParams = useSearchParams();
   const scrollId = useId();
 
-  const handleSearch = useDebouncedCallback((searchValue: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (searchValue) params.set(searchField, searchValue);
-    else params.delete(searchField);
-    replace(`${pathname}?${params.toString()}`);
-  }, 200);
-
   const { data, error, isLoading, setSize, size, mutate } = useProducts(
     businessId,
     { keepPreviousData: true },
   );
   const { flatData: products, hasMore } = useMemo(
     () => parseCursorData(data),
-    [data, pathname, searchParams],
+    [data],
   );
 
-  const collection = useMemo(
-    () =>
-      createListCollection({
-        items: products.flatMap((product) =>
-          (product.variations ?? []).map((variation) => ({
-            ...variation,
-            productName: product.name,
-          })),
-        ),
-        itemToString: (item) => item.productName,
-        itemToValue: (item) => item.id,
-      }),
-    [products, pathname, searchParams],
-  );
+  const { collection, set } = useListCollection<VariationItem>({
+    initialItems: [],
+    itemToString: (item) => item.productName,
+    itemToValue: (item) => item.id,
+  });
+
+  // useProducts reads the search query from the URL, so new results arrive
+  // here whenever the input changes; flatten them into variations.
+  useEffect(() => {
+    set(
+      products.flatMap((product) =>
+        (product.variations ?? []).map((variation) => ({
+          ...variation,
+          productName: product.name,
+        })),
+      ),
+    );
+  }, [products, set]);
+
+  const handleSearch = useDebouncedCallback((searchValue: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (searchValue) params.set(searchField, searchValue);
+    else params.delete(searchField);
+    replace(`${pathname}?${params.toString()}`);
+  }, 200);
 
   return (
     <Combobox.Root
@@ -75,7 +81,7 @@ const ProductSearch = ({
       invalid={!!error}
       collection={collection}
       selectionBehavior={"clear"}
-      onValueChange={(e) => onSelect?.(e?.items[0])}
+      onValueChange={(e) => e.items[0] && onSelect?.(e.items[0])}
       onInputValueChange={(e) => handleSearch(e.inputValue)}
       defaultInputValue={searchParams.get(searchField) ?? ""}
       positioning={{ sameWidth: false, placement: "bottom-start" }}
@@ -96,14 +102,27 @@ const ProductSearch = ({
                 <Spinner size="xs" borderWidth="1px" />
                 <Span>Loading products...</Span>
               </HStack>
+            ) : error ? (
+              <Stack p="2" gap="2">
+                <Span color="fg.error" textStyle="sm">
+                  Couldn&apos;t load products
+                </Span>
+                <Button size="xs" variant="subtle" onClick={() => mutate()}>
+                  Retry
+                </Button>
+              </Stack>
             ) : (
               <>
                 <Combobox.Empty>No products found</Combobox.Empty>
                 <InfiniteScroll
-                  dataLength={products.length}
-                  hasMore={hasMore && !error}
+                  dataLength={collection.items.length}
+                  hasMore={hasMore}
                   next={() => setSize(size + 1)}
-                  loader={<Spinner size="xs" />}
+                  loader={
+                    <HStack p="2" justify="center">
+                      <Spinner size="xs" borderWidth="1px" />
+                    </HStack>
+                  }
                   scrollableTarget={scrollId}
                 >
                   {collection.items.map((variation) => (
@@ -137,16 +156,6 @@ const ProductSearch = ({
                 </InfiniteScroll>
               </>
             )}
-            {error && (
-              <Stack p="2" gap="2">
-                <Span color="fg.error" textStyle="sm">
-                  Couldn&apos;t load products
-                </Span>
-                <Button size="xs" variant="subtle" onClick={() => mutate()}>
-                  Retry
-                </Button>
-              </Stack>
-            )}
           </Combobox.Content>
         </Combobox.Positioner>
       </Portal>
@@ -154,4 +163,4 @@ const ProductSearch = ({
   );
 };
 
-export default ProductSearch;
+export default ProductsSearch;
