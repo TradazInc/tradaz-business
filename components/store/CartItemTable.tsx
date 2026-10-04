@@ -37,8 +37,8 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
   const { data, error, mutate } = useCart(cart.id, { fallbackData: cart });
   const addToCart = useAddCartItem(businessId);
   const removeFromCart = useRemoveCartItem(businessId);
-  const decrementItem = useIncrementCartItem(businessId);
-  const incrementItem = useDecrementCartItem(businessId);
+  const incrementItem = useIncrementCartItem(businessId);
+  const decrementItem = useDecrementCartItem(businessId);
 
   const handleDeleteItem = async (id: string) => {
     toaster.promise(removeFromCart.trigger(id), {
@@ -117,7 +117,7 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
                   <Table.Cell>
                     <HStack gap={1}>
                       <IconButton
-                        size="sm"
+                        size={"xs"}
                         onClick={() => incrementItem.trigger(cartItem.id)}
                         disabled={incrementItem.isMutating}
                       >
@@ -125,7 +125,7 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
                       </IconButton>
                       {cartItem.quantity}
                       <IconButton
-                        size="sm"
+                        size={"xs"}
                         onClick={() => decrementItem.trigger(cartItem.id)}
                         disabled={decrementItem.isMutating}
                       >
