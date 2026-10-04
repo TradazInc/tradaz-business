@@ -258,7 +258,9 @@ const CartForm = ({ cart, businessId }: Props) => {
           </Field.Root>
 
           <Field.Root invalid={!!errors.terminalConfigId || !!posConfigs.error}>
-            <Field.Label>POS terminal</Field.Label>
+            <Field.Label>
+              POS terminal <Field.RequiredIndicator />
+            </Field.Label>
             <Controller
               control={control}
               name={"terminalConfigId"}
