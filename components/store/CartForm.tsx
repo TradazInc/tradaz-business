@@ -125,7 +125,7 @@ const CartForm = ({ cart, businessId }: Props) => {
 
   return (
     <form onSubmit={onSubmit} style={{ width: "100%" }}>
-      <Fieldset.Root size="md" w="full">
+      <Fieldset.Root bg={"bg.panel"} size={"md"} w={"full"} borderRadius={'md'}>
         <Stack>
           <Fieldset.Legend>Checkout</Fieldset.Legend>
           <Fieldset.HelperText>
@@ -357,9 +357,9 @@ const CartForm = ({ cart, businessId }: Props) => {
         </Fieldset.Content>
 
         <Button
+          w={"full"}
           type={"submit"}
           variant={"outline"}
-          alignSelf={"flex-start"}
           disabled={
             !isValid ||
             isSubmitting ||

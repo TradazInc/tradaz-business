@@ -20,7 +20,7 @@ export default async function page({ params }: Props) {
       <VStack w={"full"} h={"full"}>
         <PageHeader>Cart {data.id}</PageHeader>
 
-        <Stack direction={{ base: "column", md: "row" }}>
+        <Stack direction={{ base: "column", md: "row" }} gap={3}>
           <CartItemTable
             cart={data}
             businessId={businessId}
