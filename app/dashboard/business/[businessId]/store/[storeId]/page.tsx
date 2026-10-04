@@ -1,7 +1,7 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 
 interface Props {
-  params: Promise<{ storeId: string }>;
+  params: Promise<{ businessId?: string; storeId?: string }>;
 }
 
 const page = async ({ params }: Props) => {

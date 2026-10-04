@@ -8,7 +8,5 @@ export async function getOrders(organizationId: string | undefined) {
 }
 
 export async function getOrder(id: string) {
-  return apiClient("@get/api/orders/:id", {
-    params: { id },
-  });
+  return apiClient("@get/api/orders/:id", { params: { id } });
 }
