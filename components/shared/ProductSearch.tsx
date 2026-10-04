@@ -50,7 +50,7 @@ const ProductSearch = ({
   );
   const { flatData: products, hasMore } = useMemo(
     () => parseCursorData(data),
-    [data, pathname, searchParams],
+    [data],
   );
 
   const collection = useMemo(
@@ -65,7 +65,7 @@ const ProductSearch = ({
         itemToString: (item) => item.productName,
         itemToValue: (item) => item.id,
       }),
-    [products, pathname, searchParams],
+    [products],
   );
 
   return (
@@ -90,12 +90,21 @@ const ProductSearch = ({
 
       <Portal>
         <Combobox.Positioner>
-          <Combobox.Content id={scrollId} minW="sm" maxH="xs" overflowY="auto">
+          <Combobox.Content id={scrollId} minW={"sm"}>
             {isLoading ? (
-              <HStack p="2">
-                <Spinner size="xs" borderWidth="1px" />
+              <HStack p={"2"}>
+                <Spinner size={"xs"} borderWidth={"1px"} />
                 <Span>Loading products...</Span>
               </HStack>
+            ) : error ? (
+              <Stack p={"2"} gap={"2"}>
+                <Span color={"fg.error"} textStyle={"sm"}>
+                  Couldn&apos;t load products
+                </Span>
+                <Button size={"xs"} variant={"subtle"} onClick={() => mutate()}>
+                  Retry
+                </Button>
+              </Stack>
             ) : (
               <>
                 <Combobox.Empty>No products found</Combobox.Empty>
@@ -108,12 +117,10 @@ const ProductSearch = ({
                 >
                   {collection.items.map((variation) => (
                     <Combobox.Item key={variation.id} item={variation}>
-                      <Stack gap="0" flex="1" minW="0">
-                        <HStack justify="space-between" textStyle="sm">
-                          <Span fontWeight="medium" truncate>
-                            {variation.productName}
-                          </Span>
-                          <Span fontWeight="semibold">
+                      <Stack>
+                        <HStack justify={"space-between"} textStyle={"sm"}>
+                          <Span truncate>{variation.productName}</Span>
+                          <Span>
                             <FormatNumber
                               value={variation.price}
                               style="currency"
@@ -121,7 +128,7 @@ const ProductSearch = ({
                             />
                           </Span>
                         </HStack>
-                        <Span color="fg.muted" textStyle="xs" truncate>
+                        <Span color={"fg.muted"} textStyle={"xs"} truncate>
                           {[
                             variation.sku && `SKU ${variation.sku}`,
                             variation.color,
@@ -136,16 +143,6 @@ const ProductSearch = ({
                   ))}
                 </InfiniteScroll>
               </>
-            )}
-            {error && (
-              <Stack p="2" gap="2">
-                <Span color="fg.error" textStyle="sm">
-                  Couldn&apos;t load products
-                </Span>
-                <Button size="xs" variant="subtle" onClick={() => mutate()}>
-                  Retry
-                </Button>
-              </Stack>
             )}
           </Combobox.Content>
         </Combobox.Positioner>
