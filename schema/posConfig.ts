@@ -49,29 +49,29 @@ export type CreateTerminalConfigInputData = z.input<
   typeof CreateTerminalConfigInputSchema
 >;
 
-export const CreatePosConfigInputSchema = z
-  .object({
-    gateway: z.enum(Gateway, { error: "select a gateway" }),
+const BasePosConfigInputSchema = z.object({
+  gateway: z.enum(Gateway, { error: "select a gateway" }),
 
-    merchantId: z
-      .string({ error: "merchant id is required" })
-      .min(10, { error: "merchant id is required" })
-      .optional(),
+  merchantId: z
+    .string({ error: "merchant id is required" })
+    .min(10, { error: "merchant id is required" })
+    .optional(),
 
-    privateKey: z
-      .string({ error: "private key is required" })
-      .min(1, { error: "private key is required" }),
+  privateKey: z
+    .string({ error: "private key is required" })
+    .min(1, { error: "private key is required" }),
 
-    terminalConfigs: z
-      .array(CreateTerminalConfigInputSchema)
-      .min(1, { error: "add at least one terminal" }),
-  })
-  .refine(
-    (data) => {
-      data.gateway === Gateway.opay && data.merchantId;
-    },
-    { error: "Opay Merchant ID is required" },
-  );
+  terminalConfigs: z
+    .array(CreateTerminalConfigInputSchema)
+    .min(1, { error: "add at least one terminal" }),
+});
+
+export const CreatePosConfigInputSchema = BasePosConfigInputSchema.refine(
+  (data) => {
+    data.gateway === Gateway.opay && data.merchantId;
+  },
+  { error: "Opay Merchant ID is required" },
+);
 export type CreatePosConfigInputData = z.input<
   typeof CreatePosConfigInputSchema
 >;
@@ -82,18 +82,15 @@ export const UpdatePosConfigParamSchema = z.object({
   id: z.cuid2(),
 });
 
-export const UpdatePosConfigInputSchema =
-  CreatePosConfigInputSchema.partial().extend({
-    terminalConfigs: z
-      .array(
-        CreateTerminalConfigInputSchema.extend({ id: z.cuid2().optional() }),
-      )
-      .min(1, { error: "add at least one terminal" })
-      .optional(),
-  });
+export const UpdatePosConfigInputSchema = BasePosConfigInputSchema.extend({
+  terminalConfigs: z
+    .array(CreateTerminalConfigInputSchema.extend({ id: z.cuid2().optional() }))
+    .min(1, { error: "add at least one terminal" }),
+}).partial();
 export type UpdatePosConfigInputData = z.input<
   typeof UpdatePosConfigInputSchema
 >;
+
 export const UpdatePosConfigOutputSchema = GetPosConfigOutputSchema;
 
 // Delete
