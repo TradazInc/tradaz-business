@@ -72,7 +72,7 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
   };
 
   return (
-    <Box w={"full"}>
+    <Box w={"full"} gapY={3}>
       <HStack w={"full"}>
         <ProductSearch
           searchField={"search"}
