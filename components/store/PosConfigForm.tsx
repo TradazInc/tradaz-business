@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 import FormInputGrid from "../shared/FormInputGrid";
 import { useMemo } from "react";
@@ -58,6 +58,9 @@ const PosConfigForm = () => {
     defaultValues: emptyPosConfig,
     mode: "onBlur",
   });
+
+  const gateway = useWatch({ control, name: "gateway" });
+  const isOpay = gateway === Gateway.opay;
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -144,7 +147,11 @@ const PosConfigForm = () => {
               <Field.ErrorText>{errors.gateway?.message}</Field.ErrorText>
             </Field.Root>
 
-            <Field.Root required invalid={!!errors.merchantId}>
+            <Field.Root
+              required
+              disabled={!isOpay}
+              invalid={!!errors.merchantId}
+            >
               <Field.Label>
                 Merchant ID <Field.RequiredIndicator />
               </Field.Label>
