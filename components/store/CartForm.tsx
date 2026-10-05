@@ -202,7 +202,10 @@ const CartForm = ({ initialCart, businessId }: Props) => {
         <Fieldset.Content>
           {cart && (
             <TotalPriceStat
+              p={3}
               w={"full"}
+              rounded={"md"}
+              borderWidth={"1px"}
               infoText={"Total Price does not include VAT"}
               totalPrice={
                 cart.cartItems.reduce(
