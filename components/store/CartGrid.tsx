@@ -19,9 +19,12 @@ interface Props {
 }
 
 const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
-  const { data, error, mutate, setSize, size } = useCarts(businessId, {
-    fallbackData: [initialCarts],
-  });
+  const { data, error, mutate, setSize, size, isLoading } = useCarts(
+    businessId,
+    {
+      fallbackData: [initialCarts],
+    },
+  );
   const { flatData: carts, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
@@ -44,34 +47,35 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
   };
 
   return (
-    <InfiniteScroll
-      dataLength={carts.length}
-      next={() => setSize(size + 1)}
-      hasMore={hasMore && !error}
-      loader={<Spinner />}
-      style={{ width: "100%", overflow: "visible" }}
-    >
-      <GridContainer pb={12} columns={{ base: 1, md: 2 }} gap={3}>
-        <GridItem colSpan={{ base: 1, md: 1 }}>
-          <For each={carts}>
-            {(cart) => (
+    <GridContainer pb={12} columns={{ base: 1, md: 2 }} gap={2}>
+      <InfiniteScroll
+        dataLength={carts.length}
+        next={() => setSize(size + 1)}
+        hasMore={hasMore && !error}
+        loader={<Spinner />}
+        style={{ width: "100%", overflow: "visible" }}
+      >
+        <For each={carts}>
+          {(cart) => (
+            <GridItem colSpan={1}>
               <CartCard
                 key={cart.id}
                 cart={cart}
-                onClick={handleDelete}
                 disabled={isMutating}
+                onClick={handleDelete}
                 href={`${computePath(businessId, storeId)}/carts/${cart.id}`}
               />
-            )}
-          </For>
-        </GridItem>
-      </GridContainer>
+            </GridItem>
+          )}
+        </For>
+      </InfiniteScroll>
       {error && (
         <>
           <Button
             w={"full"}
             size={"md"}
             variant={"subtle"}
+            loading={isLoading}
             onClick={() => mutate()}
           >
             Click to retry
@@ -79,7 +83,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
           <Text>Carts unavailable. Retry to continue.</Text>
         </>
       )}
-    </InfiniteScroll>
+    </GridContainer>
   );
 };
 

@@ -231,6 +231,7 @@ const RevenueForm = () => {
                   size={"sm"}
                   type={"button"}
                   variant={"subtle"}
+                  loading={isLoading}
                   onClick={() => mutate()}
                 >
                   Click to retry

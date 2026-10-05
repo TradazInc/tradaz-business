@@ -206,6 +206,7 @@ export const BusinessForm = ({ signup }: Props) => {
                       w={"full"}
                       size={"sm"}
                       variant={"subtle"}
+                      loading={isLoading}
                       onClick={() => mutate()}
                     >
                       Click to retry

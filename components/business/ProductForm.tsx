@@ -327,6 +327,18 @@ const ProductForm = ({ product }: Props) => {
                   </Select.Root>
                 )}
               />
+              {categories.error && (
+                <Button
+                  w={"full"}
+                  size={"sm"}
+                  type={"button"}
+                  variant={"subtle"}
+                  loading={categories.isLoading}
+                  onClick={() => categories.mutate()}
+                >
+                  Click to retry
+                </Button>
+              )}
               <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
             </Field.Root>
 
@@ -390,6 +402,18 @@ const ProductForm = ({ product }: Props) => {
                   </Select.Root>
                 )}
               />
+              {sizeTypes.error && (
+                <Button
+                  w={"full"}
+                  size={"sm"}
+                  type={"button"}
+                  variant={"subtle"}
+                  loading={sizeTypes.isLoading}
+                  onClick={() => sizeTypes.mutate()}
+                >
+                  Click to retry
+                </Button>
+              )}
               <Field.ErrorText>{errors.sizeTypeId?.message}</Field.ErrorText>
             </Field.Root>
           </FormInputGrid>

@@ -28,7 +28,7 @@ export default async function page({ params }: Props) {
               storeId={storeId}
             />
           </GridItem>
-          <GridItem colSpan={{ base: 1, md: 1 }}>
+          <GridItem colSpan={1}>
             <CartForm cart={data} businessId={businessId} />
           </GridItem>
         </SimpleGrid>

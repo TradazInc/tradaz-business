@@ -236,6 +236,7 @@ const SubaccountForm = () => {
                   size={"sm"}
                   type={"button"}
                   variant={"subtle"}
+                  loading={countries.isLoading}
                   onClick={() => countries.mutate()}
                 >
                   Click to retry
@@ -309,6 +310,7 @@ const SubaccountForm = () => {
                   size={"sm"}
                   type={"button"}
                   variant={"subtle"}
+                  loading={banks.isLoading}
                   onClick={() => banks.mutate()}
                 >
                   Click to retry
