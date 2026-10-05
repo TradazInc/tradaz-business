@@ -24,7 +24,7 @@ interface Props {
 const CartCard = ({ cart, href, onClick, disabled }: Props) => {
   return (
     <Card.Root flexDirection={"row"} w={"full"}>
-      <Image maxW="200px" asChild>
+      <Image maxW={"200px"} borderRadius={"inherit"} asChild>
         <NextImage
           src={noImage}
           objectFit={"cover"}

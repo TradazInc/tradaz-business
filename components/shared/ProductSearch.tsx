@@ -105,7 +105,12 @@ const ProductSearch = ({
                 <Span color={"fg.error"} textStyle={"sm"}>
                   Couldn&apos;t load products
                 </Span>
-                <Button size={"xs"} variant={"subtle"} onClick={() => mutate()}>
+                <Button
+                  size={"xs"}
+                  variant={"subtle"}
+                  loading={isLoading}
+                  onClick={() => mutate()}
+                >
                   Retry
                 </Button>
               </Stack>
