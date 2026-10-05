@@ -10,9 +10,11 @@ import { InfoTip } from "../ui/toggle-tip";
 
 interface Props {
   totalPrice: number;
+  infoText?: string;
 }
 
 export default function TotalPriceStat({
+  infoText,
   totalPrice,
   ...props
 }: Props & StatRootProps) {
@@ -21,7 +23,7 @@ export default function TotalPriceStat({
       <HStack justify="space-between">
         <Stat.Label>
           Total Price
-          <InfoTip>Total Price does not include VAT</InfoTip>
+          <InfoTip>{infoText}</InfoTip>
         </Stat.Label>
         <Icon color="fg.muted">
           <TbCurrencyNaira />
