@@ -53,9 +53,10 @@ const BasePosConfigInputSchema = z.object({
   gateway: z.enum(Gateway, { error: "select a gateway" }),
 
   merchantId: z
-    .string({ error: "merchant id is required" })
-    .min(10, { error: "merchant id is required" })
-    .optional(),
+    .string()
+    .min(10, { error: "merchant id must be at least 10 characters" })
+    .optional()
+    .or(z.literal("")),
 
   privateKey: z
     .string({ error: "private key is required" })
@@ -67,10 +68,8 @@ const BasePosConfigInputSchema = z.object({
 });
 
 export const CreatePosConfigInputSchema = BasePosConfigInputSchema.refine(
-  (data) => {
-    data.gateway === Gateway.opay && data.merchantId;
-  },
-  { error: "Opay Merchant ID is required" },
+  (data) => data.gateway !== Gateway.opay || !!data.merchantId,
+  { error: "Opay Merchant ID is required", path: ["merchantId"] },
 );
 export type CreatePosConfigInputData = z.input<
   typeof CreatePosConfigInputSchema
