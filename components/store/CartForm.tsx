@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { useAddCart, useUpdateCart } from "@/hooks/cart";
+import { useAddCart, useCart, useUpdateCart } from "@/hooks/cart";
 import { usePosCheckout, useWebCheckout } from "@/hooks/checkout";
 import { usePosConfigs } from "@/hooks/posConfig";
 import { useSubaccounts } from "@/hooks/subaccount";
@@ -36,11 +36,19 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import TotalPriceStat from "./TotalPriceStat";
 
 interface Props {
-  cart?: GetCartOutputData;
+  initialCart?: GetCartOutputData;
   businessId: string | undefined;
 }
 
-const CartForm = ({ cart, businessId }: Props) => {
+const CartForm = ({ initialCart, businessId }: Props) => {
+  const {
+    data: cart,
+    error,
+    isLoading,
+    mutate,
+  } = useCart(initialCart?.id, {
+    fallbackData: initialCart,
+  });
   const addCart = useAddCart(businessId);
   const updateCart = useUpdateCart(businessId);
   const subaccounts = useSubaccounts(businessId);
@@ -459,6 +467,18 @@ const CartForm = ({ cart, businessId }: Props) => {
             </Field.ErrorText>
           </Field.Root>
         </Fieldset.Content>
+
+        {error && (
+          <Button
+            w={"full"}
+            variant={"subtle"}
+            loading={isLoading}
+            disabled={isLoading}
+            onClick={() => mutate()}
+          >
+            Error loading cart retry
+          </Button>
+        )}
 
         <Button
           w={"full"}

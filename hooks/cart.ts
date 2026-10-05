@@ -31,7 +31,7 @@ export const useCarts = (
 };
 
 export const useCart = (
-  id: string,
+  id?: string,
   config?: SWRConfiguration<GetCartOutputData, Error>,
 ) => {
   return useSWR(

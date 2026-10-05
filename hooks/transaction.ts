@@ -1,14 +1,23 @@
 import { ORDER_KEY, TRANSACTION_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
-import { CreateTransactionInputData } from "@/schema/transaction";
+import {
+  CreateTransactionInputData,
+  GetTransactionOutputData,
+} from "@/schema/transaction";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR, { SWRConfiguration, useSWRConfig } from "swr";
 import { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
-export const useTransaction = (id: string) => {
-  return useSWR(getScopedKey(TRANSACTION_KEY, id), ([key, id]) =>
-    apiClient("@get/api/transactions/:id", { params: { id }, ...apiConfig }),
+export const useTransaction = (
+  id?: string,
+  config?: SWRConfiguration<GetTransactionOutputData, Error>,
+) => {
+  return useSWR(
+    getScopedKey(TRANSACTION_KEY, id),
+    ([key, id]) =>
+      apiClient("@get/api/transactions/:id", { params: { id }, ...apiConfig }),
+    config,
   );
 };
 

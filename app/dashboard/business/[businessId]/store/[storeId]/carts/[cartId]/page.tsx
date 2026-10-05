@@ -29,7 +29,7 @@ export default async function page({ params }: Props) {
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <CartForm cart={data} businessId={businessId} />
+            <CartForm initialCart={data} businessId={businessId} />
           </GridItem>
         </SimpleGrid>
       </VStack>
