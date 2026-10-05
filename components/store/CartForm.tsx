@@ -26,6 +26,7 @@ import {
   Portal,
   Select,
   Spinner,
+  Stack,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useRouter } from "next/navigation";
@@ -198,7 +199,12 @@ const CartForm = ({ initialCart, businessId }: Props) => {
   return (
     <form onSubmit={onSubmit} style={{ width: "100%" }}>
       <Fieldset.Root p={"3"} w={"full"} size={"md"} borderRadius={"md"}>
-        <Fieldset.Legend>Checkout Summary</Fieldset.Legend>
+        <Stack>
+          <Fieldset.Legend>Checkout Summary</Fieldset.Legend>
+          <Fieldset.HelperText>
+            Provide relevant checkout information.
+          </Fieldset.HelperText>
+        </Stack>
         <Fieldset.Content>
           {cart && (
             <TotalPriceStat
