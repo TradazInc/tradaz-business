@@ -25,6 +25,7 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductColorBadge from "../shared/ProductColorBadge";
 import ProductSearch from "../shared/ProductSearch";
+import TotalPriceStat from "./TotalPriceStat";
 
 interface Props {
   cart: GetCartOutputData;
@@ -81,6 +82,14 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
         />
         <Spacer />
       </HStack>
+
+      <TotalPriceStat
+        totalPrice={cart.cartItems.reduce(
+          (total, item) => total + item.totalPrice,
+          0,
+        )}
+      />
+
       <Table.Root>
         <Table.Header>
           <Table.Row>
@@ -131,8 +140,8 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
                 <Table.Cell>
                   <FormatNumber
                     value={cartItem.totalPrice}
-                    style="currency"
-                    currency="NGN"
+                    style={"currency"}
+                    currency={"NGN"}
                   />
                 </Table.Cell>
                 <Table.Cell>

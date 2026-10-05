@@ -1,12 +1,15 @@
 import { CreateProductInputData } from "@/schema/product";
-import { FormatNumber, Stat } from "@chakra-ui/react";
+import { FormatNumber, Stat, StatRootProps } from "@chakra-ui/react";
 import { Control, useWatch } from "react-hook-form";
 
 interface Props {
   control: Control<CreateProductInputData>;
 }
 
-export default function TotalQuantity({ control }: Props) {
+export default function TotalQuantityStat({
+  control,
+  ...props
+}: Props & StatRootProps) {
   const variationValues = useWatch({
     name: "variations",
     control,
@@ -19,7 +22,7 @@ export default function TotalQuantity({ control }: Props) {
     0,
   );
   return (
-    <Stat.Root>
+    <Stat.Root {...props}>
       <Stat.Label>Total Quantity</Stat.Label>
       <Stat.ValueText>
         <FormatNumber value={total} />

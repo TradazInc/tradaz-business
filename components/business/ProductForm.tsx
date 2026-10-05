@@ -35,7 +35,7 @@ import { LuPlus } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FormInputGrid from "../shared/FormInputGrid";
 import FileUpload from "../shared/FileUpload";
-import TotalQuantity from "./TotalQuantity";
+import TotalQuantityStat from "./TotalQuantityStat";
 import VariationField from "./VariationField";
 import { Gender } from "@/schema/enums";
 
@@ -426,7 +426,7 @@ const ProductForm = ({ product }: Props) => {
           />
         </Fieldset.Content>
 
-        <TotalQuantity control={control} />
+        <TotalQuantityStat control={control} />
 
         <Button
           type={"submit"}
