@@ -210,7 +210,7 @@ export const storeItems: SideMenuItem[] = [
     label: "Finance",
     icon: LuLandmark,
     children: [
-      { label: "Sales Record", icon: LuFileText, path: "" },
+      { label: "Sales Record", icon: LuFileText, path: "/sales-record" },
       { label: "Staff Salary", icon: LuWallet, path: "" },
       { label: "Expenses", icon: LuTrendingDown, path: "" },
       { label: "Revenue", icon: LuTrendingUp, path: "" },
