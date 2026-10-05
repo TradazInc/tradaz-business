@@ -25,7 +25,6 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { MdDeleteOutline } from "react-icons/md";
 import ProductColorBadge from "../shared/ProductColorBadge";
 import ProductSearch from "../shared/ProductSearch";
-import TotalPriceStat from "./TotalPriceStat";
 
 interface Props {
   cart: GetCartOutputData;
