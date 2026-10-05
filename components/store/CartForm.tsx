@@ -269,7 +269,10 @@ const CartForm = ({ cart, businessId }: Props) => {
             <Field.ErrorText>{errors.depositAmount?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root invalid={!!errors.terminalConfigId || !!posConfigs.error}>
+          <Field.Root
+            required
+            invalid={!!errors.terminalConfigId || !!posConfigs.error}
+          >
             <Field.Label>
               POS terminal <Field.RequiredIndicator />
             </Field.Label>

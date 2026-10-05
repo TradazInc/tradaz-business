@@ -20,15 +20,15 @@ export default async function page({ params }: Props) {
       <VStack w={"full"} h={"full"}>
         <PageHeader>Cart {data.id}</PageHeader>
 
-        <SimpleGrid columns={{ base: 1, md: 3 }} gap={3}>
-          <GridItem colSpan={{ base: 3, md: 2 }}>
+        <SimpleGrid columns={{ base: 1, md: 4 }} gap={3}>
+          <GridItem colSpan={{ base: 4, md: 3 }}>
             <CartItemTable
               cart={data}
               businessId={businessId}
               storeId={storeId}
             />
           </GridItem>
-          <GridItem colSpan={{ base: 3, md: 1 }}>
+          <GridItem colSpan={{ base: 4, md: 1 }}>
             <CartForm cart={data} businessId={businessId} />
           </GridItem>
         </SimpleGrid>
