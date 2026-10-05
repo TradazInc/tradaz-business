@@ -33,6 +33,7 @@ import { useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import InfiniteScroll from "react-infinite-scroll-component";
+import TotalPriceStat from "./TotalPriceStat";
 
 interface Props {
   cart?: GetCartOutputData;
@@ -198,6 +199,21 @@ const CartForm = ({ cart, businessId }: Props) => {
         </Stack>
 
         <Fieldset.Content>
+          {cart && (
+            <TotalPriceStat
+              p={4}
+              w={"full"}
+              rounded={"md"}
+              borderWidth={"1px"}
+              totalPrice={
+                cart.cartItems.reduce(
+                  (total, item) => total + item.totalPrice,
+                  0,
+                ) - (cart.depositAmount ?? 0)
+              }
+            />
+          )}
+
           <Field.Root invalid={!!errors.couponCode}>
             <Field.Label>Coupon code</Field.Label>
             <Input placeholder="e.g., SAVE10" {...register("couponCode")} />

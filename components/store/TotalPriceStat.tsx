@@ -17,7 +17,7 @@ export default function TotalPriceStat({
   ...props
 }: Props & StatRootProps) {
   return (
-    <Stat.Root maxW={60} borderWidth={"1px"} p={4} rounded={"md"} {...props}>
+    <Stat.Root {...props}>
       <HStack justify="space-between">
         <Stat.Label>
           Total Price

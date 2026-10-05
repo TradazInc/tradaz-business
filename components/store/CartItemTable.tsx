@@ -83,13 +83,6 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
         <Spacer />
       </HStack>
 
-      <TotalPriceStat
-        totalPrice={
-          cart.cartItems.reduce((total, item) => total + item.totalPrice, 0) -
-          (cart.depositAmount ?? 0)
-        }
-      />
-
       <Table.Root>
         <Table.Header>
           <Table.Row>
