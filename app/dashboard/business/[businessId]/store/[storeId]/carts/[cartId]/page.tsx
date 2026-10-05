@@ -3,7 +3,7 @@ import PageHeader from "@/components/shared/PageHeader";
 import CartForm from "@/components/store/CartForm";
 import CartItemTable from "@/components/store/CartItemTable";
 import { getCart } from "@/server/cart";
-import { GridItem, SimpleGrid, Stack, VStack } from "@chakra-ui/react";
+import { GridItem, SimpleGrid, VStack } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId?: string; storeId?: string; cartId: string }>;
