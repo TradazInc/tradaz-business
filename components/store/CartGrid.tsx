@@ -5,7 +5,7 @@ import { GetAllCartsOutputData } from "@/schema/cart";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
-import { Button, For, Spinner, Text } from "@chakra-ui/react";
+import { Button, For, GridItem, Spinner, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import GridContainer from "../shared/GridContainer";
@@ -44,26 +44,28 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
   };
 
   return (
-    <GridContainer pb={12} columns={{ base: 1, md: 2 }}>
-      <InfiniteScroll
-        dataLength={carts.length}
-        next={() => setSize(size + 1)}
-        hasMore={hasMore && !error}
-        loader={<Spinner />}
-        style={{ width: "100%", overflow: "visible" }}
-      >
-        <For each={carts}>
-          {(cart) => (
-            <CartCard
-              key={cart.id}
-              cart={cart}
-              onClick={handleDelete}
-              disabled={isMutating}
-              href={`${computePath(businessId, storeId)}/carts/${cart.id}`}
-            />
-          )}
-        </For>
-      </InfiniteScroll>
+    <InfiniteScroll
+      dataLength={carts.length}
+      next={() => setSize(size + 1)}
+      hasMore={hasMore && !error}
+      loader={<Spinner />}
+      style={{ width: "100%", overflow: "visible" }}
+    >
+      <GridContainer pb={12} columns={{ base: 1, md: 2 }}>
+        <GridItem colSpan={{ base: 1, md: 1 }}>
+          <For each={carts}>
+            {(cart) => (
+              <CartCard
+                key={cart.id}
+                cart={cart}
+                onClick={handleDelete}
+                disabled={isMutating}
+                href={`${computePath(businessId, storeId)}/carts/${cart.id}`}
+              />
+            )}
+          </For>
+        </GridItem>
+      </GridContainer>
       {error && (
         <>
           <Button
@@ -77,7 +79,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
           <Text>Carts unavailable. Retry to continue.</Text>
         </>
       )}
-    </GridContainer>
+    </InfiniteScroll>
   );
 };
 

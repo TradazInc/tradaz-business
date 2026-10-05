@@ -21,14 +21,14 @@ export default async function page({ params }: Props) {
         <PageHeader>Cart {data.id}</PageHeader>
 
         <SimpleGrid columns={{ base: 1, md: 4 }} gap={3}>
-          <GridItem colSpan={{ base: 4, md: 3 }}>
+          <GridItem colSpan={{ base: 1, md: 3 }}>
             <CartItemTable
               cart={data}
               businessId={businessId}
               storeId={storeId}
             />
           </GridItem>
-          <GridItem colSpan={{ base: 4, md: 1 }}>
+          <GridItem colSpan={{ base: 1, md: 1 }}>
             <CartForm cart={data} businessId={businessId} />
           </GridItem>
         </SimpleGrid>
