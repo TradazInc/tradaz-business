@@ -5,7 +5,7 @@ import { GetAllCartsOutputData } from "@/schema/cart";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
-import { Button, For, GridItem, Spinner, Text } from "@chakra-ui/react";
+import { Box, Button, For, GridItem, Spinner, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import GridContainer from "../shared/GridContainer";
@@ -47,42 +47,44 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
   };
 
   return (
-    <InfiniteScroll
-      dataLength={carts.length}
-      next={() => setSize(size + 1)}
-      hasMore={hasMore && !error}
-      loader={<Spinner />}
-      style={{ width: "100%", overflow: "visible", padding: 0, margin: 0 }}
-    >
-      <GridContainer pb={12} columns={{ base: 1, md: 2 }} gap={2}>
-        <For each={carts}>
-          {(cart) => (
-            <GridItem key={cart.id} colSpan={1}>
-              <CartCard
-                cart={cart}
-                disabled={isMutating}
-                onClick={handleDelete}
-                href={`${computePath(businessId, storeId)}/carts/${cart.id}`}
-              />
-            </GridItem>
-          )}
-        </For>
-      </GridContainer>
-      {error && (
-        <>
-          <Button
-            w={"full"}
-            size={"md"}
-            variant={"subtle"}
-            loading={isLoading}
-            onClick={() => mutate()}
-          >
-            Click to retry
-          </Button>
-          <Text>Carts unavailable. Retry to continue.</Text>
-        </>
-      )}
-    </InfiniteScroll>
+    <Box w={"full"}>
+      <InfiniteScroll
+        dataLength={carts.length}
+        next={() => setSize(size + 1)}
+        hasMore={hasMore && !error}
+        loader={<Spinner />}
+        style={{ width: "100%", overflow: "visible" }}
+      >
+        <GridContainer pb={12} columns={{ base: 1, md: 2 }} gap={2}>
+          <For each={carts}>
+            {(cart) => (
+              <GridItem key={cart.id} colSpan={1}>
+                <CartCard
+                  cart={cart}
+                  disabled={isMutating}
+                  onClick={handleDelete}
+                  href={`${computePath(businessId, storeId)}/carts/${cart.id}`}
+                />
+              </GridItem>
+            )}
+          </For>
+        </GridContainer>
+        {error && (
+          <>
+            <Button
+              w={"full"}
+              size={"md"}
+              variant={"subtle"}
+              loading={isLoading}
+              onClick={() => mutate()}
+            >
+              Click to retry
+            </Button>
+            <Text>Carts unavailable. Retry to continue.</Text>
+          </>
+        )}
+      </InfiniteScroll>
+    </Box>
   );
 };
 
