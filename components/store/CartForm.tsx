@@ -30,8 +30,9 @@ import {
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   cart?: GetCartOutputData;
@@ -47,10 +48,21 @@ const CartForm = ({ cart, businessId }: Props) => {
   const posCheckout = usePosCheckout(businessId);
   const { push } = useRouter();
 
+  const parsedSubaccounts = useMemo(
+    () => parseCursorData(subaccounts.data),
+    [subaccounts.data],
+  );
+  const parsedPosConfigs = useMemo(
+    () => parseCursorData(posConfigs.data),
+    [posConfigs.data],
+  );
+  const subaccountScrollId = useId();
+  const posConfigScrollId = useId();
+
   const terminalCollection = useMemo(
     () =>
       createListCollection({
-        items: parseCursorData(posConfigs.data).flatData.flatMap((posConfig) =>
+        items: parsedPosConfigs.flatData.flatMap((posConfig) =>
           posConfig.terminalConfigs.map((terminal) => ({
             ...terminal,
             gateway: posConfig.gateway,
@@ -66,7 +78,7 @@ const CartForm = ({ cart, businessId }: Props) => {
   const subaccountCollection = useMemo(
     () =>
       createListCollection({
-        items: parseCursorData(subaccounts.data).flatData,
+        items: parsedSubaccounts.flatData,
         itemToValue: (account) => account.id,
         itemToString: (account) => account.gateway,
       }),
@@ -292,20 +304,28 @@ const CartForm = ({ cart, businessId }: Props) => {
                   </Select.Control>
                   <Portal>
                     <Select.Positioner>
-                      <Select.Content>
-                        {terminalCollection.size > 0 ? (
-                          terminalCollection.items.map((terminal) => (
-                            <Select.Item item={terminal} key={terminal.id}>
-                              {terminal.name ??
-                                [terminal.gateway, terminal.serialNumber]
-                                  .filter(Boolean)
-                                  .join(" · ")}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))
-                        ) : (
-                          <Box>No terminals found</Box>
-                        )}
+                      <Select.Content id={posConfigScrollId}>
+                        <InfiniteScroll
+                          dataLength={parsedPosConfigs.flatData.length}
+                          hasMore={parsedPosConfigs.hasMore}
+                          next={() => posConfigs.setSize(posConfigs.size + 1)}
+                          loader={<Spinner size={"xs"} />}
+                          scrollableTarget={posConfigScrollId}
+                        >
+                          {terminalCollection.size > 0 ? (
+                            terminalCollection.items.map((terminal) => (
+                              <Select.Item item={terminal} key={terminal.id}>
+                                {terminal.name ??
+                                  [terminal.gateway, terminal.serialNumber]
+                                    .filter(Boolean)
+                                    .join(" · ")}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))
+                          ) : (
+                            <Box>No terminals found</Box>
+                          )}
+                        </InfiniteScroll>
                       </Select.Content>
                     </Select.Positioner>
                   </Portal>
@@ -371,17 +391,28 @@ const CartForm = ({ cart, businessId }: Props) => {
                   </Select.Control>
                   <Portal>
                     <Select.Positioner>
-                      <Select.Content>
-                        {subaccountCollection.size > 0 ? (
-                          subaccountCollection.items.map((subaccount) => (
-                            <Select.Item item={subaccount} key={subaccount.id}>
-                              {subaccount.gateway}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))
-                        ) : (
-                          <Box>No subaccounts found</Box>
-                        )}
+                      <Select.Content id={subaccountScrollId}>
+                        <InfiniteScroll
+                          dataLength={parsedSubaccounts.flatData.length}
+                          hasMore={parsedSubaccounts.hasMore}
+                          next={() => subaccounts.setSize(subaccounts.size + 1)}
+                          loader={<Spinner size={"xs"} />}
+                          scrollableTarget={subaccountScrollId}
+                        >
+                          {subaccountCollection.size > 0 ? (
+                            subaccountCollection.items.map((subaccount) => (
+                              <Select.Item
+                                item={subaccount}
+                                key={subaccount.id}
+                              >
+                                {subaccount.gateway}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))
+                          ) : (
+                            <Box>No subaccounts found</Box>
+                          )}
+                        </InfiniteScroll>
                       </Select.Content>
                     </Select.Positioner>
                   </Portal>
