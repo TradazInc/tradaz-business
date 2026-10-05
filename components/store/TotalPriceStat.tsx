@@ -23,7 +23,7 @@ export default function TotalPriceStat({
       <HStack justify="space-between">
         <Stat.Label>
           Total Price
-          <InfoTip>{infoText}</InfoTip>
+          {infoText && <InfoTip>{infoText}</InfoTip>}
         </Stat.Label>
         <Icon color="fg.muted">
           <TbCurrencyNaira />
