@@ -293,13 +293,8 @@ const CartForm = ({ initialCart, businessId }: Props) => {
             <Field.ErrorText>{errors.depositAmount?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root
-            required
-            invalid={!!errors.terminalConfigId || !!posConfigs.error}
-          >
-            <Field.Label>
-              POS terminal <Field.RequiredIndicator />
-            </Field.Label>
+          <Field.Root invalid={!!errors.terminalConfigId || !!posConfigs.error}>
+            <Field.Label>POS terminal</Field.Label>
             <Controller
               control={control}
               name={"terminalConfigId"}
@@ -382,13 +377,8 @@ const CartForm = ({ initialCart, businessId }: Props) => {
             </Field.ErrorText>
           </Field.Root>
 
-          <Field.Root
-            required
-            invalid={!!errors.paymentConfigId || !!subaccounts.error}
-          >
-            <Field.Label>
-              Subaccount <Field.RequiredIndicator />
-            </Field.Label>
+          <Field.Root invalid={!!errors.paymentConfigId || !!subaccounts.error}>
+            <Field.Label>Subaccount</Field.Label>
             <Controller
               control={control}
               name={"paymentConfigId"}
