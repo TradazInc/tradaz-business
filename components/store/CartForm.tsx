@@ -303,6 +303,7 @@ const CartForm = ({ initialCart, businessId }: Props) => {
             <Controller
               control={control}
               name={"terminalConfigId"}
+              rules={{ deps: ["paymentConfigId"] }}
               render={({ field }) => (
                 <Select.Root
                   name={field.name}
@@ -391,6 +392,7 @@ const CartForm = ({ initialCart, businessId }: Props) => {
             <Controller
               control={control}
               name={"paymentConfigId"}
+              rules={{ deps: ["terminalConfigId"] }}
               render={({ field }) => (
                 <Select.Root
                   name={field.name}

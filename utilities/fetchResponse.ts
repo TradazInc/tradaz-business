@@ -16,3 +16,8 @@ export const createFetchResponseSchema = <T extends z.ZodType>(dataSchema: T) =>
 export type FetchResponse<T> = z.infer<
   ReturnType<typeof createFetchResponseSchema<z.ZodType<T>>>
 >;
+
+export const OptionalIdSchema = z
+  .union([z.cuid2(), z.literal("")])
+  .optional()
+  .transform((id) => id || undefined);

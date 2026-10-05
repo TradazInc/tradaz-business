@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { createFetchResponseSchema } from "../utilities/fetchResponse";
+import {
+  createFetchResponseSchema,
+  OptionalIdSchema,
+} from "../utilities/fetchResponse";
 
 // Base Schemas
 export const BaseCartParamSchema = z.object({ id: z.cuid2() });
@@ -87,13 +90,20 @@ export const CreateCartInputSchema = z
     couponCode: z.string().trim(),
     depositAmount: z.number().nonnegative(),
     points: z.number().int().nonnegative(),
-    paymentConfigId: z.cuid2(),
-    terminalConfigId: z.cuid2(),
-    shippingMethodId: z.cuid2(),
+    paymentConfigId: OptionalIdSchema,
+    terminalConfigId: OptionalIdSchema,
+    shippingMethodId: OptionalIdSchema,
   })
   .partial()
-  .refine((data) => data.paymentConfigId || data.terminalConfigId, {
-    error: "Select a terminal or payment gateway",
+  .superRefine((data, ctx) => {
+    if (data.paymentConfigId || data.terminalConfigId) return;
+    for (const path of ["paymentConfigId", "terminalConfigId"]) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Select a terminal or payment gateway",
+        path: [path],
+      });
+    }
   });
 export type CreateCartInputData = z.infer<typeof CreateCartInputSchema>;
 
