@@ -103,10 +103,10 @@ export const businessItems: SideMenuItem[] = [
     label: "Finance & Sales",
     icon: <LuLandmark />,
     children: [
-      { label: "Revenue", icon: <LuTrendingUp />, path: "/revenue" },
       { label: "Sales Record", icon: <LuFileText />, path: "/sales-record" },
       { label: "Vendor Sales", icon: <LuStore />, path: "" },
       { label: "Partner Sales", icon: <LuHandshake />, path: "" },
+      { label: "Revenue", icon: <LuTrendingUp />, path: "/revenue" },
       { label: "Expenses", icon: <LuTrendingDown />, path: "/expenses" },
       { label: "Staff Payroll", icon: <LuWallet />, path: "" },
       { label: "Tax Calculations", icon: <LuCalculator />, path: "" },
