@@ -4,7 +4,6 @@ import {
   LuCalculator,
   LuCheck,
   LuFileText,
-  LuGift,
   LuHandshake,
   LuHeart,
   LuImage,
@@ -54,91 +53,63 @@ interface SideMenuItem {
 
 export const dashboardItems: SideMenuItem[] = [
   {
-    label: "Account",
+    label: "Account & Security",
     icon: <LuUser />,
-    children: [{ label: "Profile", icon: <LuUserPlus />, path: "" }],
-  },
-  {
-    label: "Security",
-    icon: <LuShield />,
     children: [
+      { label: "Profile", icon: <LuUserPlus />, path: "" },
       { label: "Password", icon: <MdOutlinePassword />, path: "" },
-      { label: "Devices", icon: <MdDevices />, path: "" },
+      { label: "Active Devices", icon: <MdDevices />, path: "" },
     ],
   },
   {
-    label: "Settings",
+    label: "Preferences & Legal",
     icon: <LuSettings />,
     children: [
-      { label: "Preferences", icon: <MdOutlineRoomPreferences />, path: "" },
-      { label: "Terms", icon: <LuFileText />, path: "" },
-      { label: "Conditions & Policies", icon: <LuShield />, path: "" },
+      {
+        label: "App Preferences",
+        icon: <MdOutlineRoomPreferences />,
+        path: "",
+      },
+      { label: "Terms of Service", icon: <LuFileText />, path: "" },
+      { label: "Privacy Policies", icon: <LuShield />, path: "" },
     ],
   },
 ];
 
 export const businessItems: SideMenuItem[] = [
   {
-    label: "Customers",
-    icon: <LuUsers />,
-    children: [
-      { label: "Customer List", icon: <LuUsers />, path: "/customers" },
-      { label: "Reviews", icon: <LuStar />, path: "" },
-    ],
-  },
-  {
-    label: "Products",
+    label: "Catalog & Inventory",
     icon: <LuShoppingBag />,
     children: [
-      {
-        label: "Add Product",
-        icon: <LuPlus />,
-        path: "/products/new",
-      },
-      {
-        label: "Inventory",
-        icon: <LuPackage />,
-        path: "/products",
-      },
-      {
-        label: "Categories",
-        icon: <LuList />,
-        path: "/product-categories",
-      },
-      {
-        label: "Sizes",
-        icon: <LuRuler />,
-        path: "/product-sizes",
-      },
+      { label: "Add Product", icon: <LuPlus />, path: "/products/new" },
+      { label: "Store Inventory", icon: <LuPackage />, path: "/products" },
+      { label: "Vendor Inventory", icon: <LuStore />, path: "" },
+      { label: "Categories", icon: <LuList />, path: "/product-categories" },
+      { label: "Sizes", icon: <LuRuler />, path: "/product-sizes" },
     ],
   },
   {
-    label: "Vendors",
-    icon: <LuStore />,
+    label: "Directory & CRM",
+    icon: <LuUsers />,
     children: [
-      { label: "Vendor List", icon: <LuUsers />, path: "/vendors" },
-      { label: "Vendor Inventory", icon: <LuPackage />, path: "" },
-      { label: "Vendor Sales", icon: <LuFileText />, path: "" },
+      { label: "Customers", icon: <LuUsers />, path: "/customers" },
+      { label: "Customer Reviews", icon: <LuStar />, path: "" },
+      { label: "Vendors", icon: <LuStore />, path: "/vendors" },
+      { label: "Partners", icon: <LuHandshake />, path: "/partners" },
+      { label: "Staff Members", icon: <LuUser />, path: "/staff" },
     ],
   },
   {
-    label: "Partners",
-    icon: <LuHandshake />,
-    children: [
-      { label: "Partners List", icon: <LuUsers />, path: "/partners" },
-      { label: "Partners Sales", icon: <LuFileText />, path: "" },
-    ],
-  },
-
-  {
-    label: "Finance",
+    label: "Finance & Sales",
     icon: <LuLandmark />,
     children: [
-      { label: "Sales Record", icon: <LuFileText />, path: "/sales-record" },
-      { label: "Staff Salary", icon: <LuWallet />, path: "" },
-      { label: "Expenses", icon: <LuTrendingDown />, path: "/expenses" },
       { label: "Revenue", icon: <LuTrendingUp />, path: "/revenue" },
-      { label: "Tax Calculation", icon: <LuCalculator />, path: "" },
+      { label: "Sales Record", icon: <LuFileText />, path: "/sales-record" },
+      { label: "Vendor Sales", icon: <LuStore />, path: "" },
+      { label: "Partner Sales", icon: <LuHandshake />, path: "" },
+      { label: "Expenses", icon: <LuTrendingDown />, path: "/expenses" },
+      { label: "Staff Payroll", icon: <LuWallet />, path: "" },
+      { label: "Tax Calculations", icon: <LuCalculator />, path: "" },
       {
         label: "Subaccounts",
         icon: <AiOutlineAccountBook />,
@@ -147,48 +118,37 @@ export const businessItems: SideMenuItem[] = [
     ],
   },
   {
-    label: "Dispute Resolution",
+    label: "Support & Disputes",
     icon: <LuScale />,
     children: [
-      { label: "Customers Chats", icon: <LuMessageSquare />, path: "" },
-      { label: "Products exchange", icon: <LuRefreshCw />, path: "" },
-      { label: "Customers Refund", icon: <LuUndo />, path: "" },
+      { label: "Customer Chats", icon: <LuMessageSquare />, path: "" },
+      { label: "Product Exchanges", icon: <LuRefreshCw />, path: "" },
+      { label: "Refund Requests", icon: <LuUndo />, path: "" },
       { label: "Sales Reconciliation", icon: <LuCheck />, path: "" },
     ],
   },
   {
-    label: "Marketing & Promos",
-    icon: <LuTicketPercent />,
+    label: "Marketing & Engagement",
+    icon: <LuMegaphone />,
     children: [
-      { label: "Promotions", icon: <LuMegaphone />, path: "" },
-      { label: "Pop up", icon: <LuLayoutGrid />, path: "" },
+      { label: "Promotional Campaigns", icon: <LuTicketPercent />, path: "" },
+      { label: "Loyalty Points", icon: <LuHeart />, path: "/loyalty-points" },
+      { label: "Discount Coupons", icon: <LuTag />, path: "/coupons" },
+      { label: "Gift Vouchers", icon: <LuTicket />, path: "" },
       { label: "Promo Banners", icon: <LuImage />, path: "" },
       { label: "Hero Banner", icon: <LuImage />, path: "" },
+      { label: "Pop-up Modals", icon: <LuLayoutGrid />, path: "" },
     ],
   },
   {
-    label: "Loyalty & Rewards",
-    icon: <LuGift />,
-    children: [
-      { label: "Loyalty Points", icon: <LuHeart />, path: "/loyalty-points" },
-      { label: "Vouchers", icon: <LuTicket />, path: "" },
-      { label: "Coupons", icon: <LuTag />, path: "/coupons" },
-    ],
-  },
-  {
-    label: "Staff",
-    icon: <LuUserPlus />,
-    children: [{ label: "Staff List", icon: <LuUser />, path: "/staff" }],
-  },
-  {
-    label: "Settings",
+    label: "Configuration",
     icon: <LuSettings />,
     children: [
-      { label: "Logistics", icon: <LuTruck />, path: "" },
-      { label: "VAT", icon: <LuPercent />, path: "" },
+      { label: "Logistics & Shipping", icon: <LuTruck />, path: "" },
+      { label: "VAT Settings", icon: <LuPercent />, path: "" },
+      { label: "UI Configuration", icon: <LuPalette />, path: "" },
       { label: "Terms", icon: <LuFileText />, path: "" },
       { label: "Conditions & Policies", icon: <LuShield />, path: "" },
-      { label: "UI config", icon: <LuPalette />, path: "" },
     ],
   },
 ];
@@ -199,38 +159,38 @@ export const storeItems: SideMenuItem[] = [
     icon: <LuScanLine />,
     children: [
       {
-        label: "Checkout",
+        label: "Terminal (POS)",
+        icon: <MdOutlinePointOfSale />,
+        path: "/point-of-sale",
+      },
+      {
+        label: "Active Carts",
         icon: <MdOutlineShoppingCartCheckout />,
         path: "/carts",
       },
-      { label: "POS", icon: <MdOutlinePointOfSale />, path: "/point-of-sale" },
     ],
   },
   {
-    label: "Finance",
+    label: "Operations & Finance",
     icon: <LuLandmark />,
     children: [
       { label: "Sales Record", icon: <LuFileText />, path: "/sales-record" },
-      { label: "Staff Salary", icon: <LuWallet />, path: "" },
-      { label: "Expenses", icon: <LuTrendingDown />, path: "" },
       { label: "Revenue", icon: <LuTrendingUp />, path: "" },
-      { label: "Tax Calculation", icon: <LuCalculator />, path: "" },
+      { label: "Expenses", icon: <LuTrendingDown />, path: "" },
+      { label: "Staff Payroll", icon: <LuWallet />, path: "" },
+      { label: "Tax Breakdown", icon: <LuCalculator />, path: "" },
     ],
   },
   {
-    label: "Staff",
-    icon: <LuUserPlus />,
-    children: [{ label: "Staff List", icon: <LuUser />, path: "/staff" }],
-  },
-  {
-    label: "Settings",
+    label: "Store Administration",
     icon: <LuSettings />,
     children: [
-      { label: "Logistics", icon: <LuTruck />, path: "" },
-      { label: "VAT", icon: <LuPercent />, path: "" },
+      { label: "Staff Members", icon: <LuUserPlus />, path: "/staff" },
+      { label: "Logistics & Shipping", icon: <LuTruck />, path: "" },
+      { label: "VAT Settings", icon: <LuPercent />, path: "" },
+      { label: "UI Configuration", icon: <LuPalette />, path: "" },
       { label: "Terms", icon: <LuFileText />, path: "" },
       { label: "Conditions & Policies", icon: <LuShield />, path: "" },
-      { label: "UI config", icon: <LuPalette />, path: "" },
     ],
   },
 ];
