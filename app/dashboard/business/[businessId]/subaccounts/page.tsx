@@ -35,7 +35,7 @@ export default async function page({ params }: Props) {
           <Spacer />
           <DialogBox
             trigger={
-              <Button>
+              <Button variant={"outline"} size={"xs"}>
                 <LuPlus />
                 Add Subaccount
               </Button>

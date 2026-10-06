@@ -33,6 +33,12 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
+          <Button variant={"outline"} size={"xs"} asChild>
+            <NextLink href={`${computePath(businessId)}/expenses/new`}>
+              <LuPlus />
+              Create Expense
+            </NextLink>
+          </Button>
         </HStack>
 
         {expenses && expenses.data.length > 0 ? (
