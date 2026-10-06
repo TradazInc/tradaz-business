@@ -12,10 +12,11 @@ import {
   ButtonGroup,
   For,
   IconButton,
+  Menu,
+  Portal,
   Spinner,
   Table,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -83,17 +84,24 @@ const PosConfigTable = ({ initialPosConfigs, businessId }: Props) => {
                 <Table.Row key={posConfig.id} w={"full"}>
                   <Table.Cell>{posConfig.gateway}</Table.Cell>
                   <Table.Cell>
-                    <VStack gapX={2}>
-                      {posConfig.terminalConfigs?.map((terminal) => (
-                        <Box
-                          key={terminal.id}
-                          bg={"bg.inverted"}
-                          color={"fg.inverted"}
-                        >
-                          {terminal.serialNumber}
-                        </Box>
-                      ))}
-                    </VStack>
+                    <Menu.Root>
+                      <Menu.Trigger asChild>
+                        <Button variant={"outline"} size={"sm"}>
+                          Terminals
+                        </Button>
+                      </Menu.Trigger>
+                      <Portal>
+                        <Menu.Positioner>
+                          <Menu.Content>
+                            {posConfig.terminalConfigs?.map((terminal) => (
+                              <Menu.Item key={terminal.id} value={terminal.id}>
+                                {terminal.name ?? terminal.serialNumber}
+                              </Menu.Item>
+                            ))}
+                          </Menu.Content>
+                        </Menu.Positioner>
+                      </Portal>
+                    </Menu.Root>
                   </Table.Cell>
                   <Table.Cell>{posConfig.merchantId}</Table.Cell>
                   <Table.Cell>{posConfig.privateKey}</Table.Cell>
