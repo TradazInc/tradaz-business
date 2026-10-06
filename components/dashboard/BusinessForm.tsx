@@ -14,8 +14,10 @@ import {
   Box,
   Button,
   ButtonGroup,
+  CloseButton,
   createListCollection,
   Field,
+  FileUpload,
   Input,
   InputGroup,
   Select,
@@ -29,7 +31,7 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useId, useMemo } from "react";
 import { Controller, FieldPath, useForm, UseFormReturn } from "react-hook-form";
-import { LuCheck } from "react-icons/lu";
+import { LuCheck, LuFileUp } from "react-icons/lu";
 import { MdOutlineBusiness } from "react-icons/md";
 import { TiContacts } from "react-icons/ti";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -110,7 +112,7 @@ export const BusinessForm = ({ signup }: Props) => {
       </Steps.List>
 
       {stepsData.map((step, index) => (
-        <Steps.Content key={index} index={index} w={"full"}>
+        <Steps.Content key={index} index={index} w={"full"} rowGap={3}>
           {step.render(form)}
         </Steps.Content>
       ))}
@@ -192,10 +194,45 @@ const stepsData: StepData[] = [
             <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
           </Field.Root>
 
+          <Field.Root>
+            <FileUpload.Root
+              disabled
+              gap={1.5}
+              maxFiles={1}
+              accept={["image/png"]}
+            >
+              <FileUpload.HiddenInput />
+              <FileUpload.Label>Upload logo</FileUpload.Label>
+              <InputGroup
+                startElement={<LuFileUp />}
+                endElement={
+                  <FileUpload.ClearTrigger asChild>
+                    <CloseButton
+                      me="-1"
+                      size="xs"
+                      variant="plain"
+                      focusVisibleRing="inside"
+                      focusRingWidth="2px"
+                      pointerEvents="auto"
+                    />
+                  </FileUpload.ClearTrigger>
+                }
+              >
+                <Input asChild>
+                  <FileUpload.Trigger>
+                    <FileUpload.FileText lineClamp={1} />
+                  </FileUpload.Trigger>
+                </Input>
+              </InputGroup>
+            </FileUpload.Root>
+            <Field.HelperText>
+              Business logo. Enabled after subscription
+            </Field.HelperText>
+          </Field.Root>
+
           <Field.Root
             required
             invalid={!!(errors.categoryId || categories.error)}
-            mt={3}
           >
             <Field.Label>
               Brand category <Field.RequiredIndicator />
@@ -298,6 +335,7 @@ const stepsData: StepData[] = [
             <InputGroup startAddon="www." endAddon=".com">
               <Input placeholder="yoursite" {...register("slug")} />
             </InputGroup>
+            <Field.HelperText>Subdomain of business website</Field.HelperText>
             <Field.ErrorText>
               <Field.ErrorIcon />
               {errors.slug?.message}
@@ -312,6 +350,7 @@ const stepsData: StepData[] = [
               placeholder="e.g., 123 Main St, Lekki, Lagos"
               {...register("address")}
             />
+            <Field.HelperText>Address of business HQ</Field.HelperText>
             <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
           </Field.Root>
 
@@ -325,6 +364,7 @@ const stepsData: StepData[] = [
                 autoUnmask: true,
               })}
             />
+            <Field.HelperText>Contact number of business</Field.HelperText>
             <Field.ErrorText>{errors.phone?.message}</Field.ErrorText>
           </Field.Root>
         </>
