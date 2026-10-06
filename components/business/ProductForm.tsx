@@ -34,7 +34,7 @@ import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
-import FileUpload from "../shared/FileUpload";
+import { FileUpload } from "../shared/FileUpload";
 import FormInputGrid from "../shared/FormInputGrid";
 import TotalQuantityStat from "./TotalQuantityStat";
 import VariationField from "./VariationField";

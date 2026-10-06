@@ -1,13 +1,17 @@
 "use client";
 
-import { businessItems, dashboardItems, storeItems } from "@/data/sideBarList";
+import {
+  businessItems,
+  dashboardItems,
+  storeItems,
+} from "@/data/sideMenuItems";
 import { computePath } from "@/utilities/computePath";
 import { Accordion, Box, Icon } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
-export const SideBarList = () => {
+export const SideMenuList = () => {
   // Tracks url changes
   const { businessId, storeId } = useParams<{
     businessId?: string;

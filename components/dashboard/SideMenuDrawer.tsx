@@ -1,8 +1,8 @@
 import { CloseButton, Drawer, IconButton, Portal } from "@chakra-ui/react";
 import { LuMenu } from "react-icons/lu";
-import { SideBarList } from "./SideBarList";
+import { SideMenuList } from "./SideMenuList";
 
-export const SideBarDrawer = () => {
+export const SideMenuDrawer = () => {
   return (
     <Drawer.Root placement={"start"} size={"xs"}>
       <Drawer.Trigger asChild>
@@ -15,7 +15,7 @@ export const SideBarDrawer = () => {
         <Drawer.Positioner>
           <Drawer.Content>
             <Drawer.Body py={20} px={0}>
-              <SideBarList />
+              <SideMenuList />
             </Drawer.Body>
             <Drawer.CloseTrigger asChild>
               <CloseButton size="sm" />

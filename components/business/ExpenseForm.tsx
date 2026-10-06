@@ -24,7 +24,7 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
-import FileUpload from "../shared/FileUpload";
+import { FileUpload } from "../shared/FileUpload";
 import FormInputGrid from "../shared/FormInputGrid";
 
 const ExpenseForm = () => {

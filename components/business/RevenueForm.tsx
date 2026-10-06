@@ -5,6 +5,7 @@ import { MAX_FILE_SIZE } from "@/data/constants";
 import { useAddRevenue } from "@/hooks/revenue";
 import { useStores } from "@/hooks/store";
 import { CreateRevenueInputSchema, emptyRevenue } from "@/schema/revenue";
+import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
@@ -23,9 +24,8 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
-import FileUpload from "../shared/FileUpload";
+import { FileUpload } from "../shared/FileUpload";
 import FormInputGrid from "../shared/FormInputGrid";
-import { computePath } from "@/utilities/computePath";
 
 const RevenueForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();

@@ -5,7 +5,7 @@ import TradazLogo from "../shared/TradazLogo";
 import { ProfileMenu } from "./ProfileMenu";
 import { BusinessSelector } from "./BusinessSelector";
 import Notification from "./Notification";
-import { SideBarDrawer } from "./SideBarDrawer";
+import { SideMenuDrawer } from "./SideMenuDrawer";
 
 export const NavBar = () => {
   return (
@@ -18,7 +18,7 @@ export const NavBar = () => {
       borderColor={"bg.emphasized"}
     >
       <HStack gap="2">
-        <SideBarDrawer />
+        <SideMenuDrawer />
         <Link href={"/dashboard"}>
           <TradazLogo h={3} />
         </Link>
