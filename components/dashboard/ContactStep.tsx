@@ -41,7 +41,7 @@ const ContactStep = ({
           placeholder="e.g., 123 Main St, Lekki, Lagos"
           {...register("address")}
         />
-        <Field.HelperText>Address of business HQ</Field.HelperText>
+        <Field.HelperText>Address of business main branch</Field.HelperText>
         <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
       </Field.Root>
 
