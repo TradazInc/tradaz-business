@@ -19,6 +19,18 @@ export const BaseCartOutputSchema = z.object({
   memberId: z.cuid2(),
 });
 
+export const BaseCreateCartInputSchema = z
+  .object({
+    couponCode: z.string().trim(),
+    depositAmount: z.number().nonnegative(),
+    points: z.number().int().nonnegative(),
+    paymentConfigId: OptionalIdSchema,
+    terminalConfigId: OptionalIdSchema,
+    shippingMethodId: OptionalIdSchema,
+  })
+  .partial();
+export type BaseCreateCartInputData = z.infer<typeof BaseCreateCartInputSchema>;
+
 // Get All
 export const GetAllCartsQuerySchema = z.object({
   memberId: z.cuid2().optional(),
@@ -85,17 +97,8 @@ export type GetCartOutputData = z.infer<typeof GetCartOutputSchema>;
 export const GetCartParamSchema = BaseCartParamSchema;
 
 // Create
-export const CreateCartInputSchema = z
-  .object({
-    couponCode: z.string().trim(),
-    depositAmount: z.number().nonnegative(),
-    points: z.number().int().nonnegative(),
-    paymentConfigId: OptionalIdSchema,
-    terminalConfigId: OptionalIdSchema,
-    shippingMethodId: OptionalIdSchema,
-  })
-  .partial()
-  .superRefine((data, ctx) => {
+export const CreateCartInputSchema = BaseCreateCartInputSchema.superRefine(
+  (data, ctx) => {
     if (data.paymentConfigId || data.terminalConfigId) return;
     for (const path of ["paymentConfigId", "terminalConfigId"]) {
       ctx.addIssue({
@@ -104,12 +107,44 @@ export const CreateCartInputSchema = z
         path: [path],
       });
     }
-  });
+  },
+);
 export type CreateCartInputData = z.infer<typeof CreateCartInputSchema>;
 
 export const CreateCartOutputSchema = BaseCartOutputSchema;
 export type CreateCartOutputData = z.infer<typeof CreateCartOutputSchema>;
 
+// Update
+export const UpdateCartParamSchema = BaseCartParamSchema;
+
+export const UpdateCartInputSchema = CreateCartInputSchema;
+export type UpdateCartInputData = z.infer<typeof UpdateCartInputSchema>;
+
+export const UpdateCartOutputSchema = BaseCartOutputSchema;
+
+// Delete
+export const DeleteCartParamSchema = z.object({ id: z.cuid2() });
+export const DeleteCartOutputSchema = z.object({ id: z.cuid2() });
+
+export const emptyCart: CreateCartInputData = {
+  couponCode: "",
+  depositAmount: 0,
+  paymentConfigId: "",
+  points: 0,
+  shippingMethodId: "",
+  terminalConfigId: "",
+};
+
+export const formCart = (cart: GetCartOutputData): UpdateCartInputData => ({
+  paymentConfigId: cart.paymentConfigId ?? "",
+  terminalConfigId: cart.terminalConfigId ?? undefined,
+  couponCode: cart.couponCode ?? "",
+  points: cart.points ?? 0,
+  depositAmount: cart.depositAmount ?? 0,
+});
+
+/* Cart Item */
+// Create
 export const CreateCartItemInputSchema = z.object({
   variationId: z.cuid2(),
   quantity: z.number().positive({ error: "Increase cart item quantity" }),
@@ -144,37 +179,9 @@ export const IncrementCartItemOuputSchema = z.object({
 export const DecrementCartItemInputSchema = IncrementCartItemInputSchema;
 export const DecrementCartItemOuputSchema = IncrementCartItemOuputSchema;
 
-// Update
-export const UpdateCartParamSchema = BaseCartParamSchema;
-
-export const UpdateCartInputSchema = CreateCartInputSchema;
-export type UpdateCartInputData = z.infer<typeof UpdateCartInputSchema>;
-
-export const UpdateCartOutputSchema = BaseCartOutputSchema;
-
 // Delete
 export const DeleteCartItemParamSchema = BaseCartParamSchema;
 export const DeleteCartItemOutputSchema = z.object({
   id: z.cuid2(),
   cartId: z.cuid2(),
-});
-
-export const DeleteCartParamSchema = z.object({ id: z.cuid2() });
-export const DeleteCartOutputSchema = z.object({ id: z.cuid2() });
-
-export const emptyCart: CreateCartInputData = {
-  couponCode: "",
-  depositAmount: 0,
-  paymentConfigId: "",
-  points: 0,
-  shippingMethodId: "",
-  terminalConfigId: "",
-};
-
-export const formCart = (cart: GetCartOutputData): UpdateCartInputData => ({
-  paymentConfigId: cart.paymentConfigId ?? "",
-  terminalConfigId: cart.terminalConfigId ?? undefined,
-  couponCode: cart.couponCode ?? "",
-  points: cart.points ?? 0,
-  depositAmount: cart.depositAmount ?? 0,
 });

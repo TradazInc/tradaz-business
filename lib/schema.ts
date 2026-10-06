@@ -10,7 +10,7 @@ import {
   GetAllBusinessCategoryQuerySchema,
 } from "@/schema/businessCategory";
 import {
-  CreateCartInputSchema,
+  BaseCreateCartInputSchema,
   CreateCartItemInputSchema,
   CreateCartItemOutputSchema,
   CreateCartOutputSchema,
@@ -463,7 +463,7 @@ export const schema = createSchema(
       output: GetCartOutputSchema,
     },
     "@post/api/cart": {
-      input: CreateCartInputSchema,
+      input: BaseCreateCartInputSchema,
       output: CreateCartOutputSchema,
     },
     "@put/api/cart/:id": {

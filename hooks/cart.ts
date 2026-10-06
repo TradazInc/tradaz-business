@@ -1,7 +1,7 @@
 import { CART_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
 import {
-  CreateCartInputData,
+  BaseCreateCartInputData,
   CreateCartItemInputData,
   GetAllCartsOutputData,
   GetAllCartsQuerySchema,
@@ -45,7 +45,7 @@ export const useCart = (
 export const useAddCart = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
-    (key, { arg }: { arg: CreateCartInputData }) =>
+    (key, { arg }: { arg: BaseCreateCartInputData }) =>
       apiClient("@post/api/cart", { body: arg, ...apiConfig }),
   );
 };
