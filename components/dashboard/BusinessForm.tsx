@@ -91,7 +91,7 @@ export const BusinessForm = ({ signup }: Props) => {
   }, [signup]);
 
   return (
-    <Steps.RootProvider value={steps} onSubmit={onSubmit}>
+    <Steps.RootProvider value={steps} onSubmit={onSubmit} size={"sm"} gap={2}>
       <Steps.List>
         {stepsData.map((step, index) => (
           <Steps.Item key={index} index={index}>
@@ -110,7 +110,7 @@ export const BusinessForm = ({ signup }: Props) => {
       </Steps.List>
 
       {stepsData.map((step, index) => (
-        <Steps.Content key={index} index={index} maxW="xl">
+        <Steps.Content key={index} index={index} w={"full"}>
           {step.render(form)}
         </Steps.Content>
       ))}
