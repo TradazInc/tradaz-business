@@ -62,7 +62,9 @@ export const StoreForm = () => {
             Name <Field.RequiredIndicator />
           </Field.Label>
           <Input placeholder="e.g., Tradaz Lekki Lagos" {...register("name")} />
-          <Field.HelperText>Name of business's store</Field.HelperText>
+          <Field.HelperText>
+            Name of the store under selected business
+          </Field.HelperText>
           <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
         </Field.Root>
 
