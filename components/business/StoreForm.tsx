@@ -42,55 +42,51 @@ export const StoreForm = () => {
   });
 
   return (
-    <form onSubmit={onSubmit} style={{ width: "100%" }}>
-      <Fieldset.Root
-        size="lg"
-        w="full"
-        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-        mx="auto"
-        px={{ base: 4, md: 0 }}
+    <Fieldset.Root
+      w={"full"}
+      size={"lg"}
+      mx={"auto"}
+      px={{ base: 4, md: 0 }}
+      maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+      onSubmit={onSubmit}
+    >
+      <Stack>
+        <Fieldset.Legend>Store details</Fieldset.Legend>
+        <Fieldset.HelperText>
+          Please provide your store details below.
+        </Fieldset.HelperText>
+      </Stack>
+
+      <Fieldset.Content>
+        <Field.Root required invalid={!!errors.name}>
+          <Field.Label>
+            Name <Field.RequiredIndicator />
+          </Field.Label>
+          <Input placeholder="e.g., Tradaz Lekki Lagos" {...register("name")} />
+          <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+        </Field.Root>
+
+        <Field.Root required invalid={!!errors.address}>
+          <Field.Label>
+            Address <Field.RequiredIndicator />
+          </Field.Label>
+          <Input
+            placeholder="e.g., 123 Main St, Lekki, Lagos"
+            {...register("address")}
+          />
+          <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
+        </Field.Root>
+      </Fieldset.Content>
+
+      <Button
+        type={"submit"}
+        variant={"outline"}
+        alignSelf={"flex-start"}
+        disabled={!isValid || isSubmitting || isMutating}
+        loading={isSubmitting || isMutating}
       >
-        <Stack>
-          <Fieldset.Legend>Store details</Fieldset.Legend>
-          <Fieldset.HelperText>
-            Please provide your store details below.
-          </Fieldset.HelperText>
-        </Stack>
-
-        <Fieldset.Content>
-          <Field.Root required invalid={!!errors.name}>
-            <Field.Label>
-              Name <Field.RequiredIndicator />
-            </Field.Label>
-            <Input
-              placeholder="e.g., Tradaz Lekki Lagos"
-              {...register("name")}
-            />
-            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root required invalid={!!errors.address}>
-            <Field.Label>
-              Address <Field.RequiredIndicator />
-            </Field.Label>
-            <Input
-              placeholder="e.g., 123 Main St, Lekki, Lagos"
-              {...register("address")}
-            />
-            <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
-          </Field.Root>
-        </Fieldset.Content>
-
-        <Button
-          type={"submit"}
-          variant={"outline"}
-          alignSelf={"flex-start"}
-          disabled={!isValid || isSubmitting || isMutating}
-          loading={isSubmitting || isMutating}
-        >
-          Submit
-        </Button>
-      </Fieldset.Root>
-    </form>
+        Submit
+      </Button>
+    </Fieldset.Root>
   );
 };

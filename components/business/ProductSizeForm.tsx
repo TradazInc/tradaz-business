@@ -63,90 +63,89 @@ const ProductSizeForm = () => {
   });
 
   return (
-    <form onSubmit={onSubmit} style={{ width: "100%" }}>
-      <Fieldset.Root
-        size="lg"
-        w="full"
-        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-        mx="auto"
-        px={{ base: 4, md: 0 }}
-      >
-        <Stack>
-          <Fieldset.Legend>Size type details</Fieldset.Legend>
-          <Fieldset.HelperText>
-            Please provide the size type details below.
-          </Fieldset.HelperText>
-        </Stack>
+    <Fieldset.Root
+      w={"full"}
+      size={"lg"}
+      mx={"auto"}
+      px={{ base: 4, md: 0 }}
+      maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+      onSubmit={onSubmit}
+    >
+      <Stack>
+        <Fieldset.Legend>Size type details</Fieldset.Legend>
+        <Fieldset.HelperText>
+          Please provide the size type details below.
+        </Fieldset.HelperText>
+      </Stack>
 
-        <Fieldset.Content>
-          <Field.Root required invalid={!!errors.name}>
-            <Field.Label>
-              Name <Field.RequiredIndicator />
-            </Field.Label>
-            <Input placeholder="e.g., Footwears" {...register("name")} />
-            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-          </Field.Root>
-        </Fieldset.Content>
+      <Fieldset.Content>
+        <Field.Root required invalid={!!errors.name}>
+          <Field.Label>
+            Name <Field.RequiredIndicator />
+          </Field.Label>
+          <Input placeholder="e.g., Footwears" {...register("name")} />
+          <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+        </Field.Root>
+      </Fieldset.Content>
 
-        <Fieldset.Root invalid={!!errors.sizes?.root?.message}>
-          <Fieldset.Legend>Sizes</Fieldset.Legend>
-          {fields.map((field, index) => (
-            <Fieldset.Content
-              p={4}
-              borderWidth={"thin"}
-              key={field.id}
-              alignItems={"end"}
-              borderRadius={"md"}
-              flexDirection={"row"}
-            >
-              <Field.Root required invalid={!!errors?.sizes?.[index]?.value}>
-                <Field.Label>
-                  Size <Field.RequiredIndicator />
-                </Field.Label>
-                <Input
-                  placeholder="e.g., XL"
-                  {...register(`sizes.${index}.value`)}
-                />
-                <Field.ErrorText>
-                  {errors?.sizes?.[index]?.value?.message}
-                </Field.ErrorText>
-              </Field.Root>
-
-              <IconButton
-                size="sm"
-                type="button"
-                variant="subtle"
-                onClick={() => remove(index)}
-              >
-                <LuTrash2 />
-              </IconButton>
-            </Fieldset.Content>
-          ))}
-
-          <Button
-            size="sm"
-            type="button"
-            variant="outline"
-            alignSelf="flex-start"
-            onClick={() => append(emptySize)}
+      <Fieldset.Root invalid={!!errors.sizes?.root?.message}>
+        <Fieldset.Legend>Sizes</Fieldset.Legend>
+        {fields.map((field, index) => (
+          <Fieldset.Content
+            p={4}
+            borderWidth={"thin"}
+            key={field.id}
+            alignItems={"end"}
+            borderRadius={"md"}
+            flexDirection={"row"}
           >
-            <LuPlus /> Add size
-          </Button>
+            <Field.Root required invalid={!!errors?.sizes?.[index]?.value}>
+              <Field.Label>
+                Size <Field.RequiredIndicator />
+              </Field.Label>
+              <Input
+                placeholder="e.g., XL"
+                {...register(`sizes.${index}.value`)}
+              />
+              <Field.ErrorText>
+                {errors?.sizes?.[index]?.value?.message}
+              </Field.ErrorText>
+            </Field.Root>
 
-          <Fieldset.ErrorText>{errors.sizes?.root?.message}</Fieldset.ErrorText>
-        </Fieldset.Root>
+            <IconButton
+              size="sm"
+              type="button"
+              variant="subtle"
+              onClick={() => remove(index)}
+            >
+              <LuTrash2 />
+            </IconButton>
+          </Fieldset.Content>
+        ))}
 
         <Button
-          type={"submit"}
-          variant={"outline"}
-          alignSelf={"flex-start"}
-          disabled={!isValid || isSubmitting || isMutating}
-          loading={isSubmitting || isMutating}
+          size="sm"
+          type="button"
+          variant="outline"
+          alignSelf="flex-start"
+          onClick={() => append(emptySize)}
         >
-          Submit
+          <LuPlus /> Add size
         </Button>
+
+        <Fieldset.ErrorText>{errors.sizes?.root?.message}</Fieldset.ErrorText>
       </Fieldset.Root>
-    </form>
+
+      <Button
+        type={"submit"}
+        variant={"outline"}
+        alignSelf={"flex-start"}
+        disabled={!isValid || isSubmitting || isMutating}
+        loading={isSubmitting || isMutating}
+      >
+        Submit
+      </Button>
+    </Fieldset.Root>
   );
 };
 

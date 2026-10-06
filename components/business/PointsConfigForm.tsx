@@ -59,131 +59,122 @@ const PointsConfigForm = () => {
   });
 
   return (
-    <form onSubmit={onSubmit} style={{ width: "100%" }}>
-      <Fieldset.Root
-        size="lg"
-        w="full"
-        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-        mx="auto"
-        px={{ base: 4, md: 0 }}
+    <Fieldset.Root
+      w={"full"}
+      size={"lg"}
+      mx={"auto"}
+      px={{ base: 4, md: 0 }}
+      maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+      onSubmit={onSubmit}
+    >
+      <Stack>
+        <Fieldset.Legend>Loyalty Points Configuration</Fieldset.Legend>
+        <Fieldset.HelperText>
+          Please provide the loyalty points configurations below.
+        </Fieldset.HelperText>
+      </Stack>
+
+      <Fieldset.Content>
+        <Field.Root required invalid={!!errors.name}>
+          <Field.Label>
+            Name <Field.RequiredIndicator />
+          </Field.Label>
+          <Input placeholder="e.g., Gold" {...register("name")} />
+          <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+        </Field.Root>
+
+        <Field.Root required invalid={!!errors.minOrderValue}>
+          <Field.Label>
+            Mininum order value
+            <Field.RequiredIndicator />
+          </Field.Label>
+          <Controller
+            control={control}
+            name={"minOrderValue"}
+            render={({ field }) => (
+              <NumberInput.Root
+                w={"full"}
+                name={field.name}
+                disabled={field.disabled}
+                defaultValue={"0"}
+                value={Number.isNaN(field.value) ? "" : field.value.toString()}
+                onValueChange={({ valueAsNumber }) =>
+                  field.onChange(valueAsNumber)
+                }
+              >
+                <NumberInput.Control />
+                <NumberInput.Input onBlur={field.onBlur} />
+              </NumberInput.Root>
+            )}
+          />
+          <Field.ErrorText>{errors.minOrderValue?.message}</Field.ErrorText>
+        </Field.Root>
+
+        <Field.Root required invalid={!!errors.maxOrderValue}>
+          <Field.Label>
+            Maximum order value
+            <Field.RequiredIndicator />
+          </Field.Label>
+          <Controller
+            control={control}
+            name={"maxOrderValue"}
+            render={({ field }) => (
+              <NumberInput.Root
+                w={"full"}
+                name={field.name}
+                disabled={field.disabled}
+                defaultValue={"0"}
+                value={Number.isNaN(field.value) ? "" : field.value.toString()}
+                onValueChange={({ valueAsNumber }) =>
+                  field.onChange(valueAsNumber)
+                }
+              >
+                <NumberInput.Control />
+                <NumberInput.Input onBlur={field.onBlur} />
+              </NumberInput.Root>
+            )}
+          />
+          <Field.ErrorText>{errors.maxOrderValue?.message}</Field.ErrorText>
+        </Field.Root>
+
+        <Field.Root required invalid={!!errors.rewardPercentage}>
+          <Field.Label>
+            Reward percentage %
+            <Field.RequiredIndicator />
+          </Field.Label>
+          <Controller
+            control={control}
+            name={"rewardPercentage"}
+            render={({ field }) => (
+              <NumberInput.Root
+                w={"full"}
+                name={field.name}
+                disabled={field.disabled}
+                defaultValue={"0"}
+                value={Number.isNaN(field.value) ? "" : field.value.toString()}
+                onValueChange={({ valueAsNumber }) =>
+                  field.onChange(valueAsNumber)
+                }
+              >
+                <NumberInput.Control />
+                <NumberInput.Input onBlur={field.onBlur} />
+              </NumberInput.Root>
+            )}
+          />
+          <Field.ErrorText>{errors.rewardPercentage?.message}</Field.ErrorText>
+        </Field.Root>
+      </Fieldset.Content>
+
+      <Button
+        type={"submit"}
+        variant={"outline"}
+        alignSelf={"flex-start"}
+        disabled={!isValid || isSubmitting || isMutating}
+        loading={isSubmitting || isMutating}
       >
-        <Stack>
-          <Fieldset.Legend>Loyalty Points Configuration</Fieldset.Legend>
-          <Fieldset.HelperText>
-            Please provide the loyalty points configurations below.
-          </Fieldset.HelperText>
-        </Stack>
-
-        <Fieldset.Content>
-          <Field.Root required invalid={!!errors.name}>
-            <Field.Label>
-              Name <Field.RequiredIndicator />
-            </Field.Label>
-            <Input placeholder="e.g., Gold" {...register("name")} />
-            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root required invalid={!!errors.minOrderValue}>
-            <Field.Label>
-              Mininum order value
-              <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"minOrderValue"}
-              render={({ field }) => (
-                <NumberInput.Root
-                  w={"full"}
-                  name={field.name}
-                  disabled={field.disabled}
-                  defaultValue={"0"}
-                  value={
-                    Number.isNaN(field.value) ? "" : field.value.toString()
-                  }
-                  onValueChange={({ valueAsNumber }) =>
-                    field.onChange(valueAsNumber)
-                  }
-                >
-                  <NumberInput.Control />
-                  <NumberInput.Input onBlur={field.onBlur} />
-                </NumberInput.Root>
-              )}
-            />
-            <Field.ErrorText>{errors.minOrderValue?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root required invalid={!!errors.maxOrderValue}>
-            <Field.Label>
-              Maximum order value
-              <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"maxOrderValue"}
-              render={({ field }) => (
-                <NumberInput.Root
-                  w={"full"}
-                  name={field.name}
-                  disabled={field.disabled}
-                  defaultValue={"0"}
-                  value={
-                    Number.isNaN(field.value) ? "" : field.value.toString()
-                  }
-                  onValueChange={({ valueAsNumber }) =>
-                    field.onChange(valueAsNumber)
-                  }
-                >
-                  <NumberInput.Control />
-                  <NumberInput.Input onBlur={field.onBlur} />
-                </NumberInput.Root>
-              )}
-            />
-            <Field.ErrorText>{errors.maxOrderValue?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root required invalid={!!errors.rewardPercentage}>
-            <Field.Label>
-              Reward percentage %
-              <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"rewardPercentage"}
-              render={({ field }) => (
-                <NumberInput.Root
-                  w={"full"}
-                  name={field.name}
-                  disabled={field.disabled}
-                  defaultValue={"0"}
-                  value={
-                    Number.isNaN(field.value) ? "" : field.value.toString()
-                  }
-                  onValueChange={({ valueAsNumber }) =>
-                    field.onChange(valueAsNumber)
-                  }
-                >
-                  <NumberInput.Control />
-                  <NumberInput.Input onBlur={field.onBlur} />
-                </NumberInput.Root>
-              )}
-            />
-            <Field.ErrorText>
-              {errors.rewardPercentage?.message}
-            </Field.ErrorText>
-          </Field.Root>
-        </Fieldset.Content>
-
-        <Button
-          type={"submit"}
-          variant={"outline"}
-          alignSelf={"flex-start"}
-          disabled={!isValid || isSubmitting || isMutating}
-          loading={isSubmitting || isMutating}
-        >
-          Submit
-        </Button>
-      </Fieldset.Root>
-    </form>
+        Submit
+      </Button>
+    </Fieldset.Root>
   );
 };
 

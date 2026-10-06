@@ -56,51 +56,49 @@ const SignUpForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <Fieldset.Root size="lg" maxW="lg">
-        <Fieldset.Content>
-          <Field.Root required invalid={!!errors.name}>
-            <Field.Label>Full Name</Field.Label>
-            <Input {...register("name")} />
-            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-          </Field.Root>
+    <Fieldset.Root onSubmit={onSubmit} size="lg" maxW="lg">
+      <Fieldset.Content>
+        <Field.Root required invalid={!!errors.name}>
+          <Field.Label>Full Name</Field.Label>
+          <Input {...register("name")} />
+          <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+        </Field.Root>
 
-          <Field.Root required invalid={!!errors.email}>
-            <Field.Label>Email Address</Field.Label>
-            <Input type="email" {...register("email")} />
-            <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
-          </Field.Root>
+        <Field.Root required invalid={!!errors.email}>
+          <Field.Label>Email Address</Field.Label>
+          <Input type="email" {...register("email")} />
+          <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
+        </Field.Root>
 
-          <Field.Root required invalid={!!errors.password}>
-            <Field.Label>Password</Field.Label>
-            <PasswordInput {...register("password")} />
-            <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
-          </Field.Root>
-        </Fieldset.Content>
+        <Field.Root required invalid={!!errors.password}>
+          <Field.Label>Password</Field.Label>
+          <PasswordInput {...register("password")} />
+          <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
+        </Field.Root>
+      </Fieldset.Content>
 
-        <Button
-          type={"submit"}
-          loading={emailMutating}
-          disabled={!isValid || isSubmitting || emailMutating || isMutating}
-          w={"full"}
-        >
-          Sign Up
-        </Button>
+      <Button
+        type={"submit"}
+        loading={emailMutating}
+        disabled={!isValid || isSubmitting || emailMutating || isMutating}
+        w={"full"}
+      >
+        Sign Up
+      </Button>
 
-        <SeparatorText>Or</SeparatorText>
+      <SeparatorText>Or</SeparatorText>
 
-        <Button
-          type={"button"}
-          onClick={handleGoogleSignup}
-          loading={isMutating}
-          disabled={isMutating || emailMutating}
-          w={"full"}
-        >
-          <GoogleIcon />
-          <Text>Sign Up With Google</Text>
-        </Button>
-      </Fieldset.Root>
-    </form>
+      <Button
+        type={"button"}
+        onClick={handleGoogleSignup}
+        loading={isMutating}
+        disabled={isMutating || emailMutating}
+        w={"full"}
+      >
+        <GoogleIcon />
+        <Text>Sign Up With Google</Text>
+      </Button>
+    </Fieldset.Root>
   );
 };
 

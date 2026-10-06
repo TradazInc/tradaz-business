@@ -91,59 +91,57 @@ export const BusinessForm = ({ signup }: Props) => {
   }, [signup]);
 
   return (
-    <form onSubmit={onSubmit} style={{ width: "100%" }}>
-      <Steps.RootProvider value={steps}>
-        <Steps.List>
-          {stepsData.map((step, index) => (
-            <Steps.Item key={index} index={index}>
-              <Steps.Trigger>
-                <Steps.Indicator>
-                  <Steps.Status incomplete={step.icon} complete={<LuCheck />} />
-                </Steps.Indicator>
-                <Box>
-                  <Steps.Title>{step.title}</Steps.Title>
-                  <Steps.Description>{step.description}</Steps.Description>
-                </Box>
-              </Steps.Trigger>
-              <Steps.Separator />
-            </Steps.Item>
-          ))}
-        </Steps.List>
-
+    <Steps.RootProvider value={steps} onSubmit={onSubmit}>
+      <Steps.List>
         {stepsData.map((step, index) => (
-          <Steps.Content key={index} index={index} maxW="xl">
-            {step.render(form)}
-          </Steps.Content>
+          <Steps.Item key={index} index={index}>
+            <Steps.Trigger>
+              <Steps.Indicator>
+                <Steps.Status incomplete={step.icon} complete={<LuCheck />} />
+              </Steps.Indicator>
+              <Box>
+                <Steps.Title>{step.title}</Steps.Title>
+                <Steps.Description>{step.description}</Steps.Description>
+              </Box>
+            </Steps.Trigger>
+            <Steps.Separator />
+          </Steps.Item>
         ))}
+      </Steps.List>
 
-        <Steps.CompletedContent>
-          <Text>Registration complete!</Text>
-        </Steps.CompletedContent>
+      {stepsData.map((step, index) => (
+        <Steps.Content key={index} index={index} maxW="xl">
+          {step.render(form)}
+        </Steps.Content>
+      ))}
 
-        <ButtonGroup size={"sm"} variant={"outline"}>
-          <Steps.PrevTrigger asChild>
-            <Button>Back</Button>
-          </Steps.PrevTrigger>
-          <Steps.NextTrigger asChild>
-            {isLastStep ? (
-              <Button
-                type={"submit"}
-                disabled={
-                  !form.formState.isValid ||
-                  form.formState.isSubmitting ||
-                  isMutating
-                }
-                loading={form.formState.isSubmitting || isMutating}
-              >
-                Submit
-              </Button>
-            ) : (
-              <Button>Next</Button>
-            )}
-          </Steps.NextTrigger>
-        </ButtonGroup>
-      </Steps.RootProvider>
-    </form>
+      <Steps.CompletedContent>
+        <Text>Registration complete!</Text>
+      </Steps.CompletedContent>
+
+      <ButtonGroup size={"sm"} variant={"outline"}>
+        <Steps.PrevTrigger asChild>
+          <Button>Back</Button>
+        </Steps.PrevTrigger>
+        <Steps.NextTrigger asChild>
+          {isLastStep ? (
+            <Button
+              type={"submit"}
+              disabled={
+                !form.formState.isValid ||
+                form.formState.isSubmitting ||
+                isMutating
+              }
+              loading={form.formState.isSubmitting || isMutating}
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button>Next</Button>
+          )}
+        </Steps.NextTrigger>
+      </ButtonGroup>
+    </Steps.RootProvider>
   );
 };
 

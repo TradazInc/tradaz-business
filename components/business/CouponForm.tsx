@@ -77,13 +77,14 @@ const CouponForm = () => {
   });
 
   return (
-    <form onSubmit={onSubmit} style={{ width: "100%" }}>
+    <form style={{ width: "100%" }}>
       <Fieldset.Root
-        size="lg"
-        w="full"
-        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-        mx="auto"
+        w={"full"}
+        size={"lg"}
+        mx={"auto"}
         px={{ base: 4, md: 0 }}
+        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+        onSubmit={onSubmit}
       >
         <Stack>
           <Fieldset.Legend>Coupons</Fieldset.Legend>

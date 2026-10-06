@@ -197,314 +197,315 @@ const CartForm = ({ initialCart, businessId }: Props) => {
   };
 
   return (
-    <form onSubmit={onSubmit} style={{ width: "100%" }}>
-      <Fieldset.Root p={"3"} w={"full"} size={"md"} borderRadius={"md"}>
-        <Stack>
-          <Fieldset.Legend>Checkout Summary</Fieldset.Legend>
-          <Fieldset.HelperText>
-            Provide relevant checkout information.
-          </Fieldset.HelperText>
-        </Stack>
-        <Fieldset.Content>
-          {cart && (
-            <TotalPriceStat
-              p={3}
-              w={"full"}
-              rounded={"md"}
-              borderWidth={"1px"}
-              infoText={"Total Price does not include VAT"}
-              totalPrice={
-                cart.cartItems.reduce(
-                  (total, item) => total + item.totalPrice,
-                  0,
-                ) - (cart.depositAmount ?? 0)
-              }
-            />
-          )}
-
-          <Field.Root invalid={!!errors.couponCode}>
-            <Field.Label>Coupon code</Field.Label>
-            <Input placeholder="e.g., SAVE10" {...register("couponCode")} />
-            <Field.ErrorText>{errors.couponCode?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root invalid={!!errors.points}>
-            <Field.Label>Points</Field.Label>
-            <Controller
-              control={control}
-              name={"points"}
-              render={({ field }) => (
-                <NumberInput.Root
-                  min={0}
-                  step={1}
-                  w={"full"}
-                  name={field.name}
-                  disabled={field.disabled}
-                  value={field.value?.toString()}
-                  onValueChange={({ valueAsNumber }) =>
-                    field.onChange(
-                      Number.isNaN(valueAsNumber) ? 0 : valueAsNumber,
-                    )
-                  }
-                >
-                  <NumberInput.Control />
-                  <NumberInput.Input onBlur={field.onBlur} />
-                </NumberInput.Root>
-              )}
-            />
-            <Field.HelperText>Loyalty points to redeem</Field.HelperText>
-            <Field.ErrorText>{errors.points?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root invalid={!!errors.depositAmount}>
-            <Field.Label>Deposit amount</Field.Label>
-            <Controller
-              control={control}
-              name={"depositAmount"}
-              render={({ field }) => (
-                <NumberInput.Root
-                  min={0}
-                  step={0.01}
-                  w={"full"}
-                  name={field.name}
-                  disabled={field.disabled}
-                  formatOptions={{
-                    style: "currency",
-                    currency: "NGN",
-                    currencyDisplay: "symbol",
-                    currencySign: "accounting",
-                    maximumFractionDigits: 2,
-                  }}
-                  value={field.value?.toString()}
-                  onValueChange={({ valueAsNumber }) =>
-                    field.onChange(
-                      Number.isNaN(valueAsNumber) ? 0 : valueAsNumber,
-                    )
-                  }
-                >
-                  <NumberInput.Control />
-                  <NumberInput.Input onBlur={field.onBlur} />
-                </NumberInput.Root>
-              )}
-            />
-            <Field.HelperText>
-              Leave at zero to charge the full amount
-            </Field.HelperText>
-            <Field.ErrorText>{errors.depositAmount?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root invalid={!!errors.terminalConfigId || !!posConfigs.error}>
-            <Field.Label>POS terminal</Field.Label>
-            <Controller
-              control={control}
-              name={"terminalConfigId"}
-              rules={{ deps: ["paymentConfigId"] }}
-              render={({ field }) => (
-                <Select.Root
-                  name={field.name}
-                  disabled={field.disabled}
-                  value={field.value ? [field.value] : []}
-                  onValueChange={({ value }) => {
-                    field.onChange(value[0]);
-                    field.onBlur();
-                  }}
-                  onInteractOutside={() => field.onBlur()}
-                  collection={terminalCollection}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder="Select terminal" />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      <Select.ClearTrigger />
-                      {posConfigs.isLoading ? (
-                        <Spinner size="sm" />
-                      ) : (
-                        <Select.Indicator />
-                      )}
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content id={posConfigScrollId}>
-                        <InfiniteScroll
-                          dataLength={parsedPosConfigs.flatData.length}
-                          hasMore={parsedPosConfigs.hasMore}
-                          next={() => posConfigs.setSize(posConfigs.size + 1)}
-                          loader={<Spinner size={"xs"} />}
-                          scrollableTarget={posConfigScrollId}
-                        >
-                          {terminalCollection.size > 0 ? (
-                            terminalCollection.items.map((terminal) => (
-                              <Select.Item item={terminal} key={terminal.id}>
-                                {terminal.name ??
-                                  [terminal.gateway, terminal.serialNumber]
-                                    .filter(Boolean)
-                                    .join(" · ")}
-                                <Select.ItemIndicator />
-                              </Select.Item>
-                            ))
-                          ) : (
-                            <Box>No terminals found</Box>
-                          )}
-                        </InfiniteScroll>
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
-                </Select.Root>
-              )}
-            />
-            {posConfigs.error && (
-              <Button
-                w={"full"}
-                size={"sm"}
-                type={"button"}
-                variant={"subtle"}
-                onClick={() => posConfigs.mutate()}
-              >
-                Click to retry
-              </Button>
-            )}
-            <Field.HelperText>
-              Terminal to push the payment to for POS checkout. Leave empty for
-              web checkout
-            </Field.HelperText>
-            <Field.ErrorText>
-              {posConfigs.error
-                ? "Terminals unavailable. Retry to continue."
-                : errors.terminalConfigId?.message}
-            </Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root invalid={!!errors.paymentConfigId || !!subaccounts.error}>
-            <Field.Label>Subaccount</Field.Label>
-            <Controller
-              control={control}
-              name={"paymentConfigId"}
-              rules={{ deps: ["terminalConfigId"] }}
-              render={({ field }) => (
-                <Select.Root
-                  name={field.name}
-                  disabled={field.disabled}
-                  value={field.value ? [field.value] : []}
-                  onValueChange={({ value }) => {
-                    field.onChange(value[0] ?? "");
-                    field.onBlur();
-                  }}
-                  onInteractOutside={() => field.onBlur()}
-                  collection={subaccountCollection}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder="Select subaccount" />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      {subaccounts.isLoading ? (
-                        <Spinner size="sm" />
-                      ) : (
-                        <Select.Indicator />
-                      )}
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content id={subaccountScrollId}>
-                        <InfiniteScroll
-                          dataLength={parsedSubaccounts.flatData.length}
-                          hasMore={parsedSubaccounts.hasMore}
-                          next={() => subaccounts.setSize(subaccounts.size + 1)}
-                          loader={<Spinner size={"xs"} />}
-                          scrollableTarget={subaccountScrollId}
-                        >
-                          {subaccountCollection.size > 0 ? (
-                            subaccountCollection.items.map((subaccount) => (
-                              <Select.Item
-                                item={subaccount}
-                                key={subaccount.id}
-                              >
-                                {subaccount.gateway}
-                                <Select.ItemIndicator />
-                              </Select.Item>
-                            ))
-                          ) : (
-                            <Box>No subaccounts found</Box>
-                          )}
-                        </InfiniteScroll>
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
-                </Select.Root>
-              )}
-            />
-            {subaccounts.error && (
-              <Button
-                w={"full"}
-                size={"sm"}
-                type={"button"}
-                variant={"subtle"}
-                onClick={() => subaccounts.mutate()}
-              >
-                Click to retry
-              </Button>
-            )}
-            <Field.HelperText>
-              Payment gateway subaccount that receives this payment
-            </Field.HelperText>
-            <Field.ErrorText>
-              {subaccounts.error
-                ? "Subaccounts unavailable. Retry to continue."
-                : errors.paymentConfigId?.message}
-            </Field.ErrorText>
-          </Field.Root>
-        </Fieldset.Content>
-
-        {error && (
-          <Button
+    <Fieldset.Root
+      p={3}
+      w={"full"}
+      size={"md"}
+      borderRadius={"md"}
+      onSubmit={onSubmit}
+    >
+      <Stack>
+        <Fieldset.Legend>Checkout Summary</Fieldset.Legend>
+        <Fieldset.HelperText>
+          Provide relevant checkout information.
+        </Fieldset.HelperText>
+      </Stack>
+      <Fieldset.Content>
+        {cart && (
+          <TotalPriceStat
+            p={3}
             w={"full"}
-            variant={"subtle"}
-            loading={isLoading}
-            disabled={isLoading}
-            onClick={() => mutate()}
-          >
-            Error loading cart retry
-          </Button>
+            rounded={"md"}
+            borderWidth={"1px"}
+            infoText={"Total Price does not include VAT"}
+            totalPrice={
+              cart.cartItems.reduce(
+                (total, item) => total + item.totalPrice,
+                0,
+              ) - (cart.depositAmount ?? 0)
+            }
+          />
         )}
 
+        <Field.Root invalid={!!errors.couponCode}>
+          <Field.Label>Coupon code</Field.Label>
+          <Input placeholder="e.g., SAVE10" {...register("couponCode")} />
+          <Field.ErrorText>{errors.couponCode?.message}</Field.ErrorText>
+        </Field.Root>
+
+        <Field.Root invalid={!!errors.points}>
+          <Field.Label>Points</Field.Label>
+          <Controller
+            control={control}
+            name={"points"}
+            render={({ field }) => (
+              <NumberInput.Root
+                min={0}
+                step={1}
+                w={"full"}
+                name={field.name}
+                disabled={field.disabled}
+                value={field.value?.toString()}
+                onValueChange={({ valueAsNumber }) =>
+                  field.onChange(
+                    Number.isNaN(valueAsNumber) ? 0 : valueAsNumber,
+                  )
+                }
+              >
+                <NumberInput.Control />
+                <NumberInput.Input onBlur={field.onBlur} />
+              </NumberInput.Root>
+            )}
+          />
+          <Field.HelperText>Loyalty points to redeem</Field.HelperText>
+          <Field.ErrorText>{errors.points?.message}</Field.ErrorText>
+        </Field.Root>
+
+        <Field.Root invalid={!!errors.depositAmount}>
+          <Field.Label>Deposit amount</Field.Label>
+          <Controller
+            control={control}
+            name={"depositAmount"}
+            render={({ field }) => (
+              <NumberInput.Root
+                min={0}
+                step={0.01}
+                w={"full"}
+                name={field.name}
+                disabled={field.disabled}
+                formatOptions={{
+                  style: "currency",
+                  currency: "NGN",
+                  currencyDisplay: "symbol",
+                  currencySign: "accounting",
+                  maximumFractionDigits: 2,
+                }}
+                value={field.value?.toString()}
+                onValueChange={({ valueAsNumber }) =>
+                  field.onChange(
+                    Number.isNaN(valueAsNumber) ? 0 : valueAsNumber,
+                  )
+                }
+              >
+                <NumberInput.Control />
+                <NumberInput.Input onBlur={field.onBlur} />
+              </NumberInput.Root>
+            )}
+          />
+          <Field.HelperText>
+            Leave at zero to charge the full amount
+          </Field.HelperText>
+          <Field.ErrorText>{errors.depositAmount?.message}</Field.ErrorText>
+        </Field.Root>
+
+        <Field.Root invalid={!!errors.terminalConfigId || !!posConfigs.error}>
+          <Field.Label>POS terminal</Field.Label>
+          <Controller
+            control={control}
+            name={"terminalConfigId"}
+            rules={{ deps: ["paymentConfigId"] }}
+            render={({ field }) => (
+              <Select.Root
+                name={field.name}
+                disabled={field.disabled}
+                value={field.value ? [field.value] : []}
+                onValueChange={({ value }) => {
+                  field.onChange(value[0]);
+                  field.onBlur();
+                }}
+                onInteractOutside={() => field.onBlur()}
+                collection={terminalCollection}
+              >
+                <Select.HiddenSelect />
+                <Select.Control>
+                  <Select.Trigger>
+                    <Select.ValueText placeholder="Select terminal" />
+                  </Select.Trigger>
+                  <Select.IndicatorGroup>
+                    <Select.ClearTrigger />
+                    {posConfigs.isLoading ? (
+                      <Spinner size="sm" />
+                    ) : (
+                      <Select.Indicator />
+                    )}
+                  </Select.IndicatorGroup>
+                </Select.Control>
+                <Portal>
+                  <Select.Positioner>
+                    <Select.Content id={posConfigScrollId}>
+                      <InfiniteScroll
+                        dataLength={parsedPosConfigs.flatData.length}
+                        hasMore={parsedPosConfigs.hasMore}
+                        next={() => posConfigs.setSize(posConfigs.size + 1)}
+                        loader={<Spinner size={"xs"} />}
+                        scrollableTarget={posConfigScrollId}
+                      >
+                        {terminalCollection.size > 0 ? (
+                          terminalCollection.items.map((terminal) => (
+                            <Select.Item item={terminal} key={terminal.id}>
+                              {terminal.name ??
+                                [terminal.gateway, terminal.serialNumber]
+                                  .filter(Boolean)
+                                  .join(" · ")}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))
+                        ) : (
+                          <Box>No terminals found</Box>
+                        )}
+                      </InfiniteScroll>
+                    </Select.Content>
+                  </Select.Positioner>
+                </Portal>
+              </Select.Root>
+            )}
+          />
+          {posConfigs.error && (
+            <Button
+              w={"full"}
+              size={"sm"}
+              type={"button"}
+              variant={"subtle"}
+              onClick={() => posConfigs.mutate()}
+            >
+              Click to retry
+            </Button>
+          )}
+          <Field.HelperText>
+            Terminal to push the payment to for POS checkout. Leave empty for
+            web checkout
+          </Field.HelperText>
+          <Field.ErrorText>
+            {posConfigs.error
+              ? "Terminals unavailable. Retry to continue."
+              : errors.terminalConfigId?.message}
+          </Field.ErrorText>
+        </Field.Root>
+
+        <Field.Root invalid={!!errors.paymentConfigId || !!subaccounts.error}>
+          <Field.Label>Subaccount</Field.Label>
+          <Controller
+            control={control}
+            name={"paymentConfigId"}
+            rules={{ deps: ["terminalConfigId"] }}
+            render={({ field }) => (
+              <Select.Root
+                name={field.name}
+                disabled={field.disabled}
+                value={field.value ? [field.value] : []}
+                onValueChange={({ value }) => {
+                  field.onChange(value[0] ?? "");
+                  field.onBlur();
+                }}
+                onInteractOutside={() => field.onBlur()}
+                collection={subaccountCollection}
+              >
+                <Select.HiddenSelect />
+                <Select.Control>
+                  <Select.Trigger>
+                    <Select.ValueText placeholder="Select subaccount" />
+                  </Select.Trigger>
+                  <Select.IndicatorGroup>
+                    {subaccounts.isLoading ? (
+                      <Spinner size="sm" />
+                    ) : (
+                      <Select.Indicator />
+                    )}
+                  </Select.IndicatorGroup>
+                </Select.Control>
+                <Portal>
+                  <Select.Positioner>
+                    <Select.Content id={subaccountScrollId}>
+                      <InfiniteScroll
+                        dataLength={parsedSubaccounts.flatData.length}
+                        hasMore={parsedSubaccounts.hasMore}
+                        next={() => subaccounts.setSize(subaccounts.size + 1)}
+                        loader={<Spinner size={"xs"} />}
+                        scrollableTarget={subaccountScrollId}
+                      >
+                        {subaccountCollection.size > 0 ? (
+                          subaccountCollection.items.map((subaccount) => (
+                            <Select.Item item={subaccount} key={subaccount.id}>
+                              {subaccount.gateway}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))
+                        ) : (
+                          <Box>No subaccounts found</Box>
+                        )}
+                      </InfiniteScroll>
+                    </Select.Content>
+                  </Select.Positioner>
+                </Portal>
+              </Select.Root>
+            )}
+          />
+          {subaccounts.error && (
+            <Button
+              w={"full"}
+              size={"sm"}
+              type={"button"}
+              variant={"subtle"}
+              onClick={() => subaccounts.mutate()}
+            >
+              Click to retry
+            </Button>
+          )}
+          <Field.HelperText>
+            Payment gateway subaccount that receives this payment
+          </Field.HelperText>
+          <Field.ErrorText>
+            {subaccounts.error
+              ? "Subaccounts unavailable. Retry to continue."
+              : errors.paymentConfigId?.message}
+          </Field.ErrorText>
+        </Field.Root>
+      </Fieldset.Content>
+
+      {error && (
         <Button
           w={"full"}
-          type={"submit"}
-          variant={"outline"}
+          variant={"subtle"}
+          loading={isLoading}
+          disabled={isLoading}
+          onClick={() => mutate()}
+        >
+          Error loading cart retry
+        </Button>
+      )}
+
+      <Button
+        w={"full"}
+        type={"submit"}
+        variant={"outline"}
+        disabled={
+          !isValid ||
+          isSubmitting ||
+          addCart.isMutating ||
+          updateCart.isMutating
+        }
+        loading={isSubmitting || addCart.isMutating || updateCart.isMutating}
+      >
+        {cart ? "Update" : "Create"}
+      </Button>
+
+      {cart && (
+        <Button
+          w={"full"}
           disabled={
             !isValid ||
             isSubmitting ||
             addCart.isMutating ||
-            updateCart.isMutating
+            updateCart.isMutating ||
+            (isDirty && !isSubmitSuccessful)
           }
-          loading={isSubmitting || addCart.isMutating || updateCart.isMutating}
+          loading={webCheckout.isMutating || posCheckout.isMutating}
+          onClick={() => handleCheckout(cart.id)}
         >
-          {cart ? "Update" : "Create"}
+          Checkout
         </Button>
-
-        {cart && (
-          <Button
-            w={"full"}
-            disabled={
-              !isValid ||
-              isSubmitting ||
-              addCart.isMutating ||
-              updateCart.isMutating ||
-              (isDirty && !isSubmitSuccessful)
-            }
-            loading={webCheckout.isMutating || posCheckout.isMutating}
-            onClick={() => handleCheckout(cart.id)}
-          >
-            Checkout
-          </Button>
-        )}
-      </Fieldset.Root>
-    </form>
+      )}
+    </Fieldset.Root>
   );
 };
 

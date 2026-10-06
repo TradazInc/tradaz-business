@@ -57,47 +57,45 @@ const SignInForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <Fieldset.Root size="lg" maxW="lg">
-        <Fieldset.Content>
-          <Field.Root required invalid={!!errors.email}>
-            <Field.Label>Email Address</Field.Label>
-            <Input type="email" {...register("email")} />
-            <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
-          </Field.Root>
+    <Fieldset.Root onSubmit={onSubmit} size="lg" maxW="lg">
+      <Fieldset.Content>
+        <Field.Root required invalid={!!errors.email}>
+          <Field.Label>Email Address</Field.Label>
+          <Input type="email" {...register("email")} />
+          <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
+        </Field.Root>
 
-          <Field.Root required invalid={!!errors.password}>
-            <Field.Label>Password</Field.Label>
-            <PasswordInput {...register("password")} />
-            <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
-          </Field.Root>
-        </Fieldset.Content>
-        <Box textAlign="right" w="full">
-          <Link href={"#"}>Forgot Password?</Link>
-        </Box>
-        <Button
-          type={"submit"}
-          loading={emailMutating}
-          disabled={!isValid || isSubmitting || emailMutating || isMutating}
-          w={"full"}
-        >
-          Sign In
-        </Button>
+        <Field.Root required invalid={!!errors.password}>
+          <Field.Label>Password</Field.Label>
+          <PasswordInput {...register("password")} />
+          <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
+        </Field.Root>
+      </Fieldset.Content>
+      <Box textAlign="right" w="full">
+        <Link href={"#"}>Forgot Password?</Link>
+      </Box>
+      <Button
+        type={"submit"}
+        loading={emailMutating}
+        disabled={!isValid || isSubmitting || emailMutating || isMutating}
+        w={"full"}
+      >
+        Sign In
+      </Button>
 
-        <SeparatorText>Or</SeparatorText>
+      <SeparatorText>Or</SeparatorText>
 
-        <Button
-          type={"button"}
-          onClick={handleGoogleSignIn}
-          loading={isMutating}
-          disabled={isMutating || emailMutating}
-          w={"full"}
-        >
-          <GoogleIcon />
-          <Text>Sign In With Google</Text>
-        </Button>
-      </Fieldset.Root>
-    </form>
+      <Button
+        type={"button"}
+        onClick={handleGoogleSignIn}
+        loading={isMutating}
+        disabled={isMutating || emailMutating}
+        w={"full"}
+      >
+        <GoogleIcon />
+        <Text>Sign In With Google</Text>
+      </Button>
+    </Fieldset.Root>
   );
 };
 
