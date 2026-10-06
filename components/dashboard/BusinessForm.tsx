@@ -110,7 +110,7 @@ export const BusinessForm = ({ signup }: Props) => {
       </Steps.List>
 
       {stepsData.map((step, index) => (
-        <Steps.Content key={index} index={index} w={"full"} gapY={3}>
+        <Steps.Content key={index} index={index} w={"full"}>
           {step.render(form)}
         </Steps.Content>
       ))}
@@ -195,6 +195,7 @@ const stepsData: StepData[] = [
           <Field.Root
             required
             invalid={!!(errors.categoryId || categories.error)}
+            mt={3}
           >
             <Field.Label>
               Brand category <Field.RequiredIndicator />
