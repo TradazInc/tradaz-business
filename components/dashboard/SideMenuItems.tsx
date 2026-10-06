@@ -164,7 +164,7 @@ export const storeItems: SideMenuItem[] = [
         path: "/point-of-sale",
       },
       {
-        label: "Active Carts",
+        label: "Cart Checkout",
         icon: <MdOutlineShoppingCartCheckout />,
         path: "/carts",
       },
