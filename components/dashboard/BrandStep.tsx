@@ -64,7 +64,7 @@ const BrandStep = ({
       <Field.Root>
         <FileUpload.Root disabled gap={1.5} maxFiles={1} accept={["image/png"]}>
           <FileUpload.HiddenInput />
-          <FileUpload.Label>Upload logo</FileUpload.Label>
+          <FileUpload.Label>Brand logo</FileUpload.Label>
           <InputGroup
             startElement={<LuFileUp />}
             endElement={
