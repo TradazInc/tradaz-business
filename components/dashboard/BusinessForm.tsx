@@ -110,7 +110,7 @@ export const BusinessForm = ({ signup }: Props) => {
       </Steps.List>
 
       {stepsData.map((step, index) => (
-        <Steps.Content key={index} index={index} w={"full"} my={3}>
+        <Steps.Content key={index} index={index} w={"full"} gapY={3}>
           {step.render(form)}
         </Steps.Content>
       ))}
