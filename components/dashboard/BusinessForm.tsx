@@ -110,7 +110,7 @@ export const BusinessForm = ({ signup }: Props) => {
       </Steps.List>
 
       {stepsData.map((step, index) => (
-        <Steps.Content key={index} index={index} w={"full"} mt={2}>
+        <Steps.Content key={index} index={index} w={"full"} gapY={2}>
           {step.render(form)}
         </Steps.Content>
       ))}
@@ -119,7 +119,7 @@ export const BusinessForm = ({ signup }: Props) => {
         <Text>Registration complete!</Text>
       </Steps.CompletedContent>
 
-      <ButtonGroup size={"sm"} variant={"outline"}>
+      <ButtonGroup size={"sm"} variant={"outline"} mt={2}>
         <Steps.PrevTrigger asChild>
           <Button>Back</Button>
         </Steps.PrevTrigger>
