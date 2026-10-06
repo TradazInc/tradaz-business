@@ -178,14 +178,14 @@ export const storeItems: SideMenuItem[] = [
       { label: "Revenue", icon: <LuTrendingUp />, path: "" },
       { label: "Expenses", icon: <LuTrendingDown />, path: "" },
       { label: "Staff Payroll", icon: <LuWallet />, path: "" },
+      { label: "Staff Members", icon: <LuUserPlus />, path: "/staff" },
       { label: "Tax Breakdown", icon: <LuCalculator />, path: "" },
     ],
   },
   {
-    label: "Store Administration",
+    label: "Configuration",
     icon: <LuSettings />,
     children: [
-      { label: "Staff Members", icon: <LuUserPlus />, path: "/staff" },
       { label: "Logistics & Shipping", icon: <LuTruck />, path: "" },
       { label: "VAT Settings", icon: <LuPercent />, path: "" },
       { label: "UI Configuration", icon: <LuPalette />, path: "" },
