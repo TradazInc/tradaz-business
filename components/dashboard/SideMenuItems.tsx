@@ -82,7 +82,7 @@ export const businessItems: SideMenuItem[] = [
     icon: <LuShoppingBag />,
     children: [
       { label: "Add Product", icon: <LuPlus />, path: "/products/new" },
-      { label: "Store Inventory", icon: <LuPackage />, path: "/products" },
+      { label: "Inventory", icon: <LuPackage />, path: "/products" },
       { label: "Vendor Inventory", icon: <LuStore />, path: "" },
       { label: "Categories", icon: <LuList />, path: "/product-categories" },
       { label: "Sizes", icon: <LuRuler />, path: "/product-sizes" },
