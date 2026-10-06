@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  businessItems,
-  dashboardItems,
-  storeItems,
-} from "@/data/sideMenuItems";
+import { businessItems, dashboardItems, storeItems } from "./SideMenuItems";
 import { computePath } from "@/utilities/computePath";
 import { Accordion, Box, Icon } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -42,7 +38,7 @@ export const SideMenuList = () => {
           <Accordion.ItemTrigger justifyContent={"space-between"}>
             <Box>
               <Icon fontSize={"lg"} mx={3}>
-                <Icon as={item.icon} />
+                {item.icon}
               </Icon>
               {item.label}
             </Box>
@@ -59,7 +55,7 @@ export const SideMenuList = () => {
                 >
                   <NextLink href={`${basePath}${child.path}`}>
                     <Icon fontSize={"lg"} mx={3}>
-                      <Icon as={child.icon} />
+                      {child.icon}
                     </Icon>
                     {child.label}
                   </NextLink>
