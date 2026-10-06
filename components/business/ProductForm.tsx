@@ -136,7 +136,6 @@ const ProductForm = ({ product }: Props) => {
       size={"lg"}
       mx={"auto"}
       maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-      onSubmit={onSubmit}
     >
       <Fieldset.Legend textStyle="2xl">Product details</Fieldset.Legend>
       <Fieldset.HelperText>
@@ -430,7 +429,7 @@ const ProductForm = ({ product }: Props) => {
       <TotalQuantityStat control={control} />
 
       <Button
-        type={"submit"}
+        onClick={onSubmit}
         variant={"outline"}
         alignSelf={"flex-start"}
         loading={isSubmitting || isMutating}

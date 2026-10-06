@@ -83,7 +83,7 @@ export const BusinessForm = ({ signup }: Props) => {
   }, [signup]);
 
   return (
-    <Steps.RootProvider value={steps} onSubmit={onSubmit} size={"sm"}>
+    <Steps.RootProvider value={steps} size={"sm"}>
       <Steps.List mt={4}>
         {stepsData.map((step, index) => (
           <Steps.Item key={index} index={index}>
@@ -115,23 +115,23 @@ export const BusinessForm = ({ signup }: Props) => {
         <Steps.PrevTrigger asChild>
           <Button>Back</Button>
         </Steps.PrevTrigger>
-        <Steps.NextTrigger asChild>
-          {isLastStep ? (
-            <Button
-              type={"submit"}
-              disabled={
-                !form.formState.isValid ||
-                form.formState.isSubmitting ||
-                isMutating
-              }
-              loading={form.formState.isSubmitting || isMutating}
-            >
-              Submit
-            </Button>
-          ) : (
+        {isLastStep ? (
+          <Button
+            onClick={onSubmit}
+            disabled={
+              !form.formState.isValid ||
+              form.formState.isSubmitting ||
+              isMutating
+            }
+            loading={form.formState.isSubmitting || isMutating}
+          >
+            Submit
+          </Button>
+        ) : (
+          <Steps.NextTrigger asChild>
             <Button>Next</Button>
-          )}
-        </Steps.NextTrigger>
+          </Steps.NextTrigger>
+        )}
       </ButtonGroup>
     </Steps.RootProvider>
   );

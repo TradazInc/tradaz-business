@@ -69,7 +69,6 @@ const ProductSizeForm = () => {
       mx={"auto"}
       px={{ base: 4, md: 0 }}
       maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-      onSubmit={onSubmit}
     >
       <Stack>
         <Fieldset.Legend>Size type details</Fieldset.Legend>
@@ -137,7 +136,7 @@ const ProductSizeForm = () => {
       </Fieldset.Root>
 
       <Button
-        type={"submit"}
+        onClick={onSubmit}
         variant={"outline"}
         alignSelf={"flex-start"}
         disabled={!isValid || isSubmitting || isMutating}

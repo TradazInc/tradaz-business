@@ -57,7 +57,7 @@ const SignInForm = () => {
   };
 
   return (
-    <Fieldset.Root onSubmit={onSubmit} size="lg" maxW="lg">
+    <Fieldset.Root size={"lg"} maxW={"lg"}>
       <Fieldset.Content>
         <Field.Root required invalid={!!errors.email}>
           <Field.Label>Email Address</Field.Label>
@@ -75,7 +75,7 @@ const SignInForm = () => {
         <Link href={"#"}>Forgot Password?</Link>
       </Box>
       <Button
-        type={"submit"}
+        onClick={onSubmit}
         loading={emailMutating}
         disabled={!isValid || isSubmitting || emailMutating || isMutating}
         w={"full"}

@@ -48,7 +48,6 @@ export const StoreForm = () => {
       mx={"auto"}
       px={{ base: 4, md: 0 }}
       maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-      onSubmit={onSubmit}
     >
       <Stack>
         <Fieldset.Legend>Store details</Fieldset.Legend>
@@ -79,7 +78,7 @@ export const StoreForm = () => {
       </Fieldset.Content>
 
       <Button
-        type={"submit"}
+        onClick={onSubmit}
         variant={"outline"}
         alignSelf={"flex-start"}
         disabled={!isValid || isSubmitting || isMutating}

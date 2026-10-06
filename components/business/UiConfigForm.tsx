@@ -10,7 +10,6 @@ const UiConfigForm = () => {
       mx={"auto"}
       px={{ base: 4, md: 0 }}
       maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-      onSubmit={onSubmit}
     >
       <Stack>
         <Fieldset.Legend>UI Configuration</Fieldset.Legend>

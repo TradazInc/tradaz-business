@@ -91,7 +91,6 @@ const PosConfigForm = () => {
       mx={"auto"}
       px={{ base: 4, md: 0 }}
       maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-      onSubmit={onSubmit}
     >
       <Stack>
         <Fieldset.Legend>Pos config details</Fieldset.Legend>
@@ -241,7 +240,7 @@ const PosConfigForm = () => {
       </Fieldset.Root>
 
       <Button
-        type={"submit"}
+        onClick={onSubmit}
         variant={"outline"}
         alignSelf={"flex-start"}
         disabled={!isValid || isSubmitting || isMutating}

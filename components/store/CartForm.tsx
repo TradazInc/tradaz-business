@@ -197,13 +197,7 @@ const CartForm = ({ initialCart, businessId }: Props) => {
   };
 
   return (
-    <Fieldset.Root
-      p={3}
-      w={"full"}
-      size={"md"}
-      borderRadius={"md"}
-      onSubmit={onSubmit}
-    >
+    <Fieldset.Root p={3} w={"full"} size={"md"} borderRadius={"md"}>
       <Stack>
         <Fieldset.Legend>Checkout Summary</Fieldset.Legend>
         <Fieldset.HelperText>
@@ -476,7 +470,7 @@ const CartForm = ({ initialCart, businessId }: Props) => {
 
       <Button
         w={"full"}
-        type={"submit"}
+        onClick={onSubmit}
         variant={"outline"}
         disabled={
           !isValid ||

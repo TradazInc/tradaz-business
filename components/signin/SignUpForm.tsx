@@ -56,7 +56,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <Fieldset.Root onSubmit={onSubmit} size="lg" maxW="lg">
+    <Fieldset.Root size={"lg"} maxW={"lg"}>
       <Fieldset.Content>
         <Field.Root required invalid={!!errors.name}>
           <Field.Label>Full Name</Field.Label>
@@ -78,7 +78,7 @@ const SignUpForm = () => {
       </Fieldset.Content>
 
       <Button
-        type={"submit"}
+        onClick={onSubmit}
         loading={emailMutating}
         disabled={!isValid || isSubmitting || emailMutating || isMutating}
         w={"full"}
