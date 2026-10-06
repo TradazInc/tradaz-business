@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
+import { HiCog } from "react-icons/hi";
 import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -87,7 +88,7 @@ const PosConfigTable = ({ initialPosConfigs, businessId }: Props) => {
                     <Menu.Root>
                       <Menu.Trigger asChild>
                         <Button variant={"outline"} size={"sm"}>
-                          Terminals
+                          <HiCog /> Terminals
                         </Button>
                       </Menu.Trigger>
                       <Portal>
@@ -103,7 +104,7 @@ const PosConfigTable = ({ initialPosConfigs, businessId }: Props) => {
                       </Portal>
                     </Menu.Root>
                   </Table.Cell>
-                  <Table.Cell>{posConfig.merchantId}</Table.Cell>
+                  <Table.Cell>{posConfig.merchantId ?? "-"}</Table.Cell>
                   <Table.Cell>{posConfig.privateKey}</Table.Cell>
                   <Table.Cell>
                     {stores?.find((s) => s.id === posConfig.teamId)?.name ??
