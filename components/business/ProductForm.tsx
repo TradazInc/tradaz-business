@@ -142,6 +142,7 @@ const ProductForm = ({ product }: Props) => {
         <Fieldset.HelperText>
           Please provide your product details below.
         </Fieldset.HelperText>
+
         <Fieldset.Content>
           <Controller
             control={control}
