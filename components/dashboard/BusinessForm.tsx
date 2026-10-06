@@ -2,26 +2,16 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { useAddBusiness } from "@/hooks/business";
-import { useBusinessCategories } from "@/hooks/businessCategory";
 import {
   CreateBusinessInputData,
   CreateBusinessInputSchema,
 } from "@/schema/business";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
-import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Box,
   Button,
   ButtonGroup,
-  CloseButton,
-  createListCollection,
-  Field,
-  FileUpload,
-  Input,
-  InputGroup,
-  Select,
-  Spinner,
   Steps,
   Text,
   useDialogContext,
@@ -29,14 +19,14 @@ import {
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useId, useMemo } from "react";
-import { Controller, FieldPath, useForm, UseFormReturn } from "react-hook-form";
-import { LuCheck, LuFileUp } from "react-icons/lu";
+import React, { useEffect } from "react";
+import { FieldPath, useForm, UseFormReturn } from "react-hook-form";
+import { LuCheck } from "react-icons/lu";
 import { MdOutlineBusiness } from "react-icons/md";
 import { TiContacts } from "react-icons/ti";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { useHookFormMask } from "use-mask-input";
 import { z } from "zod";
+import BrandStep from "./BrandStep";
+import ContactStep from "./ContactStep";
 
 interface Props {
   signup?: string;
@@ -112,7 +102,7 @@ export const BusinessForm = ({ signup }: Props) => {
       </Steps.List>
 
       {stepsData.map((step, index) => (
-        <Steps.Content key={index} index={index} w={"full"} rowGap={3}>
+        <Steps.Content key={index} index={index} w={"full"}>
           {step.render(form)}
         </Steps.Content>
       ))}
@@ -164,155 +154,7 @@ const stepsData: StepData[] = [
     title: "Brand information",
     description: "Tell us about your brand.",
     schema: CreateBusinessInputSchema.pick({ name: true, categoryId: true }),
-    render({ register, control, formState: { errors } }) {
-      const categories = useBusinessCategories();
-      const categoryScrollId = useId();
-
-      const { flatData, hasMore } = useMemo(
-        () => parseCursorData(categories.data),
-        [categories.data],
-      );
-
-      const categoryCollection = useMemo(
-        () =>
-          createListCollection({
-            items: flatData,
-            itemToValue: (item) => item?.id,
-            itemToString: (item) => item.name,
-          }),
-        [flatData],
-      );
-
-      return (
-        <>
-          <Field.Root required invalid={!!errors.name}>
-            <Field.Label>
-              Name <Field.RequiredIndicator />
-            </Field.Label>
-            <Input placeholder="e.g., Tradaz" {...register("name")} />
-            <Field.HelperText>Name of business</Field.HelperText>
-            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root>
-            <FileUpload.Root
-              disabled
-              gap={1.5}
-              maxFiles={1}
-              accept={["image/png"]}
-            >
-              <FileUpload.HiddenInput />
-              <FileUpload.Label>Upload logo</FileUpload.Label>
-              <InputGroup
-                startElement={<LuFileUp />}
-                endElement={
-                  <FileUpload.ClearTrigger asChild>
-                    <CloseButton
-                      me="-1"
-                      size="xs"
-                      variant="plain"
-                      focusVisibleRing="inside"
-                      focusRingWidth="2px"
-                      pointerEvents="auto"
-                    />
-                  </FileUpload.ClearTrigger>
-                }
-              >
-                <Input asChild>
-                  <FileUpload.Trigger>
-                    <FileUpload.FileText lineClamp={1} />
-                  </FileUpload.Trigger>
-                </Input>
-              </InputGroup>
-            </FileUpload.Root>
-            <Field.HelperText>
-              Business logo. Enabled after subscription
-            </Field.HelperText>
-          </Field.Root>
-
-          <Field.Root
-            required
-            invalid={!!(errors.categoryId || categories.error)}
-          >
-            <Field.Label>
-              Brand category <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"categoryId"}
-              render={({ field }) => (
-                <Select.Root
-                  name={field.name}
-                  value={field.value ? [field.value] : []}
-                  collection={categoryCollection}
-                  onValueChange={({ value }) => {
-                    field.onChange(value[0] ?? "");
-                    field.onBlur();
-                  }}
-                  onInteractOutside={() => field.onBlur()}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder="Select category" />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      <Select.ClearTrigger />
-                      {categories.isLoading ? (
-                        <Spinner size="sm" />
-                      ) : (
-                        <Select.Indicator />
-                      )}
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Select.Positioner>
-                    <Select.Content id={categoryScrollId}>
-                      <InfiniteScroll
-                        dataLength={flatData.length}
-                        hasMore={hasMore && !categories.error}
-                        next={() => categories.setSize(categories.size + 1)}
-                        loader={<Spinner size={"xs"} />}
-                        scrollableTarget={categoryScrollId}
-                      >
-                        {categoryCollection.size > 0 ? (
-                          categoryCollection.items.map((category) => (
-                            <Select.Item item={category} key={category.id}>
-                              {category.name}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))
-                        ) : (
-                          <Box>No categories found</Box>
-                        )}
-                      </InfiniteScroll>
-                    </Select.Content>
-                  </Select.Positioner>
-                </Select.Root>
-              )}
-            />
-            {categories.error && (
-              <Button
-                w={"full"}
-                size={"sm"}
-                variant={"subtle"}
-                loading={categories.isLoading}
-                onClick={() => categories.mutate()}
-              >
-                Click to retry
-              </Button>
-            )}
-            <Field.HelperText>
-              Primary industry or service type of business
-            </Field.HelperText>
-            <Field.ErrorText>
-              {categories.error
-                ? "Categories unavailable. Retry to continue."
-                : errors.categoryId?.message}
-            </Field.ErrorText>
-          </Field.Root>
-        </>
-      );
-    },
+    render: (form) => <BrandStep form={form} />,
   },
   {
     icon: <TiContacts />,
@@ -323,52 +165,6 @@ const stepsData: StepData[] = [
       address: true,
       phone: true,
     }),
-    render({ register, formState: { errors } }) {
-      const withMask = useHookFormMask(register);
-
-      return (
-        <>
-          <Field.Root required invalid={!!errors.slug}>
-            <Field.Label>
-              Slug <Field.RequiredIndicator />
-            </Field.Label>
-            <InputGroup startAddon="www." endAddon=".com">
-              <Input placeholder="yoursite" {...register("slug")} />
-            </InputGroup>
-            <Field.HelperText>Subdomain of business website</Field.HelperText>
-            <Field.ErrorText>
-              <Field.ErrorIcon />
-              {errors.slug?.message}
-            </Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root required invalid={!!errors.address}>
-            <Field.Label>
-              Address <Field.RequiredIndicator />
-            </Field.Label>
-            <Input
-              placeholder="e.g., 123 Main St, Lekki, Lagos"
-              {...register("address")}
-            />
-            <Field.HelperText>Address of business HQ</Field.HelperText>
-            <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root required invalid={!!errors.phone}>
-            <Field.Label>
-              Phone <Field.RequiredIndicator />
-            </Field.Label>
-            <Input
-              placeholder="0812-345-6789"
-              {...withMask("phone", "9999-999-9999", {
-                autoUnmask: true,
-              })}
-            />
-            <Field.HelperText>Contact number of business</Field.HelperText>
-            <Field.ErrorText>{errors.phone?.message}</Field.ErrorText>
-          </Field.Root>
-        </>
-      );
-    },
+    render: (form) => <ContactStep form={form} />,
   },
 ];
