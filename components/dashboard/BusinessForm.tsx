@@ -91,15 +91,8 @@ export const BusinessForm = ({ signup }: Props) => {
   }, [signup]);
 
   return (
-    <Steps.RootProvider
-      value={steps}
-      w={"full"}
-      mx={"auto"}
-      size={"lg"}
-      px={{ base: 4, md: 0 }}
-      maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-    >
-      <form onSubmit={onSubmit} style={{ width: "100%" }}>
+    <form onSubmit={onSubmit} style={{ width: "100%" }}>
+      <Steps.RootProvider value={steps}>
         <Steps.List>
           {stepsData.map((step, index) => (
             <Steps.Item key={index} index={index}>
@@ -149,8 +142,8 @@ export const BusinessForm = ({ signup }: Props) => {
             )}
           </Steps.NextTrigger>
         </ButtonGroup>
-      </form>
-    </Steps.RootProvider>
+      </Steps.RootProvider>
+    </form>
   );
 };
 
