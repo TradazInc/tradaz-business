@@ -14,7 +14,7 @@ export type GetProductCategoryOutputData = z.infer<
 
 // Get All
 export const GetAllProductCategoryQuerySchema = z.object({
-  name: z.string().optional(),
+  search: z.string().optional(),
   organizationId: z.cuid2().optional(),
   organizationSlug: z.string().optional(),
   cursor: z.cuid2().optional(),
