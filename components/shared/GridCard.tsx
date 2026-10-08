@@ -2,6 +2,7 @@ import {
   Badge,
   Box,
   Card,
+  Square,
   HStack,
   Icon,
   Image,
@@ -21,16 +22,18 @@ interface Props {
 const GridCard = ({ logo, name, address, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"} flexDirection={"row"}>
-      <Icon size={"lg"}>
-        {logo ? (
-          <Image src={logo} borderRadius={"full"} fit={"cover"} />
-        ) : (
-          <MdBusiness />
-        )}
-      </Icon>
+      <Square size={"full"}>
+        <Icon size={"xl"}>
+          {logo ? (
+            <Image src={logo} borderRadius={"full"} fit={"cover"} />
+          ) : (
+            <MdBusiness />
+          )}
+        </Icon>
+      </Square>
 
       <Box>
-        <Card.Body>
+        <Card.Body gapY={0}>
           <Card.Title mb="2">{name}</Card.Title>
           <Card.Description>{address}</Card.Description>
           <HStack mt="4">
