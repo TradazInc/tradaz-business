@@ -26,11 +26,11 @@ const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
       <Card.Body gap={0}>
         <HStack gap={3}>
           {logo ? (
-            <Avatar.Root size={"xl"}>
+            <Avatar.Root>
               <Avatar.Image src={logo} />
             </Avatar.Root>
           ) : (
-            <Icon size={"xl"} rounded={"full"} bg={"bg"}>
+            <Icon rounded={"full"} bg={"bg"}>
               <MdBusiness />
             </Icon>
           )}
