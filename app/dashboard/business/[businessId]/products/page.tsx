@@ -1,13 +1,12 @@
 import ProductGrid from "@/components/business/ProductGrid";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getProducts } from "@/server/product";
 import { computePath } from "@/utilities/computePath";
 import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
-import NextLink from "next/link";
 import { Suspense } from "react";
+import NextLink from "next/link";
 import { LuPlus } from "react-icons/lu";
 
 interface Props {
@@ -16,9 +15,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: products, error } = await getProducts(businessId);
-
-  if (error) return error.message;
+  const products = getProducts(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -33,24 +30,16 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
+          <Button asChild>
+            <NextLink href={`${computePath(businessId)}/products/new`}>
+              <LuPlus />
+              Create Product
+            </NextLink>
+          </Button>
           {/* add dropdown */}
         </HStack>
 
-        {products.data.length > 0 ? (
-          <ProductGrid businessId={businessId} initialProducts={products} />
-        ) : (
-          <EmptyPage
-            title={"No products found"}
-            description={"Create a new product"}
-          >
-            <Button asChild>
-              <NextLink href={`${computePath(businessId)}/products/new`}>
-                <LuPlus />
-                Create Product
-              </NextLink>
-            </Button>
-          </EmptyPage>
-        )}
+        <ProductGrid businessId={businessId} initialProducts={products} />
       </VStack>
     </PageContainer>
   );

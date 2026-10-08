@@ -4,7 +4,7 @@ import { z } from "zod";
 import { FetchResponse } from "../utilities/fetchResponse";
 
 // Get All
-export type Member = typeof authClient.$Infer.Member & {
+export type GetMemberOutputData = typeof authClient.$Infer.Member & {
   user: {
     id: string;
     name: string;
@@ -12,7 +12,7 @@ export type Member = typeof authClient.$Infer.Member & {
     image: string | null | undefined;
   };
 };
-export type GetAllMembersOutputData = FetchResponse<Member>;
+export type GetAllMembersOutputData = FetchResponse<GetMemberOutputData>;
 
 export const GetAllMembersQuerySchema = z.object({
   organizationId: z.cuid2().optional(),

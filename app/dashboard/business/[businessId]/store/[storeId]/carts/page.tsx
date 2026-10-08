@@ -1,4 +1,3 @@
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
@@ -14,9 +13,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId, storeId } = await params;
-  const { data: carts, error } = await getCarts(businessId, storeId);
-
-  if (error) return error?.message;
+  const carts = getCarts(businessId, storeId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -31,15 +28,11 @@ export default async function page({ params }: Props) {
           <NewCartButton businessId={businessId} storeId={storeId} />
         </HStack>
 
-        {carts && carts.data.length > 0 ? (
-          <CartGrid
-            initialCarts={carts}
-            businessId={businessId}
-            storeId={storeId}
-          />
-        ) : (
-          <EmptyPage title="No carts found" description="Create a cart" />
-        )}
+        <CartGrid
+          initialCarts={carts}
+          businessId={businessId}
+          storeId={storeId}
+        />
       </VStack>
     </PageContainer>
   );

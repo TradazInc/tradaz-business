@@ -21,15 +21,16 @@ import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
+import EmptyPage from "@/components/shared/EmptyPage";
 
 interface Props {
-  initialSizeTypes: GetAllSizeTypeOutputData;
+  initialSizeTypes: Promise<GetAllSizeTypeOutputData[]>;
   businessId: string | undefined;
 }
 
 const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = useSizeTypes(businessId, {
-    fallbackData: [initialSizeTypes],
+    fallbackData: initialSizeTypes,
   });
   const { flatData: sizeTypes, hasMore } = useMemo(
     () => parseCursorData(data),
@@ -47,6 +48,15 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && sizeTypes.length === 0) {
+    return (
+      <EmptyPage
+        title="No sizes found"
+        description="Create a product size"
+      />
+    );
+  }
 
   return (
     <Box w={"full"}>

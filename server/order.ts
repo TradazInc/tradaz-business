@@ -1,9 +1,10 @@
 import { PAGE_SIZE } from "@/data/constants";
-import { apiClient } from "@/lib/apiClient";
+import { apiClient, apiConfig } from "@/lib/apiClient";
 
 export async function getOrders(organizationId: string | undefined) {
   return apiClient("@get/api/orders", {
     query: { pageSize: PAGE_SIZE, organizationId },
+    ...apiConfig,
   });
 }
 

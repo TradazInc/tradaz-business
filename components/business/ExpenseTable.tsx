@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyPage from "@/components/shared/EmptyPage";
 import { toaster } from "@/components/ui/toaster";
 import { useExpenses, useRemoveExpense } from "@/hooks/expense";
 import { useStores } from "@/hooks/store";
@@ -23,14 +24,14 @@ import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialExpenses: GetAllExpenseOutputData;
+  initialExpenses: Promise<GetAllExpenseOutputData[]>;
   businessId: string | undefined;
 }
 
 const ExpenseTable = ({ initialExpenses, businessId }: Props) => {
   const { data: stores } = useStores(businessId);
   const { data, error, mutate, setSize, size } = useExpenses(businessId, {
-    fallbackData: [initialExpenses],
+    fallbackData: initialExpenses,
   });
   const { flatData: expenses, hasMore } = useMemo(
     () => parseCursorData(data),
@@ -51,6 +52,11 @@ const ExpenseTable = ({ initialExpenses, businessId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && expenses.length === 0) {
+    return <EmptyPage title="No expesnes found" description="Create expense" />;
+  }
+
   return (
     <Box w={"full"}>
       <InfiniteScroll

@@ -1,10 +1,10 @@
-import { Store } from "@/schema/store";
+import { GetStoreOutputData } from "@/schema/store";
 import { Badge, Card, HStack, Icon, LinkOverlay, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LiaStoreAltSolid } from "react-icons/lia";
 
 interface Props {
-  store: Store;
+  store: GetStoreOutputData;
   badgeItems: (string | undefined)[];
   href: string;
 }

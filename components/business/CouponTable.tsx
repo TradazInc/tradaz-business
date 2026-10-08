@@ -20,15 +20,16 @@ import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
+import EmptyPage from "@/components/shared/EmptyPage";
 
 interface Props {
-  initialCoupons: GetAllCouponOutputData;
+  initialCoupons: Promise<GetAllCouponOutputData[]>;
   businessId: string | undefined;
 }
 
 const CouponTable = ({ initialCoupons, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = useCoupons(businessId, {
-    fallbackData: [initialCoupons],
+    fallbackData: initialCoupons,
   });
   const { flatData: coupons, hasMore } = useMemo(
     () => parseCursorData(data),
@@ -49,6 +50,13 @@ const CouponTable = ({ initialCoupons, businessId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && coupons.length === 0) {
+    return (
+      <EmptyPage title="No coupons found" description="Create a new coupon" />
+    );
+  }
+
   return (
     <Box w={"full"}>
       <InfiniteScroll

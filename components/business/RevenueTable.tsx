@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyPage from "@/components/shared/EmptyPage";
 import { toaster } from "@/components/ui/toaster";
 import { useRemoveRevenue, useRevenues } from "@/hooks/revenue";
 import { useStores } from "@/hooks/store";
@@ -23,14 +24,14 @@ import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialRevenues: GetAllRevenueOutputData;
+  initialRevenues: Promise<GetAllRevenueOutputData[]>;
   businessId: string | undefined;
 }
 
 const RevenueTable = ({ initialRevenues, businessId }: Props) => {
   const { data: stores } = useStores(businessId);
   const { data, error, mutate, setSize, size } = useRevenues(businessId, {
-    fallbackData: [initialRevenues],
+    fallbackData: initialRevenues,
   });
   const { flatData: revenues, hasMore } = useMemo(
     () => parseCursorData(data),
@@ -51,6 +52,11 @@ const RevenueTable = ({ initialRevenues, businessId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && revenues.length === 0) {
+    return <EmptyPage title="No revenue found" description="Create revenue" />;
+  }
+
   return (
     <Box w={"full"}>
       <InfiniteScroll

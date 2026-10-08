@@ -1,4 +1,4 @@
-import { Business } from "@/schema/business";
+import { GetBusinessOutputData } from "@/schema/business";
 import {
   Avatar,
   Badge,
@@ -13,7 +13,7 @@ import NextLink from "next/link";
 import { IoIosBusiness } from "react-icons/io";
 
 interface Props {
-  business: Business;
+  business: GetBusinessOutputData;
   badgeItems: (string | undefined)[];
   href: string;
 }

@@ -1,5 +1,4 @@
 import OrderTable from "@/components/business/OrderTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
@@ -13,9 +12,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: orders, error } = await getOrders(businessId);
-
-  if (error) return error?.message;
+  const orders = getOrders(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -32,14 +29,7 @@ export default async function page({ params }: Props) {
           <Spacer />
         </HStack>
 
-        {orders && orders.data.length > 0 ? (
-          <OrderTable initialOrders={orders} businessId={businessId} />
-        ) : (
-          <EmptyPage
-            title="No orders found"
-            description="Make a sale to get your first order"
-          />
-        )}
+        <OrderTable initialOrders={orders} businessId={businessId} />
       </VStack>
     </PageContainer>
   );

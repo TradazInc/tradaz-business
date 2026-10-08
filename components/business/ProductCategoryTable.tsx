@@ -22,16 +22,17 @@ import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
+import EmptyPage from "@/components/shared/EmptyPage";
 
 interface Props {
-  initialCategories: GetAllProductCategoryOutputData;
+  initialCategories: Promise<GetAllProductCategoryOutputData[]>;
   businessId: string | undefined;
 }
 
 const ProductCategoryTable = ({ initialCategories, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = useProductCategories(
     businessId,
-    { fallbackData: [initialCategories] },
+    { fallbackData: initialCategories },
   );
   const { flatData: productCategories, hasMore } = useMemo(
     () => parseCursorData(data),
@@ -49,6 +50,15 @@ const ProductCategoryTable = ({ initialCategories, businessId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && productCategories.length === 0) {
+    return (
+      <EmptyPage
+        title="No categories found"
+        description="Create a product category"
+      />
+    );
+  }
 
   return (
     <Box w={"full"}>

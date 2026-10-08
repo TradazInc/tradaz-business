@@ -1,9 +1,5 @@
-import {
-  ProductSizeForm,
-  ProductSizeFormViewport,
-} from "@/components/business/ProductSizeForm";
+import { ProductSizeForm, ProductSizeFormViewport } from "@/components/business/ProductSizeForm";
 import ProductSizeTable from "@/components/business/ProductSizeTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getSizeTypes } from "@/server/sizeType";
@@ -15,9 +11,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: sizeTypes, error } = await getSizeTypes();
-
-  if (error) return error.message;
+  const sizeTypes = getSizeTypes().then((d) => [d]);
 
   return (
     <PageContainer>
@@ -29,17 +23,10 @@ export default async function page({ params }: Props) {
           <ProductSizeForm />
         </HStack>
 
-        {sizeTypes.data.length > 0 ? (
-          <ProductSizeTable
-            initialSizeTypes={sizeTypes}
-            businessId={businessId}
-          />
-        ) : (
-          <EmptyPage
-            title="No sizes found"
-            description="Create a product size"
-          />
-        )}
+        <ProductSizeTable
+          initialSizeTypes={sizeTypes}
+          businessId={businessId}
+        />
       </VStack>
       <ProductSizeFormViewport />
     </PageContainer>

@@ -26,15 +26,16 @@ import {
 import { useMemo } from "react";
 import { MdOutlineViewInAr } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
+import EmptyPage from "@/components/shared/EmptyPage";
 
 interface Props {
-  initialOrders: GetAllOrderOutputData;
+  initialOrders: Promise<GetAllOrderOutputData[]>;
   businessId: string | undefined;
 }
 
 const OrderTable = ({ initialOrders, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = useOrders(businessId, {
-    fallbackData: [initialOrders],
+    fallbackData: initialOrders,
   });
   const { flatData: orders, hasMore } = useMemo(
     () => parseCursorData(data),
@@ -67,6 +68,15 @@ const OrderTable = ({ initialOrders, businessId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && orders.length === 0) {
+    return (
+      <EmptyPage
+        title="No orders found"
+        description="Make a sale to get your first order"
+      />
+    );
+  }
 
   return (
     <Box w={"full"}>

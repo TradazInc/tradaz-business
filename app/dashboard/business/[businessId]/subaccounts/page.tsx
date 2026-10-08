@@ -1,9 +1,5 @@
-import {
-  SubaccountForm,
-  SubaccountFormViewport,
-} from "@/components/business/SubaccountForm";
+import { SubaccountForm, SubaccountFormViewport } from "@/components/business/SubaccountForm";
 import SubaccountTable from "@/components/business/SubaccountTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
@@ -17,9 +13,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: Subaccounts, error } = await getSubaccounts(businessId);
-
-  if (error) return error?.message;
+  const Subaccounts = getSubaccounts(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -37,17 +31,10 @@ export default async function page({ params }: Props) {
           <SubaccountForm />
         </HStack>
 
-        {Subaccounts && Subaccounts.data.length > 0 ? (
-          <SubaccountTable
-            initialSubaccounts={Subaccounts}
-            businessId={businessId}
-          />
-        ) : (
-          <EmptyPage
-            title="No subaccount found"
-            description="Add a subaccount to receive payments"
-          />
-        )}
+        <SubaccountTable
+          initialSubaccounts={Subaccounts}
+          businessId={businessId}
+        />
       </VStack>
       <SubaccountFormViewport />
     </PageContainer>

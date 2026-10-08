@@ -1,16 +1,22 @@
 import { STORE_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
-import { CreateStoreInputData } from "@/schema/store";
+import { CreateStoreInputData, GetAllStoresOutputData } from "@/schema/store";
 import { getScopedKey } from "@/utilities/computeKey";
-import useSWR from "swr";
+import useSWR, { SWRConfiguration } from "swr";
 import useSWRMutation from "swr/mutation";
 
-export const useStores = (organizationId: string | undefined) => {
-  return useSWR(getScopedKey(STORE_KEY, organizationId), () =>
-    authClient.organization.listTeams({
-      query: { organizationId },
-      fetchOptions: authConfig,
-    }),
+export const useStores = (
+  organizationId: string | undefined,
+  config?: SWRConfiguration<GetAllStoresOutputData, Error>,
+) => {
+  return useSWR(
+    getScopedKey(STORE_KEY, organizationId),
+    () =>
+      authClient.organization.listTeams({
+        query: { organizationId },
+        fetchOptions: authConfig,
+      }),
+    config,
   );
 };
 

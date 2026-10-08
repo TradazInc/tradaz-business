@@ -3,7 +3,6 @@ import {
   BusinessFormViewport,
 } from "@/components/dashboard/BusinessForm";
 import BusinessGrid from "@/components/dashboard/BusinessGrid";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
@@ -17,9 +16,7 @@ interface Props {
 
 export default async function page({ searchParams }: Props) {
   const { signup } = await searchParams;
-  const { data: businesses, error } = await getBusinesses();
-
-  if (error) return error.message;
+  const businesses = getBusinesses();
 
   return (
     <PageContainer>
@@ -31,19 +28,10 @@ export default async function page({ searchParams }: Props) {
             <Search placeholder={"Search for a brand"} searchField={"search"} />
           </Suspense>
           <Spacer />
-          <BusinessForm />
+          <BusinessForm signup={signup} />
         </HStack>
 
-        {businesses.length > 0 ? (
-          <BusinessGrid initialBusinesses={businesses} />
-        ) : (
-          <EmptyPage
-            title={"No businesses found"}
-            description={"Create a new business"}
-          >
-            <BusinessForm signup={signup} />
-          </EmptyPage>
-        )}
+        <BusinessGrid initialBusinesses={businesses} />
       </VStack>
       <BusinessFormViewport />
     </PageContainer>

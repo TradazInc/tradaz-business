@@ -1,12 +1,11 @@
+import BusinessName from "@/components/business/BusinessName";
 import { StoreForm, StoreFormViewport } from "@/components/business/StoreForm";
 import StoreGrid from "@/components/business/StoreGrid";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
-import { getBusiness } from "@/server/business";
+import { getStores } from "@/server/store";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 interface Props {
@@ -15,14 +14,14 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data, error } = await getBusiness(businessId);
-
-  if (error) notFound();
+  const stores = getStores(businessId);
 
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>{`${data.name} Stores`}</PageHeader>
+        <PageHeader>
+          <BusinessName businessId={businessId} />
+        </PageHeader>
 
         <HStack w={"full"}>
           <Suspense>
@@ -32,18 +31,7 @@ export default async function page({ params }: Props) {
           <StoreForm />
         </HStack>
 
-        {data?.teams.length > 0 ? (
-          <StoreGrid
-            initialStores={data.teams}
-            businessId={businessId}
-            businessName={data.name}
-          />
-        ) : (
-          <EmptyPage
-            title={"No stores found"}
-            description={"Create a new store for your brand"}
-          />
-        )}
+        <StoreGrid initialStores={stores} businessId={businessId} />
       </VStack>
       <StoreFormViewport />
     </PageContainer>

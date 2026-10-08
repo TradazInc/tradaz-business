@@ -1,5 +1,8 @@
-import { authClient } from "@/lib/authClient";
+import { authClient, authConfig } from "@/lib/authClient";
 
 export async function getStores(organizationId: string) {
-  return authClient.organization.listTeams({ query: { organizationId } });
+  return authClient.organization.listTeams({
+    query: { organizationId },
+    fetchOptions: authConfig,
+  });
 }

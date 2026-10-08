@@ -1,11 +1,7 @@
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
-import {
-  PosConfigForm,
-  PosConfigFormViewport,
-} from "@/components/store/PosConfigForm";
+import { PosConfigForm, PosConfigFormViewport } from "@/components/store/PosConfigForm";
 import PosConfigTable from "@/components/store/PosConfigTable";
 import { getPosConfigs } from "@/server/posConfig";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
@@ -17,9 +13,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId, storeId } = await params;
-  const { data: posConfigs, error } = await getPosConfigs(businessId, storeId);
-
-  if (error) return error?.message;
+  const posConfigs = getPosConfigs(businessId, storeId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -37,17 +31,10 @@ export default async function page({ params }: Props) {
           <PosConfigForm />
         </HStack>
 
-        {posConfigs && posConfigs.data.length > 0 ? (
-          <PosConfigTable
-            initialPosConfigs={posConfigs}
-            businessId={businessId}
-          />
-        ) : (
-          <EmptyPage
-            title="No configurations found"
-            description="Create a POS configuration"
-          />
-        )}
+        <PosConfigTable
+          initialPosConfigs={posConfigs}
+          businessId={businessId}
+        />
       </VStack>
       <PosConfigFormViewport />
     </PageContainer>

@@ -1,5 +1,4 @@
 import RevenueTable from "@/components/business/RevenueTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
@@ -16,9 +15,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: revenues, error } = await getRevenues(businessId);
-
-  if (error) return error?.message;
+  const revenues = getRevenues(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -41,18 +38,7 @@ export default async function page({ params }: Props) {
           </Button>
         </HStack>
 
-        {revenues && revenues.data.length > 0 ? (
-          <RevenueTable initialRevenues={revenues} businessId={businessId} />
-        ) : (
-          <EmptyPage title="No revenue found" description="Create revenue">
-            <Button asChild>
-              <NextLink href={`${computePath(businessId)}/revenue/new`}>
-                <LuPlus />
-                Create Revenue
-              </NextLink>
-            </Button>
-          </EmptyPage>
-        )}
+        <RevenueTable initialRevenues={revenues} businessId={businessId} />
       </VStack>
     </PageContainer>
   );

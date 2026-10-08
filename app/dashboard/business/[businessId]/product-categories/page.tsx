@@ -1,9 +1,5 @@
-import {
-  ProductCategoryForm,
-  ProductCategoryFormViewport,
-} from "@/components/business/ProductCategoryForm";
+import { ProductCategoryForm, ProductCategoryFormViewport } from "@/components/business/ProductCategoryForm";
 import ProductCategoryTable from "@/components/business/ProductCategoryTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getProductCategories } from "@/server/productCategory";
@@ -15,9 +11,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: categories, error } = await getProductCategories(businessId);
-
-  if (error) return error.message;
+  const categories = getProductCategories(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -29,17 +23,10 @@ export default async function page({ params }: Props) {
           <ProductCategoryForm />
         </HStack>
 
-        {categories.data.length > 0 ? (
-          <ProductCategoryTable
-            initialCategories={categories}
-            businessId={businessId}
-          />
-        ) : (
-          <EmptyPage
-            title="No categories found"
-            description="Create a product category"
-          />
-        )}
+        <ProductCategoryTable
+          initialCategories={categories}
+          businessId={businessId}
+        />
       </VStack>
       <ProductCategoryFormViewport />
     </PageContainer>

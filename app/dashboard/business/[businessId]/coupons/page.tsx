@@ -1,9 +1,5 @@
-import {
-  CouponForm,
-  CouponFormViewport,
-} from "@/components/business/CouponForm";
+import { CouponForm, CouponFormViewport } from "@/components/business/CouponForm";
 import CouponTable from "@/components/business/CouponTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getCoupons } from "@/server/coupon";
@@ -15,9 +11,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: coupons, error } = await getCoupons(businessId);
-
-  if (error) return error.message;
+  const coupons = getCoupons(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -29,14 +23,7 @@ export default async function page({ params }: Props) {
           <CouponForm />
         </HStack>
 
-        {coupons.data.length > 0 ? (
-          <CouponTable initialCoupons={coupons} businessId={businessId} />
-        ) : (
-          <EmptyPage
-            title="No coupons found"
-            description="Create a new coupon"
-          />
-        )}
+        <CouponTable initialCoupons={coupons} businessId={businessId} />
       </VStack>
       <CouponFormViewport />
     </PageContainer>

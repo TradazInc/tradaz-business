@@ -23,16 +23,17 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { HiCog } from "react-icons/hi";
 import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
+import EmptyPage from "@/components/shared/EmptyPage";
 
 interface Props {
-  initialPosConfigs: GetAllPosConfigOutputData;
+  initialPosConfigs: Promise<GetAllPosConfigOutputData[]>;
   businessId: string | undefined;
 }
 
 const PosConfigTable = ({ initialPosConfigs, businessId }: Props) => {
   const { data: stores } = useStores(businessId);
   const { data, error, mutate, setSize, size } = usePosConfigs(businessId, {
-    fallbackData: [initialPosConfigs],
+    fallbackData: initialPosConfigs,
   });
   const { flatData: posConfigs, hasMore } = useMemo(
     () => parseCursorData(data),
@@ -50,6 +51,15 @@ const PosConfigTable = ({ initialPosConfigs, businessId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && posConfigs.length === 0) {
+    return (
+      <EmptyPage
+        title="No configurations found"
+        description="Create a POS configuration"
+      />
+    );
+  }
 
   return (
     <Box w={"full"}>

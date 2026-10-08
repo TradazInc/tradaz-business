@@ -13,4 +13,5 @@ export const CreateStoreInputSchema = z.object({
 });
 export type CreateStoreInputData = z.infer<typeof CreateStoreInputSchema>;
 
-export type Store = typeof authClient.$Infer.Team;
+export type GetStoreOutputData = typeof authClient.$Infer.Team;
+export type GetAllStoresOutputData = GetStoreOutputData[];

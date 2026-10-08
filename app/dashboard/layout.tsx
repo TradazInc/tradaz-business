@@ -12,9 +12,9 @@ export default async function BusinessLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [session, business] = await Promise.all([
+  const [session, businesses] = await Promise.all([
     getSession(),
-    getBusinesses(),
+    getBusinesses().catch(() => undefined),
   ]);
   if (!session.data || session.error) unauthorized();
 
@@ -24,7 +24,7 @@ export default async function BusinessLayout({
         value={{
           fallback: {
             [unstable_serialize(getKey(SESSION_KEY))]: session.data,
-            [unstable_serialize(getKey(BUSINESS_KEY))]: business.data,
+            [unstable_serialize(getKey(BUSINESS_KEY))]: businesses,
           },
         }}
       >

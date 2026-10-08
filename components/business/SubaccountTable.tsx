@@ -16,20 +16,30 @@ import {
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import InfiniteScroll from "react-infinite-scroll-component";
+import EmptyPage from "@/components/shared/EmptyPage";
 
 interface Props {
-  initialSubaccounts: GetAllSubaccountOutputData;
+  initialSubaccounts: Promise<GetAllSubaccountOutputData[]>;
   businessId: string | undefined;
 }
 
 const SubaccountTable = ({ initialSubaccounts, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = useSubaccounts(businessId, {
-    fallbackData: [initialSubaccounts],
+    fallbackData: initialSubaccounts,
   });
   const { flatData: subaccounts, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
+
+  if (data && subaccounts.length === 0) {
+    return (
+      <EmptyPage
+        title="No subaccount found"
+        description="Add a subaccount to receive payments"
+      />
+    );
+  }
 
   return (
     <Box w={"full"}>

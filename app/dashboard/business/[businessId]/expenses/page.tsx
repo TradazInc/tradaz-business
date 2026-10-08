@@ -1,5 +1,4 @@
 import ExpenseTable from "@/components/business/ExpenseTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
@@ -16,9 +15,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: expenses, error } = await getExpenses(businessId);
-
-  if (error) return error?.message;
+  const expenses = getExpenses(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -41,18 +38,7 @@ export default async function page({ params }: Props) {
           </Button>
         </HStack>
 
-        {expenses && expenses.data.length > 0 ? (
-          <ExpenseTable initialExpenses={expenses} businessId={businessId} />
-        ) : (
-          <EmptyPage title="No expesnes found" description="Create expense">
-            <Button asChild>
-              <NextLink href={`${computePath(businessId)}/expenses/new`}>
-                <LuPlus />
-                Create Expense
-              </NextLink>
-            </Button>
-          </EmptyPage>
-        )}
+        <ExpenseTable initialExpenses={expenses} businessId={businessId} />
       </VStack>
     </PageContainer>
   );

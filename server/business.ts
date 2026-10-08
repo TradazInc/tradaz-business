@@ -1,13 +1,14 @@
-import { authClient } from "@/lib/authClient";
-import type { Business } from "@/schema/business";
+import { authClient, authConfig } from "@/lib/authClient";
+import type { GetAllBusinessOutputData } from "@/schema/business";
 
 export async function checkBusinessSlug(slug: string) {
   return authClient.organization.checkSlug({ slug }).then((res) => res);
 }
 
 export async function getBusinesses() {
-  const businesses = await authClient.organization.list();
-  return businesses as typeof businesses & { data: Business[] | null };
+  return authClient.organization.list({
+    fetchOptions: authConfig,
+  }) as Promise<GetAllBusinessOutputData>;
 }
 
 export async function getBusiness(organizationId?: string) {

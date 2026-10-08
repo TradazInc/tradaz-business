@@ -11,9 +11,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import GridContainer from "../shared/GridContainer";
 import { toaster } from "../ui/toaster";
 import CartCard from "./CartCard";
+import EmptyPage from "@/components/shared/EmptyPage";
 
 interface Props {
-  initialCarts: GetAllCartsOutputData;
+  initialCarts: Promise<GetAllCartsOutputData[]>;
   businessId: string | undefined;
   storeId: string | undefined;
 }
@@ -22,7 +23,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
   const { data, error, mutate, setSize, size, isLoading } = useCarts(
     businessId,
     {
-      fallbackData: [initialCarts],
+      fallbackData: initialCarts,
     },
   );
   const { flatData: carts, hasMore } = useMemo(
@@ -45,6 +46,12 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && carts.length === 0) {
+    return (
+      <EmptyPage title="No carts found" description="Create a cart" />
+    );
+  }
 
   return (
     <Box w={"full"}>

@@ -18,20 +18,31 @@ import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 
 import InfiniteScroll from "react-infinite-scroll-component";
+import EmptyPage from "@/components/shared/EmptyPage";
 
 interface Props {
-  initialPointsConfigs: GetAllPointsConfigOutputData;
+  initialPointsConfigs: Promise<GetAllPointsConfigOutputData[]>;
   businessId: string | undefined;
 }
 
 const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
   const { data, error, mutate, setSize, size } = usePointsConfigs(businessId, {
-    fallbackData: [initialPointsConfigs],
+    fallbackData: initialPointsConfigs,
   });
   const { flatData: pointsConfigs, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
+
+  if (data && pointsConfigs.length === 0) {
+    return (
+      <EmptyPage
+        title="No loyalty points configs found"
+        description="Create a loyalty points config"
+      />
+    );
+  }
+
   return (
     <Box w={"full"}>
       <InfiniteScroll

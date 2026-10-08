@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyPage from "@/components/shared/EmptyPage";
 import { useProducts } from "@/hooks/product";
 import { GetAllProductOutputData } from "@/schema/product";
 import { computePath } from "@/utilities/computePath";
@@ -11,18 +12,27 @@ import GridContainer from "../shared/GridContainer";
 import ProductCard from "./ProductCard";
 
 interface Props {
-  initialProducts: GetAllProductOutputData;
+  initialProducts: Promise<GetAllProductOutputData[]>;
   businessId: string | undefined;
 }
 
 const ProductGrid = ({ businessId, initialProducts }: Props) => {
   const { data, size, setSize, error, mutate } = useProducts(businessId, {
-    fallbackData: [initialProducts],
+    fallbackData: initialProducts,
   });
   const { flatData: products, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
+
+  if (data && products.length === 0) {
+    return (
+      <EmptyPage
+        title={"No products found"}
+        description={"Create a new product"}
+      />
+    );
+  }
 
   return (
     <InfiniteScroll

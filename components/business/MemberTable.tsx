@@ -1,9 +1,9 @@
 "use client";
 
+import EmptyPage from "@/components/shared/EmptyPage";
 import { toaster } from "@/components/ui/toaster";
 import { useMembers, useRemoveMember } from "@/hooks/member";
-import { FetchResponse } from "@/utilities/fetchResponse";
-import { Member } from "@/schema/member";
+import { GetAllMembersOutputData } from "@/schema/member";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseIndexData } from "@/utilities/parsePageData";
 import {
@@ -22,13 +22,13 @@ import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
-  initialMembers: FetchResponse<Member>;
+  initialMembers: Promise<GetAllMembersOutputData[]>;
   businessId: string | undefined;
 }
 
 const MemberTable = ({ businessId, initialMembers }: Props) => {
   const { data, error, mutate, setSize, size } = useMembers(businessId, {
-    fallbackData: [initialMembers],
+    fallbackData: initialMembers,
   });
   const { flatData: members, hasMore } = useMemo(
     () => parseIndexData(data),
@@ -50,6 +50,12 @@ const MemberTable = ({ businessId, initialMembers }: Props) => {
       error: errorToastOptions,
     });
   };
+
+  if (data && members.length === 0) {
+    return (
+      <EmptyPage title="No members found" description="Invite a new member" />
+    );
+  }
 
   return (
     <Box w={"full"}>

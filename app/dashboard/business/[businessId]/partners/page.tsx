@@ -1,5 +1,4 @@
 import MemberTable from "@/components/business/MemberTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
@@ -13,9 +12,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: members, error } = await getMembers(businessId);
-
-  if (error) return error?.message;
+  const members = getMembers(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
@@ -32,14 +29,7 @@ export default async function page({ params }: Props) {
           <Spacer />
         </HStack>
 
-        {members && members.data.length > 0 ? (
-          <MemberTable initialMembers={members} businessId={businessId} />
-        ) : (
-          <EmptyPage
-            title="No partner found"
-            description="Invite new partner"
-          />
-        )}
+        <MemberTable initialMembers={members} businessId={businessId} />
       </VStack>
     </PageContainer>
   );

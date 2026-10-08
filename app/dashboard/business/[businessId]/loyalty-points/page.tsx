@@ -1,9 +1,5 @@
-import {
-  PointsConfigForm,
-  PointsConfigFormViewport,
-} from "@/components/business/PointsConfigForm";
+import { PointsConfigForm, PointsConfigFormViewport } from "@/components/business/PointsConfigForm";
 import PointsConfigTable from "@/components/business/PointsConfigTable";
-import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getPointsConfigs } from "@/server/pointsConfig";
@@ -15,9 +11,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const { data: pointsConfigs, error } = await getPointsConfigs();
-
-  if (error) return error.message;
+  const pointsConfigs = getPointsConfigs().then((d) => [d]);
 
   return (
     <PageContainer>
@@ -29,17 +23,10 @@ export default async function page({ params }: Props) {
           <PointsConfigForm />
         </HStack>
 
-        {pointsConfigs.data.length > 0 ? (
-          <PointsConfigTable
-            initialPointsConfigs={pointsConfigs}
-            businessId={businessId}
-          />
-        ) : (
-          <EmptyPage
-            title="No loyalty points configs found"
-            description="Create a loyalty points config"
-          />
-        )}
+        <PointsConfigTable
+          initialPointsConfigs={pointsConfigs}
+          businessId={businessId}
+        />
       </VStack>
       <PointsConfigFormViewport />
     </PageContainer>

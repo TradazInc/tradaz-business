@@ -20,4 +20,4 @@ export const emptyInvitation: CreateInvitationInputData = {
   teamId: "",
 };
 
-export type Invitation = typeof authClient.$Infer.Invitation;
+export type GetInvitationOutputData = typeof authClient.$Infer.Invitation;

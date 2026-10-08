@@ -39,7 +39,9 @@ export const CreateBusinessInputSchema = z.object({
 export type CreateBusinessInputData = z.infer<typeof CreateBusinessInputSchema>;
 
 // organization.list is enriched with the category relation by an after hook on the API
-export type Business = typeof authClient.$Infer.Organization & {
+export type GetBusinessOutputData = typeof authClient.$Infer.Organization & {
   category: BusinessCategory | null;
 };
+export type GetAllBusinessOutputData = GetBusinessOutputData[];
+
 export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
