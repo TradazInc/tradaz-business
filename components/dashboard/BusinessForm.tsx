@@ -78,7 +78,7 @@ export const businessDialog = createOverlay<BusinessFormProps>((props) => {
   // Open form dialog on signup
   useEffect(() => {
     if (!signup) return;
-    if (signup) props.onOpenChange?.({ open: false });
+    if (signup) props.onOpenChange?.({ open: true });
 
     const params = new URLSearchParams(searchParams.toString());
     params.delete("signup");
