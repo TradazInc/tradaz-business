@@ -2,6 +2,7 @@
 
 import { GetAllCartsOutputItemData } from "@/schema/cart";
 import {
+  Box,
   Button,
   Card,
   DataList,
@@ -60,15 +61,17 @@ const CartCard = ({ cart, href, onClick, disabled }: Props) => {
           </DataList.Root>
         </Text>
 
-        <Button
-          variant={"subtle"}
-          colorPalette={"red"}
-          onClick={() => onClick(cart.id)}
-          disabled={disabled}
-        >
-          <MdDeleteOutline />
-          Delete
-        </Button>
+        <Box w={"full"} justifyContent={"flex-end"}>
+          <Button
+            variant={"subtle"}
+            disabled={disabled}
+            colorPalette={"red"}
+            onClick={() => onClick(cart.id)}
+          >
+            <MdDeleteOutline />
+            Delete
+          </Button>
+        </Box>
       </LinkBox>
     </Card.Root>
   );
