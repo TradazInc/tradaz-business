@@ -90,62 +90,64 @@ export const businessDialog = createOverlay<BusinessFormProps>((props) => {
         <Dialog.Backdrop />
         <Dialog.Positioner>
           <Dialog.Content>
-            <Steps.RootProvider value={steps} size={"sm"}>
-              <Steps.List mt={4}>
+            <Dialog.Body>
+              <Steps.RootProvider value={steps} size={"sm"}>
+                <Steps.List mt={4}>
+                  {stepsData.map((step, index) => (
+                    <Steps.Item key={index} index={index}>
+                      <Steps.Trigger>
+                        <Steps.Indicator>
+                          <Steps.Status
+                            incomplete={step.icon}
+                            complete={<LuCheck />}
+                          />
+                        </Steps.Indicator>
+                        <Box>
+                          <Steps.Title>{step.title}</Steps.Title>
+                          <Steps.Description>
+                            {step.description}
+                          </Steps.Description>
+                        </Box>
+                      </Steps.Trigger>
+                      <Steps.Separator />
+                    </Steps.Item>
+                  ))}
+                </Steps.List>
+
                 {stepsData.map((step, index) => (
-                  <Steps.Item key={index} index={index}>
-                    <Steps.Trigger>
-                      <Steps.Indicator>
-                        <Steps.Status
-                          incomplete={step.icon}
-                          complete={<LuCheck />}
-                        />
-                      </Steps.Indicator>
-                      <Box>
-                        <Steps.Title>{step.title}</Steps.Title>
-                        <Steps.Description>
-                          {step.description}
-                        </Steps.Description>
-                      </Box>
-                    </Steps.Trigger>
-                    <Steps.Separator />
-                  </Steps.Item>
+                  <Steps.Content key={index} index={index} w={"full"}>
+                    {step.render(form)}
+                  </Steps.Content>
                 ))}
-              </Steps.List>
 
-              {stepsData.map((step, index) => (
-                <Steps.Content key={index} index={index} w={"full"}>
-                  {step.render(form)}
-                </Steps.Content>
-              ))}
+                <Steps.CompletedContent>
+                  <Text>Registration complete!</Text>
+                </Steps.CompletedContent>
 
-              <Steps.CompletedContent>
-                <Text>Registration complete!</Text>
-              </Steps.CompletedContent>
-
-              <ButtonGroup size={"sm"} variant={"outline"} mt={2}>
-                <Steps.PrevTrigger asChild>
-                  <Button>Back</Button>
-                </Steps.PrevTrigger>
-                {isLastStep ? (
-                  <Button
-                    onClick={onSubmit}
-                    disabled={
-                      !form.formState.isValid ||
-                      form.formState.isSubmitting ||
-                      isMutating
-                    }
-                    loading={form.formState.isSubmitting || isMutating}
-                  >
-                    Submit
-                  </Button>
-                ) : (
-                  <Steps.NextTrigger asChild>
-                    <Button>Next</Button>
-                  </Steps.NextTrigger>
-                )}
-              </ButtonGroup>
-            </Steps.RootProvider>
+                <ButtonGroup size={"sm"} variant={"outline"} mt={2}>
+                  <Steps.PrevTrigger asChild>
+                    <Button>Back</Button>
+                  </Steps.PrevTrigger>
+                  {isLastStep ? (
+                    <Button
+                      onClick={onSubmit}
+                      disabled={
+                        !form.formState.isValid ||
+                        form.formState.isSubmitting ||
+                        isMutating
+                      }
+                      loading={form.formState.isSubmitting || isMutating}
+                    >
+                      Submit
+                    </Button>
+                  ) : (
+                    <Steps.NextTrigger asChild>
+                      <Button>Next</Button>
+                    </Steps.NextTrigger>
+                  )}
+                </ButtonGroup>
+              </Steps.RootProvider>
+            </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>
       </Portal>

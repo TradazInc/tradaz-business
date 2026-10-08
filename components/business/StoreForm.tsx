@@ -63,58 +63,60 @@ export const storeDialog = createOverlay<StoreFormProps>((props) => {
         <Dialog.Backdrop />
         <Dialog.Positioner>
           <Dialog.Content>
-            <Fieldset.Root
-              w={"full"}
-              size={"lg"}
-              mx={"auto"}
-              px={{ base: 4, md: 0 }}
-              maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-            >
-              <Stack>
-                <Fieldset.Legend>Store details</Fieldset.Legend>
-                <Fieldset.HelperText>
-                  Please provide your store details below.
-                </Fieldset.HelperText>
-              </Stack>
-
-              <Fieldset.Content>
-                <Field.Root required invalid={!!errors.name}>
-                  <Field.Label>
-                    Name <Field.RequiredIndicator />
-                  </Field.Label>
-                  <Input
-                    placeholder="e.g., Tradaz Lekki Lagos"
-                    {...register("name")}
-                  />
-                  <Field.HelperText>
-                    Name of the store under selected business
-                  </Field.HelperText>
-                  <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-                </Field.Root>
-
-                <Field.Root required invalid={!!errors.address}>
-                  <Field.Label>
-                    Address <Field.RequiredIndicator />
-                  </Field.Label>
-                  <Input
-                    placeholder="e.g., 123 Main St, Lekki, Lagos"
-                    {...register("address")}
-                  />
-                  <Field.HelperText>Address of store</Field.HelperText>
-                  <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
-                </Field.Root>
-              </Fieldset.Content>
-
-              <Button
-                onClick={onSubmit}
-                variant={"outline"}
-                alignSelf={"flex-start"}
-                disabled={!isValid || isSubmitting || isMutating}
-                loading={isSubmitting || isMutating}
+            <Dialog.Body>
+              <Fieldset.Root
+                w={"full"}
+                size={"lg"}
+                mx={"auto"}
+                px={{ base: 4, md: 0 }}
+                maxW={{ base: "full", md: "2xl", xl: "4xl" }}
               >
-                Submit
-              </Button>
-            </Fieldset.Root>
+                <Stack>
+                  <Fieldset.Legend>Store details</Fieldset.Legend>
+                  <Fieldset.HelperText>
+                    Please provide your store details below.
+                  </Fieldset.HelperText>
+                </Stack>
+
+                <Fieldset.Content>
+                  <Field.Root required invalid={!!errors.name}>
+                    <Field.Label>
+                      Name <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Input
+                      placeholder="e.g., Tradaz Lekki Lagos"
+                      {...register("name")}
+                    />
+                    <Field.HelperText>
+                      Name of the store under selected business
+                    </Field.HelperText>
+                    <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                  </Field.Root>
+
+                  <Field.Root required invalid={!!errors.address}>
+                    <Field.Label>
+                      Address <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Input
+                      placeholder="e.g., 123 Main St, Lekki, Lagos"
+                      {...register("address")}
+                    />
+                    <Field.HelperText>Address of store</Field.HelperText>
+                    <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
+                  </Field.Root>
+                </Fieldset.Content>
+
+                <Button
+                  onClick={onSubmit}
+                  variant={"outline"}
+                  alignSelf={"flex-start"}
+                  disabled={!isValid || isSubmitting || isMutating}
+                  loading={isSubmitting || isMutating}
+                >
+                  Submit
+                </Button>
+              </Fieldset.Root>
+            </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>
       </Portal>

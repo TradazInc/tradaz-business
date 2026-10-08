@@ -54,40 +54,45 @@ export const productCategoryDialog = createOverlay((props) => {
         <Dialog.Backdrop />
         <Dialog.Positioner>
           <Dialog.Content>
-            <Fieldset.Root
-              w={"full"}
-              size={"lg"}
-              mx={"auto"}
-              px={{ base: 4, md: 0 }}
-              maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-            >
-              <Stack>
-                <Fieldset.Legend>Product Category details</Fieldset.Legend>
-                <Fieldset.HelperText>
-                  Please provide the product category details below.
-                </Fieldset.HelperText>
-              </Stack>
-
-              <Fieldset.Content>
-                <Field.Root required invalid={!!errors.name}>
-                  <Field.Label>
-                    Name <Field.RequiredIndicator />
-                  </Field.Label>
-                  <Input placeholder="e.g., Footwears" {...register("name")} />
-                  <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-                </Field.Root>
-              </Fieldset.Content>
-
-              <Button
-                onClick={onSubmit}
-                variant={"outline"}
-                alignSelf={"flex-start"}
-                disabled={!isValid || isSubmitting || isMutating}
-                loading={isSubmitting || isMutating}
+            <Dialog.Body>
+              <Fieldset.Root
+                w={"full"}
+                size={"lg"}
+                mx={"auto"}
+                px={{ base: 4, md: 0 }}
+                maxW={{ base: "full", md: "2xl", xl: "4xl" }}
               >
-                Submit
-              </Button>
-            </Fieldset.Root>
+                <Stack>
+                  <Fieldset.Legend>Product Category details</Fieldset.Legend>
+                  <Fieldset.HelperText>
+                    Please provide the product category details below.
+                  </Fieldset.HelperText>
+                </Stack>
+
+                <Fieldset.Content>
+                  <Field.Root required invalid={!!errors.name}>
+                    <Field.Label>
+                      Name <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Input
+                      placeholder="e.g., Footwears"
+                      {...register("name")}
+                    />
+                    <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                  </Field.Root>
+                </Fieldset.Content>
+
+                <Button
+                  onClick={onSubmit}
+                  variant={"outline"}
+                  alignSelf={"flex-start"}
+                  disabled={!isValid || isSubmitting || isMutating}
+                  loading={isSubmitting || isMutating}
+                >
+                  Submit
+                </Button>
+              </Fieldset.Root>
+            </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>
       </Portal>
