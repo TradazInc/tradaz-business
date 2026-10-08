@@ -44,7 +44,7 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
           </Stack>
         </HStack>
 
-        <Card.Description my={1}>
+        <Card.Description my={1.5}>
           {JSON.parse(business.metadata)?.address}
         </Card.Description>
 

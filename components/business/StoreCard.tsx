@@ -22,7 +22,7 @@ const StoreCard = ({ store, href, badgeItems }: Props) => {
           </Text>
         </HStack>
 
-        <Card.Description my={1}>{store.address}</Card.Description>
+        <Card.Description my={1.5}>{store.address}</Card.Description>
 
         <HStack>
           {badgeItems.filter(Boolean).map((item) => (
