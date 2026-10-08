@@ -1,13 +1,17 @@
 import { BUSINESS_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
-import { CreateBusinessInputData } from "@/schema/business";
+import { Business, CreateBusinessInputData } from "@/schema/business";
 import { getKey, getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 export const useBusinesses = () => {
-  return useSWR(getKey(BUSINESS_KEY), () =>
-    authClient.organization.list({ fetchOptions: authConfig }),
+  return useSWR(
+    getKey(BUSINESS_KEY),
+    () =>
+      authClient.organization.list({ fetchOptions: authConfig }) as Promise<
+        Business[]
+      >,
   );
 };
 

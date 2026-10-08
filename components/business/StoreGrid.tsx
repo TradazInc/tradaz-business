@@ -1,19 +1,17 @@
-"use client";
-
 import { Store } from "@/schema/store";
 import { computePath } from "@/utilities/computePath";
 import { For } from "@chakra-ui/react";
+import { format } from "date-fns";
 import GridCard from "../shared/GridCard";
 import GridContainer from "../shared/GridContainer";
 
 interface Props {
   initialStores: Store[];
   businessId: string | undefined;
+  businessName: string;
 }
 
-const StoreGrid = ({ businessId, initialStores }: Props) => {
-  // Implement infinite scroll
-
+const StoreGrid = ({ businessId, businessName, initialStores }: Props) => {
   return (
     <GridContainer pb={12}>
       <For each={initialStores}>
@@ -22,7 +20,10 @@ const StoreGrid = ({ businessId, initialStores }: Props) => {
             key={store.id}
             name={store.name}
             address={store.address}
-            createdAt={new Date(store.createdAt).toDateString()}
+            badgeItems={[
+              businessName,
+              format(store.createdAt, "dd MMM yy").toUpperCase(),
+            ]}
             href={computePath(businessId, store.id)}
           />
         )}

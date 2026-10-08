@@ -22,7 +22,7 @@ export default async function page({ params }: Props) {
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>{`${data?.name} Stores`}</PageHeader>
+        <PageHeader>{`${data.name} Stores`}</PageHeader>
 
         <HStack w={"full"}>
           <Suspense>
@@ -33,7 +33,11 @@ export default async function page({ params }: Props) {
         </HStack>
 
         {data?.teams.length > 0 ? (
-          <StoreGrid initialStores={data.teams} businessId={businessId} />
+          <StoreGrid
+            initialStores={data.teams}
+            businessId={businessId}
+            businessName={data.name}
+          />
         ) : (
           <EmptyPage
             title={"No stores found"}

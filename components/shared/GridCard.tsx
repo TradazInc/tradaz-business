@@ -1,6 +1,7 @@
 import {
+  Badge,
+  Box,
   Card,
-  Heading,
   HStack,
   Icon,
   Image,
@@ -13,43 +14,32 @@ interface Props {
   logo?: string | null;
   name: string;
   address?: string;
-  createdAt?: string;
+  badgeItems: (string | undefined)[];
   href: string;
 }
 
-const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
+const GridCard = ({ logo, name, address, href, badgeItems }: Props) => {
   return (
-    <Card.Root size={"sm"}>
-      <Card.Header>
-        <HStack gap={1.5}>
-          <Icon size={"lg"}>
-            {logo ? (
-              <Image src={logo} borderRadius={"full"} fit={"cover"} />
-            ) : (
-              <MdBusiness />
-            )}
-          </Icon>
-          <Heading size={"sm"}>{name}</Heading>
-        </HStack>
-      </Card.Header>
+    <Card.Root size={"sm"} flexDirection={"row"}>
+      <Icon size={"lg"}>
+        {logo ? (
+          <Image src={logo} borderRadius={"full"} fit={"cover"} />
+        ) : (
+          <MdBusiness />
+        )}
+      </Icon>
 
-      <Card.Body
-        textStyle={"sm"}
-        color={"fg.muted"}
-        textAlign={"start"}
-        alignItems={"flex-start"}
-      >
-        {address}
-      </Card.Body>
-
-      <Card.Footer
-        textStyle={"sm"}
-        color={"fg.muted"}
-        textAlign={"start"}
-        alignItems={"flex-start"}
-      >
-        {createdAt}
-      </Card.Footer>
+      <Box>
+        <Card.Body>
+          <Card.Title mb="2">{name}</Card.Title>
+          <Card.Description>{address}</Card.Description>
+          <HStack mt="4">
+            {badgeItems.map((item) => (
+              <Badge>{item}</Badge>
+            ))}
+          </HStack>
+        </Card.Body>
+      </Box>
 
       <LinkOverlay asChild>
         <NextLink href={href} />

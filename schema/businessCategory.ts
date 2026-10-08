@@ -6,6 +6,7 @@ export const GetBusinessCategoryOuputSchema = z.object({
   id: z.cuid2(),
   name: z.string(),
 });
+export type BusinessCategory = z.infer<typeof GetBusinessCategoryOuputSchema>;
 
 // Get All
 export const GetAllBusinessCategoryQuerySchema = z.object({

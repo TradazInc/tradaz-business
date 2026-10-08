@@ -3,6 +3,7 @@ import { authClient } from "@/lib/authClient";
 import { checkBusinessSlug } from "@/server/business";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { z } from "zod";
+import { BusinessCategory } from "./businessCategory";
 
 // Create
 export const CreateBusinessInputSchema = z.object({
@@ -37,5 +38,8 @@ export const CreateBusinessInputSchema = z.object({
 });
 export type CreateBusinessInputData = z.infer<typeof CreateBusinessInputSchema>;
 
-export type Business = typeof authClient.$Infer.Organization;
+// organization.list is enriched with the category relation by an after hook on the API
+export type Business = typeof authClient.$Infer.Organization & {
+  category: BusinessCategory | null;
+};
 export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
