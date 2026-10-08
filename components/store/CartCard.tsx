@@ -1,18 +1,18 @@
 "use client";
 
-import noImage from "@/public/no-image-placeholder.webp";
 import { GetAllCartsOutputItemData } from "@/schema/cart";
 import {
-  Box,
   Button,
-  ButtonGroup,
   Card,
   DataList,
-  Image,
+  Heading,
+  LinkBox,
+  LinkOverlay,
+  Span,
+  Text,
 } from "@chakra-ui/react";
-import NextImage from "next/image";
-import NextLink from "next/link";
-import { MdDeleteOutline, MdOutlineViewInAr } from "react-icons/md";
+import { formatDistanceToNowStrict } from "date-fns";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface Props {
   href: string;
@@ -23,18 +23,21 @@ interface Props {
 
 const CartCard = ({ cart, href, onClick, disabled }: Props) => {
   return (
-    <Card.Root flexDirection={"row"} w={"full"}>
-      <Image maxW={"200px"} borderRadius={"inherit"} asChild>
-        <NextImage
-          src={noImage}
-          objectFit={"cover"}
-          alt={`No image for ${cart.id}`}
-        />
-      </Image>
-      <Box>
-        <Card.Body>
-          <Card.Title mb="2">Cart {cart.id}</Card.Title>
+    <Card.Root w={"full"} p={5} borderWidth={"1px"} rounded={"md"} asChild>
+      <LinkBox>
+        <Span asChild color={"fg.muted"} textStyle={"sm"}>
+          <time dateTime={cart.createdAt}>
+            {formatDistanceToNowStrict(new Date(cart.createdAt), {
+              addSuffix: true,
+            })}
+          </time>
+        </Span>
 
+        <Heading size={"lg"} my={2}>
+          <LinkOverlay href={href}>Cart {cart.id}</LinkOverlay>
+        </Heading>
+
+        <Text mb={3} color={"fg.muted"}>
           <DataList.Root orientation="horizontal">
             {cart.couponCode && (
               <DataList.Item key={cart.couponCode}>
@@ -55,28 +58,18 @@ const CartCard = ({ cart, href, onClick, disabled }: Props) => {
               </DataList.Item>
             )}
           </DataList.Root>
-        </Card.Body>
+        </Text>
 
-        <Card.Footer>
-          <ButtonGroup size={"sm"} variant={"subtle"}>
-            <Button variant={"subtle"} colorPalette={"blue"} asChild>
-              <NextLink href={href}>
-                <MdOutlineViewInAr />
-                View
-              </NextLink>
-            </Button>
-            <Button
-              variant={"subtle"}
-              colorPalette={"red"}
-              onClick={() => onClick(cart.id)}
-              disabled={disabled}
-            >
-              <MdDeleteOutline />
-              Delete
-            </Button>
-          </ButtonGroup>
-        </Card.Footer>
-      </Box>
+        <Button
+          variant={"subtle"}
+          colorPalette={"red"}
+          onClick={() => onClick(cart.id)}
+          disabled={disabled}
+        >
+          <MdDeleteOutline />
+          Delete
+        </Button>
+      </LinkBox>
     </Card.Root>
   );
 };
