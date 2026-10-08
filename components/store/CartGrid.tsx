@@ -55,7 +55,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
         loader={<Spinner />}
         style={{ width: "100%", overflow: "visible" }}
       >
-        <GridContainer pb={12} columns={{ base: 1, md: 2 }} gap={2}>
+        <GridContainer pb={12} gap={2}>
           <For each={carts}>
             {(cart) => (
               <GridItem key={cart.id} colSpan={1}>
