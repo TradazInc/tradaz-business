@@ -9,7 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { LuBoxes } from "react-icons/lu";
+import { IoBusinessSharp } from "react-icons/io5";
 
 interface Props {
   logo?: string | null;
@@ -34,7 +34,7 @@ const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
             {logo ? (
               <Image src={logo} borderRadius={"full"} fit={"cover"} />
             ) : (
-              <LuBoxes />
+              <IoBusinessSharp />
             )}
           </Icon>
           <Heading size={"sm"}>{name}</Heading>
