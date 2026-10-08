@@ -48,7 +48,7 @@ const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
 
         <Card.Description>{address}</Card.Description>
 
-        <HStack mt={4}>
+        <HStack mt={2}>
           {badgeItems.filter(Boolean).map((item) => (
             <Badge>{item}</Badge>
           ))}
