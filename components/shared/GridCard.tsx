@@ -24,13 +24,7 @@ const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
     <Card.Root size={"sm"}>
       <Card.Header>
         <HStack gap={"1.5"}>
-          <Icon
-            p={1}
-            bg={"bg"}
-            size={"xl"}
-            rounded={"full"}
-            contain={"content"}
-          >
+          <Icon>
             {logo ? (
               <Image src={logo} borderRadius={"full"} fit={"cover"} />
             ) : (
