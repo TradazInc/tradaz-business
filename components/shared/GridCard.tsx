@@ -5,8 +5,6 @@ import {
   Icon,
   Image,
   LinkOverlay,
-  Text,
-  VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { MdBusiness } from "react-icons/md";
@@ -34,25 +32,23 @@ const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
           <Heading size={"sm"}>{name}</Heading>
         </HStack>
       </Card.Header>
-      <Card.Footer>
-        <VStack alignItems={"flex-start"} w={"full"}>
-          <Text
-            w={"full"}
-            textStyle={"sm"}
-            color={"fg.muted"}
-            textAlign={"start"}
-          >
-            {address}
-          </Text>
-          <Text
-            w={"full"}
-            textStyle={"sm"}
-            color={"fg.muted"}
-            textAlign={"start"}
-          >
-            {createdAt}
-          </Text>
-        </VStack>
+
+      <Card.Body
+        textStyle={"sm"}
+        color={"fg.muted"}
+        textAlign={"start"}
+        alignItems={"flex-start"}
+      >
+        {address}
+      </Card.Body>
+
+      <Card.Footer
+        textStyle={"sm"}
+        color={"fg.muted"}
+        textAlign={"start"}
+        alignItems={"flex-start"}
+      >
+        {createdAt}
       </Card.Footer>
 
       <LinkOverlay asChild>
