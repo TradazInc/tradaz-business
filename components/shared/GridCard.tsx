@@ -23,8 +23,8 @@ const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
   return (
     <Card.Root size={"sm"}>
       <Card.Header>
-        <HStack gap={"1.5"}>
-          <Icon>
+        <HStack gap={1.5}>
+          <Icon size={"lg"}>
             {logo ? (
               <Image src={logo} borderRadius={"full"} fit={"cover"} />
             ) : (
@@ -37,18 +37,18 @@ const GridCard = ({ logo, name, address, createdAt, href }: Props) => {
       <Card.Footer>
         <VStack alignItems={"flex-start"} w={"full"}>
           <Text
-            color={"fg.muted"}
-            textStyle={"sm"}
-            textAlign={"start"}
             w={"full"}
+            textStyle={"sm"}
+            color={"fg.muted"}
+            textAlign={"start"}
           >
             {address}
           </Text>
           <Text
-            color={"fg.muted"}
-            textStyle={"sm"}
-            textAlign={"start"}
             w={"full"}
+            textStyle={"sm"}
+            color={"fg.muted"}
+            textAlign={"start"}
           >
             {createdAt}
           </Text>
