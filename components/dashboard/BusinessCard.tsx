@@ -1,3 +1,4 @@
+import { Business } from "@/schema/business";
 import {
   Avatar,
   Badge,
@@ -12,22 +13,19 @@ import NextLink from "next/link";
 import { MdBusiness } from "react-icons/md";
 
 interface Props {
-  logo?: string | null;
-  name: string;
-  slug?: string;
-  address?: string;
+  business: Business;
   badgeItems: (string | undefined)[];
   href: string;
 }
 
-const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
+const BusinessCard = ({ business, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"} flexDirection={"row"}>
       <Card.Body gap={0}>
         <HStack gap={3}>
-          {logo ? (
+          {business.logo ? (
             <Avatar.Root>
-              <Avatar.Image src={logo} />
+              <Avatar.Image src={business.logo} />
             </Avatar.Root>
           ) : (
             <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
@@ -36,17 +34,19 @@ const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
           )}
           <Stack gap={0}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
-              {name}
+              {business.name}
             </Text>
-            {slug && (
+            {business.slug && (
               <Text color={"fg.muted"} textStyle={"sm"}>
-                @{slug}
+                @{business.slug}
               </Text>
             )}
           </Stack>
         </HStack>
 
-        <Card.Description my={1}>{address}</Card.Description>
+        <Card.Description my={1}>
+          {JSON.parse(business.metadata)?.address}
+        </Card.Description>
 
         <HStack>
           {badgeItems.filter(Boolean).map((item) => (
@@ -62,4 +62,4 @@ const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
   );
 };
 
-export default GridCard;
+export default BusinessCard;

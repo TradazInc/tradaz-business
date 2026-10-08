@@ -2,7 +2,7 @@ import { Store } from "@/schema/store";
 import { computePath } from "@/utilities/computePath";
 import { For } from "@chakra-ui/react";
 import { format } from "date-fns";
-import GridCard from "../shared/GridCard";
+import StoreCard from "./StoreCard";
 import GridContainer from "../shared/GridContainer";
 
 interface Props {
@@ -16,10 +16,9 @@ const StoreGrid = ({ businessId, businessName, initialStores }: Props) => {
     <GridContainer pb={12}>
       <For each={initialStores}>
         {(store) => (
-          <GridCard
+          <StoreCard
             key={store.id}
-            name={store.name}
-            address={store.address}
+            store={store}
             badgeItems={[
               businessName,
               format(store.createdAt, "dd MMM yy").toUpperCase(),
