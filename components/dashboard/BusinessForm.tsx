@@ -35,12 +35,9 @@ interface BusinessFormProps {
   signup?: string;
 }
 
-export const businessDialog = createOverlay<BusinessFormProps>((props) => {
-  const { signup, ...rest } = props;
+export const businessDialog = createOverlay((props) => {
   const { trigger, isMutating } = useAddBusiness();
-  const { refresh, push, replace } = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { refresh, push } = useRouter();
 
   const form = useForm({
     resolver: standardSchemaResolver(CreateBusinessInputSchema),
@@ -75,18 +72,8 @@ export const businessDialog = createOverlay<BusinessFormProps>((props) => {
     } catch {} // Error displayed by toaster
   });
 
-  // Open form dialog on signup
-  useEffect(() => {
-    if (!signup) return;
-    if (signup) props.onOpenChange?.({ open: true });
-
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete("signup");
-    replace(`${pathname}?${params.toString()}`);
-  }, [signup]);
-
   return (
-    <Dialog.Root {...rest} size={"lg"} lazyMount>
+    <Dialog.Root {...props} size={"lg"} lazyMount>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
@@ -157,10 +144,24 @@ export const businessDialog = createOverlay<BusinessFormProps>((props) => {
 });
 
 export const BusinessForm = ({ signup }: BusinessFormProps) => {
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Open form dialog on signup
+  useEffect(() => {
+    if (!signup) return;
+    businessDialog.open("business-form", {});
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("signup");
+    replace(`${pathname}?${params.toString()}`);
+  }, [signup, pathname, searchParams, replace]);
+
   return (
     <FormButton
       onClick={() => {
-        businessDialog.open("business-form", { signup });
+        businessDialog.open("business-form", {});
       }}
     >
       <LuPlus />
