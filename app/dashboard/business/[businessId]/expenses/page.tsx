@@ -1,10 +1,11 @@
 import ExpenseTable from "@/components/business/ExpenseTable";
+import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getExpenses } from "@/server/expense";
 import { computePath } from "@/utilities/computePath";
-import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -30,12 +31,12 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
-          <Button variant={"outline"} size={"xs"} asChild>
+          <FormButton asChild>
             <NextLink href={`${computePath(businessId)}/expenses/new`}>
               <LuPlus />
               Create Expense
             </NextLink>
-          </Button>
+          </FormButton>
         </HStack>
 
         <ExpenseTable initialExpenses={expenses} businessId={businessId} />

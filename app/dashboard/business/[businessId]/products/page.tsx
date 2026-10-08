@@ -8,6 +8,7 @@ import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
 import NextLink from "next/link";
 import { LuPlus } from "react-icons/lu";
+import FormButton from "@/components/shared/FormButton";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -30,12 +31,12 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
-          <Button size={"xs"} variant={"outline"} asChild>
+          <FormButton asChild>
             <NextLink href={`${computePath(businessId)}/products/new`}>
               <LuPlus />
               Create Product
             </NextLink>
-          </Button>
+          </FormButton>
           {/* add dropdown */}
         </HStack>
 

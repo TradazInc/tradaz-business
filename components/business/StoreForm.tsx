@@ -19,6 +19,7 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
+import FormButton from "../shared/FormButton";
 
 interface StoreFormProps {
   signup?: string;
@@ -126,16 +127,14 @@ export const storeDialog = createOverlay<StoreFormProps>((props) => {
 
 export const StoreForm = ({ signup }: StoreFormProps) => {
   return (
-    <Button
-      size={"xs"}
-      variant={"outline"}
+    <FormButton
       onClick={() => {
         storeDialog.open("store-form", { signup });
       }}
     >
       <LuPlus />
       New Store
-    </Button>
+    </FormButton>
   );
 };
 

@@ -18,6 +18,7 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
+import FormButton from "../shared/FormButton";
 
 export const productCategoryDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -102,16 +103,14 @@ export const productCategoryDialog = createOverlay((props) => {
 
 export const ProductCategoryForm = () => {
   return (
-    <Button
-      size={"xs"}
-      variant={"outline"}
+    <FormButton
       onClick={() => {
         productCategoryDialog.open("product-category-form", {});
       }}
     >
       <LuPlus />
       New Category
-    </Button>
+    </FormButton>
   );
 };
 

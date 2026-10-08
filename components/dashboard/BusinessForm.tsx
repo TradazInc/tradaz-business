@@ -27,6 +27,7 @@ import { LuCheck, LuPlus } from "react-icons/lu";
 import { MdOutlineBusiness } from "react-icons/md";
 import { TiContacts } from "react-icons/ti";
 import { z } from "zod";
+import FormButton from "../shared/FormButton";
 import BrandStep from "./BrandStep";
 import ContactStep from "./ContactStep";
 
@@ -157,16 +158,14 @@ export const businessDialog = createOverlay<BusinessFormProps>((props) => {
 
 export const BusinessForm = ({ signup }: BusinessFormProps) => {
   return (
-    <Button
-      size={"xs"}
-      variant={"outline"}
+    <FormButton
       onClick={() => {
         businessDialog.open("business-form", { signup });
       }}
     >
       <LuPlus />
       New Brand
-    </Button>
+    </FormButton>
   );
 };
 

@@ -3,9 +3,9 @@
 import { useAddCart } from "@/hooks/cart";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
-import { Button, ButtonProps } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuPlus } from "react-icons/lu";
+import FormButton from "../shared/FormButton";
 import { toaster } from "../ui/toaster";
 
 interface Props {
@@ -13,11 +13,7 @@ interface Props {
   storeId: string | undefined;
 }
 
-const NewCartButton = ({
-  businessId,
-  storeId,
-  ...props
-}: Props & ButtonProps) => {
+const NewCartButton = ({ businessId, storeId }: Props) => {
   const { push, refresh } = useRouter();
   const { trigger } = useAddCart(businessId);
 
@@ -42,10 +38,10 @@ const NewCartButton = ({
   };
 
   return (
-    <Button variant={"outline"} size={"xs"} {...props} onClick={handleClick}>
+    <FormButton onClick={handleClick}>
       <LuPlus />
       New Cart
-    </Button>
+    </FormButton>
   );
 };
 

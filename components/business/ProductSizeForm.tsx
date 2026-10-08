@@ -1,12 +1,12 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
+import { useAddSizeTypes } from "@/hooks/sizeType";
 import {
   CreateSizeTypeInputSchema,
   emptySize,
   emptySizeType,
 } from "@/schema/sizeType";
-import { useAddSizeTypes } from "@/hooks/sizeType";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
@@ -23,6 +23,7 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
+import FormButton from "../shared/FormButton";
 
 export const productSizeDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -167,16 +168,14 @@ export const productSizeDialog = createOverlay((props) => {
 
 export const ProductSizeForm = () => {
   return (
-    <Button
-      size={"xs"}
-      variant={"outline"}
+    <FormButton
       onClick={() => {
         productSizeDialog.open("product-size-form", {});
       }}
     >
       <LuPlus />
       New Product Size
-    </Button>
+    </FormButton>
   );
 };
 

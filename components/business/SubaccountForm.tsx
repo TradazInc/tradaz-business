@@ -30,6 +30,7 @@ import { useId, useMemo, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
+import FormButton from "../shared/FormButton";
 import FormInputGrid from "../shared/FormInputGrid";
 
 export const subaccountDialog = createOverlay((props) => {
@@ -374,16 +375,14 @@ export const subaccountDialog = createOverlay((props) => {
 
 export const SubaccountForm = () => {
   return (
-    <Button
-      size={"xs"}
-      variant={"outline"}
+    <FormButton
       onClick={() => {
         subaccountDialog.open("subaccount-form", {});
       }}
     >
       <LuPlus />
       Add Subaccount
-    </Button>
+    </FormButton>
   );
 };
 

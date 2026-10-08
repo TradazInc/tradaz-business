@@ -22,6 +22,7 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
+import FormButton from "../shared/FormButton";
 
 export const pointsConfigDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -209,16 +210,14 @@ export const pointsConfigDialog = createOverlay((props) => {
 
 export const PointsConfigForm = () => {
   return (
-    <Button
-      size={"xs"}
-      variant={"outline"}
+    <FormButton
       onClick={() => {
         pointsConfigDialog.open("points-config-form", {});
       }}
     >
       <LuPlus />
       New Configs
-    </Button>
+    </FormButton>
   );
 };
 

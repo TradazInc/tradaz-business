@@ -23,10 +23,11 @@ import {
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
+import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuCalendar, LuPlus } from "react-icons/lu";
+import FormButton from "../shared/FormButton";
 import FormInputGrid from "../shared/FormInputGrid";
-import { useMemo } from "react";
 
 export const couponDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -416,16 +417,14 @@ export const couponDialog = createOverlay((props) => {
 
 export const CouponForm = () => {
   return (
-    <Button
-      size={"xs"}
-      variant={"outline"}
+    <FormButton
       onClick={() => {
         couponDialog.open("coupon-form", {});
       }}
     >
       <LuPlus />
       New Coupon
-    </Button>
+    </FormButton>
   );
 };
 

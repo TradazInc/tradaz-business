@@ -25,10 +25,11 @@ import {
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
+import { useMemo } from "react";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { LuPlus, LuTrash2 } from "react-icons/lu";
+import FormButton from "../shared/FormButton";
 import FormInputGrid from "../shared/FormInputGrid";
-import { useMemo } from "react";
 
 export const posConfigDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -287,16 +288,14 @@ export const posConfigDialog = createOverlay((props) => {
 
 export const PosConfigForm = () => {
   return (
-    <Button
-      size={"xs"}
-      variant={"outline"}
+    <FormButton
       onClick={() => {
         posConfigDialog.open("pos-config-form", {});
       }}
     >
       <LuPlus />
       Add POS config
-    </Button>
+    </FormButton>
   );
 };
 

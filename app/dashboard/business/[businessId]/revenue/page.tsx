@@ -1,4 +1,5 @@
 import RevenueTable from "@/components/business/RevenueTable";
+import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
@@ -30,12 +31,12 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
-          <Button variant={"outline"} size={"xs"} asChild>
+          <FormButton asChild>
             <NextLink href={`${computePath(businessId)}/revenue/new`}>
               <LuPlus />
               Create Revenue
             </NextLink>
-          </Button>
+          </FormButton>
         </HStack>
 
         <RevenueTable initialRevenues={revenues} businessId={businessId} />
