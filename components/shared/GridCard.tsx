@@ -24,13 +24,13 @@ const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"} flexDirection={"row"}>
       <Card.Body gap={0}>
-        <HStack gap={3}>
+        <HStack gap={3} mb={4}>
           {logo ? (
             <Avatar.Root>
               <Avatar.Image src={logo} />
             </Avatar.Root>
           ) : (
-            <Icon rounded={"full"} bg={"bg"}>
+            <Icon rounded={"full"} bg={"bg"} size={"xl"} borderWidth={"1px"}>
               <MdBusiness />
             </Icon>
           )}
@@ -45,7 +45,9 @@ const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
             )}
           </Stack>
         </HStack>
+
         <Card.Description>{address}</Card.Description>
+
         <HStack mt={4}>
           {badgeItems.filter(Boolean).map((item) => (
             <Badge>{item}</Badge>
