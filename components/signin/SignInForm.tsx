@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { GoogleIcon } from "./GoogleIcon";
+import { FcGoogle } from "react-icons/fc";
 import SeparatorText from "./SeparatorText";
 
 const SignInForm = () => {
@@ -92,7 +92,7 @@ const SignInForm = () => {
         disabled={isMutating || emailMutating}
         w={"full"}
       >
-        <GoogleIcon />
+        <FcGoogle />
         <Text>Sign In With Google</Text>
       </Button>
     </Fieldset.Root>

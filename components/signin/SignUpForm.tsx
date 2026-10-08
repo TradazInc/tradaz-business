@@ -10,7 +10,7 @@ import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { GoogleIcon } from "./GoogleIcon";
+import { FcGoogle } from "react-icons/fc";
 import SeparatorText from "./SeparatorText";
 
 const SignUpForm = () => {
@@ -95,7 +95,7 @@ const SignUpForm = () => {
         disabled={isMutating || emailMutating}
         w={"full"}
       >
-        <GoogleIcon />
+        <FcGoogle />
         <Text>Sign Up With Google</Text>
       </Button>
     </Fieldset.Root>
