@@ -59,15 +59,11 @@ const ProductCard = ({ href, product }: Props) => {
         </DataList.Root>
       </Card.Body>
 
-      <Card.Footer gap={2}>
+      <Card.Footer justifyContent={"flex-end"}>
         <Button variant={"outline"} asChild>
           <NextLink href={href}>View</NextLink>
         </Button>
-        <Button
-          variant={"subtle"}
-          colorPalette={"red"}
-          onClick={() => {}}
-        >
+        <Button variant={"subtle"} colorPalette={"red"} onClick={() => {}}>
           Delete
         </Button>
       </Card.Footer>

@@ -22,7 +22,7 @@ interface Props {
 
 const CartCard = ({ cart, href, onClick }: Props) => {
   return (
-    <Card.Root w={"full"} p={5} borderWidth={"1px"} rounded={"md"}>
+    <Card.Root size={"sm"}>
       <Card.Body>
         <HStack gap={3}>
           <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
@@ -42,7 +42,7 @@ const CartCard = ({ cart, href, onClick }: Props) => {
           </Stack>
         </HStack>
 
-        <Card.Description>
+        <Card.Description my={1.5}>
           {[
             cart.couponCode && `Coupon ${cart.couponCode}`,
             (cart.points ?? 0) > 0 && `Points ${cart.points}`,
@@ -53,7 +53,7 @@ const CartCard = ({ cart, href, onClick }: Props) => {
         </Card.Description>
       </Card.Body>
 
-      <Card.Footer>
+      <Card.Footer justifyContent={"flex-end"}>
         <Button variant={"outline"} asChild>
           <NextLink href={href}>View</NextLink>
         </Button>
