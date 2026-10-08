@@ -4,7 +4,6 @@ import { GetAllCartsOutputItemData } from "@/schema/cart";
 import {
   Button,
   Card,
-  DataList,
   HStack,
   Icon,
   LinkOverlay,
@@ -31,7 +30,6 @@ const CartCard = ({ cart, href, onClick, disabled }: Props) => {
           <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
             <MdShoppingCartCheckout />
           </Icon>
-          <Text fontWeight={"semibold"} textStyle={"sm"}></Text>
           <Stack gap={0}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
               Cart {cart.id}
@@ -46,26 +44,15 @@ const CartCard = ({ cart, href, onClick, disabled }: Props) => {
           </Stack>
         </HStack>
 
-        <DataList.Root orientation={"horizontal"} my={1}>
-          {cart.couponCode && (
-            <DataList.Item>
-              <DataList.ItemLabel>Coupon</DataList.ItemLabel>
-              <DataList.ItemValue>{cart.couponCode}</DataList.ItemValue>
-            </DataList.Item>
-          )}
-          {(cart.depositAmount ?? 0) > 0 && (
-            <DataList.Item>
-              <DataList.ItemLabel>Deposit</DataList.ItemLabel>
-              <DataList.ItemValue>{cart.depositAmount}</DataList.ItemValue>
-            </DataList.Item>
-          )}
-          {(cart.points ?? 0) > 0 && (
-            <DataList.Item>
-              <DataList.ItemLabel>Points</DataList.ItemLabel>
-              <DataList.ItemValue>{cart.points}</DataList.ItemValue>
-            </DataList.Item>
-          )}
-        </DataList.Root>
+        <Card.Description>
+          {[
+            cart.couponCode && `Coupon ${cart.couponCode}`,
+            (cart.points ?? 0) > 0 && `Points ${cart.points}`,
+            (cart.depositAmount ?? 0) > 0 && `Deposit ${cart.depositAmount}`,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+        </Card.Description>
       </Card.Body>
 
       <Card.Footer>
