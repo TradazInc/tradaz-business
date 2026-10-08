@@ -18,6 +18,7 @@ const BusinessGrid = ({ initialBusinesses }: Props) => {
             key={business.id}
             logo={business.logo}
             name={business.name}
+            slug={business.slug}
             badgeItems={[
               business.category?.name,
               format(business.createdAt, "dd MMM yy").toUpperCase(),
