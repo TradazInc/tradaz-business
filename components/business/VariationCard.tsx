@@ -1,8 +1,6 @@
 import { GetProductVariationOutputData } from "@/schema/product";
 import {
-  Badge,
   Card,
-  ColorSwatch,
   DataList,
   Flex,
   FormatNumber,

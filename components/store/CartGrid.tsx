@@ -30,7 +30,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
     [data],
   );
 
-  const { trigger, isMutating } = useRemoveCart(businessId);
+  const { trigger } = useRemoveCart(businessId);
 
   const handleDelete = async (id: string) => {
     toaster.promise(trigger(id), {
@@ -61,7 +61,6 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
               <GridItem key={cart.id} colSpan={1}>
                 <CartCard
                   cart={cart}
-                  disabled={isMutating}
                   onClick={handleDelete}
                   href={`${computePath(businessId, storeId)}/carts/${cart.id}`}
                 />

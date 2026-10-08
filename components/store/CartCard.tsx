@@ -6,26 +6,24 @@ import {
   Card,
   HStack,
   Icon,
-  LinkOverlay,
   Span,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { formatDistanceToNowStrict } from "date-fns";
 import NextLink from "next/link";
-import { MdDeleteOutline, MdShoppingCartCheckout } from "react-icons/md";
+import { MdShoppingCartCheckout } from "react-icons/md";
 
 interface Props {
   href: string;
   cart: GetAllCartsOutputItemData;
-  disabled: boolean;
   onClick: (id: string) => void;
 }
 
-const CartCard = ({ cart, href, onClick, disabled }: Props) => {
+const CartCard = ({ cart, href, onClick }: Props) => {
   return (
     <Card.Root w={"full"} p={5} borderWidth={"1px"} rounded={"md"} asChild>
-      <Card.Body gap={0}>
+      <Card.Body>
         <HStack gap={3}>
           <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
             <MdShoppingCartCheckout />
@@ -56,20 +54,17 @@ const CartCard = ({ cart, href, onClick, disabled }: Props) => {
       </Card.Body>
 
       <Card.Footer>
+        <Button variant={"outline"} asChild>
+          <NextLink href={href}>View</NextLink>
+        </Button>
         <Button
           variant={"subtle"}
-          disabled={disabled}
           colorPalette={"red"}
           onClick={() => onClick(cart.id)}
         >
-          <MdDeleteOutline />
           Delete
         </Button>
       </Card.Footer>
-
-      <LinkOverlay asChild>
-        <NextLink href={href} />
-      </LinkOverlay>
     </Card.Root>
   );
 };

@@ -4,7 +4,6 @@ import { Button, Card, DataList, HStack, Image } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { MdDeleteOutline, MdOutlineViewInAr } from "react-icons/md";
 import StatusIndicator from "./StatusIndicator";
 
 interface Props {
@@ -28,12 +27,13 @@ const ProductCard = ({ href, product }: Props) => {
           <NextImage src={noImage} alt={`No image for ${product.name}`} />
         )}
       </Image>
-      <Card.Body gap="2">
+      <Card.Body gap={2}>
         <HStack justify={"space-between"}>
           <Card.Title>{product.name}</Card.Title>
           <StatusIndicator status={product.productStatus} />
         </HStack>
-        <DataList.Root size="sm">
+
+        <DataList.Root size={"sm"}>
           {product.vendor && (
             <DataList.Item>
               <DataList.ItemLabel>Vendor</DataList.ItemLabel>
@@ -58,20 +58,16 @@ const ProductCard = ({ href, product }: Props) => {
           )}
         </DataList.Root>
       </Card.Body>
-      <Card.Footer gap="2">
-        <Button variant={"subtle"} colorPalette={"blue"} flex={"1"} asChild>
-          <NextLink href={href}>
-            <MdOutlineViewInAr />
-            View
-          </NextLink>
+
+      <Card.Footer gap={2}>
+        <Button variant={"outline"} asChild>
+          <NextLink href={href}>View</NextLink>
         </Button>
         <Button
           variant={"subtle"}
           colorPalette={"red"}
-          flex={"1"}
           onClick={() => {}}
         >
-          <MdDeleteOutline />
           Delete
         </Button>
       </Card.Footer>
