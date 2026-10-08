@@ -1,16 +1,25 @@
 import { INVITATION_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
-import { CreateInvitationInputData } from "@/schema/invitation";
+import {
+  CreateInvitationInputData,
+  GetAllInvitationOutputData,
+} from "@/schema/invitation";
 import { getScopedKey } from "@/utilities/computeKey";
-import useSWR from "swr";
+import useSWR, { SWRConfiguration } from "swr";
 import useSWRMutation from "swr/mutation";
 
-export const useInvitations = (organizationId: string | undefined) => {
-  return useSWR(getScopedKey(INVITATION_KEY, organizationId), ([key, query]) =>
-    authClient.organization.listInvitations({
-      query: { organizationId },
-      fetchOptions: authConfig,
-    }),
+export const useInvitations = (
+  organizationId: string | undefined,
+  config?: SWRConfiguration<GetAllInvitationOutputData, Error>,
+) => {
+  return useSWR(
+    getScopedKey(INVITATION_KEY, organizationId),
+    ([key, query]) =>
+      authClient.organization.listInvitations({
+        query: { organizationId },
+        fetchOptions: authConfig,
+      }),
+    config,
   );
 };
 

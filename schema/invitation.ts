@@ -21,3 +21,4 @@ export const emptyInvitation: CreateInvitationInputData = {
 };
 
 export type GetInvitationOutputData = typeof authClient.$Infer.Invitation;
+export type GetAllInvitationOutputData = GetInvitationOutputData[];
