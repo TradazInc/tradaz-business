@@ -13,15 +13,14 @@ import {
   ButtonGroup,
   For,
   FormatNumber,
-  IconButton,
   Spinner,
   Table,
   Text,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
-import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
+import DeleteIconButton from "../shared/DeleteIconButton";
+import EditIconButton from "../shared/EditIconButton";
 
 interface Props {
   initialRevenues: Promise<GetAllRevenueOutputData[]>;
@@ -105,20 +104,14 @@ const RevenueTable = ({ initialRevenues, businessId }: Props) => {
                       ? (stores?.find((s) => s.id === revenue.teamId)?.name ??
                         "-")
                       : "-"}
-                  </Table.Cell>{" "}
+                  </Table.Cell>
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
-                      <IconButton>
-                        <AiOutlineEdit />
-                      </IconButton>
-                      <IconButton
-                        color={"fg.error"}
-                        _hover={{ bg: "bg.error", color: "fg.error" }}
+                      <EditIconButton />
+                      <DeleteIconButton
                         onClick={() => handleDelete(revenue.id)}
                         disabled={isMutating}
-                      >
-                        <MdDeleteOutline />
-                      </IconButton>
+                      />
                     </ButtonGroup>
                   </Table.Cell>
                 </Table.Row>

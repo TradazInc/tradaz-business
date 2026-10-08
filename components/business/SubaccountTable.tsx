@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyPage from "@/components/shared/EmptyPage";
 import { useSubaccounts } from "@/hooks/subaccount";
 import { GetAllSubaccountOutputData } from "@/schema/subaccount";
 import { parseCursorData } from "@/utilities/parsePageData";
@@ -8,15 +9,14 @@ import {
   Button,
   ButtonGroup,
   For,
-  IconButton,
   Spinner,
   Table,
   Text,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
 import InfiniteScroll from "react-infinite-scroll-component";
-import EmptyPage from "@/components/shared/EmptyPage";
+import DeleteIconButton from "../shared/DeleteIconButton";
+import EditIconButton from "../shared/EditIconButton";
 
 interface Props {
   initialSubaccounts: Promise<GetAllSubaccountOutputData[]>;
@@ -76,9 +76,8 @@ const SubaccountTable = ({ initialSubaccounts, businessId }: Props) => {
 
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
-                      <IconButton>
-                        <AiOutlineEdit />
-                      </IconButton>
+                      <EditIconButton />
+                      <DeleteIconButton />
                     </ButtonGroup>
                   </Table.Cell>
                 </Table.Row>

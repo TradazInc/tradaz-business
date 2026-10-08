@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyPage from "@/components/shared/EmptyPage";
 import { toaster } from "@/components/ui/toaster";
 import { useOrders, useUpdateOrderStatus } from "@/hooks/order";
 import { OrderStatus } from "@/schema/enums";
@@ -16,7 +17,6 @@ import {
   createListCollection,
   For,
   FormatNumber,
-  IconButton,
   Portal,
   Select,
   Spinner,
@@ -24,9 +24,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { MdOutlineViewInAr } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
-import EmptyPage from "@/components/shared/EmptyPage";
+import ViewIconButton from "../shared/ViewIconButton";
 
 interface Props {
   initialOrders: Promise<GetAllOrderOutputData[]>;
@@ -167,9 +166,7 @@ const OrderTable = ({ initialOrders, businessId }: Props) => {
                   </Table.Cell>
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
-                      <IconButton>
-                        <MdOutlineViewInAr />
-                      </IconButton>
+                      <ViewIconButton />
                     </ButtonGroup>
                   </Table.Cell>
                 </Table.Row>

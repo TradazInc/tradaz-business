@@ -9,16 +9,16 @@ import {
   ButtonGroup,
   For,
   FormatNumber,
-  IconButton,
   Spinner,
   Table,
   Text,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
 
-import InfiniteScroll from "react-infinite-scroll-component";
 import EmptyPage from "@/components/shared/EmptyPage";
+import InfiniteScroll from "react-infinite-scroll-component";
+import DeleteIconButton from "../shared/DeleteIconButton";
+import EditIconButton from "../shared/EditIconButton";
 
 interface Props {
   initialPointsConfigs: Promise<GetAllPointsConfigOutputData[]>;
@@ -93,9 +93,8 @@ const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
                   <Table.Cell>{pointsConfig.rewardPercentage}</Table.Cell>
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
-                      <IconButton>
-                        <AiOutlineEdit />
-                      </IconButton>
+                      <EditIconButton />
+                      <DeleteIconButton />
                     </ButtonGroup>
                   </Table.Cell>
                 </Table.Row>

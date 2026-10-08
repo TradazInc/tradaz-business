@@ -1,5 +1,6 @@
 "use client";
 
+import EmptyPage from "@/components/shared/EmptyPage";
 import { toaster } from "@/components/ui/toaster";
 import { useCoupons, useRemoveCoupon } from "@/hooks/coupon";
 import { GetAllCouponOutputData } from "@/schema/coupon";
@@ -11,16 +12,14 @@ import {
   ButtonGroup,
   For,
   FormatNumber,
-  IconButton,
   Spinner,
   Table,
   Text,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
-import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
-import EmptyPage from "@/components/shared/EmptyPage";
+import DeleteIconButton from "../shared/DeleteIconButton";
+import EditIconButton from "../shared/EditIconButton";
 
 interface Props {
   initialCoupons: Promise<GetAllCouponOutputData[]>;
@@ -113,17 +112,11 @@ const CouponTable = ({ initialCoupons, businessId }: Props) => {
                   </Table.Cell>
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
-                      <IconButton>
-                        <AiOutlineEdit />
-                      </IconButton>
-                      <IconButton
-                        color={"fg.error"}
-                        _hover={{ bg: "bg.error", color: "fg.error" }}
+                      <EditIconButton />
+                      <DeleteIconButton
                         onClick={() => handleDelete(coupon.id)}
                         disabled={isMutating}
-                      >
-                        <MdDeleteOutline />
-                      </IconButton>
+                      />
                     </ButtonGroup>
                   </Table.Cell>
                 </Table.Row>

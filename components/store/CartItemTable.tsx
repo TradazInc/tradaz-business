@@ -22,7 +22,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { LuMinus, LuPlus } from "react-icons/lu";
-import { MdDeleteOutline } from "react-icons/md";
+import DeleteIconButton from "../shared/DeleteIconButton";
 import ProductColorBadge from "../shared/ProductColorBadge";
 import ProductSearch from "../shared/ProductSearch";
 
@@ -142,16 +142,11 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
                   )?.quantity ?? "N/A"}
                 </Table.Cell>
                 <Table.Cell textAlign="end">
-                  <IconButton
-                    size="sm"
-                    variant="outline"
-                    color={"fg.error"}
-                    _hover={{ bg: "bg.error", color: "fg.error" }}
+                  <DeleteIconButton
+                    size={"sm"}
                     onClick={() => handleDeleteItem(cartItem.id)}
                     disabled={removeFromCart.isMutating}
-                  >
-                    <MdDeleteOutline />
-                  </IconButton>
+                  />
                 </Table.Cell>
               </Table.Row>
             )}
