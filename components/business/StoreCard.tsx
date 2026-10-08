@@ -1,7 +1,7 @@
 import { Store } from "@/schema/store";
 import { Badge, Card, HStack, Icon, LinkOverlay, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { MdBusiness } from "react-icons/md";
+import { LiaStoreAltSolid } from "react-icons/lia";
 
 interface Props {
   store: Store;
@@ -15,7 +15,7 @@ const StoreCard = ({ store, href, badgeItems }: Props) => {
       <Card.Body gap={0}>
         <HStack gap={3}>
           <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
-            <MdBusiness />
+            <LiaStoreAltSolid />
           </Icon>
           <Text fontWeight={"semibold"} textStyle={"sm"}>
             {store.name}
