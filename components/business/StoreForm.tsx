@@ -58,7 +58,7 @@ export const storeDialog = createOverlay<StoreFormProps>((props) => {
   });
 
   return (
-    <Dialog.Root {...rest}>
+    <Dialog.Root {...rest} size={"lg"} lazyMount>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>

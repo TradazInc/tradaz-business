@@ -85,7 +85,7 @@ export const businessDialog = createOverlay<BusinessFormProps>((props) => {
   }, [signup]);
 
   return (
-    <Dialog.Root {...rest}>
+    <Dialog.Root {...rest} size={"lg"} lazyMount>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>

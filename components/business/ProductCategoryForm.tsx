@@ -49,7 +49,7 @@ export const productCategoryDialog = createOverlay((props) => {
   });
 
   return (
-    <Dialog.Root {...props}>
+    <Dialog.Root {...props} size={"lg"} lazyMount>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>

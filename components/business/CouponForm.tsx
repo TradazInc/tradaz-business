@@ -74,7 +74,7 @@ export const couponDialog = createOverlay((props) => {
   });
 
   return (
-    <Dialog.Root size={"lg"} {...props}>
+    <Dialog.Root {...props} size={"lg"} lazyMount>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
