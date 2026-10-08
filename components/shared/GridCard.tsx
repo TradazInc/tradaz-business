@@ -1,11 +1,10 @@
 import {
+  Avatar,
   Badge,
-  Box,
   Card,
-  Square,
+  Circle,
   HStack,
   Icon,
-  Image,
   LinkOverlay,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -22,27 +21,33 @@ interface Props {
 const GridCard = ({ logo, name, address, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"} flexDirection={"row"}>
-      <Square size={"full"}>
-        <Icon size={"xl"}>
-          {logo ? (
-            <Image src={logo} borderRadius={"full"} fit={"cover"} />
-          ) : (
+      <Circle
+        bg={"bg"}
+        size={10}
+        flexShrink={0}
+        overflow={"hidden"}
+        alignSelf={"center"}
+      >
+        {logo ? (
+          <Avatar.Root size={"xl"}>
+            <Avatar.Image src={logo} />
+          </Avatar.Root>
+        ) : (
+          <Icon size={"xl"}>
             <MdBusiness />
-          )}
-        </Icon>
-      </Square>
+          </Icon>
+        )}
+      </Circle>
 
-      <Box>
-        <Card.Body gapY={0}>
-          <Card.Title mb="2">{name}</Card.Title>
-          <Card.Description>{address}</Card.Description>
-          <HStack mt="4">
-            {badgeItems.map((item) => (
-              <Badge>{item}</Badge>
-            ))}
-          </HStack>
-        </Card.Body>
-      </Box>
+      <Card.Body gap={0}>
+        <Card.Title mb="2">{name}</Card.Title>
+        <Card.Description>{address}</Card.Description>
+        <HStack mt="4">
+          {badgeItems.map((item) => (
+            <Badge>{item}</Badge>
+          ))}
+        </HStack>
+      </Card.Body>
 
       <LinkOverlay asChild>
         <NextLink href={href} />
