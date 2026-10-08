@@ -1,6 +1,6 @@
-import ProductCarousel from "@/components/business/ProductCarousel";
-import ProductDescription from "@/components/business/ProductDescription";
-import VariationCard from "@/components/business/VariationCard";
+import ProductCarousel from "@/components/shared/ProductCarousel";
+import ProductDescription from "@/components/shared/ProductDescription";
+import VariationCard from "@/components/shared/VariationCard";
 import { PageContainer } from "@/components/shared/PageContainer";
 import { getProduct } from "@/server/product";
 import { Box, Stack, VStack } from "@chakra-ui/react";

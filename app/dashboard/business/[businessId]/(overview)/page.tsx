@@ -1,6 +1,6 @@
-import BusinessName from "@/components/business/BusinessName";
-import { StoreForm, StoreFormViewport } from "@/components/business/StoreForm";
-import StoreGrid from "@/components/business/StoreGrid";
+import BusinessName from "@/components/shared/BusinessName";
+import { StoreForm, StoreFormViewport } from "@/components/shared/StoreForm";
+import StoreGrid from "@/components/shared/StoreGrid";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";

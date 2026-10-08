@@ -1,4 +1,4 @@
-import ExpenseForm from "@/components/business/ExpenseForm";
+import ExpenseForm from "@/components/shared/ExpenseForm";
 import { PageContainer } from "@/components/shared/PageContainer";
 
 export default function page() {

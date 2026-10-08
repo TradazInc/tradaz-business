@@ -1,8 +1,8 @@
 import {
   BusinessForm,
   BusinessFormViewport,
-} from "@/components/dashboard/BusinessForm";
-import BusinessGrid from "@/components/dashboard/BusinessGrid";
+} from "@/components/shared/BusinessForm";
+import BusinessGrid from "@/components/shared/BusinessGrid";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";

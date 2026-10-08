@@ -1,5 +1,5 @@
-import { PointsConfigForm, PointsConfigFormViewport } from "@/components/business/PointsConfigForm";
-import PointsConfigTable from "@/components/business/PointsConfigTable";
+import { PointsConfigForm, PointsConfigFormViewport } from "@/components/shared/PointsConfigForm";
+import PointsConfigTable from "@/components/shared/PointsConfigTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getPointsConfigs } from "@/server/pointsConfig";

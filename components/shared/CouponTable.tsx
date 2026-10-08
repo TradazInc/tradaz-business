@@ -1,0 +1,145 @@
+"use client";
+
+import EmptyPage from "@/components/shared/EmptyPage";
+import { toaster } from "@/components/ui/toaster";
+import { useCoupons, useRemoveCoupon } from "@/hooks/coupon";
+import { GetAllCouponOutputData } from "@/schema/coupon";
+import { errorToastOptions } from "@/utilities/errorToastOptions";
+import { parseCursorData } from "@/utilities/parsePageData";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  For,
+  FormatNumber,
+  Spinner,
+  Table,
+  Text,
+} from "@chakra-ui/react";
+import { useMemo } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import DeleteIconButton from "./DeleteIconButton";
+import EditIconButton from "./EditIconButton";
+
+interface Props {
+  initialCoupons: Promise<GetAllCouponOutputData[]>;
+  businessId: string | undefined;
+}
+
+const CouponTable = ({ initialCoupons, businessId }: Props) => {
+  const { data, error, mutate, setSize, size } = useCoupons(businessId, {
+    fallbackData: initialCoupons,
+  });
+  const { flatData: coupons, hasMore } = useMemo(
+    () => parseCursorData(data),
+    [data],
+  );
+  const { trigger, isMutating } = useRemoveCoupon(businessId);
+
+  const handleDelete = async (id: string) => {
+    toaster.promise(trigger(id), {
+      loading: {
+        title: "Deleting coupon...",
+        description: "Please wait",
+      },
+      success: {
+        title: "Deletion successful",
+        description: "Coupon has been deleted",
+      },
+      error: errorToastOptions,
+    });
+  };
+
+  if (data && coupons.length === 0) {
+    return (
+      <EmptyPage title="No coupons found" description="Create a new coupon" />
+    );
+  }
+
+  return (
+    <Box w={"full"}>
+      <InfiniteScroll
+        dataLength={coupons.length}
+        next={() => setSize(size + 1)}
+        hasMore={hasMore && !error}
+        loader={<Spinner />}
+        style={{ width: "100%", overflow: "visible" }}
+      >
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader>Name</Table.ColumnHeader>
+              <Table.ColumnHeader>Code</Table.ColumnHeader>
+              <Table.ColumnHeader>Discount Type</Table.ColumnHeader>
+              <Table.ColumnHeader>Discount Value</Table.ColumnHeader>
+              <Table.ColumnHeader>Mininum Order Value</Table.ColumnHeader>
+              <Table.ColumnHeader>Usage Limit</Table.ColumnHeader>
+              <Table.ColumnHeader>Active</Table.ColumnHeader>
+              <Table.ColumnHeader>Start Date</Table.ColumnHeader>
+              <Table.ColumnHeader>End Date</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <For
+              each={coupons}
+              fallback={
+                <Table.Row>
+                  <Table.Cell colSpan={10}>No coupons available</Table.Cell>
+                </Table.Row>
+              }
+            >
+              {(coupon) => (
+                <Table.Row key={coupon.id} w={"full"}>
+                  <Table.Cell>{coupon.name}</Table.Cell>
+                  <Table.Cell>{coupon.code}</Table.Cell>
+                  <Table.Cell>{coupon.discountType}</Table.Cell>
+                  <Table.Cell>{coupon.discountValue}</Table.Cell>
+                  <Table.Cell>
+                    <FormatNumber
+                      value={coupon.minOrderValue}
+                      style="currency"
+                      currency="NGN"
+                    />
+                  </Table.Cell>
+                  <Table.Cell>{coupon.usageLimit}</Table.Cell>
+                  <Table.Cell>{coupon.isActive}</Table.Cell>
+                  <Table.Cell>
+                    {new Date(coupon.startsAt).toDateString()}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {new Date(coupon.endsAt).toDateString()}
+                  </Table.Cell>
+                  <Table.Cell textAlign="end">
+                    <ButtonGroup size="sm" variant="outline">
+                      <EditIconButton />
+                      <DeleteIconButton
+                        onClick={() => handleDelete(coupon.id)}
+                        disabled={isMutating}
+                      />
+                    </ButtonGroup>
+                  </Table.Cell>
+                </Table.Row>
+              )}
+            </For>
+          </Table.Body>
+        </Table.Root>
+      </InfiniteScroll>
+      {error && (
+        <>
+          <Button
+            w={"full"}
+            size={"md"}
+            variant={"subtle"}
+            onClick={() => mutate()}
+          >
+            Click to retry
+          </Button>
+          <Text>Coupons unavailable. Retry to continue.</Text>
+        </>
+      )}
+    </Box>
+  );
+};
+
+export default CouponTable;

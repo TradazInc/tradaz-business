@@ -1,5 +1,5 @@
-import ExpenseForm from "@/components/business/ExpenseForm";
-import RevenueForm from "@/components/business/RevenueForm";
+import ExpenseForm from "@/components/shared/ExpenseForm";
+import RevenueForm from "@/components/shared/RevenueForm";
 import { PageContainer } from "@/components/shared/PageContainer";
 
 interface Props {

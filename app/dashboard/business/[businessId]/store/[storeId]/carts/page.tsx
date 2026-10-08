@@ -1,8 +1,8 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
-import CartGrid from "@/components/store/CartGrid";
-import NewCartButton from "@/components/store/NewCartButton";
+import CartGrid from "@/components/shared/CartGrid";
+import NewCartButton from "@/components/shared/NewCartButton";
 import { getCarts } from "@/server/cart";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";

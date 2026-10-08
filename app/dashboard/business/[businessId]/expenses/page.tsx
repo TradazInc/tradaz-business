@@ -1,4 +1,4 @@
-import ExpenseTable from "@/components/business/ExpenseTable";
+import ExpenseTable from "@/components/shared/ExpenseTable";
 import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";

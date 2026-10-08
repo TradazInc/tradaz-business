@@ -1,4 +1,4 @@
-import RevenueTable from "@/components/business/RevenueTable";
+import RevenueTable from "@/components/shared/RevenueTable";
 import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";

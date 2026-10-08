@@ -1,4 +1,4 @@
-import ProductGrid from "@/components/business/ProductGrid";
+import ProductGrid from "@/components/shared/ProductGrid";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";

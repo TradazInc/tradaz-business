@@ -1,5 +1,5 @@
-import { ProductCategoryForm, ProductCategoryFormViewport } from "@/components/business/ProductCategoryForm";
-import ProductCategoryTable from "@/components/business/ProductCategoryTable";
+import { ProductCategoryForm, ProductCategoryFormViewport } from "@/components/shared/ProductCategoryForm";
+import ProductCategoryTable from "@/components/shared/ProductCategoryTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getProductCategories } from "@/server/productCategory";

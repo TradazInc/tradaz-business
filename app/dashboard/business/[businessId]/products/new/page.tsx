@@ -1,4 +1,4 @@
-import ProductForm from "@/components/business/ProductForm";
+import ProductForm from "@/components/shared/ProductForm";
 import { PageContainer } from "@/components/shared/PageContainer";
 
 export default function page() {

@@ -1,8 +1,8 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
-import { PosConfigForm, PosConfigFormViewport } from "@/components/store/PosConfigForm";
-import PosConfigTable from "@/components/store/PosConfigTable";
+import { PosConfigForm, PosConfigFormViewport } from "@/components/shared/PosConfigForm";
+import PosConfigTable from "@/components/shared/PosConfigTable";
 import { getPosConfigs } from "@/server/posConfig";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";

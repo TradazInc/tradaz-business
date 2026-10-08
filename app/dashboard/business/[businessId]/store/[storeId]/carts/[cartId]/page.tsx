@@ -1,7 +1,7 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
-import CartForm from "@/components/store/CartForm";
-import CartItemTable from "@/components/store/CartItemTable";
+import CartForm from "@/components/shared/CartForm";
+import CartItemTable from "@/components/shared/CartItemTable";
 import { getCart } from "@/server/cart";
 import { GridItem, SimpleGrid, VStack } from "@chakra-ui/react";
 

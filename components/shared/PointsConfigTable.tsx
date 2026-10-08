@@ -1,0 +1,123 @@
+"use client";
+
+import { usePointsConfigs } from "@/hooks/pointsConfig";
+import { GetAllPointsConfigOutputData } from "@/schema/pointsConfig";
+import { parseCursorData } from "@/utilities/parsePageData";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  For,
+  FormatNumber,
+  Spinner,
+  Table,
+  Text,
+} from "@chakra-ui/react";
+import { useMemo } from "react";
+
+import EmptyPage from "@/components/shared/EmptyPage";
+import InfiniteScroll from "react-infinite-scroll-component";
+import DeleteIconButton from "./DeleteIconButton";
+import EditIconButton from "./EditIconButton";
+
+interface Props {
+  initialPointsConfigs: Promise<GetAllPointsConfigOutputData[]>;
+  businessId: string | undefined;
+}
+
+const PointsConfigTable = ({ initialPointsConfigs, businessId }: Props) => {
+  const { data, error, mutate, setSize, size } = usePointsConfigs(businessId, {
+    fallbackData: initialPointsConfigs,
+  });
+  const { flatData: pointsConfigs, hasMore } = useMemo(
+    () => parseCursorData(data),
+    [data],
+  );
+
+  if (data && pointsConfigs.length === 0) {
+    return (
+      <EmptyPage
+        title="No loyalty points configs found"
+        description="Create a loyalty points config"
+      />
+    );
+  }
+
+  return (
+    <Box w={"full"}>
+      <InfiniteScroll
+        dataLength={pointsConfigs.length}
+        next={() => setSize(size + 1)}
+        hasMore={hasMore && !error}
+        loader={<Spinner />}
+        style={{ width: "100%", overflow: "visible" }}
+      >
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader>Name</Table.ColumnHeader>
+              <Table.ColumnHeader>Min Order Value</Table.ColumnHeader>
+              <Table.ColumnHeader>Max Order Value</Table.ColumnHeader>
+              <Table.ColumnHeader>Reward Percentage</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <For
+              each={pointsConfigs}
+              fallback={
+                <Table.Row>
+                  <Table.Cell colSpan={5}>
+                    No points configs available
+                  </Table.Cell>
+                </Table.Row>
+              }
+            >
+              {(pointsConfig) => (
+                <Table.Row key={pointsConfig.id} w={"full"}>
+                  <Table.Cell>{pointsConfig.name}</Table.Cell>
+                  <Table.Cell>
+                    <FormatNumber
+                      value={pointsConfig.minOrderValue}
+                      style="currency"
+                      currency="NGN"
+                    />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <FormatNumber
+                      value={pointsConfig.maxOrderValue}
+                      style="currency"
+                      currency="NGN"
+                    />
+                  </Table.Cell>
+                  <Table.Cell>{pointsConfig.rewardPercentage}</Table.Cell>
+                  <Table.Cell textAlign="end">
+                    <ButtonGroup size="sm" variant="outline">
+                      <EditIconButton />
+                      <DeleteIconButton />
+                    </ButtonGroup>
+                  </Table.Cell>
+                </Table.Row>
+              )}
+            </For>
+          </Table.Body>
+        </Table.Root>
+      </InfiniteScroll>
+      {error && (
+        <>
+          <Button
+            w={"full"}
+            size={"md"}
+            variant={"subtle"}
+            onClick={() => mutate()}
+          >
+            Click to retry
+          </Button>
+          <Text>Points configs unavailable. Retry to continue.</Text>
+        </>
+      )}
+    </Box>
+  );
+};
+
+export default PointsConfigTable;

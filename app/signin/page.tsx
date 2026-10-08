@@ -1,5 +1,5 @@
-import SignInForm from "@/components/signin/SignInForm";
-import SignUpForm from "@/components/signin/SignUpForm";
+import SignInForm from "@/components/shared/SignInForm";
+import SignUpForm from "@/components/shared/SignUpForm";
 import TradazLogo from "@/components/shared/TradazLogo";
 import { Center, Tabs, VStack } from "@chakra-ui/react";
 import { IoCreateOutline } from "react-icons/io5";

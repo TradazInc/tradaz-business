@@ -1,4 +1,4 @@
-import MemberTable from "@/components/business/MemberTable";
+import MemberTable from "@/components/shared/MemberTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";

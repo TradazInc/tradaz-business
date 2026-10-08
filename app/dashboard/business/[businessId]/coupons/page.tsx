@@ -1,5 +1,5 @@
-import { CouponForm, CouponFormViewport } from "@/components/business/CouponForm";
-import CouponTable from "@/components/business/CouponTable";
+import { CouponForm, CouponFormViewport } from "@/components/shared/CouponForm";
+import CouponTable from "@/components/shared/CouponTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getCoupons } from "@/server/coupon";

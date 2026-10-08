@@ -1,4 +1,4 @@
-import OrderTable from "@/components/business/OrderTable";
+import OrderTable from "@/components/shared/OrderTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";

@@ -1,5 +1,5 @@
-import { SubaccountForm, SubaccountFormViewport } from "@/components/business/SubaccountForm";
-import SubaccountTable from "@/components/business/SubaccountTable";
+import { SubaccountForm, SubaccountFormViewport } from "@/components/shared/SubaccountForm";
+import SubaccountTable from "@/components/shared/SubaccountTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";

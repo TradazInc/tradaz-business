@@ -1,5 +1,5 @@
-import { ProductSizeForm, ProductSizeFormViewport } from "@/components/business/ProductSizeForm";
-import ProductSizeTable from "@/components/business/ProductSizeTable";
+import { ProductSizeForm, ProductSizeFormViewport } from "@/components/shared/ProductSizeForm";
+import ProductSizeTable from "@/components/shared/ProductSizeTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getSizeTypes } from "@/server/sizeType";

@@ -1,4 +1,4 @@
-import RevenueForm from "@/components/business/RevenueForm";
+import RevenueForm from "@/components/shared/RevenueForm";
 import { PageContainer } from "@/components/shared/PageContainer";
 
 interface Props {
