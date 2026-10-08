@@ -30,7 +30,7 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
-          <Button asChild>
+          <Button size={"xs"} variant={"outline"} asChild>
             <NextLink href={`${computePath(businessId)}/products/new`}>
               <LuPlus />
               Create Product

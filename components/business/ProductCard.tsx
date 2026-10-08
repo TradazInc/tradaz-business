@@ -33,7 +33,7 @@ const ProductCard = ({ href, product }: Props) => {
           <StatusIndicator status={product.productStatus} />
         </HStack>
 
-        <DataList.Root size={"sm"}>
+        <DataList.Root size={"sm"} orientation={"horizontal"}>
           {product.vendor && (
             <DataList.Item>
               <DataList.ItemLabel>Vendor</DataList.ItemLabel>
