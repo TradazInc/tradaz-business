@@ -24,13 +24,13 @@ const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"} flexDirection={"row"}>
       <Card.Body gap={0}>
-        <HStack gap={3} mb={4}>
+        <HStack gap={3} mb={2}>
           {logo ? (
             <Avatar.Root>
               <Avatar.Image src={logo} />
             </Avatar.Root>
           ) : (
-            <Icon rounded={"full"} bg={"bg"} size={"xl"} borderWidth={"1px"}>
+            <Icon p={2} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
               <MdBusiness />
             </Icon>
           )}
