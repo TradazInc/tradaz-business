@@ -1,12 +1,13 @@
-import ProductCategoryForm from "@/components/business/ProductCategoryForm";
+import {
+  ProductCategoryForm,
+  ProductCategoryFormViewport,
+} from "@/components/business/ProductCategoryForm";
 import ProductCategoryTable from "@/components/business/ProductCategoryTable";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getProductCategories } from "@/server/productCategory";
-import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
-import { LuPlus } from "react-icons/lu";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -25,16 +26,7 @@ export default async function page({ params }: Props) {
 
         <HStack w={"full"}>
           <Spacer />
-          <DialogBox
-            trigger={
-              <Button variant={"outline"} size={"xs"}>
-                <LuPlus />
-                New Category
-              </Button>
-            }
-          >
-            <ProductCategoryForm />
-          </DialogBox>
+          <ProductCategoryForm />
         </HStack>
 
         {categories.data.length > 0 ? (
@@ -46,20 +38,10 @@ export default async function page({ params }: Props) {
           <EmptyPage
             title="No categories found"
             description="Create a product category"
-          >
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  New Category
-                </Button>
-              }
-            >
-              <ProductCategoryForm />
-            </DialogBox>
-          </EmptyPage>
+          />
         )}
       </VStack>
+      <ProductCategoryFormViewport />
     </PageContainer>
   );
 }

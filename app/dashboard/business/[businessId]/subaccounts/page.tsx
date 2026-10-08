@@ -1,14 +1,15 @@
-import SubaccountForm from "@/components/business/SubaccountForm";
+import {
+  SubaccountForm,
+  SubaccountFormViewport,
+} from "@/components/business/SubaccountForm";
 import SubaccountTable from "@/components/business/SubaccountTable";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getSubaccounts } from "@/server/subaccount";
-import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
-import { LuPlus } from "react-icons/lu";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -33,16 +34,7 @@ export default async function page({ params }: Props) {
             />
           </Suspense>
           <Spacer />
-          <DialogBox
-            trigger={
-              <Button variant={"outline"} size={"xs"}>
-                <LuPlus />
-                Add Subaccount
-              </Button>
-            }
-          >
-            <SubaccountForm />
-          </DialogBox>
+          <SubaccountForm />
         </HStack>
 
         {Subaccounts && Subaccounts.data.length > 0 ? (
@@ -54,20 +46,10 @@ export default async function page({ params }: Props) {
           <EmptyPage
             title="No subaccount found"
             description="Add a subaccount to receive payments"
-          >
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  Add Subaccount
-                </Button>
-              }
-            >
-              <SubaccountForm />
-            </DialogBox>
-          </EmptyPage>
+          />
         )}
       </VStack>
+      <SubaccountFormViewport />
     </PageContainer>
   );
 }

@@ -1,15 +1,13 @@
-import { StoreForm } from "@/components/business/StoreForm";
+import { StoreForm, StoreFormViewport } from "@/components/business/StoreForm";
 import StoreGrid from "@/components/business/StoreGrid";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getBusiness } from "@/server/business";
-import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { LuPlus } from "react-icons/lu";
 
 interface Props {
   params: Promise<{ businessId: string }>;
@@ -31,16 +29,7 @@ export default async function page({ params }: Props) {
             <Search placeholder={"Search for a store"} searchField={"search"} />
           </Suspense>
           <Spacer />
-          <DialogBox
-            trigger={
-              <Button variant={"outline"} size={"xs"}>
-                <LuPlus />
-                New Store
-              </Button>
-            }
-          >
-            <StoreForm />
-          </DialogBox>
+          <StoreForm />
         </HStack>
 
         {data?.teams.length > 0 ? (
@@ -49,20 +38,10 @@ export default async function page({ params }: Props) {
           <EmptyPage
             title={"No stores found"}
             description={"Create a new store for your brand"}
-          >
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  New Store
-                </Button>
-              }
-            >
-              <StoreForm />
-            </DialogBox>
-          </EmptyPage>
+          />
         )}
       </VStack>
+      <StoreFormViewport />
     </PageContainer>
   );
 }

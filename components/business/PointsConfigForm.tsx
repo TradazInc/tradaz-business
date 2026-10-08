@@ -9,25 +9,25 @@ import { useAddPointsConfig } from "@/hooks/pointsConfig";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
+  createOverlay,
+  Dialog,
   Field,
   Fieldset,
   Input,
   NumberInput,
+  Portal,
   Stack,
-  useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import { LuPlus } from "react-icons/lu";
 
-const PointsConfigForm = () => {
+export const pointsConfigDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddPointsConfig(businessId);
-  // throws if the component is ever rendered outside a Dialog.Root
-  const { setOpen } = useDialogContext();
 
   const {
-    reset,
     control,
     register,
     handleSubmit,
@@ -53,128 +53,169 @@ const PointsConfigForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      reset(emptyPointsConfig);
-      setOpen(false);
+      props.onOpenChange?.({ open: false });
     } catch {} // Error displayed by toaster
   });
 
   return (
-    <Fieldset.Root
-      w={"full"}
-      size={"lg"}
-      mx={"auto"}
-      px={{ base: 4, md: 0 }}
-      maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+    <Dialog.Root {...props}>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Fieldset.Root
+              w={"full"}
+              size={"lg"}
+              mx={"auto"}
+              px={{ base: 4, md: 0 }}
+              maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+            >
+              <Stack>
+                <Fieldset.Legend>Loyalty Points Configuration</Fieldset.Legend>
+                <Fieldset.HelperText>
+                  Please provide the loyalty points configurations below.
+                </Fieldset.HelperText>
+              </Stack>
+
+              <Fieldset.Content>
+                <Field.Root required invalid={!!errors.name}>
+                  <Field.Label>
+                    Name <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Input placeholder="e.g., Gold" {...register("name")} />
+                  <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                </Field.Root>
+
+                <Field.Root required invalid={!!errors.minOrderValue}>
+                  <Field.Label>
+                    Mininum order value
+                    <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Controller
+                    control={control}
+                    name={"minOrderValue"}
+                    render={({ field }) => (
+                      <NumberInput.Root
+                        w={"full"}
+                        name={field.name}
+                        disabled={field.disabled}
+                        defaultValue={"0"}
+                        value={
+                          Number.isNaN(field.value)
+                            ? ""
+                            : field.value.toString()
+                        }
+                        onValueChange={({ valueAsNumber }) =>
+                          field.onChange(valueAsNumber)
+                        }
+                      >
+                        <NumberInput.Control />
+                        <NumberInput.Input onBlur={field.onBlur} />
+                      </NumberInput.Root>
+                    )}
+                  />
+                  <Field.ErrorText>
+                    {errors.minOrderValue?.message}
+                  </Field.ErrorText>
+                </Field.Root>
+
+                <Field.Root required invalid={!!errors.maxOrderValue}>
+                  <Field.Label>
+                    Maximum order value
+                    <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Controller
+                    control={control}
+                    name={"maxOrderValue"}
+                    render={({ field }) => (
+                      <NumberInput.Root
+                        w={"full"}
+                        name={field.name}
+                        disabled={field.disabled}
+                        defaultValue={"0"}
+                        value={
+                          Number.isNaN(field.value)
+                            ? ""
+                            : field.value.toString()
+                        }
+                        onValueChange={({ valueAsNumber }) =>
+                          field.onChange(valueAsNumber)
+                        }
+                      >
+                        <NumberInput.Control />
+                        <NumberInput.Input onBlur={field.onBlur} />
+                      </NumberInput.Root>
+                    )}
+                  />
+                  <Field.ErrorText>
+                    {errors.maxOrderValue?.message}
+                  </Field.ErrorText>
+                </Field.Root>
+
+                <Field.Root required invalid={!!errors.rewardPercentage}>
+                  <Field.Label>
+                    Reward percentage %
+                    <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Controller
+                    control={control}
+                    name={"rewardPercentage"}
+                    render={({ field }) => (
+                      <NumberInput.Root
+                        w={"full"}
+                        name={field.name}
+                        disabled={field.disabled}
+                        defaultValue={"0"}
+                        value={
+                          Number.isNaN(field.value)
+                            ? ""
+                            : field.value.toString()
+                        }
+                        onValueChange={({ valueAsNumber }) =>
+                          field.onChange(valueAsNumber)
+                        }
+                      >
+                        <NumberInput.Control />
+                        <NumberInput.Input onBlur={field.onBlur} />
+                      </NumberInput.Root>
+                    )}
+                  />
+                  <Field.ErrorText>
+                    {errors.rewardPercentage?.message}
+                  </Field.ErrorText>
+                </Field.Root>
+              </Fieldset.Content>
+
+              <Button
+                onClick={onSubmit}
+                variant={"outline"}
+                alignSelf={"flex-start"}
+                disabled={!isValid || isSubmitting || isMutating}
+                loading={isSubmitting || isMutating}
+              >
+                Submit
+              </Button>
+            </Fieldset.Root>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
+});
+
+export const PointsConfigForm = () => {
+  return (
+    <Button
+      size={"xs"}
+      variant={"outline"}
+      onClick={() => {
+        pointsConfigDialog.open("points-config-form", {});
+      }}
     >
-      <Stack>
-        <Fieldset.Legend>Loyalty Points Configuration</Fieldset.Legend>
-        <Fieldset.HelperText>
-          Please provide the loyalty points configurations below.
-        </Fieldset.HelperText>
-      </Stack>
-
-      <Fieldset.Content>
-        <Field.Root required invalid={!!errors.name}>
-          <Field.Label>
-            Name <Field.RequiredIndicator />
-          </Field.Label>
-          <Input placeholder="e.g., Gold" {...register("name")} />
-          <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-        </Field.Root>
-
-        <Field.Root required invalid={!!errors.minOrderValue}>
-          <Field.Label>
-            Mininum order value
-            <Field.RequiredIndicator />
-          </Field.Label>
-          <Controller
-            control={control}
-            name={"minOrderValue"}
-            render={({ field }) => (
-              <NumberInput.Root
-                w={"full"}
-                name={field.name}
-                disabled={field.disabled}
-                defaultValue={"0"}
-                value={Number.isNaN(field.value) ? "" : field.value.toString()}
-                onValueChange={({ valueAsNumber }) =>
-                  field.onChange(valueAsNumber)
-                }
-              >
-                <NumberInput.Control />
-                <NumberInput.Input onBlur={field.onBlur} />
-              </NumberInput.Root>
-            )}
-          />
-          <Field.ErrorText>{errors.minOrderValue?.message}</Field.ErrorText>
-        </Field.Root>
-
-        <Field.Root required invalid={!!errors.maxOrderValue}>
-          <Field.Label>
-            Maximum order value
-            <Field.RequiredIndicator />
-          </Field.Label>
-          <Controller
-            control={control}
-            name={"maxOrderValue"}
-            render={({ field }) => (
-              <NumberInput.Root
-                w={"full"}
-                name={field.name}
-                disabled={field.disabled}
-                defaultValue={"0"}
-                value={Number.isNaN(field.value) ? "" : field.value.toString()}
-                onValueChange={({ valueAsNumber }) =>
-                  field.onChange(valueAsNumber)
-                }
-              >
-                <NumberInput.Control />
-                <NumberInput.Input onBlur={field.onBlur} />
-              </NumberInput.Root>
-            )}
-          />
-          <Field.ErrorText>{errors.maxOrderValue?.message}</Field.ErrorText>
-        </Field.Root>
-
-        <Field.Root required invalid={!!errors.rewardPercentage}>
-          <Field.Label>
-            Reward percentage %
-            <Field.RequiredIndicator />
-          </Field.Label>
-          <Controller
-            control={control}
-            name={"rewardPercentage"}
-            render={({ field }) => (
-              <NumberInput.Root
-                w={"full"}
-                name={field.name}
-                disabled={field.disabled}
-                defaultValue={"0"}
-                value={Number.isNaN(field.value) ? "" : field.value.toString()}
-                onValueChange={({ valueAsNumber }) =>
-                  field.onChange(valueAsNumber)
-                }
-              >
-                <NumberInput.Control />
-                <NumberInput.Input onBlur={field.onBlur} />
-              </NumberInput.Root>
-            )}
-          />
-          <Field.ErrorText>{errors.rewardPercentage?.message}</Field.ErrorText>
-        </Field.Root>
-      </Fieldset.Content>
-
-      <Button
-        onClick={onSubmit}
-        variant={"outline"}
-        alignSelf={"flex-start"}
-        disabled={!isValid || isSubmitting || isMutating}
-        loading={isSubmitting || isMutating}
-      >
-        Submit
-      </Button>
-    </Fieldset.Root>
+      <LuPlus />
+      New Configs
+    </Button>
   );
 };
 
-export default PointsConfigForm;
+export const PointsConfigFormViewport = pointsConfigDialog.Viewport;

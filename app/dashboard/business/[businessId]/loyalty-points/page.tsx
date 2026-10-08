@@ -1,12 +1,13 @@
-import PointsConfigForm from "@/components/business/PointsConfigForm";
+import {
+  PointsConfigForm,
+  PointsConfigFormViewport,
+} from "@/components/business/PointsConfigForm";
 import PointsConfigTable from "@/components/business/PointsConfigTable";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getPointsConfigs } from "@/server/pointsConfig";
-import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
-import { LuPlus } from "react-icons/lu";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -25,16 +26,7 @@ export default async function page({ params }: Props) {
 
         <HStack w={"full"}>
           <Spacer />
-          <DialogBox
-            trigger={
-              <Button variant={"outline"} size={"xs"}>
-                <LuPlus />
-                New Configs
-              </Button>
-            }
-          >
-            <PointsConfigForm />
-          </DialogBox>
+          <PointsConfigForm />
         </HStack>
 
         {pointsConfigs.data.length > 0 ? (
@@ -46,20 +38,10 @@ export default async function page({ params }: Props) {
           <EmptyPage
             title="No loyalty points configs found"
             description="Create a loyalty points config"
-          >
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  New Configs
-                </Button>
-              }
-            >
-              <PointsConfigForm />
-            </DialogBox>
-          </EmptyPage>
+          />
         )}
       </VStack>
+      <PointsConfigFormViewport />
     </PageContainer>
   );
 }

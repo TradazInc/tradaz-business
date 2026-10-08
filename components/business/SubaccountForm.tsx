@@ -14,6 +14,8 @@ import { parseCursorData } from "@/utilities/parsePageData";
 import {
   Button,
   createListCollection,
+  createOverlay,
+  Dialog,
   Field,
   Fieldset,
   Input,
@@ -21,26 +23,23 @@ import {
   Select,
   Spinner,
   Stack,
-  useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
 import { useId, useMemo, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
+import { LuPlus } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FormInputGrid from "../shared/FormInputGrid";
 
-const SubaccountForm = () => {
+export const subaccountDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddSubaccount(businessId);
   const { refresh } = useRouter();
-  // throws if the component is ever rendered outside a Dialog.Root
-  const { setOpen } = useDialogContext();
   const [country, setCountry] = useState("nigeria");
   const bankScrollId = useId();
 
   const {
-    reset,
     control,
     register,
     setValue,
@@ -114,240 +113,272 @@ const SubaccountForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      reset(emptySubaccount);
-      setOpen(false);
       refresh();
+      props.onOpenChange?.({ open: false });
     } catch {} // Error displayed by toaster
   });
 
   return (
-    <Fieldset.Root
-      w={"full"}
-      size={"lg"}
-      mx={"auto"}
-      px={{ base: 4, md: 0 }}
-      maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-    >
-      <Stack>
-        <Fieldset.Legend>Subaccounts</Fieldset.Legend>
-        <Fieldset.HelperText>
-          Please provide the settlement account details below.
-        </Fieldset.HelperText>
-      </Stack>
-
-      <Fieldset.Content>
-        <FormInputGrid>
-          <Field.Root required invalid={!!errors.gateway}>
-            <Field.Label>
-              Gateway <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"gateway"}
-              render={({ field }) => (
-                <Select.Root
-                  name={field.name}
-                  disabled={field.disabled}
-                  value={field.value ? [field.value] : []}
-                  onValueChange={({ value }) => {
-                    field.onChange(value[0]);
-                    field.onBlur();
-                    clearBank();
-                  }}
-                  onInteractOutside={() => field.onBlur()}
-                  collection={gatewayCollection}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder="Select gateway" />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      <Select.Indicator />
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                    <Select.Positioner>
-                      <Select.Content>
-                        {gatewayCollection.items.map((item) => (
-                          <Select.Item item={item} key={item.value}>
-                            {item.label}
-                            <Select.ItemIndicator />
-                          </Select.Item>
-                        ))}
-                      </Select.Content>
-                    </Select.Positioner>
-                  </Portal>
-                </Select.Root>
-              )}
-            />
-            <Field.HelperText>
-              Payment gateway that will settle into this account
-            </Field.HelperText>
-            <Field.ErrorText>{errors.gateway?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <Field.Root
-            required
-            disabled={!isPaystack}
-            invalid={!!countries.error}
-          >
-            <Field.Label>
-              Country <Field.RequiredIndicator />
-            </Field.Label>
-            <Select.Root
-              value={[country]}
-              onValueChange={({ value }) => {
-                setCountry(value[0]);
-                clearBank();
-              }}
-              collection={countryCollection}
+    <Dialog.Root {...props}>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Fieldset.Root
+              w={"full"}
+              size={"lg"}
+              mx={"auto"}
+              px={{ base: 4, md: 0 }}
+              maxW={{ base: "full", md: "2xl", xl: "4xl" }}
             >
-              <Select.HiddenSelect />
-              <Select.Control>
-                <Select.Trigger>
-                  <Select.ValueText placeholder="Select country" />
-                </Select.Trigger>
-                <Select.IndicatorGroup>
-                  {countries.isLoading ? (
-                    <Spinner size="sm" />
-                  ) : (
-                    <Select.Indicator />
-                  )}
-                </Select.IndicatorGroup>
-              </Select.Control>
-              <Portal>
-                <Select.Positioner>
-                  <Select.Content>
-                    {countryCollection.items.map((item) => (
-                      <Select.Item item={item} key={item.id}>
-                        {item.name}
-                        <Select.ItemIndicator />
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Positioner>
-              </Portal>
-            </Select.Root>
-            {countries.error && (
-              <Button
-                w={"full"}
-                size={"sm"}
-                type={"button"}
-                variant={"subtle"}
-                loading={countries.isLoading}
-                onClick={() => countries.mutate()}
-              >
-                Click to retry
-              </Button>
-            )}
-            <Field.HelperText>Country the bank is located in</Field.HelperText>
-            <Field.ErrorText>
-              Countries unavailable. Retry to continue.
-            </Field.ErrorText>
-          </Field.Root>
+              <Stack>
+                <Fieldset.Legend>Subaccounts</Fieldset.Legend>
+                <Fieldset.HelperText>
+                  Please provide the settlement account details below.
+                </Fieldset.HelperText>
+              </Stack>
 
-          <Field.Root required invalid={!!errors.bankCode || !!banks.error}>
-            <Field.Label>
-              Bank <Field.RequiredIndicator />
-            </Field.Label>
-            <Controller
-              control={control}
-              name={"bankCode"}
-              render={({ field }) => (
-                <Select.Root
-                  name={field.name}
-                  disabled={field.disabled || !gateway}
-                  value={field.value ? [field.value] : []}
-                  onValueChange={({ value }) => {
-                    field.onChange(value[0] ?? "");
-                    field.onBlur();
-                  }}
-                  onInteractOutside={() => field.onBlur()}
-                  collection={bankCollection}
-                >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                    <Select.Trigger>
-                      <Select.ValueText placeholder="Select bank" />
-                    </Select.Trigger>
-                    <Select.IndicatorGroup>
-                      <Select.ClearTrigger />
-                      {banks.isLoading ? (
-                        <Spinner size="sm" />
-                      ) : (
-                        <Select.Indicator />
+              <Fieldset.Content>
+                <FormInputGrid>
+                  <Field.Root required invalid={!!errors.gateway}>
+                    <Field.Label>
+                      Gateway <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Controller
+                      control={control}
+                      name={"gateway"}
+                      render={({ field }) => (
+                        <Select.Root
+                          name={field.name}
+                          disabled={field.disabled}
+                          value={field.value ? [field.value] : []}
+                          onValueChange={({ value }) => {
+                            field.onChange(value[0]);
+                            field.onBlur();
+                            clearBank();
+                          }}
+                          onInteractOutside={() => field.onBlur()}
+                          collection={gatewayCollection}
+                        >
+                          <Select.HiddenSelect />
+                          <Select.Control>
+                            <Select.Trigger>
+                              <Select.ValueText placeholder="Select gateway" />
+                            </Select.Trigger>
+                            <Select.IndicatorGroup>
+                              <Select.Indicator />
+                            </Select.IndicatorGroup>
+                          </Select.Control>
+                          <Portal>
+                            <Select.Positioner>
+                              <Select.Content>
+                                {gatewayCollection.items.map((item) => (
+                                  <Select.Item item={item} key={item.value}>
+                                    {item.label}
+                                    <Select.ItemIndicator />
+                                  </Select.Item>
+                                ))}
+                              </Select.Content>
+                            </Select.Positioner>
+                          </Portal>
+                        </Select.Root>
                       )}
-                    </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Select.Positioner>
-                    <Select.Content id={bankScrollId}>
-                      <InfiniteScroll
-                        dataLength={parsedBanks.flatData.length}
-                        hasMore={parsedBanks.hasMore && !banks.error}
-                        next={() => banks.setSize(banks.size + 1)}
-                        loader={<Spinner size={"xs"} />}
-                        scrollableTarget={bankScrollId}
+                    />
+                    <Field.HelperText>
+                      Payment gateway that will settle into this account
+                    </Field.HelperText>
+                    <Field.ErrorText>{errors.gateway?.message}</Field.ErrorText>
+                  </Field.Root>
+
+                  <Field.Root
+                    required
+                    disabled={!isPaystack}
+                    invalid={!!countries.error}
+                  >
+                    <Field.Label>
+                      Country <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Select.Root
+                      value={[country]}
+                      onValueChange={({ value }) => {
+                        setCountry(value[0]);
+                        clearBank();
+                      }}
+                      collection={countryCollection}
+                    >
+                      <Select.HiddenSelect />
+                      <Select.Control>
+                        <Select.Trigger>
+                          <Select.ValueText placeholder="Select country" />
+                        </Select.Trigger>
+                        <Select.IndicatorGroup>
+                          {countries.isLoading ? (
+                            <Spinner size="sm" />
+                          ) : (
+                            <Select.Indicator />
+                          )}
+                        </Select.IndicatorGroup>
+                      </Select.Control>
+                      <Portal>
+                        <Select.Positioner>
+                          <Select.Content>
+                            {countryCollection.items.map((item) => (
+                              <Select.Item item={item} key={item.id}>
+                                {item.name}
+                                <Select.ItemIndicator />
+                              </Select.Item>
+                            ))}
+                          </Select.Content>
+                        </Select.Positioner>
+                      </Portal>
+                    </Select.Root>
+                    {countries.error && (
+                      <Button
+                        w={"full"}
+                        size={"sm"}
+                        type={"button"}
+                        variant={"subtle"}
+                        loading={countries.isLoading}
+                        onClick={() => countries.mutate()}
                       >
-                        {bankCollection.items.map((bank) => (
-                          <Select.Item item={bank} key={bank.code}>
-                            {bank.name}
-                            <Select.ItemIndicator />
-                          </Select.Item>
-                        ))}
-                      </InfiniteScroll>
-                    </Select.Content>
-                  </Select.Positioner>
-                </Select.Root>
-              )}
-            />
-            {banks.error && (
+                        Click to retry
+                      </Button>
+                    )}
+                    <Field.HelperText>
+                      Country the bank is located in
+                    </Field.HelperText>
+                    <Field.ErrorText>
+                      Countries unavailable. Retry to continue.
+                    </Field.ErrorText>
+                  </Field.Root>
+
+                  <Field.Root
+                    required
+                    invalid={!!errors.bankCode || !!banks.error}
+                  >
+                    <Field.Label>
+                      Bank <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Controller
+                      control={control}
+                      name={"bankCode"}
+                      render={({ field }) => (
+                        <Select.Root
+                          name={field.name}
+                          disabled={field.disabled || !gateway}
+                          value={field.value ? [field.value] : []}
+                          onValueChange={({ value }) => {
+                            field.onChange(value[0] ?? "");
+                            field.onBlur();
+                          }}
+                          onInteractOutside={() => field.onBlur()}
+                          collection={bankCollection}
+                        >
+                          <Select.HiddenSelect />
+                          <Select.Control>
+                            <Select.Trigger>
+                              <Select.ValueText placeholder="Select bank" />
+                            </Select.Trigger>
+                            <Select.IndicatorGroup>
+                              <Select.ClearTrigger />
+                              {banks.isLoading ? (
+                                <Spinner size="sm" />
+                              ) : (
+                                <Select.Indicator />
+                              )}
+                            </Select.IndicatorGroup>
+                          </Select.Control>
+                          <Select.Positioner>
+                            <Select.Content id={bankScrollId}>
+                              <InfiniteScroll
+                                dataLength={parsedBanks.flatData.length}
+                                hasMore={parsedBanks.hasMore && !banks.error}
+                                next={() => banks.setSize(banks.size + 1)}
+                                loader={<Spinner size={"xs"} />}
+                                scrollableTarget={bankScrollId}
+                              >
+                                {bankCollection.items.map((bank) => (
+                                  <Select.Item item={bank} key={bank.code}>
+                                    {bank.name}
+                                    <Select.ItemIndicator />
+                                  </Select.Item>
+                                ))}
+                              </InfiniteScroll>
+                            </Select.Content>
+                          </Select.Positioner>
+                        </Select.Root>
+                      )}
+                    />
+                    {banks.error && (
+                      <Button
+                        w={"full"}
+                        size={"sm"}
+                        type={"button"}
+                        variant={"subtle"}
+                        loading={banks.isLoading}
+                        onClick={() => banks.mutate()}
+                      >
+                        Click to retry
+                      </Button>
+                    )}
+                    <Field.HelperText>
+                      Bank that holds the account
+                    </Field.HelperText>
+                    <Field.ErrorText>
+                      {banks.error
+                        ? "Banks unavailable. Retry to continue."
+                        : errors.bankCode?.message}
+                    </Field.ErrorText>
+                  </Field.Root>
+
+                  <Field.Root required invalid={!!errors.accountNumber}>
+                    <Field.Label>
+                      Account number <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Input
+                      inputMode="numeric"
+                      maxLength={10}
+                      placeholder="e.g., 0123456789"
+                      {...register("accountNumber")}
+                    />
+                    <Field.HelperText>10 digit account number</Field.HelperText>
+                    <Field.ErrorText>
+                      {errors.accountNumber?.message}
+                    </Field.ErrorText>
+                  </Field.Root>
+                </FormInputGrid>
+              </Fieldset.Content>
+
               <Button
-                w={"full"}
-                size={"sm"}
-                type={"button"}
-                variant={"subtle"}
-                loading={banks.isLoading}
-                onClick={() => banks.mutate()}
+                onClick={onSubmit}
+                variant={"outline"}
+                alignSelf={"flex-start"}
+                disabled={!isValid || isSubmitting || isMutating}
+                loading={isSubmitting || isMutating}
               >
-                Click to retry
+                Submit
               </Button>
-            )}
-            <Field.HelperText>Bank that holds the account</Field.HelperText>
-            <Field.ErrorText>
-              {banks.error
-                ? "Banks unavailable. Retry to continue."
-                : errors.bankCode?.message}
-            </Field.ErrorText>
-          </Field.Root>
+            </Fieldset.Root>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
+});
 
-          <Field.Root required invalid={!!errors.accountNumber}>
-            <Field.Label>
-              Account number <Field.RequiredIndicator />
-            </Field.Label>
-            <Input
-              inputMode="numeric"
-              maxLength={10}
-              placeholder="e.g., 0123456789"
-              {...register("accountNumber")}
-            />
-            <Field.HelperText>10 digit account number</Field.HelperText>
-            <Field.ErrorText>{errors.accountNumber?.message}</Field.ErrorText>
-          </Field.Root>
-        </FormInputGrid>
-      </Fieldset.Content>
-
-      <Button
-        onClick={onSubmit}
-        variant={"outline"}
-        alignSelf={"flex-start"}
-        disabled={!isValid || isSubmitting || isMutating}
-        loading={isSubmitting || isMutating}
-      >
-        Submit
-      </Button>
-    </Fieldset.Root>
+export const SubaccountForm = () => {
+  return (
+    <Button
+      size={"xs"}
+      variant={"outline"}
+      onClick={() => {
+        subaccountDialog.open("subaccount-form", {});
+      }}
+    >
+      <LuPlus />
+      Add Subaccount
+    </Button>
   );
 };
 
-export default SubaccountForm;
+export const SubaccountFormViewport = subaccountDialog.Viewport;

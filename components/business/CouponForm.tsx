@@ -9,7 +9,9 @@ import {
   Button,
   Checkbox,
   createListCollection,
+  createOverlay,
   DatePicker,
+  Dialog,
   Field,
   Fieldset,
   Input,
@@ -18,20 +20,17 @@ import {
   Portal,
   Select,
   Stack,
-  useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { LuCalendar } from "react-icons/lu";
+import { LuCalendar, LuPlus } from "react-icons/lu";
 import FormInputGrid from "../shared/FormInputGrid";
 import { useMemo } from "react";
 
-const CouponForm = () => {
+export const couponDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddCoupon(businessId);
-  // throws if the component is ever rendered outside a Dialog.Root
-  const { setOpen } = useDialogContext();
 
   const discountTypeCollection = useMemo(
     () =>
@@ -45,7 +44,6 @@ const CouponForm = () => {
   );
 
   const {
-    reset,
     control,
     register,
     handleSubmit,
@@ -71,315 +69,362 @@ const CouponForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      reset(emptyCoupon);
-      setOpen(false);
+      props.onOpenChange?.({ open: false });
     } catch {} // Error displayed by toaster
   });
 
   return (
-    <form style={{ width: "100%" }}>
-      <Fieldset.Root
-        w={"full"}
-        size={"lg"}
-        mx={"auto"}
-        px={{ base: 4, md: 0 }}
-        maxW={{ base: "full", md: "2xl", xl: "4xl" }}
-      >
-        <Stack>
-          <Fieldset.Legend>Coupons</Fieldset.Legend>
-          <Fieldset.HelperText>
-            Please provide the coupon details below.
-          </Fieldset.HelperText>
-        </Stack>
+    <Dialog.Root size={"lg"} {...props}>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Fieldset.Root
+              w={"full"}
+              size={"lg"}
+              mx={"auto"}
+              px={{ base: 4, md: 0 }}
+              maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+            >
+              <Stack>
+                <Fieldset.Legend>Coupons</Fieldset.Legend>
+                <Fieldset.HelperText>
+                  Please provide the coupon details below.
+                </Fieldset.HelperText>
+              </Stack>
 
-        <Fieldset.Content>
-          <Field.Root required invalid={!!errors.name}>
-            <Field.Label>
-              Name <Field.RequiredIndicator />
-            </Field.Label>
-            <Input placeholder="e.g., Holiday" {...register("name")} />
-            <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-          </Field.Root>
-
-          <FormInputGrid>
-            <Field.Root required invalid={!!errors.code}>
-              <Field.Label>Code</Field.Label>
-              <Input placeholder="e.g., ABC123" {...register("code")} />
-              <Field.HelperText>
-                Code will be generated if not provided
-              </Field.HelperText>
-              <Field.ErrorText>{errors.code?.message}</Field.ErrorText>
-            </Field.Root>
-
-            <Field.Root required invalid={!!errors.minOrderValue}>
-              <Field.Label>
-                Mininum order value
-                <Field.RequiredIndicator />
-              </Field.Label>
-              <Controller
-                control={control}
-                name={"minOrderValue"}
-                render={({ field }) => (
-                  <NumberInput.Root
-                    w={"full"}
-                    name={field.name}
-                    disabled={field.disabled}
-                    value={
-                      Number.isNaN(field.value) ? "" : field.value.toString()
-                    }
-                    onValueChange={({ valueAsNumber }) =>
-                      field.onChange(valueAsNumber)
-                    }
-                  >
-                    <NumberInput.Control />
-                    <NumberInput.Input onBlur={field.onBlur} />
-                  </NumberInput.Root>
-                )}
-              />
-              <Field.ErrorText>{errors.minOrderValue?.message}</Field.ErrorText>
-            </Field.Root>
-
-            <Field.Root required invalid={!!errors.usageLimit}>
-              <Field.Label>
-                Usage limit <Field.RequiredIndicator />
-              </Field.Label>
-              <Controller
-                control={control}
-                name={"usageLimit"}
-                render={({ field }) => (
-                  <NumberInput.Root
-                    w={"full"}
-                    name={field.name}
-                    disabled={field.disabled}
-                    value={
-                      Number.isNaN(field.value) ? "" : field.value.toString()
-                    }
-                    onValueChange={({ valueAsNumber }) =>
-                      field.onChange(valueAsNumber)
-                    }
-                  >
-                    <NumberInput.Control />
-                    <NumberInput.Input onBlur={field.onBlur} />
-                  </NumberInput.Root>
-                )}
-              />
-              <Field.ErrorText>{errors.usageLimit?.message}</Field.ErrorText>
-            </Field.Root>
-
-            <Field.Root required invalid={!!errors.discountValue}>
-              <Field.Label>
-                Discount value <Field.RequiredIndicator />
-              </Field.Label>
-              <Controller
-                control={control}
-                name={"discountValue"}
-                render={({ field }) => (
-                  <NumberInput.Root
-                    w={"full"}
-                    name={field.name}
-                    disabled={field.disabled}
-                    value={
-                      Number.isNaN(field.value) ? "" : field.value.toString()
-                    }
-                    onValueChange={({ valueAsNumber }) =>
-                      field.onChange(valueAsNumber)
-                    }
-                  >
-                    <NumberInput.Control />
-                    <NumberInput.Input onBlur={field.onBlur} />
-                  </NumberInput.Root>
-                )}
-              />
-              <Field.ErrorText>{errors.discountValue?.message}</Field.ErrorText>
-            </Field.Root>
-
-            <Field.Root required invalid={!!errors.discountType}>
-              <Field.Label>
-                Discount type <Field.RequiredIndicator />
-              </Field.Label>
-              <Controller
-                control={control}
-                name={"discountType"}
-                render={({ field }) => (
-                  <Select.Root
-                    name={field.name}
-                    value={[field.value]}
-                    onValueChange={({ value }) => {
-                      field.onChange(value[0]);
-                      field.onBlur();
-                    }}
-                    onInteractOutside={() => field.onBlur()}
-                    collection={discountTypeCollection}
-                  >
-                    <Select.HiddenSelect />
-                    <Select.Control>
-                      <Select.Trigger>
-                        <Select.ValueText placeholder={"Select discountType"} />
-                      </Select.Trigger>
-                      <Select.IndicatorGroup>
-                        <Select.Indicator />
-                      </Select.IndicatorGroup>
-                    </Select.Control>
-                    <Portal>
-                      <Select.Positioner>
-                        <Select.Content>
-                          {discountTypeCollection.items.map((discountType) => (
-                            <Select.Item
-                              item={discountType}
-                              key={discountType.value}
-                            >
-                              {discountType.label}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))}
-                        </Select.Content>
-                      </Select.Positioner>
-                    </Portal>
-                  </Select.Root>
-                )}
-              />
-              <Field.ErrorText>{errors.discountType?.message}</Field.ErrorText>
-            </Field.Root>
-
-            <Controller
-              control={control}
-              name="isActive"
-              render={({ field }) => (
-                <Field.Root
-                  invalid={!!errors.isActive}
-                  disabled={field.disabled}
-                >
+              <Fieldset.Content>
+                <Field.Root required invalid={!!errors.name}>
                   <Field.Label>
-                    Coupon Active <Field.RequiredIndicator />
+                    Name <Field.RequiredIndicator />
                   </Field.Label>
-                  <Checkbox.Root
-                    py={2}
-                    gap={"4"}
-                    alignItems={"flex-start"}
-                    checked={field.value}
-                    onCheckedChange={({ checked }) => field.onChange(checked)}
-                  >
-                    <Checkbox.HiddenInput />
-                    <Checkbox.Control />
-                    <Checkbox.Label>Active</Checkbox.Label>
-                  </Checkbox.Root>
-                  <Field.ErrorText>{errors.isActive?.message}</Field.ErrorText>
+                  <Input placeholder="e.g., Holiday" {...register("name")} />
+                  <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
                 </Field.Root>
-              )}
-            />
 
-            <Controller
-              control={control}
-              name="startsAt"
-              render={({ field }) => (
-                <Field.Root invalid={!!errors.startsAt}>
-                  <DatePicker.Root
-                    value={field.value ? [parseDate(field.value)] : []}
-                    onValueChange={(e) => {
-                      field.onChange(e.value[0]?.toString() ?? "");
-                      field.onBlur();
-                    }}
-                    invalid={!!errors.startsAt}
-                  >
-                    <DatePicker.Label>Start date</DatePicker.Label>
-                    <DatePicker.Control>
-                      <DatePicker.Input
-                        placeholder="Select date"
-                        onBlur={field.onBlur}
-                      />
-                      <DatePicker.IndicatorGroup>
-                        <DatePicker.Trigger>
-                          <LuCalendar />
-                        </DatePicker.Trigger>
-                      </DatePicker.IndicatorGroup>
-                    </DatePicker.Control>
-                    <Portal>
-                      <DatePicker.Positioner>
-                        <DatePicker.Content>
-                          <DatePicker.View view="day">
-                            <DatePicker.Header />
-                            <DatePicker.DayTable />
-                          </DatePicker.View>
-                          <DatePicker.View view="month">
-                            <DatePicker.Header />
-                            <DatePicker.MonthTable />
-                          </DatePicker.View>
-                          <DatePicker.View view="year">
-                            <DatePicker.Header />
-                            <DatePicker.YearTable />
-                          </DatePicker.View>
-                        </DatePicker.Content>
-                      </DatePicker.Positioner>
-                    </Portal>
-                  </DatePicker.Root>
-                  <Field.ErrorText>{errors.startsAt?.message}</Field.ErrorText>
-                </Field.Root>
-              )}
-            />
+                <FormInputGrid>
+                  <Field.Root required invalid={!!errors.code}>
+                    <Field.Label>Code</Field.Label>
+                    <Input placeholder="e.g., ABC123" {...register("code")} />
+                    <Field.HelperText>
+                      Code will be generated if not provided
+                    </Field.HelperText>
+                    <Field.ErrorText>{errors.code?.message}</Field.ErrorText>
+                  </Field.Root>
 
-            <Controller
-              control={control}
-              name="endsAt"
-              render={({ field }) => (
-                <Field.Root invalid={!!errors.endsAt}>
-                  <DatePicker.Root
-                    value={field.value ? [parseDate(field.value)] : []}
-                    onValueChange={(e) => {
-                      field.onChange(e.value[0]?.toString() ?? "");
-                      field.onBlur();
-                    }}
-                    invalid={!!errors.endsAt}
-                  >
-                    <DatePicker.Label>End date</DatePicker.Label>
-                    <DatePicker.Control>
-                      <DatePicker.Input
-                        placeholder="Select date"
-                        onBlur={field.onBlur}
-                      />
-                      <DatePicker.IndicatorGroup>
-                        <DatePicker.Trigger>
-                          <LuCalendar />
-                        </DatePicker.Trigger>
-                      </DatePicker.IndicatorGroup>
-                    </DatePicker.Control>
-                    <Portal>
-                      <DatePicker.Positioner>
-                        <DatePicker.Content>
-                          <DatePicker.View view="day">
-                            <DatePicker.Header />
-                            <DatePicker.DayTable />
-                          </DatePicker.View>
-                          <DatePicker.View view="month">
-                            <DatePicker.Header />
-                            <DatePicker.MonthTable />
-                          </DatePicker.View>
-                          <DatePicker.View view="year">
-                            <DatePicker.Header />
-                            <DatePicker.YearTable />
-                          </DatePicker.View>
-                        </DatePicker.Content>
-                      </DatePicker.Positioner>
-                    </Portal>
-                  </DatePicker.Root>
-                  <Field.ErrorText>{errors.endsAt?.message}</Field.ErrorText>
-                </Field.Root>
-              )}
-            />
-          </FormInputGrid>
-        </Fieldset.Content>
+                  <Field.Root required invalid={!!errors.minOrderValue}>
+                    <Field.Label>
+                      Mininum order value
+                      <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Controller
+                      control={control}
+                      name={"minOrderValue"}
+                      render={({ field }) => (
+                        <NumberInput.Root
+                          w={"full"}
+                          name={field.name}
+                          disabled={field.disabled}
+                          value={
+                            Number.isNaN(field.value)
+                              ? ""
+                              : field.value.toString()
+                          }
+                          onValueChange={({ valueAsNumber }) =>
+                            field.onChange(valueAsNumber)
+                          }
+                        >
+                          <NumberInput.Control />
+                          <NumberInput.Input onBlur={field.onBlur} />
+                        </NumberInput.Root>
+                      )}
+                    />
+                    <Field.ErrorText>
+                      {errors.minOrderValue?.message}
+                    </Field.ErrorText>
+                  </Field.Root>
 
-        <Button
-          onClick={onSubmit}
-          variant={"outline"}
-          alignSelf={"flex-start"}
-          disabled={!isValid || isSubmitting || isMutating}
-          loading={isSubmitting || isMutating}
-        >
-          Submit
-        </Button>
-      </Fieldset.Root>
-    </form>
+                  <Field.Root required invalid={!!errors.usageLimit}>
+                    <Field.Label>
+                      Usage limit <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Controller
+                      control={control}
+                      name={"usageLimit"}
+                      render={({ field }) => (
+                        <NumberInput.Root
+                          w={"full"}
+                          name={field.name}
+                          disabled={field.disabled}
+                          value={
+                            Number.isNaN(field.value)
+                              ? ""
+                              : field.value.toString()
+                          }
+                          onValueChange={({ valueAsNumber }) =>
+                            field.onChange(valueAsNumber)
+                          }
+                        >
+                          <NumberInput.Control />
+                          <NumberInput.Input onBlur={field.onBlur} />
+                        </NumberInput.Root>
+                      )}
+                    />
+                    <Field.ErrorText>
+                      {errors.usageLimit?.message}
+                    </Field.ErrorText>
+                  </Field.Root>
+
+                  <Field.Root required invalid={!!errors.discountValue}>
+                    <Field.Label>
+                      Discount value <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Controller
+                      control={control}
+                      name={"discountValue"}
+                      render={({ field }) => (
+                        <NumberInput.Root
+                          w={"full"}
+                          name={field.name}
+                          disabled={field.disabled}
+                          value={
+                            Number.isNaN(field.value)
+                              ? ""
+                              : field.value.toString()
+                          }
+                          onValueChange={({ valueAsNumber }) =>
+                            field.onChange(valueAsNumber)
+                          }
+                        >
+                          <NumberInput.Control />
+                          <NumberInput.Input onBlur={field.onBlur} />
+                        </NumberInput.Root>
+                      )}
+                    />
+                    <Field.ErrorText>
+                      {errors.discountValue?.message}
+                    </Field.ErrorText>
+                  </Field.Root>
+
+                  <Field.Root required invalid={!!errors.discountType}>
+                    <Field.Label>
+                      Discount type <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Controller
+                      control={control}
+                      name={"discountType"}
+                      render={({ field }) => (
+                        <Select.Root
+                          name={field.name}
+                          value={[field.value]}
+                          onValueChange={({ value }) => {
+                            field.onChange(value[0]);
+                            field.onBlur();
+                          }}
+                          onInteractOutside={() => field.onBlur()}
+                          collection={discountTypeCollection}
+                        >
+                          <Select.HiddenSelect />
+                          <Select.Control>
+                            <Select.Trigger>
+                              <Select.ValueText
+                                placeholder={"Select discountType"}
+                              />
+                            </Select.Trigger>
+                            <Select.IndicatorGroup>
+                              <Select.Indicator />
+                            </Select.IndicatorGroup>
+                          </Select.Control>
+                          <Portal>
+                            <Select.Positioner>
+                              <Select.Content>
+                                {discountTypeCollection.items.map(
+                                  (discountType) => (
+                                    <Select.Item
+                                      item={discountType}
+                                      key={discountType.value}
+                                    >
+                                      {discountType.label}
+                                      <Select.ItemIndicator />
+                                    </Select.Item>
+                                  ),
+                                )}
+                              </Select.Content>
+                            </Select.Positioner>
+                          </Portal>
+                        </Select.Root>
+                      )}
+                    />
+                    <Field.ErrorText>
+                      {errors.discountType?.message}
+                    </Field.ErrorText>
+                  </Field.Root>
+
+                  <Controller
+                    control={control}
+                    name="isActive"
+                    render={({ field }) => (
+                      <Field.Root
+                        invalid={!!errors.isActive}
+                        disabled={field.disabled}
+                      >
+                        <Field.Label>
+                          Coupon Active <Field.RequiredIndicator />
+                        </Field.Label>
+                        <Checkbox.Root
+                          py={2}
+                          gap={"4"}
+                          alignItems={"flex-start"}
+                          checked={field.value}
+                          onCheckedChange={({ checked }) =>
+                            field.onChange(checked)
+                          }
+                        >
+                          <Checkbox.HiddenInput />
+                          <Checkbox.Control />
+                          <Checkbox.Label>Active</Checkbox.Label>
+                        </Checkbox.Root>
+                        <Field.ErrorText>
+                          {errors.isActive?.message}
+                        </Field.ErrorText>
+                      </Field.Root>
+                    )}
+                  />
+
+                  <Controller
+                    control={control}
+                    name="startsAt"
+                    render={({ field }) => (
+                      <Field.Root invalid={!!errors.startsAt}>
+                        <DatePicker.Root
+                          value={field.value ? [parseDate(field.value)] : []}
+                          onValueChange={(e) => {
+                            field.onChange(e.value[0]?.toString() ?? "");
+                            field.onBlur();
+                          }}
+                          invalid={!!errors.startsAt}
+                        >
+                          <DatePicker.Label>Start date</DatePicker.Label>
+                          <DatePicker.Control>
+                            <DatePicker.Input
+                              placeholder="Select date"
+                              onBlur={field.onBlur}
+                            />
+                            <DatePicker.IndicatorGroup>
+                              <DatePicker.Trigger>
+                                <LuCalendar />
+                              </DatePicker.Trigger>
+                            </DatePicker.IndicatorGroup>
+                          </DatePicker.Control>
+                          <Portal>
+                            <DatePicker.Positioner>
+                              <DatePicker.Content>
+                                <DatePicker.View view="day">
+                                  <DatePicker.Header />
+                                  <DatePicker.DayTable />
+                                </DatePicker.View>
+                                <DatePicker.View view="month">
+                                  <DatePicker.Header />
+                                  <DatePicker.MonthTable />
+                                </DatePicker.View>
+                                <DatePicker.View view="year">
+                                  <DatePicker.Header />
+                                  <DatePicker.YearTable />
+                                </DatePicker.View>
+                              </DatePicker.Content>
+                            </DatePicker.Positioner>
+                          </Portal>
+                        </DatePicker.Root>
+                        <Field.ErrorText>
+                          {errors.startsAt?.message}
+                        </Field.ErrorText>
+                      </Field.Root>
+                    )}
+                  />
+
+                  <Controller
+                    control={control}
+                    name="endsAt"
+                    render={({ field }) => (
+                      <Field.Root invalid={!!errors.endsAt}>
+                        <DatePicker.Root
+                          value={field.value ? [parseDate(field.value)] : []}
+                          onValueChange={(e) => {
+                            field.onChange(e.value[0]?.toString() ?? "");
+                            field.onBlur();
+                          }}
+                          invalid={!!errors.endsAt}
+                        >
+                          <DatePicker.Label>End date</DatePicker.Label>
+                          <DatePicker.Control>
+                            <DatePicker.Input
+                              placeholder="Select date"
+                              onBlur={field.onBlur}
+                            />
+                            <DatePicker.IndicatorGroup>
+                              <DatePicker.Trigger>
+                                <LuCalendar />
+                              </DatePicker.Trigger>
+                            </DatePicker.IndicatorGroup>
+                          </DatePicker.Control>
+                          <Portal>
+                            <DatePicker.Positioner>
+                              <DatePicker.Content>
+                                <DatePicker.View view="day">
+                                  <DatePicker.Header />
+                                  <DatePicker.DayTable />
+                                </DatePicker.View>
+                                <DatePicker.View view="month">
+                                  <DatePicker.Header />
+                                  <DatePicker.MonthTable />
+                                </DatePicker.View>
+                                <DatePicker.View view="year">
+                                  <DatePicker.Header />
+                                  <DatePicker.YearTable />
+                                </DatePicker.View>
+                              </DatePicker.Content>
+                            </DatePicker.Positioner>
+                          </Portal>
+                        </DatePicker.Root>
+                        <Field.ErrorText>
+                          {errors.endsAt?.message}
+                        </Field.ErrorText>
+                      </Field.Root>
+                    )}
+                  />
+                </FormInputGrid>
+              </Fieldset.Content>
+
+              <Button
+                onClick={onSubmit}
+                variant={"outline"}
+                alignSelf={"flex-start"}
+                disabled={!isValid || isSubmitting || isMutating}
+                loading={isSubmitting || isMutating}
+              >
+                Submit
+              </Button>
+            </Fieldset.Root>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
+});
+
+export const CouponForm = () => {
+  return (
+    <Button
+      size={"xs"}
+      variant={"outline"}
+      onClick={() => {
+        couponDialog.open("coupon-form", {});
+      }}
+    >
+      <LuPlus />
+      New Coupon
+    </Button>
   );
 };
 
-export default CouponForm;
+export const CouponFormViewport = couponDialog.Viewport;

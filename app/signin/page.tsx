@@ -2,6 +2,8 @@ import SignInForm from "@/components/signin/SignInForm";
 import SignUpForm from "@/components/signin/SignUpForm";
 import TradazLogo from "@/components/shared/TradazLogo";
 import { Center, Tabs, VStack } from "@chakra-ui/react";
+import { IoCreateOutline } from "react-icons/io5";
+import { IoIosLogIn } from "react-icons/io";
 
 const SigninPage = () => {
   return (
@@ -20,8 +22,14 @@ const SigninPage = () => {
           }}
         >
           <Tabs.List>
-            <Tabs.Trigger value="signin">Sign In</Tabs.Trigger>
-            <Tabs.Trigger value="signup">Sign Up</Tabs.Trigger>
+            <Tabs.Trigger value="signin">
+              <IoIosLogIn />
+              Sign In
+            </Tabs.Trigger>
+            <Tabs.Trigger value="signup">
+              <IoCreateOutline />
+              Sign Up
+            </Tabs.Trigger>
             <Tabs.Indicator />
           </Tabs.List>
 

@@ -1,14 +1,15 @@
-import { BusinessForm } from "@/components/dashboard/BusinessForm";
+import {
+  BusinessForm,
+  BusinessFormViewport,
+} from "@/components/dashboard/BusinessForm";
 import BusinessGrid from "@/components/dashboard/BusinessGrid";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getBusinesses } from "@/server/business";
-import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
-import { LuPlus } from "react-icons/lu";
 
 interface Props {
   searchParams: Promise<{ signup?: string }>;
@@ -30,16 +31,7 @@ export default async function page({ searchParams }: Props) {
             <Search placeholder={"Search for a brand"} searchField={"search"} />
           </Suspense>
           <Spacer />
-          <DialogBox
-            trigger={
-              <Button variant={"outline"} size={"xs"}>
-                <LuPlus />
-                New Brand
-              </Button>
-            }
-          >
-            <BusinessForm />
-          </DialogBox>
+          <BusinessForm />
         </HStack>
 
         {businesses.length > 0 ? (
@@ -49,19 +41,11 @@ export default async function page({ searchParams }: Props) {
             title={"No businesses found"}
             description={"Create a new business"}
           >
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  New Brand
-                </Button>
-              }
-            >
-              <BusinessForm signup={signup} />
-            </DialogBox>
+            <BusinessForm signup={signup} />
           </EmptyPage>
         )}
       </VStack>
+      <BusinessFormViewport />
     </PageContainer>
   );
 }

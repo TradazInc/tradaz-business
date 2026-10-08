@@ -1,12 +1,13 @@
-import ProductSizeForm from "@/components/business/ProductSizeForm";
+import {
+  ProductSizeForm,
+  ProductSizeFormViewport,
+} from "@/components/business/ProductSizeForm";
 import ProductSizeTable from "@/components/business/ProductSizeTable";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getSizeTypes } from "@/server/sizeType";
-import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
-import { LuPlus } from "react-icons/lu";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -25,16 +26,7 @@ export default async function page({ params }: Props) {
 
         <HStack w={"full"}>
           <Spacer />
-          <DialogBox
-            trigger={
-              <Button variant={"outline"} size={"xs"}>
-                <LuPlus />
-                New Product Size
-              </Button>
-            }
-          >
-            <ProductSizeForm />
-          </DialogBox>
+          <ProductSizeForm />
         </HStack>
 
         {sizeTypes.data.length > 0 ? (
@@ -43,20 +35,13 @@ export default async function page({ params }: Props) {
             businessId={businessId}
           />
         ) : (
-          <EmptyPage title="No sizes found" description="Create a product size">
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  New size
-                </Button>
-              }
-            >
-              <ProductSizeForm />
-            </DialogBox>
-          </EmptyPage>
+          <EmptyPage
+            title="No sizes found"
+            description="Create a product size"
+          />
         )}
       </VStack>
+      <ProductSizeFormViewport />
     </PageContainer>
   );
 }

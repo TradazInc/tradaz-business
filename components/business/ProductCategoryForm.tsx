@@ -1,32 +1,29 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import {
-  CreateProductCategoryInputSchema,
-  emptyProductCategory,
-} from "@/schema/productCategory";
+import { CreateProductCategoryInputSchema } from "@/schema/productCategory";
 import { useAddProductCategory } from "@/hooks/productCategory";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
+  createOverlay,
+  Dialog,
   Field,
   Fieldset,
   Input,
+  Portal,
   Stack,
-  useDialogContext,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { LuPlus } from "react-icons/lu";
 
-const ProductCategoryForm = () => {
+export const productCategoryDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddProductCategory(businessId);
-  // throws if the component is ever rendered outside a Dialog.Root
-  const { setOpen } = useDialogContext();
 
   const {
-    reset,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
@@ -47,47 +44,70 @@ const ProductCategoryForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      reset(emptyProductCategory);
-      setOpen(false);
+      props.onOpenChange?.({ open: false });
     } catch {} // Error displayed by toaster
   });
 
   return (
-    <Fieldset.Root
-      w={"full"}
-      size={"lg"}
-      mx={"auto"}
-      px={{ base: 4, md: 0 }}
-      maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+    <Dialog.Root {...props}>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Fieldset.Root
+              w={"full"}
+              size={"lg"}
+              mx={"auto"}
+              px={{ base: 4, md: 0 }}
+              maxW={{ base: "full", md: "2xl", xl: "4xl" }}
+            >
+              <Stack>
+                <Fieldset.Legend>Product Category details</Fieldset.Legend>
+                <Fieldset.HelperText>
+                  Please provide the product category details below.
+                </Fieldset.HelperText>
+              </Stack>
+
+              <Fieldset.Content>
+                <Field.Root required invalid={!!errors.name}>
+                  <Field.Label>
+                    Name <Field.RequiredIndicator />
+                  </Field.Label>
+                  <Input placeholder="e.g., Footwears" {...register("name")} />
+                  <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                </Field.Root>
+              </Fieldset.Content>
+
+              <Button
+                onClick={onSubmit}
+                variant={"outline"}
+                alignSelf={"flex-start"}
+                disabled={!isValid || isSubmitting || isMutating}
+                loading={isSubmitting || isMutating}
+              >
+                Submit
+              </Button>
+            </Fieldset.Root>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
+});
+
+export const ProductCategoryForm = () => {
+  return (
+    <Button
+      size={"xs"}
+      variant={"outline"}
+      onClick={() => {
+        productCategoryDialog.open("product-category-form", {});
+      }}
     >
-      <Stack>
-        <Fieldset.Legend>Product Category details</Fieldset.Legend>
-        <Fieldset.HelperText>
-          Please provide the product category details below.
-        </Fieldset.HelperText>
-      </Stack>
-
-      <Fieldset.Content>
-        <Field.Root required invalid={!!errors.name}>
-          <Field.Label>
-            Name <Field.RequiredIndicator />
-          </Field.Label>
-          <Input placeholder="e.g., Footwears" {...register("name")} />
-          <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-        </Field.Root>
-      </Fieldset.Content>
-
-      <Button
-        onClick={onSubmit}
-        variant={"outline"}
-        alignSelf={"flex-start"}
-        disabled={!isValid || isSubmitting || isMutating}
-        loading={isSubmitting || isMutating}
-      >
-        Submit
-      </Button>
-    </Fieldset.Root>
+      <LuPlus />
+      New Category
+    </Button>
   );
 };
 
-export default ProductCategoryForm;
+export const ProductCategoryFormViewport = productCategoryDialog.Viewport;

@@ -12,33 +12,34 @@ import {
   Box,
   Button,
   ButtonGroup,
+  createOverlay,
+  Dialog,
+  Portal,
   Steps,
   Text,
-  useDialogContext,
   useSteps,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { FieldPath, useForm, UseFormReturn } from "react-hook-form";
-import { LuCheck } from "react-icons/lu";
+import { LuCheck, LuPlus } from "react-icons/lu";
 import { MdOutlineBusiness } from "react-icons/md";
 import { TiContacts } from "react-icons/ti";
 import { z } from "zod";
 import BrandStep from "./BrandStep";
 import ContactStep from "./ContactStep";
 
-interface Props {
+interface BusinessFormProps {
   signup?: string;
 }
 
-export const BusinessForm = ({ signup }: Props) => {
+export const businessDialog = createOverlay<BusinessFormProps>((props) => {
+  const { signup, ...rest } = props;
   const { trigger, isMutating } = useAddBusiness();
   const { refresh, push, replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  // throws if the component is ever rendered outside a Dialog.Root
-  const { setOpen } = useDialogContext();
 
   const form = useForm({
     resolver: standardSchemaResolver(CreateBusinessInputSchema),
@@ -69,13 +70,14 @@ export const BusinessForm = ({ signup }: Props) => {
       const business = await promise.unwrap();
       refresh();
       push(computePath(business.id));
+      props.onOpenChange?.({ open: false });
     } catch {} // Error displayed by toaster
   });
 
-  // Open form dialog on first signup
+  // Open form dialog on signup
   useEffect(() => {
     if (!signup) return;
-    if (signup) setOpen(false);
+    if (signup) props.onOpenChange?.({ open: false });
 
     const params = new URLSearchParams(searchParams.toString());
     params.delete("signup");
@@ -83,59 +85,90 @@ export const BusinessForm = ({ signup }: Props) => {
   }, [signup]);
 
   return (
-    <Steps.RootProvider value={steps} size={"sm"}>
-      <Steps.List mt={4}>
-        {stepsData.map((step, index) => (
-          <Steps.Item key={index} index={index}>
-            <Steps.Trigger>
-              <Steps.Indicator>
-                <Steps.Status incomplete={step.icon} complete={<LuCheck />} />
-              </Steps.Indicator>
-              <Box>
-                <Steps.Title>{step.title}</Steps.Title>
-                <Steps.Description>{step.description}</Steps.Description>
-              </Box>
-            </Steps.Trigger>
-            <Steps.Separator />
-          </Steps.Item>
-        ))}
-      </Steps.List>
+    <Dialog.Root {...rest}>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Steps.RootProvider value={steps} size={"sm"}>
+              <Steps.List mt={4}>
+                {stepsData.map((step, index) => (
+                  <Steps.Item key={index} index={index}>
+                    <Steps.Trigger>
+                      <Steps.Indicator>
+                        <Steps.Status
+                          incomplete={step.icon}
+                          complete={<LuCheck />}
+                        />
+                      </Steps.Indicator>
+                      <Box>
+                        <Steps.Title>{step.title}</Steps.Title>
+                        <Steps.Description>
+                          {step.description}
+                        </Steps.Description>
+                      </Box>
+                    </Steps.Trigger>
+                    <Steps.Separator />
+                  </Steps.Item>
+                ))}
+              </Steps.List>
 
-      {stepsData.map((step, index) => (
-        <Steps.Content key={index} index={index} w={"full"}>
-          {step.render(form)}
-        </Steps.Content>
-      ))}
+              {stepsData.map((step, index) => (
+                <Steps.Content key={index} index={index} w={"full"}>
+                  {step.render(form)}
+                </Steps.Content>
+              ))}
 
-      <Steps.CompletedContent>
-        <Text>Registration complete!</Text>
-      </Steps.CompletedContent>
+              <Steps.CompletedContent>
+                <Text>Registration complete!</Text>
+              </Steps.CompletedContent>
 
-      <ButtonGroup size={"sm"} variant={"outline"} mt={2}>
-        <Steps.PrevTrigger asChild>
-          <Button>Back</Button>
-        </Steps.PrevTrigger>
-        {isLastStep ? (
-          <Button
-            onClick={onSubmit}
-            disabled={
-              !form.formState.isValid ||
-              form.formState.isSubmitting ||
-              isMutating
-            }
-            loading={form.formState.isSubmitting || isMutating}
-          >
-            Submit
-          </Button>
-        ) : (
-          <Steps.NextTrigger asChild>
-            <Button>Next</Button>
-          </Steps.NextTrigger>
-        )}
-      </ButtonGroup>
-    </Steps.RootProvider>
+              <ButtonGroup size={"sm"} variant={"outline"} mt={2}>
+                <Steps.PrevTrigger asChild>
+                  <Button>Back</Button>
+                </Steps.PrevTrigger>
+                {isLastStep ? (
+                  <Button
+                    onClick={onSubmit}
+                    disabled={
+                      !form.formState.isValid ||
+                      form.formState.isSubmitting ||
+                      isMutating
+                    }
+                    loading={form.formState.isSubmitting || isMutating}
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <Steps.NextTrigger asChild>
+                    <Button>Next</Button>
+                  </Steps.NextTrigger>
+                )}
+              </ButtonGroup>
+            </Steps.RootProvider>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
+});
+
+export const BusinessForm = ({ signup }: BusinessFormProps) => {
+  return (
+    <Button
+      size={"xs"}
+      variant={"outline"}
+      onClick={() => {
+        businessDialog.open("business-form", { signup });
+      }}
+    >
+      <LuPlus />
+      New Brand
+    </Button>
   );
 };
+
+export const BusinessFormViewport = businessDialog.Viewport;
 
 interface StepData {
   icon: React.ReactNode;

@@ -38,7 +38,7 @@ const CartCard = ({ cart, href, onClick, disabled }: Props) => {
         </Heading>
 
         <Text mb={3} color={"fg.muted"}>
-          <DataList.Root orientation="horizontal">
+          <DataList.Root orientation={"horizontal"}>
             {cart.couponCode && (
               <DataList.Item key={cart.couponCode}>
                 <DataList.ItemLabel>Coupon</DataList.ItemLabel>

@@ -1,12 +1,13 @@
-import CouponForm from "@/components/business/CouponForm";
+import {
+  CouponForm,
+  CouponFormViewport,
+} from "@/components/business/CouponForm";
 import CouponTable from "@/components/business/CouponTable";
-import { DialogBox } from "@/components/shared/DialogBox";
 import EmptyPage from "@/components/shared/EmptyPage";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { getCoupons } from "@/server/coupon";
-import { Button, HStack, Spacer, VStack } from "@chakra-ui/react";
-import { LuPlus } from "react-icons/lu";
+import { HStack, Spacer, VStack } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -25,35 +26,19 @@ export default async function page({ params }: Props) {
 
         <HStack w={"full"}>
           <Spacer />
-          <DialogBox
-            trigger={
-              <Button variant={"outline"} size={"xs"}>
-                <LuPlus />
-                New Coupon
-              </Button>
-            }
-          >
-            <CouponForm />
-          </DialogBox>
+          <CouponForm />
         </HStack>
 
         {coupons.data.length > 0 ? (
           <CouponTable initialCoupons={coupons} businessId={businessId} />
         ) : (
-          <EmptyPage title="No coupons found" description="Create a new coupon">
-            <DialogBox
-              trigger={
-                <Button>
-                  <LuPlus />
-                  New Coupon
-                </Button>
-              }
-            >
-              <CouponForm />
-            </DialogBox>
-          </EmptyPage>
+          <EmptyPage
+            title="No coupons found"
+            description="Create a new coupon"
+          />
         )}
       </VStack>
+      <CouponFormViewport />
     </PageContainer>
   );
 }
