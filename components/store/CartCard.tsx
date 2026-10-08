@@ -22,7 +22,7 @@ interface Props {
 
 const CartCard = ({ cart, href, onClick }: Props) => {
   return (
-    <Card.Root w={"full"} p={5} borderWidth={"1px"} rounded={"md"} asChild>
+    <Card.Root w={"full"} p={5} borderWidth={"1px"} rounded={"md"}>
       <Card.Body>
         <HStack gap={3}>
           <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
