@@ -1,9 +1,11 @@
 import noImage from "@/public/no-image-placeholder.webp";
 import { GetAllProductOutputItemData } from "@/schema/product";
-import { Button, Card, DataList, HStack, Image } from "@chakra-ui/react";
+import { Card, DataList, HStack, Image } from "@chakra-ui/react";
 import { CldImage } from "next-cloudinary";
 import NextImage from "next/image";
 import NextLink from "next/link";
+import CardDeleteButton from "../shared/CardDeleteButton";
+import CardViewButton from "../shared/CardViewButton";
 import StatusIndicator from "./StatusIndicator";
 
 interface Props {
@@ -60,12 +62,10 @@ const ProductCard = ({ href, product }: Props) => {
       </Card.Body>
 
       <Card.Footer justifyContent={"flex-end"}>
-        <Button variant={"outline"} asChild>
+        <CardViewButton asChild>
           <NextLink href={href}>View</NextLink>
-        </Button>
-        <Button variant={"subtle"} colorPalette={"red"} onClick={() => {}}>
-          Delete
-        </Button>
+        </CardViewButton>
+        <CardDeleteButton onClick={() => {}}>Delete</CardDeleteButton>
       </Card.Footer>
     </Card.Root>
   );

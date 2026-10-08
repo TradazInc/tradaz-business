@@ -1,18 +1,12 @@
 "use client";
 
 import { GetAllCartsOutputItemData } from "@/schema/cart";
-import {
-  Button,
-  Card,
-  HStack,
-  Icon,
-  Span,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Card, HStack, Icon, Span, Stack, Text } from "@chakra-ui/react";
 import { formatDistanceToNowStrict } from "date-fns";
 import NextLink from "next/link";
 import { MdShoppingCartCheckout } from "react-icons/md";
+import CardDeleteButton from "../shared/CardDeleteButton";
+import CardViewButton from "../shared/CardViewButton";
 
 interface Props {
   href: string;
@@ -54,16 +48,12 @@ const CartCard = ({ cart, href, onClick }: Props) => {
       </Card.Body>
 
       <Card.Footer justifyContent={"flex-end"}>
-        <Button variant={"outline"} asChild>
+        <CardViewButton asChild>
           <NextLink href={href}>View</NextLink>
-        </Button>
-        <Button
-          variant={"subtle"}
-          colorPalette={"red"}
-          onClick={() => onClick(cart.id)}
-        >
+        </CardViewButton>
+        <CardDeleteButton onClick={() => onClick(cart.id)}>
           Delete
-        </Button>
+        </CardDeleteButton>
       </Card.Footer>
     </Card.Root>
   );

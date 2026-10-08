@@ -1,5 +1,4 @@
 import { Button, ButtonProps } from "@chakra-ui/react";
-import { LuPlus } from "react-icons/lu";
 
 const FormButton = ({ children, ...props }: ButtonProps) => {
   return (
