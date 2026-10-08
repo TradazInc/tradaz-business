@@ -28,7 +28,7 @@ const CartCard = ({ cart, href, onClick, disabled }: Props) => {
     <Card.Root w={"full"} p={5} borderWidth={"1px"} rounded={"md"} asChild>
       <Card.Body gap={0}>
         <HStack gap={3}>
-          <Icon p={1} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
+          <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
             <MdShoppingCartCheckout />
           </Icon>
           <Text fontWeight={"semibold"} textStyle={"sm"}></Text>
@@ -46,28 +46,26 @@ const CartCard = ({ cart, href, onClick, disabled }: Props) => {
           </Stack>
         </HStack>
 
-        <Card.Description my={1}>
-          <DataList.Root orientation={"horizontal"}>
-            {cart.couponCode && (
-              <DataList.Item key={cart.couponCode}>
-                <DataList.ItemLabel>Coupon</DataList.ItemLabel>
-                <DataList.ItemValue>{cart.couponCode}</DataList.ItemValue>
-              </DataList.Item>
-            )}
-            {cart.depositAmount && cart.depositAmount > 0 && (
-              <DataList.Item key={cart.depositAmount}>
-                <DataList.ItemLabel>Deposit</DataList.ItemLabel>
-                <DataList.ItemValue>{cart.depositAmount}</DataList.ItemValue>
-              </DataList.Item>
-            )}
-            {cart.points && cart.points > 0 && (
-              <DataList.Item key={cart.points}>
-                <DataList.ItemLabel>Points</DataList.ItemLabel>
-                <DataList.ItemValue>{cart.points}</DataList.ItemValue>
-              </DataList.Item>
-            )}
-          </DataList.Root>
-        </Card.Description>
+        <DataList.Root orientation={"horizontal"} my={1}>
+          {cart.couponCode && (
+            <DataList.Item>
+              <DataList.ItemLabel>Coupon</DataList.ItemLabel>
+              <DataList.ItemValue>{cart.couponCode}</DataList.ItemValue>
+            </DataList.Item>
+          )}
+          {(cart.depositAmount ?? 0) > 0 && (
+            <DataList.Item>
+              <DataList.ItemLabel>Deposit</DataList.ItemLabel>
+              <DataList.ItemValue>{cart.depositAmount}</DataList.ItemValue>
+            </DataList.Item>
+          )}
+          {(cart.points ?? 0) > 0 && (
+            <DataList.Item>
+              <DataList.ItemLabel>Points</DataList.ItemLabel>
+              <DataList.ItemValue>{cart.points}</DataList.ItemValue>
+            </DataList.Item>
+          )}
+        </DataList.Root>
       </Card.Body>
 
       <Card.Footer>

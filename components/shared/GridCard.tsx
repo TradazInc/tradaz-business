@@ -30,7 +30,7 @@ const GridCard = ({ logo, name, slug, address, href, badgeItems }: Props) => {
               <Avatar.Image src={logo} />
             </Avatar.Root>
           ) : (
-            <Icon p={1} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
+            <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
               <MdBusiness />
             </Icon>
           )}
