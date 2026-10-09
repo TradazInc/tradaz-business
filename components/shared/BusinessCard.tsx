@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { PiBuildingFill } from "react-icons/pi";
+import { HiBuildingOffice2 } from "react-icons/hi2";
 
 interface Props {
   business: GetBusinessOutputData;
@@ -25,7 +25,7 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
           <Avatar.Root variant={"outline"}>
             <Avatar.Image src={business.logo ?? undefined} />
             <Avatar.Fallback>
-              <PiBuildingFill />
+              <HiBuildingOffice2 />
             </Avatar.Fallback>
           </Avatar.Root>
           <Stack gap={0}>

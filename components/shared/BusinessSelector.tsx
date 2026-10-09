@@ -13,9 +13,9 @@ import { updateSession } from "@/utilities/updateSession";
 import { Breadcrumb, HStack, Skeleton } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
+import { HiBuildingOffice2 } from "react-icons/hi2";
 import { LiaSlashSolid, LiaStoreAltSolid } from "react-icons/lia";
 import { LuChevronDown } from "react-icons/lu";
-import { PiBuildingFill } from "react-icons/pi";
 import { BusinessSelectorItem } from "./BusinessSelectorItem";
 
 export const BusinessSelector = () => {
@@ -94,7 +94,7 @@ export const BusinessSelector = () => {
               handleClick={handleBusiness}
             >
               <Breadcrumb.Link as="button">
-                <PiBuildingFill />
+                <HiBuildingOffice2 />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
                     {activeBusiness ? activeBusiness.name : "Brands"}

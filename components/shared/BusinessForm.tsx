@@ -23,8 +23,8 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { FieldPath, useForm, UseFormReturn } from "react-hook-form";
+import { HiBuildingOffice2 } from "react-icons/hi2";
 import { LuCheck, LuPlus } from "react-icons/lu";
-import { PiBuildingFill } from "react-icons/pi";
 import { TiContacts } from "react-icons/ti";
 import { z } from "zod";
 import BrandStep from "./BrandStep";
@@ -185,7 +185,7 @@ const fieldsOf = (step: StepData) =>
 
 const stepsData: StepData[] = [
   {
-    icon: <PiBuildingFill />,
+    icon: <HiBuildingOffice2 />,
     title: "Brand information",
     description: "Tell us about your brand.",
     schema: CreateBusinessInputSchema.pick({ name: true, categoryId: true }),

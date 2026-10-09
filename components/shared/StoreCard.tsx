@@ -1,5 +1,12 @@
 import { GetStoreOutputData } from "@/schema/store";
-import { Badge, Card, HStack, Icon, LinkOverlay, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Badge,
+  Card,
+  HStack,
+  LinkOverlay,
+  Text,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LiaStoreAltSolid } from "react-icons/lia";
 
@@ -14,9 +21,11 @@ const StoreCard = ({ store, href, badgeItems }: Props) => {
     <Card.Root size={"sm"} flexDirection={"row"}>
       <Card.Body gap={0}>
         <HStack gap={3}>
-          <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
-            <LiaStoreAltSolid />
-          </Icon>
+          <Avatar.Root variant={"outline"}>
+            <Avatar.Fallback>
+              <LiaStoreAltSolid />
+            </Avatar.Fallback>
+          </Avatar.Root>
           <Text fontWeight={"semibold"} textStyle={"sm"}>
             {store.name}
           </Text>
