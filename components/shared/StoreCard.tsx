@@ -29,7 +29,7 @@ const StoreCard = ({ store, href, badgeItems, businessName }: Props) => {
         </Avatar.Root>
 
         <Box gap={1.5}>
-          <HStack justifyContent={"flex-start"}>
+          <HStack justifyContent={"flex-start"} gap={0.5}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
               {store.name}
             </Text>
