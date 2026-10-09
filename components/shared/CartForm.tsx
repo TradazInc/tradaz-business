@@ -36,17 +36,18 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import TotalPriceStat from "./TotalPriceStat";
 
 interface Props {
-  initialCart?: GetCartOutputData;
+  initialCart?: Promise<GetCartOutputData>;
+  cartId: string;
   businessId: string | undefined;
 }
 
-const CartForm = ({ initialCart, businessId }: Props) => {
+const CartForm = ({ initialCart, businessId, cartId }: Props) => {
   const {
     data: cart,
     error,
     isLoading,
     mutate,
-  } = useCart(initialCart?.id, {
+  } = useCart(cartId, {
     fallbackData: initialCart,
   });
   const addCart = useAddCart(businessId);

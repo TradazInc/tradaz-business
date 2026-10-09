@@ -27,13 +27,16 @@ import ProductColorBadge from "./ProductColorBadge";
 import ProductSearch from "./ProductSearch";
 
 interface Props {
-  cart: GetCartOutputData;
+  initialCart: Promise<GetCartOutputData>;
+  cartId: string;
   businessId: string | undefined;
   storeId: string | undefined;
 }
 
-const CartItemTable = ({ cart, businessId, storeId }: Props) => {
-  const { data, error, mutate } = useCart(cart.id, { fallbackData: cart });
+const CartItemTable = ({ initialCart, businessId, storeId, cartId }: Props) => {
+  const { data, error, mutate } = useCart(cartId, {
+    fallbackData: initialCart,
+  });
   const addToCart = useAddCartItem(businessId);
   const removeFromCart = useRemoveCartItem(businessId);
   const incrementItem = useIncrementCartItem(businessId);
@@ -55,7 +58,7 @@ const CartItemTable = ({ cart, businessId, storeId }: Props) => {
 
   const handleAddItem = async (id: string) => {
     toaster.promise(
-      addToCart.trigger({ variationId: id, cartId: cart.id, quantity: 1 }),
+      addToCart.trigger({ variationId: id, cartId: cartId, quantity: 1 }),
       {
         loading: {
           title: "Adding cart item...",

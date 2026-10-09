@@ -4,11 +4,12 @@ import {
   CreateProductInputData,
   GetAllProductOutputData,
   GetAllProductQuerySchema,
+  GetProductOutputData,
   UpdateProductInputData,
   UpdateProductStatusInputData,
 } from "@/schema/product";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
-import { useSWRConfig } from "swr";
+import useSWR, { SWRConfiguration, useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
@@ -25,6 +26,18 @@ export const useProducts = (
   return useSWRInfinite(
     getCursorKey(PRODUCT_KEY, { ...query, organizationId }),
     ([key, query]) => apiClient("@get/api/products", { query, ...apiConfig }),
+    config,
+  );
+};
+
+export const useProduct = (
+  id: string,
+  config?: SWRConfiguration<GetProductOutputData, Error>,
+) => {
+  return useSWR(
+    getScopedKey(PRODUCT_KEY, id),
+    ([key, query]) =>
+      apiClient("@get/api/products/:id", { params: { id }, ...apiConfig }),
     config,
   );
 };

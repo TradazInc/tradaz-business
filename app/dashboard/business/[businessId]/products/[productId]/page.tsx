@@ -1,10 +1,6 @@
-import ProductCarousel from "@/components/shared/ProductCarousel";
-import ProductDescription from "@/components/shared/ProductDescription";
-import VariationCard from "@/components/shared/VariationCard";
 import { PageContainer } from "@/components/shared/PageContainer";
+import ProductDetail from "@/components/shared/ProductDetail";
 import { getProduct } from "@/server/product";
-import { Box, Stack, VStack } from "@chakra-ui/react";
-import { notFound } from "next/navigation";
 
 interface Props {
   params: Promise<{ productId: string }>;
@@ -12,26 +8,11 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { productId } = await params;
-  const { data: product, error } = await getProduct(productId);
-
-  if (!product || error) notFound();
+  const productPromise = getProduct(productId);
 
   return (
     <PageContainer py={10}>
-      <Stack direction={{ base: "column", md: "row" }} gap={{ sm: 4, md: 10 }}>
-        <Box w={{ base: "full", md: "60%" }}>
-          <ProductCarousel product={product} />
-        </Box>
-        <Box w={{ base: "full", md: "40%" }}>
-          <ProductDescription product={product} />
-        </Box>
-      </Stack>
-
-      <VStack gap={{ base: 4, md: 10 }} mt={8}>
-        {product.variations.map((v, i) => (
-          <VariationCard key={v.id} variation={v} index={i} />
-        ))}
-      </VStack>
+      <ProductDetail initialProduct={productPromise} productId={productId} />
     </PageContainer>
   );
 }

@@ -12,5 +12,5 @@ export async function getCarts(
 }
 
 export async function getCart(id: string) {
-  return apiClient("@get/api/cart/:id", { params: { id } });
+  return apiClient("@get/api/cart/:id", { params: { id }, ...apiConfig });
 }

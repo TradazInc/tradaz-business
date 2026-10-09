@@ -1,7 +1,8 @@
-import { PageContainer } from "@/components/shared/PageContainer";
-import PageHeader from "@/components/shared/PageHeader";
 import CartForm from "@/components/shared/CartForm";
 import CartItemTable from "@/components/shared/CartItemTable";
+import CartName from "@/components/shared/CartName";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
 import { getCart } from "@/server/cart";
 import { GridItem, SimpleGrid, VStack } from "@chakra-ui/react";
 
@@ -11,25 +12,30 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId, storeId, cartId } = await params;
-  const { data, error } = await getCart(cartId);
-
-  if (error) return error.message;
+  const cartPromise = getCart(cartId);
 
   return (
     <PageContainer>
       <VStack w={"full"} h={"full"}>
-        <PageHeader>Cart {data.id}</PageHeader>
+        <PageHeader>
+          <CartName cartId={cartId} />
+        </PageHeader>
 
         <SimpleGrid columns={{ base: 1, md: 4 }} gap={3}>
           <GridItem colSpan={{ base: 1, md: 3 }}>
             <CartItemTable
-              cart={data}
+              initialCart={cartPromise}
               businessId={businessId}
               storeId={storeId}
+              cartId={cartId}
             />
           </GridItem>
           <GridItem colSpan={1}>
-            <CartForm initialCart={data} businessId={businessId} />
+            <CartForm
+              initialCart={cartPromise}
+              businessId={businessId}
+              cartId={cartId}
+            />
           </GridItem>
         </SimpleGrid>
       </VStack>

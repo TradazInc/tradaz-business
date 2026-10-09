@@ -1,7 +1,6 @@
-import ProductForm from "@/components/shared/ProductForm";
 import { PageContainer } from "@/components/shared/PageContainer";
+import ProductForm from "@/components/shared/ProductForm";
 import { getProduct } from "@/server/product";
-import { notFound } from "next/navigation";
 
 interface Props {
   params: Promise<{ productId: string }>;
@@ -9,9 +8,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { productId } = await params;
-  const { data: product, error } = await getProduct(productId);
-
-  if (error) notFound();
+  const product = await getProduct(productId);
 
   return (
     <PageContainer>
