@@ -20,36 +20,38 @@ interface Props {
 const BusinessCard = ({ business, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"}>
-      <Card.Body flexDirection={"row"} alignItems={"center"} gap={3}>
-        <Avatar.Root variant={"outline"} size={"lg"}>
-          <Avatar.Image src={business.logo ?? undefined} />
-          <Avatar.Fallback>
-            <HiBuildingOffice2 />
-          </Avatar.Fallback>
-        </Avatar.Root>
+      <Card.Body asChild>
+        <HStack gap={3}>
+          <Avatar.Root variant={"outline"} size={"lg"}>
+            <Avatar.Image src={business.logo ?? undefined} />
+            <Avatar.Fallback>
+              <HiBuildingOffice2 />
+            </Avatar.Fallback>
+          </Avatar.Root>
 
-        <Stack>
-          <HStack justifyContent={"flex-start"} gap={0.5}>
-            <Text fontWeight={"semibold"} textStyle={"sm"}>
-              {business.name}
-            </Text>
-            {business.slug && (
-              <Text color={"fg.muted"} textStyle={"sm"}>
-                @{business.slug}
+          <Stack>
+            <HStack justifyContent={"flex-start"} gap={0.5}>
+              <Text fontWeight={"semibold"} textStyle={"sm"}>
+                {business.name}
               </Text>
-            )}
-          </HStack>
+              {business.slug && (
+                <Text color={"fg.muted"} textStyle={"sm"}>
+                  @{business.slug}
+                </Text>
+              )}
+            </HStack>
 
-          <Card.Description>
-            {JSON.parse(business.metadata)?.address}
-          </Card.Description>
+            <Card.Description>
+              {JSON.parse(business.metadata)?.address}
+            </Card.Description>
 
-          <HStack>
-            {badgeItems.filter(Boolean).map((item) => (
-              <Badge>{item}</Badge>
-            ))}
-          </HStack>
-        </Stack>
+            <HStack>
+              {badgeItems.filter(Boolean).map((item) => (
+                <Badge>{item}</Badge>
+              ))}
+            </HStack>
+          </Stack>
+        </HStack>
       </Card.Body>
 
       <LinkOverlay asChild>

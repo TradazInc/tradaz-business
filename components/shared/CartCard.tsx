@@ -17,37 +17,40 @@ interface Props {
 const CartCard = ({ cart, href, onClick }: Props) => {
   return (
     <Card.Root size={"sm"}>
-      <Card.Body flexDirection={"row"} alignItems={"center"} gap={3}>
-        <Avatar.Root variant={"outline"} size={"lg"}>
-          <Avatar.Fallback>
-            <MdShoppingCartCheckout />
-          </Avatar.Fallback>
-        </Avatar.Root>
+      <Card.Body asChild>
+        <HStack gap={3}>
+          <Avatar.Root variant={"outline"} size={"lg"}>
+            <Avatar.Fallback>
+              <MdShoppingCartCheckout />
+            </Avatar.Fallback>
+          </Avatar.Root>
 
-        <Stack>
-          <HStack justifyContent={"flex-start"}>
-            <Text fontWeight={"semibold"} textStyle={"sm"} maxW={28} truncate>
-              Cart {cart.id}
-            </Text>
-            <Span asChild color={"fg.muted"} textStyle={"sm"}>
-              <time dateTime={cart.createdAt}>
-                {formatDistanceToNowStrict(new Date(cart.createdAt), {
-                  addSuffix: true,
-                })}
-              </time>
-            </Span>
-          </HStack>
+          <Stack>
+            <HStack justifyContent={"flex-start"}>
+              <Text fontWeight={"semibold"} textStyle={"sm"} maxW={28} truncate>
+                Cart {cart.id}
+              </Text>
+              <Span asChild color={"fg.muted"} textStyle={"sm"}>
+                <time dateTime={cart.createdAt}>
+                  {formatDistanceToNowStrict(new Date(cart.createdAt), {
+                    addSuffix: true,
+                  })}
+                </time>
+              </Span>
+            </HStack>
 
-          <Card.Description>
-            {[
-              cart.couponCode && `Coupon ${cart.couponCode}`,
-              (cart.points ?? 0) > 0 && `Points ${cart.points}`,
-              (cart.depositAmount ?? 0) > 0 && `Deposit ${cart.depositAmount}`,
-            ]
-              .filter(Boolean)
-              .join(" · ")}
-          </Card.Description>
-        </Stack>
+            <Card.Description>
+              {[
+                cart.couponCode && `Coupon ${cart.couponCode}`,
+                (cart.points ?? 0) > 0 && `Points ${cart.points}`,
+                (cart.depositAmount ?? 0) > 0 &&
+                  `Deposit ${cart.depositAmount}`,
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </Card.Description>
+          </Stack>
+        </HStack>
       </Card.Body>
 
       <Card.Footer justifyContent={"flex-end"}>
