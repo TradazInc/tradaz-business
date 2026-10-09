@@ -37,10 +37,11 @@ export const SideMenuList = () => {
             <Spacer />
             <Accordion.ItemIndicator />
           </Accordion.ItemTrigger>
-          {item.children &&
-            item.children.map((child, index) => (
-              <Accordion.ItemContent key={index}>
+          <Accordion.ItemContent>
+            {item.children &&
+              item.children.map((child, index) => (
                 <Accordion.ItemBody
+                  key={index}
                   p={3}
                   display={"flex"}
                   cursor={"pointer"}
@@ -49,14 +50,14 @@ export const SideMenuList = () => {
                   asChild
                 >
                   <NextLink href={`${basePath}${child.path}`}>
-                    <Icon fontSize={"lg"} color={"fg.subtle"} mx={3}>
+                    <Icon fontSize={"lg"} color={"fg.subtle"}>
                       {child.icon}
                     </Icon>
                     {child.label}
                   </NextLink>
                 </Accordion.ItemBody>
-              </Accordion.ItemContent>
-            ))}
+              ))}
+          </Accordion.ItemContent>
         </Accordion.Item>
       ))}
     </Accordion.Root>
