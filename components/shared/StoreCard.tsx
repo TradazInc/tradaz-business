@@ -12,23 +12,30 @@ import { LiaStoreAltSolid } from "react-icons/lia";
 
 interface Props {
   store: GetStoreOutputData;
+  businessName?: string;
   badgeItems: (string | undefined)[];
   href: string;
 }
 
-const StoreCard = ({ store, href, badgeItems }: Props) => {
+const StoreCard = ({ store, href, badgeItems, businessName }: Props) => {
   return (
-    <Card.Root size={"sm"}>
+    <Card.Root size={"sm"} flexDirection={"row"}>
+      <Avatar.Root variant={"outline"}>
+        <Avatar.Fallback>
+          <LiaStoreAltSolid />
+        </Avatar.Fallback>
+      </Avatar.Root>
+
       <Card.Body gap={1.5}>
-        <HStack gap={3}>
-          <Avatar.Root variant={"outline"}>
-            <Avatar.Fallback>
-              <LiaStoreAltSolid />
-            </Avatar.Fallback>
-          </Avatar.Root>
+        <HStack gap={3} justifyContent={"flex-start"}>
           <Text fontWeight={"semibold"} textStyle={"sm"}>
             {store.name}
           </Text>
+          {businessName && (
+            <Text color={"fg.muted"} textStyle={"sm"}>
+              @{businessName}
+            </Text>
+          )}
         </HStack>
 
         <Card.Description>{store.address}</Card.Description>

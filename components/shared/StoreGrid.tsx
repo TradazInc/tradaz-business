@@ -42,10 +42,8 @@ const StoreGrid = ({ businessId, initialStores }: Props) => {
           <StoreCard
             key={store.id}
             store={store}
-            badgeItems={[
-              business?.name,
-              format(store.createdAt, "dd MMM yy").toUpperCase(),
-            ]}
+            businessName={business?.name}
+            badgeItems={[format(store.createdAt, "dd MMM yy").toUpperCase()]}
             href={computePath(businessId, store.id)}
           />
         )}

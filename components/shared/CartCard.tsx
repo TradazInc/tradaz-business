@@ -1,7 +1,7 @@
 "use client";
 
 import { GetAllCartsOutputItemData } from "@/schema/cart";
-import { Card, HStack, Icon, Span, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Card, HStack, Span, Text } from "@chakra-ui/react";
 import { formatDistanceToNowStrict } from "date-fns";
 import NextLink from "next/link";
 import { MdShoppingCartCheckout } from "react-icons/md";
@@ -16,27 +16,28 @@ interface Props {
 
 const CartCard = ({ cart, href, onClick }: Props) => {
   return (
-    <Card.Root size={"sm"}>
-      <Card.Body>
-        <HStack gap={3}>
-          <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
-            <MdShoppingCartCheckout />
-          </Icon>
-          <Stack gap={0}>
-            <Text fontWeight={"semibold"} textStyle={"sm"}>
-              Cart {cart.id}
-            </Text>
-            <Span asChild color={"fg.muted"} textStyle={"sm"}>
-              <time dateTime={cart.createdAt}>
-                {formatDistanceToNowStrict(new Date(cart.createdAt), {
-                  addSuffix: true,
-                })}
-              </time>
-            </Span>
-          </Stack>
+    <Card.Root size={"sm"} flexDirection={"row"}>
+      <Avatar.Root variant={"outline"}>
+        <Avatar.Fallback>
+          <MdShoppingCartCheckout />
+        </Avatar.Fallback>
+      </Avatar.Root>
+
+      <Card.Body gap={1.5}>
+        <HStack gap={0} justifyContent={"flex-start"}>
+          <Text fontWeight={"semibold"} textStyle={"sm"}>
+            Cart {cart.id}
+          </Text>
+          <Span asChild color={"fg.muted"} textStyle={"sm"}>
+            <time dateTime={cart.createdAt}>
+              {formatDistanceToNowStrict(new Date(cart.createdAt), {
+                addSuffix: true,
+              })}
+            </time>
+          </Span>
         </HStack>
 
-        <Card.Description my={1.5}>
+        <Card.Description>
           {[
             cart.couponCode && `Coupon ${cart.couponCode}`,
             (cart.points ?? 0) > 0 && `Points ${cart.points}`,

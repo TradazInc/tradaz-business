@@ -5,7 +5,6 @@ import {
   Card,
   HStack,
   LinkOverlay,
-  Stack,
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -19,25 +18,24 @@ interface Props {
 
 const BusinessCard = ({ business, href, badgeItems }: Props) => {
   return (
-    <Card.Root size={"sm"}>
+    <Card.Root size={"sm"} flexDirection={"row"}>
+      <Avatar.Root variant={"outline"}>
+        <Avatar.Image src={business.logo ?? undefined} />
+        <Avatar.Fallback>
+          <HiBuildingOffice2 />
+        </Avatar.Fallback>
+      </Avatar.Root>
+
       <Card.Body gap={1.5}>
-        <HStack gap={3}>
-          <Avatar.Root variant={"outline"}>
-            <Avatar.Image src={business.logo ?? undefined} />
-            <Avatar.Fallback>
-              <HiBuildingOffice2 />
-            </Avatar.Fallback>
-          </Avatar.Root>
-          <Stack gap={0}>
-            <Text fontWeight={"semibold"} textStyle={"sm"}>
-              {business.name}
+        <HStack gap={0} justifyContent={"flex-start"}>
+          <Text fontWeight={"semibold"} textStyle={"sm"}>
+            {business.name}
+          </Text>
+          {business.slug && (
+            <Text color={"fg.muted"} textStyle={"sm"}>
+              @{business.slug}
             </Text>
-            {business.slug && (
-              <Text color={"fg.muted"} textStyle={"sm"}>
-                @{business.slug}
-              </Text>
-            )}
-          </Stack>
+          )}
         </HStack>
 
         <Card.Description>
