@@ -19,7 +19,7 @@ interface Props {
 
 const BusinessCard = ({ business, href, badgeItems }: Props) => {
   return (
-    <Card.Root size={"sm"} flexDirection={"row"}>
+    <Card.Root size={"sm"}>
       <Card.Body gap={0}>
         <HStack gap={3}>
           <Avatar.Root variant={"outline"}>
