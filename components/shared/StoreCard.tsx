@@ -21,18 +21,14 @@ interface Props {
 const StoreCard = ({ store, href, badgeItems, businessName }: Props) => {
   return (
     <Card.Root size={"sm"}>
-      <Card.Body
-        flexDirection={"row"}
-        alignItems={"center"}
-        justifyContent={"space-evenly"}
-      >
+      <Card.Body flexDirection={"row"} alignItems={"center"} gap={3}>
         <Avatar.Root variant={"outline"} size={"lg"}>
           <Avatar.Fallback>
             <LiaStoreAltSolid />
           </Avatar.Fallback>
         </Avatar.Root>
 
-        <Box gap={2}>
+        <Box gap={3}>
           <HStack justifyContent={"flex-start"} gap={0.5}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
               {store.name}

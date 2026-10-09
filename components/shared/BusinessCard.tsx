@@ -20,11 +20,7 @@ interface Props {
 const BusinessCard = ({ business, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"}>
-      <Card.Body
-        flexDirection={"row"}
-        alignItems={"center"}
-        justifyContent={"space-evenly"}
-      >
+      <Card.Body flexDirection={"row"} alignItems={"center"} gap={3}>
         <Avatar.Root variant={"outline"} size={"lg"}>
           <Avatar.Image src={business.logo ?? undefined} />
           <Avatar.Fallback>
@@ -32,7 +28,7 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
           </Avatar.Fallback>
         </Avatar.Root>
 
-        <Box gap={2}>
+        <Box gap={3}>
           <HStack justifyContent={"flex-start"} gap={0.5}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
               {business.name}
