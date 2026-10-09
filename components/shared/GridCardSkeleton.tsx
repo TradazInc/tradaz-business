@@ -4,13 +4,11 @@ const GridCardSkeleton = () => {
   return (
     <Card.Root border={"none"} size={"sm"}>
       <Card.Body gap={0}>
-        <HStack gap={3}>
+        <HStack>
           <SkeletonCircle size={10} />
           <SkeletonText noOfLines={2} />
         </HStack>
-        <Card.Description my={2}>
-          <SkeletonText noOfLines={1} />
-        </Card.Description>
+        <SkeletonText noOfLines={1} mt={2} />
       </Card.Body>
     </Card.Root>
   );
