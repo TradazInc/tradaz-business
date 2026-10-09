@@ -31,11 +31,14 @@ export const SideMenuList = () => {
       w={"full"}
       size={"sm"}
       rounded={"none"}
-      variant={"enclosed"}
+      variant={"outline"}
     >
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label} my={2} p={1}>
-          <Accordion.ItemTrigger justifyContent={"space-between"}>
+          <Accordion.ItemTrigger
+            justifyContent={"space-between"}
+            _open={{ bg: "gray.subtle" }}
+          >
             <Box>
               <Icon fontSize={"lg"} mx={3}>
                 {item.icon}
