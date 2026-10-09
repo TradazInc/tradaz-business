@@ -7,7 +7,7 @@ const GridCardSkeleton = () => {
         <SkeletonCircle size={10} />
         <SkeletonText noOfLines={2} />
       </HStack>
-      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} m={3}/>
     </Card.Root>
   );
 };
