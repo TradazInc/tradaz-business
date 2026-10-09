@@ -20,7 +20,7 @@ interface Props {
 const StoreCard = ({ store, href, badgeItems, businessName }: Props) => {
   return (
     <Card.Root size={"sm"} flexDirection={"row"}>
-      <Avatar.Root variant={"outline"} margin={"auto"}>
+      <Avatar.Root variant={"outline"} size={"lg"} margin={"auto"} m={1}>
         <Avatar.Fallback>
           <LiaStoreAltSolid />
         </Avatar.Fallback>

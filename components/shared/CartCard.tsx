@@ -17,7 +17,7 @@ interface Props {
 const CartCard = ({ cart, href, onClick }: Props) => {
   return (
     <Card.Root size={"sm"} flexDirection={"row"}>
-      <Avatar.Root variant={"outline"} margin={"auto"}>
+      <Avatar.Root variant={"outline"} size={"lg"} margin={"auto"} m={1}>
         <Avatar.Fallback>
           <MdShoppingCartCheckout />
         </Avatar.Fallback>
