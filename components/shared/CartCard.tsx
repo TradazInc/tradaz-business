@@ -1,7 +1,7 @@
 "use client";
 
 import { GetAllCartsOutputItemData } from "@/schema/cart";
-import { Avatar, Card, HStack, Span, Text } from "@chakra-ui/react";
+import { Avatar, Box, Card, HStack, Span, Text } from "@chakra-ui/react";
 import { formatDistanceToNowStrict } from "date-fns";
 import NextLink from "next/link";
 import { MdShoppingCartCheckout } from "react-icons/md";
@@ -16,36 +16,38 @@ interface Props {
 
 const CartCard = ({ cart, href, onClick }: Props) => {
   return (
-    <Card.Root size={"sm"} flexDirection={"row"} alignItems={"center"}>
-      <Avatar.Root variant={"outline"} size={"lg"} ms={2}>
-        <Avatar.Fallback>
-          <MdShoppingCartCheckout />
-        </Avatar.Fallback>
-      </Avatar.Root>
+    <Card.Root size={"sm"}>
+      <Card.Body flexDirection={"row"} alignItems={"center"}>
+        <Avatar.Root variant={"outline"} size={"lg"}>
+          <Avatar.Fallback>
+            <MdShoppingCartCheckout />
+          </Avatar.Fallback>
+        </Avatar.Root>
 
-      <Card.Body gap={1.5}>
-        <HStack justifyContent={"flex-start"}>
-          <Text fontWeight={"semibold"} textStyle={"sm"} maxW={28} truncate>
-            Cart {cart.id}
-          </Text>
-          <Span asChild color={"fg.muted"} textStyle={"sm"}>
-            <time dateTime={cart.createdAt}>
-              {formatDistanceToNowStrict(new Date(cart.createdAt), {
-                addSuffix: true,
-              })}
-            </time>
-          </Span>
-        </HStack>
+        <Box gap={1.5}>
+          <HStack justifyContent={"flex-start"}>
+            <Text fontWeight={"semibold"} textStyle={"sm"} maxW={28} truncate>
+              Cart {cart.id}
+            </Text>
+            <Span asChild color={"fg.muted"} textStyle={"sm"}>
+              <time dateTime={cart.createdAt}>
+                {formatDistanceToNowStrict(new Date(cart.createdAt), {
+                  addSuffix: true,
+                })}
+              </time>
+            </Span>
+          </HStack>
 
-        <Card.Description>
-          {[
-            cart.couponCode && `Coupon ${cart.couponCode}`,
-            (cart.points ?? 0) > 0 && `Points ${cart.points}`,
-            (cart.depositAmount ?? 0) > 0 && `Deposit ${cart.depositAmount}`,
-          ]
-            .filter(Boolean)
-            .join(" · ")}
-        </Card.Description>
+          <Card.Description>
+            {[
+              cart.couponCode && `Coupon ${cart.couponCode}`,
+              (cart.points ?? 0) > 0 && `Points ${cart.points}`,
+              (cart.depositAmount ?? 0) > 0 && `Deposit ${cart.depositAmount}`,
+            ]
+              .filter(Boolean)
+              .join(" · ")}
+          </Card.Description>
+        </Box>
       </Card.Body>
 
       <Card.Footer justifyContent={"flex-end"}>

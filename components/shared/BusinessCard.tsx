@@ -2,6 +2,7 @@ import { GetBusinessOutputData } from "@/schema/business";
 import {
   Avatar,
   Badge,
+  Box,
   Card,
   HStack,
   LinkOverlay,
@@ -18,35 +19,37 @@ interface Props {
 
 const BusinessCard = ({ business, href, badgeItems }: Props) => {
   return (
-    <Card.Root size={"sm"} flexDirection={"row"} alignItems={"center"}>
-      <Avatar.Root variant={"outline"} size={"lg"} ms={2}>
-        <Avatar.Image src={business.logo ?? undefined} />
-        <Avatar.Fallback>
-          <HiBuildingOffice2 />
-        </Avatar.Fallback>
-      </Avatar.Root>
+    <Card.Root size={"sm"}>
+      <Card.Body flexDirection={"row"} alignItems={"center"}>
+        <Avatar.Root variant={"outline"} size={"lg"}>
+          <Avatar.Image src={business.logo ?? undefined} />
+          <Avatar.Fallback>
+            <HiBuildingOffice2 />
+          </Avatar.Fallback>
+        </Avatar.Root>
 
-      <Card.Body gap={1.5}>
-        <HStack justifyContent={"flex-start"}>
-          <Text fontWeight={"semibold"} textStyle={"sm"}>
-            {business.name}
-          </Text>
-          {business.slug && (
-            <Text color={"fg.muted"} textStyle={"sm"}>
-              @{business.slug}
+        <Box gap={1.5}>
+          <HStack justifyContent={"flex-start"}>
+            <Text fontWeight={"semibold"} textStyle={"sm"}>
+              {business.name}
             </Text>
-          )}
-        </HStack>
+            {business.slug && (
+              <Text color={"fg.muted"} textStyle={"sm"}>
+                @{business.slug}
+              </Text>
+            )}
+          </HStack>
 
-        <Card.Description>
-          {JSON.parse(business.metadata)?.address}
-        </Card.Description>
+          <Card.Description>
+            {JSON.parse(business.metadata)?.address}
+          </Card.Description>
 
-        <HStack>
-          {badgeItems.filter(Boolean).map((item) => (
-            <Badge>{item}</Badge>
-          ))}
-        </HStack>
+          <HStack>
+            {badgeItems.filter(Boolean).map((item) => (
+              <Badge>{item}</Badge>
+            ))}
+          </HStack>
+        </Box>
       </Card.Body>
 
       <LinkOverlay asChild>
