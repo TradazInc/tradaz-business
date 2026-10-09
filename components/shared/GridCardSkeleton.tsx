@@ -8,7 +8,7 @@ const GridCardSkeleton = () => {
           <SkeletonCircle size={10} />
           <SkeletonText noOfLines={2} />
         </HStack>
-        <Card.Description my={1.5}>
+        <Card.Description my={2}>
           <SkeletonText noOfLines={1} />
         </Card.Description>
       </Card.Body>
