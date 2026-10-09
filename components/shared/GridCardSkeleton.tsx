@@ -2,12 +2,16 @@ import { Card, HStack, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 const GridCardSkeleton = () => {
   return (
-    <Card.Root border={"none"}>
-      <HStack gap={3} p={3}>
-        <SkeletonCircle size={10} />
-        <SkeletonText noOfLines={2} />
-      </HStack>
-      <SkeletonText noOfLines={1} m={3}/>
+    <Card.Root border={"none"} p={3}>
+      <Card.Body gap={0}>
+        <HStack gap={3}>
+          <SkeletonCircle size={10} />
+          <SkeletonText noOfLines={2} />
+        </HStack>
+        <Card.Description>
+          <SkeletonText noOfLines={1} />
+        </Card.Description>
+      </Card.Body>
     </Card.Root>
   );
 };
