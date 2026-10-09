@@ -4,7 +4,6 @@ import {
   Badge,
   Card,
   HStack,
-  Icon,
   LinkOverlay,
   Stack,
   Text,
@@ -23,15 +22,12 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
     <Card.Root size={"sm"} flexDirection={"row"}>
       <Card.Body gap={0}>
         <HStack gap={3}>
-          {business.logo ? (
-            <Avatar.Root>
-              <Avatar.Image src={business.logo} />
-            </Avatar.Root>
-          ) : (
-            <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
+          <Avatar.Root variant={"outline"}>
+            <Avatar.Image src={business.logo ?? undefined} />
+            <Avatar.Fallback>
               <PiBuildingFill />
-            </Icon>
-          )}
+            </Avatar.Fallback>
+          </Avatar.Root>
           <Stack gap={0}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
               {business.name}
