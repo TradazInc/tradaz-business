@@ -21,11 +21,7 @@ import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 import FormButton from "./FormButton";
 
-interface StoreFormProps {
-  signup?: string;
-}
-
-export const storeDialog = createOverlay<StoreFormProps>((props) => {
+export const storeDialog = createOverlay((props) => {
   const { signup, ...rest } = props;
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddStore(businessId);
@@ -125,11 +121,11 @@ export const storeDialog = createOverlay<StoreFormProps>((props) => {
   );
 });
 
-export const StoreForm = ({ signup }: StoreFormProps) => {
+export const StoreForm = () => {
   return (
     <FormButton
       onClick={() => {
-        storeDialog.open("store-form", { signup });
+        storeDialog.open("store-form", {});
       }}
     >
       <LuPlus />
