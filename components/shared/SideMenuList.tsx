@@ -26,12 +26,7 @@ export const SideMenuList = () => {
   }, [businessId, storeId]);
 
   return (
-    <Accordion.Root
-      collapsible
-      w={"full"}
-      rounded={"none"}
-      variant={"outline"}
-    >
+    <Accordion.Root collapsible>
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label}>
           <Accordion.ItemTrigger p={3} _open={{ bg: "gray.subtle" }}>
@@ -47,6 +42,7 @@ export const SideMenuList = () => {
               <Accordion.ItemContent key={index}>
                 <Accordion.ItemBody
                   p={3}
+                  display={"flex"}
                   cursor={"pointer"}
                   color={"fg.muted"}
                   _hover={{ color: "fg" }}
