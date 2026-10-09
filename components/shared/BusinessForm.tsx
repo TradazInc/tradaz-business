@@ -24,7 +24,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { FieldPath, useForm, UseFormReturn } from "react-hook-form";
 import { LuCheck, LuPlus } from "react-icons/lu";
-import { MdOutlineBusiness } from "react-icons/md";
+import { PiBuildingFill } from "react-icons/pi";
 import { TiContacts } from "react-icons/ti";
 import { z } from "zod";
 import BrandStep from "./BrandStep";
@@ -185,7 +185,7 @@ const fieldsOf = (step: StepData) =>
 
 const stepsData: StepData[] = [
   {
-    icon: <MdOutlineBusiness />,
+    icon: <PiBuildingFill />,
     title: "Brand information",
     description: "Tell us about your brand.",
     schema: CreateBusinessInputSchema.pick({ name: true, categoryId: true }),

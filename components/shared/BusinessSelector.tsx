@@ -15,7 +15,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { LiaSlashSolid, LiaStoreAltSolid } from "react-icons/lia";
 import { LuChevronDown } from "react-icons/lu";
-import { MdOutlineBusiness } from "react-icons/md";
+import { PiBuildingFill } from "react-icons/pi";
 import { BusinessSelectorItem } from "./BusinessSelectorItem";
 
 export const BusinessSelector = () => {
@@ -94,7 +94,7 @@ export const BusinessSelector = () => {
               handleClick={handleBusiness}
             >
               <Breadcrumb.Link as="button">
-                <MdOutlineBusiness />
+                <PiBuildingFill />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
                     {activeBusiness ? activeBusiness.name : "Brands"}

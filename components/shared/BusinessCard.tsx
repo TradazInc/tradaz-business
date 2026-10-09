@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { MdBusiness } from "react-icons/md";
+import { PiBuildingFill } from "react-icons/pi";
 
 interface Props {
   business: GetBusinessOutputData;
@@ -29,7 +29,7 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
             </Avatar.Root>
           ) : (
             <Icon p={1.5} rounded={"full"} size={"2xl"} borderWidth={"1px"}>
-              <MdBusiness />
+              <PiBuildingFill />
             </Icon>
           )}
           <Stack gap={0}>
