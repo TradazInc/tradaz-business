@@ -34,7 +34,7 @@ export const SideMenuList = () => {
       variant={"outline"}
     >
       {sideItems.map((item, index) => (
-        <Accordion.Item key={index} value={item.label} my={2} p={1}>
+        <Accordion.Item key={index} value={item.label}>
           <Accordion.ItemTrigger
             justifyContent={"space-between"}
             _open={{ bg: "gray.subtle" }}
