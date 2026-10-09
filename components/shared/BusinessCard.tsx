@@ -18,8 +18,8 @@ interface Props {
 
 const BusinessCard = ({ business, href, badgeItems }: Props) => {
   return (
-    <Card.Root size={"sm"} flexDirection={"row"}>
-      <Avatar.Root variant={"outline"} size={"lg"} margin={"auto"} m={1}>
+    <Card.Root size={"sm"} flexDirection={"row"} alignItems={"center"}>
+      <Avatar.Root variant={"outline"} size={"lg"} ms={2}>
         <Avatar.Image src={business.logo ?? undefined} />
         <Avatar.Fallback>
           <HiBuildingOffice2 />
