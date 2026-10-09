@@ -1,7 +1,7 @@
 "use client";
 
 import { GetAllCartsOutputItemData } from "@/schema/cart";
-import { Avatar, Box, Card, HStack, Span, Text } from "@chakra-ui/react";
+import { Avatar, Card, HStack, Span, Stack, Text } from "@chakra-ui/react";
 import { formatDistanceToNowStrict } from "date-fns";
 import NextLink from "next/link";
 import { MdShoppingCartCheckout } from "react-icons/md";
@@ -24,7 +24,7 @@ const CartCard = ({ cart, href, onClick }: Props) => {
           </Avatar.Fallback>
         </Avatar.Root>
 
-        <Box gap={3}>
+        <Stack gap={1.5}>
           <HStack justifyContent={"flex-start"}>
             <Text fontWeight={"semibold"} textStyle={"sm"} maxW={28} truncate>
               Cart {cart.id}
@@ -47,7 +47,7 @@ const CartCard = ({ cart, href, onClick }: Props) => {
               .filter(Boolean)
               .join(" · ")}
           </Card.Description>
-        </Box>
+        </Stack>
       </Card.Body>
 
       <Card.Footer justifyContent={"flex-end"}>

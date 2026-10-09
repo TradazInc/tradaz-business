@@ -2,7 +2,7 @@ import { GetBusinessOutputData } from "@/schema/business";
 import {
   Avatar,
   Badge,
-  Box,
+  Stack,
   Card,
   HStack,
   LinkOverlay,
@@ -28,7 +28,7 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
           </Avatar.Fallback>
         </Avatar.Root>
 
-        <Box gap={3}>
+        <Stack gap={1.5}>
           <HStack justifyContent={"flex-start"} gap={0.5}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
               {business.name}
@@ -49,7 +49,7 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
               <Badge>{item}</Badge>
             ))}
           </HStack>
-        </Box>
+        </Stack>
       </Card.Body>
 
       <LinkOverlay asChild>

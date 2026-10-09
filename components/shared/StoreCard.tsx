@@ -2,7 +2,7 @@ import { GetStoreOutputData } from "@/schema/store";
 import {
   Avatar,
   Badge,
-  Box,
+  Stack,
   Card,
   HStack,
   LinkOverlay,
@@ -28,7 +28,7 @@ const StoreCard = ({ store, href, badgeItems, businessName }: Props) => {
           </Avatar.Fallback>
         </Avatar.Root>
 
-        <Box gap={3}>
+        <Stack gap={1.5}>
           <HStack justifyContent={"flex-start"} gap={0.5}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
               {store.name}
@@ -47,7 +47,7 @@ const StoreCard = ({ store, href, badgeItems, businessName }: Props) => {
               <Badge>{item}</Badge>
             ))}
           </HStack>
-        </Box>
+        </Stack>
       </Card.Body>
 
       <LinkOverlay asChild>
