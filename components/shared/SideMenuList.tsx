@@ -29,13 +29,12 @@ export const SideMenuList = () => {
     <Accordion.Root
       collapsible
       w={"full"}
-      size={"sm"}
       rounded={"none"}
       variant={"outline"}
     >
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label}>
-          <Accordion.ItemTrigger p={2} _open={{ bg: "gray.subtle" }}>
+          <Accordion.ItemTrigger p={3} _open={{ bg: "gray.subtle" }}>
             <Icon fontSize={"lg"} color={"fg.subtle"}>
               {item.icon}
             </Icon>
@@ -47,7 +46,7 @@ export const SideMenuList = () => {
             item.children.map((child, index) => (
               <Accordion.ItemContent key={index}>
                 <Accordion.ItemBody
-                  pl={5}
+                  p={3}
                   cursor={"pointer"}
                   color={"fg.muted"}
                   _hover={{ color: "fg" }}
