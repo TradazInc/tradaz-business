@@ -1,24 +1,24 @@
 import { GetStoreOutputData } from "@/schema/store";
 import {
   Avatar,
-  Badge,
-  Stack,
   Card,
   HStack,
   LinkOverlay,
+  Stack,
   Text,
 } from "@chakra-ui/react";
+import { format } from "date-fns";
 import NextLink from "next/link";
 import { LiaStoreAltSolid } from "react-icons/lia";
+import BadgeList from "./BadgeList";
 
 interface Props {
   store: GetStoreOutputData;
   businessName?: string;
-  badgeItems: (string | undefined)[];
   href: string;
 }
 
-const StoreCard = ({ store, href, badgeItems, businessName }: Props) => {
+const StoreCard = ({ store, href, businessName }: Props) => {
   return (
     <Card.Root size={"sm"}>
       <Card.Body asChild>
@@ -43,11 +43,9 @@ const StoreCard = ({ store, href, badgeItems, businessName }: Props) => {
 
             <Card.Description>{store.address}</Card.Description>
 
-            <HStack>
-              {badgeItems.filter(Boolean).map((item) => (
-                <Badge>{item}</Badge>
-              ))}
-            </HStack>
+            <BadgeList
+              items={[format(store.createdAt, "dd MMM yy").toUpperCase()]}
+            />
           </Stack>
         </HStack>
       </Card.Body>

@@ -1,23 +1,23 @@
 import { GetBusinessOutputData } from "@/schema/business";
 import {
   Avatar,
-  Badge,
-  Stack,
   Card,
   HStack,
   LinkOverlay,
+  Stack,
   Text,
 } from "@chakra-ui/react";
+import { format } from "date-fns";
 import NextLink from "next/link";
 import { HiBuildingOffice2 } from "react-icons/hi2";
+import BadgeList from "./BadgeList";
 
 interface Props {
   business: GetBusinessOutputData;
-  badgeItems: (string | undefined)[];
   href: string;
 }
 
-const BusinessCard = ({ business, href, badgeItems }: Props) => {
+const BusinessCard = ({ business, href }: Props) => {
   return (
     <Card.Root size={"sm"}>
       <Card.Body asChild>
@@ -45,11 +45,12 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
               {JSON.parse(business.metadata)?.address}
             </Card.Description>
 
-            <HStack>
-              {badgeItems.filter(Boolean).map((item) => (
-                <Badge>{item}</Badge>
-              ))}
-            </HStack>
+            <BadgeList
+              items={[
+                business.category?.name,
+                format(business.createdAt, "dd MMM yy").toUpperCase(),
+              ]}
+            />
           </Stack>
         </HStack>
       </Card.Body>

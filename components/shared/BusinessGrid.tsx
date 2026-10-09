@@ -4,10 +4,9 @@ import { useBusinesses } from "@/hooks/business";
 import { GetAllBusinessOutputData } from "@/schema/business";
 import { computePath } from "@/utilities/computePath";
 import { For } from "@chakra-ui/react";
-import { format } from "date-fns";
+import BusinessCard from "./BusinessCard";
 import EmptyPage from "./EmptyPage";
 import GridContainer from "./GridContainer";
-import BusinessCard from "./BusinessCard";
 
 interface Props {
   initialBusinesses: Promise<GetAllBusinessOutputData>;
@@ -34,10 +33,6 @@ const BusinessGrid = ({ initialBusinesses }: Props) => {
           <BusinessCard
             key={business.id}
             business={business}
-            badgeItems={[
-              business.category?.name,
-              format(business.createdAt, "dd MMM yy").toUpperCase(),
-            ]}
             href={computePath(business.id)}
           />
         )}

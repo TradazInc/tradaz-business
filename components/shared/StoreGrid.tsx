@@ -5,7 +5,6 @@ import { useStores } from "@/hooks/store";
 import { GetAllStoresOutputData } from "@/schema/store";
 import { computePath } from "@/utilities/computePath";
 import { For } from "@chakra-ui/react";
-import { format } from "date-fns";
 import { notFound } from "next/navigation";
 import EmptyPage from "./EmptyPage";
 import GridContainer from "./GridContainer";
@@ -43,7 +42,6 @@ const StoreGrid = ({ businessId, initialStores }: Props) => {
             key={store.id}
             store={store}
             businessName={business?.name}
-            badgeItems={[format(store.createdAt, "dd MMM yy").toUpperCase()]}
             href={computePath(businessId, store.id)}
           />
         )}
