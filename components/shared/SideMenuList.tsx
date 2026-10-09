@@ -44,6 +44,7 @@ export const SideMenuList = () => {
                   key={index}
                   py={3}
                   px={6}
+                  gap={3}
                   display={"flex"}
                   cursor={"pointer"}
                   color={"fg.muted"}
