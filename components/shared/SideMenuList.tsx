@@ -42,7 +42,8 @@ export const SideMenuList = () => {
               item.children.map((child, index) => (
                 <Accordion.ItemBody
                   key={index}
-                  p={3}
+                  py={3}
+                  px={6}
                   display={"flex"}
                   cursor={"pointer"}
                   color={"fg.muted"}
