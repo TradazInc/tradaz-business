@@ -1,11 +1,11 @@
 "use client";
 
-import { businessItems, dashboardItems, storeItems } from "./SideMenuItems";
 import { computePath } from "@/utilities/computePath";
-import { Accordion, Box, Icon } from "@chakra-ui/react";
+import { Accordion, Icon, Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
+import { businessItems, dashboardItems, storeItems } from "./SideMenuItems";
 
 export const SideMenuList = () => {
   // Tracks url changes
@@ -29,22 +29,18 @@ export const SideMenuList = () => {
     <Accordion.Root
       collapsible
       w={"full"}
-      size={"sm"}
+      size={"md"}
       rounded={"none"}
       variant={"outline"}
     >
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label}>
-          <Accordion.ItemTrigger
-            justifyContent={"space-between"}
-            _open={{ bg: "gray.subtle" }}
-          >
-            <Box>
-              <Icon fontSize={"lg"} mx={3}>
-                {item.icon}
-              </Icon>
-              {item.label}
-            </Box>
+          <Accordion.ItemTrigger _open={{ bg: "gray.subtle" }}>
+            <Icon fontSize={"lg"} color={"fg.subtle"}>
+              {item.icon}
+            </Icon>
+            {item.label}
+            <Spacer />
             <Accordion.ItemIndicator />
           </Accordion.ItemTrigger>
           {item.children &&
@@ -57,7 +53,7 @@ export const SideMenuList = () => {
                   _hover={{ color: "fg" }}
                 >
                   <NextLink href={`${basePath}${child.path}`}>
-                    <Icon fontSize={"lg"} mx={3}>
+                    <Icon fontSize={"lg"} color={"fg.subtle"}>
                       {child.icon}
                     </Icon>
                     {child.label}
