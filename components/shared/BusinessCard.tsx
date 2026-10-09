@@ -28,7 +28,7 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
           </Avatar.Fallback>
         </Avatar.Root>
 
-        <Stack gap={1.5}>
+        <Stack>
           <HStack justifyContent={"flex-start"} gap={0.5}>
             <Text fontWeight={"semibold"} textStyle={"sm"}>
               {business.name}

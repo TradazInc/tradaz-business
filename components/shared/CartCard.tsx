@@ -24,7 +24,7 @@ const CartCard = ({ cart, href, onClick }: Props) => {
           </Avatar.Fallback>
         </Avatar.Root>
 
-        <Stack gap={1.5}>
+        <Stack>
           <HStack justifyContent={"flex-start"}>
             <Text fontWeight={"semibold"} textStyle={"sm"} maxW={28} truncate>
               Cart {cart.id}
