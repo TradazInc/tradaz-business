@@ -20,7 +20,7 @@ interface Props {
 const BusinessCard = ({ business, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"}>
-      <Card.Body gap={0}>
+      <Card.Body gap={1.5}>
         <HStack gap={3}>
           <Avatar.Root variant={"outline"}>
             <Avatar.Image src={business.logo ?? undefined} />
@@ -40,7 +40,7 @@ const BusinessCard = ({ business, href, badgeItems }: Props) => {
           </Stack>
         </HStack>
 
-        <Card.Description my={1.5}>
+        <Card.Description>
           {JSON.parse(business.metadata)?.address}
         </Card.Description>
 

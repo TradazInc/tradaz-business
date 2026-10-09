@@ -19,7 +19,7 @@ interface Props {
 const StoreCard = ({ store, href, badgeItems }: Props) => {
   return (
     <Card.Root size={"sm"}>
-      <Card.Body gap={0}>
+      <Card.Body gap={1.5}>
         <HStack gap={3}>
           <Avatar.Root variant={"outline"}>
             <Avatar.Fallback>
@@ -31,7 +31,7 @@ const StoreCard = ({ store, href, badgeItems }: Props) => {
           </Text>
         </HStack>
 
-        <Card.Description my={1.5}>{store.address}</Card.Description>
+        <Card.Description>{store.address}</Card.Description>
 
         <HStack>
           {badgeItems.filter(Boolean).map((item) => (
