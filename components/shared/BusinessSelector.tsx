@@ -13,8 +13,9 @@ import { updateSession } from "@/utilities/updateSession";
 import { Breadcrumb, HStack, Skeleton } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
-import { LiaSlashSolid } from "react-icons/lia";
-import { LuBuilding2, LuChevronDown, LuStore } from "react-icons/lu";
+import { LiaSlashSolid, LiaStoreAltSolid } from "react-icons/lia";
+import { LuChevronDown } from "react-icons/lu";
+import { MdOutlineBusiness } from "react-icons/md";
 import { BusinessSelectorItem } from "./BusinessSelectorItem";
 
 export const BusinessSelector = () => {
@@ -93,7 +94,7 @@ export const BusinessSelector = () => {
               handleClick={handleBusiness}
             >
               <Breadcrumb.Link as="button">
-                <LuBuilding2 />
+                <MdOutlineBusiness />
                 <Skeleton height={"5"} loading={isLoading}>
                   <HStack>
                     {activeBusiness ? activeBusiness.name : "Brands"}
@@ -119,7 +120,7 @@ export const BusinessSelector = () => {
                 activeBusiness={activeBusinessId}
               >
                 <Breadcrumb.Link as="button">
-                  <LuStore />
+                  <LiaStoreAltSolid />
                   {activeStore.name}
                   <LuChevronDown />
                 </Breadcrumb.Link>

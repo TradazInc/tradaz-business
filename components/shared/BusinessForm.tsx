@@ -27,9 +27,9 @@ import { LuCheck, LuPlus } from "react-icons/lu";
 import { MdOutlineBusiness } from "react-icons/md";
 import { TiContacts } from "react-icons/ti";
 import { z } from "zod";
-import FormButton from "./FormButton";
 import BrandStep from "./BrandStep";
 import ContactStep from "./ContactStep";
+import FormButton from "./FormButton";
 
 interface BusinessFormProps {
   signup?: string;
