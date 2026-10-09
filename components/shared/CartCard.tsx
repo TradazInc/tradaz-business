@@ -17,15 +17,15 @@ interface Props {
 const CartCard = ({ cart, href, onClick }: Props) => {
   return (
     <Card.Root size={"sm"} flexDirection={"row"}>
-      <Avatar.Root variant={"outline"}>
+      <Avatar.Root variant={"outline"} margin={"auto"}>
         <Avatar.Fallback>
           <MdShoppingCartCheckout />
         </Avatar.Fallback>
       </Avatar.Root>
 
       <Card.Body gap={1.5}>
-        <HStack gap={0} justifyContent={"flex-start"}>
-          <Text fontWeight={"semibold"} textStyle={"sm"}>
+        <HStack justifyContent={"flex-start"}>
+          <Text fontWeight={"semibold"} textStyle={"sm"} maxW={28} truncate>
             Cart {cart.id}
           </Text>
           <Span asChild color={"fg.muted"} textStyle={"sm"}>
