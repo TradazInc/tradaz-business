@@ -17,14 +17,18 @@ interface Props {
 const CartCard = ({ cart, href, onClick }: Props) => {
   return (
     <Card.Root size={"sm"}>
-      <Card.Body flexDirection={"row"} alignItems={"center"}>
+      <Card.Body
+        flexDirection={"row"}
+        alignItems={"center"}
+        justifyContent={"space-evenly"}
+      >
         <Avatar.Root variant={"outline"} size={"lg"}>
           <Avatar.Fallback>
             <MdShoppingCartCheckout />
           </Avatar.Fallback>
         </Avatar.Root>
 
-        <Box gap={1.5}>
+        <Box gap={2}>
           <HStack justifyContent={"flex-start"}>
             <Text fontWeight={"semibold"} textStyle={"sm"} maxW={28} truncate>
               Cart {cart.id}
