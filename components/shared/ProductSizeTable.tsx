@@ -71,7 +71,7 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeader>Name</Table.ColumnHeader>
-              <Table.ColumnHeader>Code</Table.ColumnHeader>
+              <Table.ColumnHeader>Sizes</Table.ColumnHeader>
               <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
