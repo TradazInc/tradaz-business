@@ -12,6 +12,7 @@ import GridContainer from "./GridContainer";
 import { toaster } from "../ui/toaster";
 import CartCard from "./CartCard";
 import EmptyPage from "./EmptyPage";
+import { LuShoppingCart } from "react-icons/lu";
 
 interface Props {
   initialCarts: Promise<GetAllCartsOutputData[]>;
@@ -49,7 +50,9 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
 
   if (data && carts.length === 0) {
     return (
-      <EmptyPage title="No carts found" description="Create a cart" />
+      <EmptyPage title="No carts found" description="Create a cart">
+        <LuShoppingCart />
+      </EmptyPage>
     );
   }
 

@@ -1,18 +1,19 @@
 import { EmptyState, VStack } from "@chakra-ui/react";
+import React from "react";
 import { HiColorSwatch } from "react-icons/hi";
 
-export default function EmptyPage({
-  title,
-  description,
-}: {
+interface Props {
   title: string;
   description: string;
-}) {
+  children?: React.ReactNode;
+}
+
+export default function EmptyPage({ title, description, children }: Props) {
   return (
-    <EmptyState.Root flex="1" w="full">
+    <EmptyState.Root size={"lg"}>
       <EmptyState.Content>
         <EmptyState.Indicator>
-          <HiColorSwatch />
+          {children || <HiColorSwatch />}
         </EmptyState.Indicator>
         <VStack textAlign="center">
           <EmptyState.Title>{title}</EmptyState.Title>
