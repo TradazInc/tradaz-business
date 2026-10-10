@@ -4,12 +4,14 @@ import PageHeader from "@/components/shared/PageHeader";
 import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
+import Search from "@/components/shared/Search";
 import { StoreForm, StoreFormViewport } from "@/components/shared/StoreForm";
 import StoreGrid from "@/components/shared/StoreGrid";
 import { StoreStat } from "@/components/shared/StoreStat";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getStores } from "@/server/store";
 import { Spacer } from "@chakra-ui/react";
+import { Suspense } from "react";
 
 interface Props {
   params: Promise<{ businessId: string }>;
@@ -26,6 +28,9 @@ export default async function page({ params }: Props) {
       </PageHeader>
 
       <PageItemContainer>
+        <Suspense>
+          <Search placeholder={"Search for a store"} searchField={"search"} />
+        </Suspense>
         <Spacer />
         <StoreForm />
       </PageItemContainer>

@@ -9,9 +9,11 @@ import PageHeader from "@/components/shared/PageHeader";
 import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
+import Search from "@/components/shared/Search";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getBusinesses } from "@/server/business";
 import { Spacer } from "@chakra-ui/react";
+import { Suspense } from "react";
 
 interface Props {
   searchParams: Promise<{ signup?: string }>;
@@ -26,6 +28,9 @@ export default async function page({ searchParams }: Props) {
       <PageHeader>Your Brands</PageHeader>
 
       <PageItemContainer>
+        <Suspense>
+          <Search placeholder={"Search for a brand"} searchField={"search"} />
+        </Suspense>
         <Spacer />
         <BusinessForm signup={signup} />
       </PageItemContainer>
