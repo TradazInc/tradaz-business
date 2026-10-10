@@ -5,7 +5,10 @@ import {
 import BusinessGrid from "@/components/shared/BusinessGrid";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import { RevenueStat } from "@/components/shared/RevenueStat";
+import { SalesStat } from "@/components/shared/SalesStat";
 import Search from "@/components/shared/Search";
+import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getBusinesses } from "@/server/business";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -29,6 +32,12 @@ export default async function page({ searchParams }: Props) {
           </Suspense>
           <Spacer />
           <BusinessForm signup={signup} />
+        </HStack>
+
+        <HStack>
+          <VisitorsStat />
+          <SalesStat />
+          <RevenueStat />
         </HStack>
 
         <BusinessGrid initialBusinesses={businesses} />

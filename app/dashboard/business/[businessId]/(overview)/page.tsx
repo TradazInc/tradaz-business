@@ -1,9 +1,12 @@
 import BusinessName from "@/components/shared/BusinessName";
-import { StoreForm, StoreFormViewport } from "@/components/shared/StoreForm";
-import StoreGrid from "@/components/shared/StoreGrid";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import { RevenueStat } from "@/components/shared/RevenueStat";
+import { SalesStat } from "@/components/shared/SalesStat";
 import Search from "@/components/shared/Search";
+import { StoreForm, StoreFormViewport } from "@/components/shared/StoreForm";
+import StoreGrid from "@/components/shared/StoreGrid";
+import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getStores } from "@/server/store";
 import { HStack, Spacer, VStack } from "@chakra-ui/react";
 import { Suspense } from "react";
@@ -29,6 +32,12 @@ export default async function page({ params }: Props) {
           </Suspense>
           <Spacer />
           <StoreForm />
+        </HStack>
+
+        <HStack>
+          <VisitorsStat />
+          <SalesStat />
+          <RevenueStat />
         </HStack>
 
         <StoreGrid initialStores={stores} businessId={businessId} />
