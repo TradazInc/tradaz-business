@@ -3,7 +3,7 @@
 import { useBusinesses } from "@/hooks/business";
 import { useStores } from "@/hooks/store";
 import { GetAllStoresOutputData } from "@/schema/store";
-import { Stat, StatRootProps } from "@chakra-ui/react";
+import { FormatNumber, Stat, StatRootProps } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import { StatContainer } from "./StatContainer";
 
@@ -29,7 +29,13 @@ export const StoreStat = ({
   return (
     <StatContainer {...props}>
       <Stat.Label>Stores</Stat.Label>
-      <Stat.ValueText>{stores?.length ?? 0}</Stat.ValueText>
+      <Stat.ValueText>
+        <FormatNumber
+          value={stores?.length ?? 0}
+          notation={"compact"}
+          compactDisplay={"short"}
+        />
+      </Stat.ValueText>
     </StatContainer>
   );
 };
