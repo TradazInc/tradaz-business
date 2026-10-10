@@ -8,7 +8,7 @@ import {
   Menu,
   Portal,
 } from "@chakra-ui/react";
-import { LuCircleCheck, LuLightbulb } from "react-icons/lu";
+import { LuLightbulb, LuShoppingBag } from "react-icons/lu";
 
 const Notification = () => {
   return (
@@ -33,7 +33,7 @@ const Notification = () => {
                   flexDirection={"row"}
                 >
                   <Icon size={"md"}>
-                    <LuCircleCheck />
+                    <LuShoppingBag />
                   </Icon>
                   <DataList.Item>
                     <DataList.ItemLabel>{content.title}</DataList.ItemLabel>
