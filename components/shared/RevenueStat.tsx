@@ -1,15 +1,9 @@
 import { FormatNumber, Progress, Stat, StatRootProps } from "@chakra-ui/react";
+import { StatContainer } from "./StatContainer";
 
 export const RevenueStat = ({ ...props }: StatRootProps) => {
   return (
-    <Stat.Root
-      p={4}
-      w={"full"}
-      h={"full"}
-      rounded={"md"}
-      borderWidth={"1px"}
-      {...props}
-    >
+    <StatContainer {...props}>
       <Stat.Label>Revenue</Stat.Label>
       <Stat.ValueText>
         <FormatNumber
@@ -25,6 +19,6 @@ export const RevenueStat = ({ ...props }: StatRootProps) => {
           <Progress.Range />
         </Progress.Track>
       </Progress.Root>
-    </Stat.Root>
+    </StatContainer>
   );
 };

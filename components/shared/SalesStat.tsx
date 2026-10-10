@@ -5,17 +5,11 @@ import {
   Stat,
   StatRootProps,
 } from "@chakra-ui/react";
+import { StatContainer } from "./StatContainer";
 
 export const SalesStat = ({ ...props }: StatRootProps) => {
   return (
-    <Stat.Root
-      p={4}
-      w={"full"}
-      h={"full"}
-      rounded={"md"}
-      borderWidth={"1px"}
-      {...props}
-    >
+    <StatContainer {...props}>
       <Stat.Label>Sales</Stat.Label>
       <HStack>
         <Stat.ValueText>
@@ -32,6 +26,6 @@ export const SalesStat = ({ ...props }: StatRootProps) => {
         </Badge>
       </HStack>
       <Stat.HelpText>since last month</Stat.HelpText>
-    </Stat.Root>
+    </StatContainer>
   );
 };

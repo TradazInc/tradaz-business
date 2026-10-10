@@ -3,15 +3,20 @@
 import { useBusinesses } from "@/hooks/business";
 import { useStores } from "@/hooks/store";
 import { GetAllStoresOutputData } from "@/schema/store";
-import { Stat } from "@chakra-ui/react";
+import { Stat, StatRootProps } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
+import { StatContainer } from "./StatContainer";
 
 interface Props {
   initialStores: Promise<GetAllStoresOutputData>;
   businessId: string;
 }
 
-export const StoreStat = ({ initialStores, businessId }: Props) => {
+export const StoreStat = ({
+  initialStores,
+  businessId,
+  ...props
+}: Props & StatRootProps) => {
   const { data: businesses } = useBusinesses();
   const business = businesses?.find((b) => b.id === businessId);
 
@@ -22,9 +27,9 @@ export const StoreStat = ({ initialStores, businessId }: Props) => {
   });
 
   return (
-    <Stat.Root p={4} w={"full"} h={"full"} rounded={"md"} borderWidth={"1px"}>
+    <StatContainer {...props}>
       <Stat.Label>Stores</Stat.Label>
       <Stat.ValueText>{stores?.length ?? 0}</Stat.ValueText>
-    </Stat.Root>
+    </StatContainer>
   );
 };

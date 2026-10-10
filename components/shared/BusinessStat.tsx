@@ -2,21 +2,25 @@
 
 import { useBusinesses } from "@/hooks/business";
 import { GetAllBusinessOutputData } from "@/schema/business";
-import { Stat } from "@chakra-ui/react";
+import { Stat, StatRootProps } from "@chakra-ui/react";
+import { StatContainer } from "./StatContainer";
 
 interface Props {
   initialBusinesses: Promise<GetAllBusinessOutputData>;
 }
 
-export const BusinessStat = ({ initialBusinesses }: Props) => {
+export const BusinessStat = ({
+  initialBusinesses,
+  ...props
+}: Props & StatRootProps) => {
   const { data: businesses } = useBusinesses({
     fallbackData: initialBusinesses,
   });
 
   return (
-    <Stat.Root p={4} w={"full"} h={"full"} rounded={"md"} borderWidth={"1px"}>
+    <StatContainer {...props}>
       <Stat.Label>Businesses</Stat.Label>
       <Stat.ValueText>{businesses?.length ?? 0}</Stat.ValueText>
-    </Stat.Root>
+    </StatContainer>
   );
 };
