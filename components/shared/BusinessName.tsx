@@ -13,7 +13,7 @@ const BusinessName = ({ businessId }: Props) => {
 
   return (
     <Skeleton w={40} h={10} loading={isLoading}>
-      <Text> {business?.name}</Text>
+      <Text> {business?.name} Stores</Text>
     </Skeleton>
   );
 };
