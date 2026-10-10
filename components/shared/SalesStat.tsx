@@ -17,6 +17,7 @@ export const SalesStat = ({ ...props }: StatRootProps) => {
             value={845600.4}
             style={"currency"}
             currency={"NGN"}
+            currencyDisplay={"narrowSymbol"}
             maximumFractionDigits={0}
           />
         </Stat.ValueText>

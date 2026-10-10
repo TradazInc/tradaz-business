@@ -10,6 +10,7 @@ export const RevenueStat = ({ ...props }: StatRootProps) => {
           value={134000}
           style={"currency"}
           currency={"NGN"}
+          currencyDisplay={"narrowSymbol"}
           maximumFractionDigits={0}
         />
       </Stat.ValueText>
