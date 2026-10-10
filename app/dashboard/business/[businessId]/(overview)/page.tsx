@@ -6,6 +6,7 @@ import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
 import { StoreForm, StoreFormViewport } from "@/components/shared/StoreForm";
 import StoreGrid from "@/components/shared/StoreGrid";
+import { StoreStat } from "@/components/shared/StoreStat";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getStores } from "@/server/store";
 import { Spacer } from "@chakra-ui/react";
@@ -30,6 +31,7 @@ export default async function page({ params }: Props) {
       </PageItemContainer>
 
       <PageItemContainer my={2}>
+        <StoreStat initialStores={stores} businessId={businessId} />
         <VisitorsStat />
         <SalesStat />
         <RevenueStat />

@@ -3,6 +3,7 @@ import {
   BusinessFormViewport,
 } from "@/components/shared/BusinessForm";
 import BusinessGrid from "@/components/shared/BusinessGrid";
+import { BusinessStat } from "@/components/shared/BusinessStat";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { PageItemContainer } from "@/components/shared/PageItemContainer";
@@ -30,6 +31,7 @@ export default async function page({ searchParams }: Props) {
       </PageItemContainer>
 
       <PageItemContainer my={2}>
+        <BusinessStat initialBusinesses={businesses} />
         <VisitorsStat />
         <SalesStat />
         <RevenueStat />
