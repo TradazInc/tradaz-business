@@ -1,5 +1,3 @@
-"use client";
-
 import { notifications } from "@/data/notifications";
 import {
   Circle,
@@ -10,14 +8,14 @@ import {
   Menu,
   Portal,
 } from "@chakra-ui/react";
-import { LuBell, LuCircleCheck } from "react-icons/lu";
+import { LuCircleCheck, LuLightbulb } from "react-icons/lu";
 
 const Notification = () => {
   return (
     <Menu.Root>
       <Menu.Trigger rounded="full" focusRing="outside" asChild>
         <IconButton rounded={"full"} variant={"outline"} size={"sm"}>
-          <LuBell />
+          <LuLightbulb />
           <Float offsetX="1" offsetY="1">
             <Circle
               bg="red"
@@ -36,10 +34,10 @@ const Notification = () => {
                 <DataList.Root
                   size={"sm"}
                   variant={"bold"}
-                  flexDirection={"row"}
                   alignItems={"center"}
+                  flexDirection={"row"}
                 >
-                  <Icon size={"md"} color={"green.500"}>
+                  <Icon size={"md"}>
                     <LuCircleCheck />
                   </Icon>
                   <DataList.Item>
