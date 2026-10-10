@@ -80,9 +80,7 @@ const VariationCard = ({ variation, index }: Props) => {
           <DataList.Root orientation={"horizontal"}>
             {variation.teamVariations.map((tv) => (
               <DataList.Item key={tv.id}>
-                <DataList.ItemLabel>
-                  {tv.team.address} quantity
-                </DataList.ItemLabel>
+                <DataList.ItemLabel>{tv.team.address} stock</DataList.ItemLabel>
                 <DataList.ItemValue>{tv.quantity}</DataList.ItemValue>
               </DataList.Item>
             ))}
