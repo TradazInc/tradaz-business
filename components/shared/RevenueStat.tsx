@@ -2,7 +2,7 @@ import { FormatNumber, Progress, Stat, StatRootProps } from "@chakra-ui/react";
 
 export const RevenueStat = ({ ...props }: StatRootProps) => {
   return (
-    <Stat.Root maxW="240px" {...props}>
+    <Stat.Root borderWidth={"1px"} rounded={"md"} {...props}>
       <Stat.Label>Revenue</Stat.Label>
       <Stat.ValueText>
         <FormatNumber

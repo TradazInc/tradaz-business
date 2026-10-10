@@ -8,7 +8,7 @@ import {
 
 export const SalesStat = ({ ...props }: StatRootProps) => {
   return (
-    <Stat.Root {...props}>
+    <Stat.Root borderWidth={"1px"} rounded={"md"} {...props}>
       <Stat.Label>Sales</Stat.Label>
       <HStack>
         <Stat.ValueText>
