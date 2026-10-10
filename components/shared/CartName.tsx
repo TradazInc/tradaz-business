@@ -11,7 +11,11 @@ const CartName = ({ cartId }: Props) => {
   const { data: cart, isLoading } = useCart(cartId);
 
   return (
-    <Skeleton w={40} h={10} loading={isLoading}>
+    <Skeleton
+      loading={isLoading}
+      h={isLoading ? 10 : "auto"}
+      w={isLoading ? 100 : "auto"}
+    >
       <Text>{`Cart ${cart?.id}`}</Text>
     </Skeleton>
   );
