@@ -4,6 +4,7 @@ import { ProfileMenu } from "./ProfileMenu";
 import { BusinessSelector } from "./BusinessSelector";
 import Notification from "./Notification";
 import { SideMenuDrawer } from "./SideMenuDrawer";
+import HelpIconButton from "./HelpIconButton";
 
 export const NavBar = () => {
   return (
@@ -17,6 +18,7 @@ export const NavBar = () => {
 
       <HStack gap={"2"}>
         <ColorModeButton rounded={"full"} variant={"outline"} />
+        <HelpIconButton />
         <Notification />
         <ProfileMenu />
       </HStack>
