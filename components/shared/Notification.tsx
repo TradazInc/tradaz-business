@@ -16,7 +16,7 @@ const Notification = () => {
   return (
     <Menu.Root>
       <Menu.Trigger rounded="full" focusRing="outside" asChild>
-        <IconButton rounded={"full"} variant={"subtle"}>
+        <IconButton rounded={"full"} variant={"outline"} size={"sm"}>
           <LuBell />
           <Float offsetX="1" offsetY="1">
             <Circle

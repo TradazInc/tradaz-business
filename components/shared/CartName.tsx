@@ -8,10 +8,12 @@ interface Props {
 }
 
 const CartName = ({ cartId }: Props) => {
-  const { data: cart } = useCart(cartId);
+  const { data: cart, isLoading } = useCart(cartId);
 
   return (
-    <Text>{cart ? `Cart ${cart.id}` : <Skeleton w={"160px"} h={10} />}</Text>
+    <Skeleton w={40} h={10} loading={isLoading}>
+      <Text>{`Cart ${cart?.id}`}</Text>
+    </Skeleton>
   );
 };
 

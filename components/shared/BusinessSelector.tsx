@@ -11,12 +11,14 @@ import { useStores } from "@/hooks/store";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { updateSession } from "@/utilities/updateSession";
 import { Breadcrumb, HStack, Skeleton } from "@chakra-ui/react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { HiBuildingOffice2 } from "react-icons/hi2";
 import { LiaSlashSolid, LiaStoreAltSolid } from "react-icons/lia";
 import { LuChevronDown } from "react-icons/lu";
-import { BusinessSelectorItem } from "./BusinessSelectorItem";
+import { BusinessSelectorMenu } from "./BusinessSelectorMenu";
+import TradazLogo from "./TradazLogo";
 
 export const BusinessSelector = () => {
   const { data: session } = useSession();
@@ -82,29 +84,31 @@ export const BusinessSelector = () => {
   return (
     <Breadcrumb.Root>
       <Breadcrumb.List>
-        <>
-          <Breadcrumb.Separator>
-            <LiaSlashSolid />
-          </Breadcrumb.Separator>
+        <Link href={"/dashboard"}>
+          <TradazLogo h={3} />
+        </Link>
 
-          <Breadcrumb.Item>
-            <BusinessSelectorItem
-              data={businesses}
-              dataType={"business"}
-              handleClick={handleBusiness}
-            >
-              <Breadcrumb.Link as="button">
-                <HiBuildingOffice2 />
-                <Skeleton height={"5"} loading={isLoading}>
-                  <HStack>
-                    {activeBusiness ? activeBusiness.name : "Brands"}
-                    <LuChevronDown />
-                  </HStack>
-                </Skeleton>
-              </Breadcrumb.Link>
-            </BusinessSelectorItem>
-          </Breadcrumb.Item>
-        </>
+        <Breadcrumb.Separator>
+          <LiaSlashSolid />
+        </Breadcrumb.Separator>
+
+        <Breadcrumb.Item>
+          <BusinessSelectorMenu
+            data={businesses}
+            dataType={"business"}
+            handleClick={handleBusiness}
+          >
+            <Breadcrumb.Link as="button">
+              <HiBuildingOffice2 />
+              <Skeleton height={"5"} loading={isLoading}>
+                <HStack>
+                  {activeBusiness ? activeBusiness.name : "Brands"}
+                  <LuChevronDown />
+                </HStack>
+              </Skeleton>
+            </Breadcrumb.Link>
+          </BusinessSelectorMenu>
+        </Breadcrumb.Item>
 
         {activeStore && (
           <>
@@ -113,7 +117,7 @@ export const BusinessSelector = () => {
             </Breadcrumb.Separator>
 
             <Breadcrumb.Item>
-              <BusinessSelectorItem
+              <BusinessSelectorMenu
                 data={stores}
                 dataType={"store"}
                 handleClick={handleStore}
@@ -124,7 +128,7 @@ export const BusinessSelector = () => {
                   {activeStore.name}
                   <LuChevronDown />
                 </Breadcrumb.Link>
-              </BusinessSelectorItem>
+              </BusinessSelectorMenu>
             </Breadcrumb.Item>
           </>
         )}

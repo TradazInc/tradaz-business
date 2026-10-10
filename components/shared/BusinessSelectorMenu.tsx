@@ -11,7 +11,7 @@ interface Props {
   handleClick: (id: string) => Promise<unknown>;
 }
 
-export const BusinessSelectorItem = ({
+export const BusinessSelectorMenu = ({
   activeBusiness,
   children,
   data,

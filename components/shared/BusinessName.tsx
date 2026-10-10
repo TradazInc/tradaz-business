@@ -8,13 +8,13 @@ interface Props {
 }
 
 const BusinessName = ({ businessId }: Props) => {
-  const { data: businesses } = useBusinesses();
+  const { data: businesses, isLoading } = useBusinesses();
   const business = businesses?.find((b) => b.id === businessId);
 
   return (
-    <Text>
-      {business ? `${business.name}` : <Skeleton w={"160px"} h={10} />}
-    </Text>
+    <Skeleton w={40} h={10} loading={isLoading}>
+      <Text> {business?.name}</Text>
+    </Skeleton>
   );
 };
 

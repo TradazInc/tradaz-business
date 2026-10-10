@@ -6,7 +6,7 @@ export const SideMenuDrawer = () => {
   return (
     <Drawer.Root placement={"start"} size={"xs"}>
       <Drawer.Trigger asChild>
-        <IconButton rounded={"full"} variant={"subtle"}>
+        <IconButton rounded={"full"} variant={"outline"} size={"sm"}>
           <LuMenu />
         </IconButton>
       </Drawer.Trigger>
