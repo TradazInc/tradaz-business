@@ -10,6 +10,7 @@ import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
 import Search from "@/components/shared/Search";
+import UserName from "@/components/shared/UserName";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getBusinesses } from "@/server/business";
 import { Spacer } from "@chakra-ui/react";
@@ -25,7 +26,9 @@ export default async function page({ searchParams }: Props) {
 
   return (
     <PageContainer>
-      <PageHeader>Your Brands</PageHeader>
+      <PageHeader>
+        <UserName />
+      </PageHeader>
 
       <PageItemContainer>
         <Suspense>
