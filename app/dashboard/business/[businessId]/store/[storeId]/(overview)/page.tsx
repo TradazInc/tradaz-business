@@ -1,4 +1,5 @@
 import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
 import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
 import StoreName from "@/components/shared/StoreName";
@@ -14,7 +15,9 @@ const page = async ({ params }: Props) => {
 
   return (
     <PageContainer>
-      <StoreName businessId={businessId} storeId={storeId} />
+      <PageHeader>
+        <StoreName businessId={businessId} storeId={storeId} />
+      </PageHeader>
 
       <HStack>
         <VisitorsStat />

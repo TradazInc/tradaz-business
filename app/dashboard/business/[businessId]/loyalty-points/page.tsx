@@ -1,9 +1,12 @@
-import { PointsConfigForm, PointsConfigFormViewport } from "@/components/shared/PointsConfigForm";
-import PointsConfigTable from "@/components/shared/PointsConfigTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import {
+  PointsConfigForm,
+  PointsConfigFormViewport,
+} from "@/components/shared/PointsConfigForm";
+import PointsConfigTable from "@/components/shared/PointsConfigTable";
 import { getPointsConfigs } from "@/server/pointsConfig";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -15,19 +18,17 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>Loyalty Points</PageHeader>
+      <PageHeader>Loyalty Points</PageHeader>
 
-        <HStack w={"full"}>
-          <Spacer />
-          <PointsConfigForm />
-        </HStack>
+      <HStack w={"full"}>
+        <Spacer />
+        <PointsConfigForm />
+      </HStack>
 
-        <PointsConfigTable
-          initialPointsConfigs={pointsConfigs}
-          businessId={businessId}
-        />
-      </VStack>
+      <PointsConfigTable
+        initialPointsConfigs={pointsConfigs}
+        businessId={businessId}
+      />
       <PointsConfigFormViewport />
     </PageContainer>
   );

@@ -1,10 +1,13 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
-import Search from "@/components/shared/Search";
-import { PosConfigForm, PosConfigFormViewport } from "@/components/shared/PosConfigForm";
+import {
+  PosConfigForm,
+  PosConfigFormViewport,
+} from "@/components/shared/PosConfigForm";
 import PosConfigTable from "@/components/shared/PosConfigTable";
+import Search from "@/components/shared/Search";
 import { getPosConfigs } from "@/server/posConfig";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 interface Props {
@@ -17,25 +20,20 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>POS Configurations</PageHeader>
+      <PageHeader>POS Configurations</PageHeader>
 
-        <HStack w={"full"}>
-          <Suspense>
-            <Search
-              placeholder={"Search for a configuration"}
-              searchField={"search"}
-            />
-          </Suspense>
-          <Spacer />
-          <PosConfigForm />
-        </HStack>
+      <HStack w={"full"}>
+        <Suspense>
+          <Search
+            placeholder={"Search for a configuration"}
+            searchField={"search"}
+          />
+        </Suspense>
+        <Spacer />
+        <PosConfigForm />
+      </HStack>
 
-        <PosConfigTable
-          initialPosConfigs={posConfigs}
-          businessId={businessId}
-        />
-      </VStack>
+      <PosConfigTable initialPosConfigs={posConfigs} businessId={businessId} />
       <PosConfigFormViewport />
     </PageContainer>
   );

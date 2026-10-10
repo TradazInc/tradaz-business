@@ -16,29 +16,27 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>
-          <CartName cartId={cartId} />
-        </PageHeader>
+      <PageHeader>
+        <CartName cartId={cartId} />
+      </PageHeader>
 
-        <SimpleGrid columns={{ base: 1, md: 4 }} gap={3}>
-          <GridItem colSpan={{ base: 1, md: 3 }}>
-            <CartItemTable
-              initialCart={cartPromise}
-              businessId={businessId}
-              storeId={storeId}
-              cartId={cartId}
-            />
-          </GridItem>
-          <GridItem colSpan={1}>
-            <CartForm
-              initialCart={cartPromise}
-              businessId={businessId}
-              cartId={cartId}
-            />
-          </GridItem>
-        </SimpleGrid>
-      </VStack>
+      <SimpleGrid columns={{ base: 1, md: 4 }} gap={3}>
+        <GridItem colSpan={{ base: 1, md: 3 }}>
+          <CartItemTable
+            initialCart={cartPromise}
+            businessId={businessId}
+            storeId={storeId}
+            cartId={cartId}
+          />
+        </GridItem>
+        <GridItem colSpan={1}>
+          <CartForm
+            initialCart={cartPromise}
+            businessId={businessId}
+            cartId={cartId}
+          />
+        </GridItem>
+      </SimpleGrid>
     </PageContainer>
   );
 }

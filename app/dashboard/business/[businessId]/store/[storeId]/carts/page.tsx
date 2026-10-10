@@ -17,23 +17,21 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>Carts</PageHeader>
+      <PageHeader>Carts</PageHeader>
 
-        <HStack w={"full"}>
-          <Suspense>
-            <Search placeholder={"Search for a cart"} searchField={"search"} />
-          </Suspense>
-          <Spacer />
-          <NewCartButton businessId={businessId} storeId={storeId} />
-        </HStack>
+      <HStack w={"full"}>
+        <Suspense>
+          <Search placeholder={"Search for a cart"} searchField={"search"} />
+        </Suspense>
+        <Spacer />
+        <NewCartButton businessId={businessId} storeId={storeId} />
+      </HStack>
 
-        <CartGrid
-          initialCarts={carts}
-          businessId={businessId}
-          storeId={storeId}
-        />
-      </VStack>
+      <CartGrid
+        initialCarts={carts}
+        businessId={businessId}
+        storeId={storeId}
+      />
     </PageContainer>
   );
 }

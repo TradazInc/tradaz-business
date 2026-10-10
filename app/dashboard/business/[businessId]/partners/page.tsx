@@ -3,7 +3,7 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getMembers } from "@/server/member";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 interface Props {
@@ -16,21 +16,16 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>Partners</PageHeader>
+      <PageHeader>Partners</PageHeader>
 
-        <HStack w={"full"}>
-          <Suspense>
-            <Search
-              placeholder={"Search for a partner"}
-              searchField={"search"}
-            />
-          </Suspense>
-          <Spacer />
-        </HStack>
+      <HStack w={"full"}>
+        <Suspense>
+          <Search placeholder={"Search for a partner"} searchField={"search"} />
+        </Suspense>
+        <Spacer />
+      </HStack>
 
-        <MemberTable initialMembers={members} businessId={businessId} />
-      </VStack>
+      <MemberTable initialMembers={members} businessId={businessId} />
     </PageContainer>
   );
 }

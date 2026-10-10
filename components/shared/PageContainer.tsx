@@ -1,10 +1,10 @@
-import { Box, BoxProps } from "@chakra-ui/react";
+import { VStack, StackProps } from "@chakra-ui/react";
 
 export const PageContainer = ({
   children,
   ...props
-}: { children: React.ReactNode } & BoxProps) => (
-  <Box overflowY={"auto"} px={{ base: 10, md: 36 }} {...props}>
+}: { children: React.ReactNode } & StackProps) => (
+  <VStack overflowY={"auto"} px={{ base: 10, md: 36 }} {...props}>
     {children}
-  </Box>
+  </VStack>
 );

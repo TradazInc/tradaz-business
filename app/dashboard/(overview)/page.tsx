@@ -7,11 +7,9 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
-import Search from "@/components/shared/Search";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getBusinesses } from "@/server/business";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
-import { Suspense } from "react";
+import { HStack, Spacer } from "@chakra-ui/react";
 
 interface Props {
   searchParams: Promise<{ signup?: string }>;
@@ -23,25 +21,20 @@ export default async function page({ searchParams }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>Your Brands</PageHeader>
+      <PageHeader>Your Brands</PageHeader>
 
-        <HStack w={"full"}>
-          <Suspense>
-            <Search placeholder={"Search for a brand"} searchField={"search"} />
-          </Suspense>
-          <Spacer />
-          <BusinessForm signup={signup} />
-        </HStack>
+      <HStack w={"full"}>
+        <Spacer />
+        <BusinessForm signup={signup} />
+      </HStack>
 
-        <HStack>
-          <VisitorsStat />
-          <SalesStat />
-          <RevenueStat />
-        </HStack>
+      <HStack>
+        <VisitorsStat />
+        <SalesStat />
+        <RevenueStat />
+      </HStack>
 
-        <BusinessGrid initialBusinesses={businesses} />
-      </VStack>
+      <BusinessGrid initialBusinesses={businesses} />
       <BusinessFormViewport />
     </PageContainer>
   );

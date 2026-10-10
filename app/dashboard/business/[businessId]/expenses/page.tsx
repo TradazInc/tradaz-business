@@ -5,7 +5,7 @@ import PageHeader from "@/components/shared/PageHeader";
 import Search from "@/components/shared/Search";
 import { getExpenses } from "@/server/expense";
 import { computePath } from "@/utilities/computePath";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -20,27 +20,25 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>Expenses</PageHeader>
+      <PageHeader>Expenses</PageHeader>
 
-        <HStack w={"full"}>
-          <Suspense>
-            <Search
-              placeholder={"Search for an expense"}
-              searchField={"search"}
-            />
-          </Suspense>
-          <Spacer />
-          <FormButton asChild>
-            <NextLink href={`${computePath(businessId)}/expenses/new`}>
-              <LuPlus />
-              Create Expense
-            </NextLink>
-          </FormButton>
-        </HStack>
+      <HStack w={"full"}>
+        <Suspense>
+          <Search
+            placeholder={"Search for an expense"}
+            searchField={"search"}
+          />
+        </Suspense>
+        <Spacer />
+        <FormButton asChild>
+          <NextLink href={`${computePath(businessId)}/expenses/new`}>
+            <LuPlus />
+            Create Expense
+          </NextLink>
+        </FormButton>
+      </HStack>
 
-        <ExpenseTable initialExpenses={expenses} businessId={businessId} />
-      </VStack>
+      <ExpenseTable initialExpenses={expenses} businessId={businessId} />
     </PageContainer>
   );
 }

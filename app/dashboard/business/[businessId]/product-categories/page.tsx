@@ -1,9 +1,12 @@
-import { ProductCategoryForm, ProductCategoryFormViewport } from "@/components/shared/ProductCategoryForm";
-import ProductCategoryTable from "@/components/shared/ProductCategoryTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import {
+  ProductCategoryForm,
+  ProductCategoryFormViewport,
+} from "@/components/shared/ProductCategoryForm";
+import ProductCategoryTable from "@/components/shared/ProductCategoryTable";
 import { getProductCategories } from "@/server/productCategory";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -15,19 +18,17 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>Product Categories</PageHeader>
+      <PageHeader>Product Categories</PageHeader>
 
-        <HStack w={"full"}>
-          <Spacer />
-          <ProductCategoryForm />
-        </HStack>
+      <HStack w={"full"}>
+        <Spacer />
+        <ProductCategoryForm />
+      </HStack>
 
-        <ProductCategoryTable
-          initialCategories={categories}
-          businessId={businessId}
-        />
-      </VStack>
+      <ProductCategoryTable
+        initialCategories={categories}
+        businessId={businessId}
+      />
       <ProductCategoryFormViewport />
     </PageContainer>
   );

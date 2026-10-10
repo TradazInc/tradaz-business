@@ -1,9 +1,12 @@
-import { ProductSizeForm, ProductSizeFormViewport } from "@/components/shared/ProductSizeForm";
-import ProductSizeTable from "@/components/shared/ProductSizeTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import {
+  ProductSizeForm,
+  ProductSizeFormViewport,
+} from "@/components/shared/ProductSizeForm";
+import ProductSizeTable from "@/components/shared/ProductSizeTable";
 import { getSizeTypes } from "@/server/sizeType";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { HStack, Spacer } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -15,19 +18,14 @@ export default async function page({ params }: Props) {
 
   return (
     <PageContainer>
-      <VStack w={"full"} h={"full"}>
-        <PageHeader>Product Sizes</PageHeader>
+      <PageHeader>Product Sizes</PageHeader>
 
-        <HStack w={"full"}>
-          <Spacer />
-          <ProductSizeForm />
-        </HStack>
+      <HStack w={"full"}>
+        <Spacer />
+        <ProductSizeForm />
+      </HStack>
 
-        <ProductSizeTable
-          initialSizeTypes={sizeTypes}
-          businessId={businessId}
-        />
-      </VStack>
+      <ProductSizeTable initialSizeTypes={sizeTypes} businessId={businessId} />
       <ProductSizeFormViewport />
     </PageContainer>
   );
