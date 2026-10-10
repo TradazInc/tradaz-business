@@ -6,8 +6,8 @@ import {
   FormatNumber,
   Heading,
   Square,
-  Text,
 } from "@chakra-ui/react";
+import { format } from "date-fns";
 import ProductColorBadge from "./ProductColorBadge";
 
 interface Props {
@@ -66,25 +66,26 @@ const VariationCard = ({ variation, index }: Props) => {
                 )}
               </DataList.ItemValue>
             </DataList.Item>
-            {variation.teamVariations.length ? (
-              <>
-                {variation.teamVariations.map((tv) => (
-                  <DataList.Item
-                    key={tv.id}
-                    justifyContent={"space-between"}
-                    gap={4}
-                  >
-                    <DataList.ItemLabel>
-                      {tv.team.address} quantity
-                    </DataList.ItemLabel>
-                    <DataList.ItemValue>{tv.quantity}</DataList.ItemValue>
-                  </DataList.Item>
-                ))}
-              </>
-            ) : (
-              <Text color={"fg.muted"}>Not stocked in any store</Text>
-            )}
+            <DataList.Item>
+              <DataList.ItemLabel>Created At</DataList.ItemLabel>
+              <DataList.ItemValue>
+                {format(variation.createdAt, "dd MMM yy").toUpperCase()}
+              </DataList.ItemValue>
+            </DataList.Item>
           </DataList.Root>
+
+          {variation.teamVariations.length > 0 && (
+            <DataList.Root orientation={"horizontal"} w={"full"}>
+              {variation.teamVariations.map((tv) => (
+                <DataList.Item key={tv.id}>
+                  <DataList.ItemLabel>
+                    {tv.team.address} quantity
+                  </DataList.ItemLabel>
+                  <DataList.ItemValue>{tv.quantity}</DataList.ItemValue>
+                </DataList.Item>
+              ))}
+            </DataList.Root>
+          )}
         </Flex>
       </Card.Body>
     </Card.Root>
