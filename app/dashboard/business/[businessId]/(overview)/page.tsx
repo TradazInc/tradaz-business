@@ -3,6 +3,7 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
+import StatContainer from "@/components/shared/StatContainer";
 import { StoreForm, StoreFormViewport } from "@/components/shared/StoreForm";
 import StoreGrid from "@/components/shared/StoreGrid";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
@@ -28,11 +29,11 @@ export default async function page({ params }: Props) {
         <StoreForm />
       </HStack>
 
-      <HStack>
+      <StatContainer>
         <VisitorsStat />
         <SalesStat />
         <RevenueStat />
-      </HStack>
+      </StatContainer>
 
       <StoreGrid initialStores={stores} businessId={businessId} />
       <StoreFormViewport />

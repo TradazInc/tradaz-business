@@ -2,7 +2,14 @@ import { Badge, Stat, StatRootProps } from "@chakra-ui/react";
 
 export const VisitorsStat = ({ ...props }: StatRootProps) => {
   return (
-    <Stat.Root borderWidth={"1px"} rounded={"md"} {...props}>
+    <Stat.Root
+      p={4}
+      minW={64}
+      h={"full"}
+      rounded={"md"}
+      borderWidth={"1px"}
+      {...props}
+    >
       <Stat.Label>Unique visitors</Stat.Label>
       <Stat.ValueText>192.1k</Stat.ValueText>
       <Badge colorPalette={"red"} variant={"plain"} px={"0"}>

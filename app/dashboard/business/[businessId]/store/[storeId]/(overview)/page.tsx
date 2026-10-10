@@ -2,6 +2,7 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
+import StatContainer from "@/components/shared/StatContainer";
 import StoreName from "@/components/shared/StoreName";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { HStack } from "@chakra-ui/react";
@@ -19,11 +20,11 @@ const page = async ({ params }: Props) => {
         <StoreName businessId={businessId} storeId={storeId} />
       </PageHeader>
 
-      <HStack>
+      <StatContainer>
         <VisitorsStat />
         <SalesStat />
         <RevenueStat />
-      </HStack>
+      </StatContainer>
     </PageContainer>
   );
 };

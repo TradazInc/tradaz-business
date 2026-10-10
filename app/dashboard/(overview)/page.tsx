@@ -7,6 +7,7 @@ import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { RevenueStat } from "@/components/shared/RevenueStat";
 import { SalesStat } from "@/components/shared/SalesStat";
+import StatContainer from "@/components/shared/StatContainer";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getBusinesses } from "@/server/business";
 import { HStack, Spacer } from "@chakra-ui/react";
@@ -28,11 +29,11 @@ export default async function page({ searchParams }: Props) {
         <BusinessForm signup={signup} />
       </HStack>
 
-      <HStack>
+      <StatContainer>
         <VisitorsStat />
         <SalesStat />
         <RevenueStat />
-      </HStack>
+      </StatContainer>
 
       <BusinessGrid initialBusinesses={businesses} />
       <BusinessFormViewport />
