@@ -3,7 +3,7 @@ import { MdOutlineViewInAr } from "react-icons/md";
 
 const ViewIconButton = ({ children, ...props }: IconButtonProps) => {
   return (
-    <IconButton {...props}>
+    <IconButton variant={"outline"} {...props}>
       <MdOutlineViewInAr />
     </IconButton>
   );

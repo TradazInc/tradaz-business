@@ -6,6 +6,7 @@ const DeleteIconButton = ({ children, ...props }: IconButtonProps) => {
     <IconButton
       {...props}
       color={"fg.error"}
+      variant={"outline"}
       _hover={{ bg: "bg.error", color: "fg.error" }}
     >
       <MdDeleteOutline />
