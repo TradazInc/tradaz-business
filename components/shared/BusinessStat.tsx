@@ -4,6 +4,8 @@ import { useBusinesses } from "@/hooks/business";
 import { GetAllBusinessOutputData } from "@/schema/business";
 import { FormatNumber, Stat, StatRootProps } from "@chakra-ui/react";
 import { StatContainer } from "./StatContainer";
+import { useSession } from "@/hooks/session";
+import { format } from "date-fns";
 
 interface Props {
   initialBusinesses: Promise<GetAllBusinessOutputData>;
@@ -17,6 +19,8 @@ export const BusinessStat = ({
     fallbackData: initialBusinesses,
   });
 
+  const { data: session } = useSession();
+
   return (
     <StatContainer {...props}>
       <Stat.Label>Businesses</Stat.Label>
@@ -27,6 +31,11 @@ export const BusinessStat = ({
           compactDisplay={"short"}
         />
       </Stat.ValueText>
+      {session?.user && (
+        <Stat.HelpText>
+          since {format(session?.user.createdAt, "PPP")}
+        </Stat.HelpText>
+      )}
     </StatContainer>
   );
 };
