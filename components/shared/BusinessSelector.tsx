@@ -24,6 +24,7 @@ export const BusinessSelector = () => {
   const { data: session } = useSession();
   const activeBusinessId = session?.session.activeOrganizationId ?? undefined;
   const activeStoreId = session?.session.activeTeamId ?? undefined;
+  const sessionLoaded = !!session;
 
   const { data: businesses, isLoading } = useBusinesses();
   const { data: stores } = useStores(activeBusinessId);
@@ -71,15 +72,19 @@ export const BusinessSelector = () => {
   }>();
 
   useEffect(() => {
-    if (!session) return;
+    if (!sessionLoaded) return;
 
     // Use URL to update session
-    if (activeBusinessId !== businessId) {
-      handleBusiness(businessId); // optimistic update re-runs this effect for the store
-      return;
-    }
-    if (activeStoreId !== storeId) handleStore(storeId);
-  }, [session, activeBusinessId, activeStoreId, businessId, storeId]);
+    const sync = async () => {
+      if (activeBusinessId !== businessId) {
+        await handleBusiness(businessId); // clears the store
+        if (storeId) await handleStore(storeId);
+        return;
+      }
+      if (activeStoreId !== storeId) await handleStore(storeId);
+    };
+    sync();
+  }, [sessionLoaded, businessId, storeId]);
 
   return (
     <Breadcrumb.Root>
