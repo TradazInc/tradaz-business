@@ -1,7 +1,15 @@
 import { InfoTip } from "@/components/ui/toggle-tip";
 import { GetProductOutputData } from "@/schema/product";
-import { DataList, Heading, HStack, Square, VStack } from "@chakra-ui/react";
+import {
+  DataList,
+  Heading,
+  HStack,
+  Separator,
+  Square,
+  VStack,
+} from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
+import { capitalizeWords } from "@/utilities/capitalizeWord";
 
 interface Props {
   product: GetProductOutputData;
@@ -9,10 +17,13 @@ interface Props {
 
 const ProductDescription = ({ product }: Props) => {
   return (
-    <VStack w={"full"} mx={"auto"}>
-      <Heading size={{ base: "3xl", md: "4xl", lg: "5xl" }} marginBottom={3}>
-        {product.name.toUpperCase()}
+    <VStack w={"full"} mx={"auto"} justifyContent={"flex-start"} gapY={8}>
+      <Heading marginBottom={3} size={{ base: "xl", md: "3xl" }}>
+        {capitalizeWords(product.name)}
       </Heading>
+
+      <Separator />
+
       <DataList.Root
         w={"full"}
         orientation={"horizontal"}
@@ -22,7 +33,6 @@ const ProductDescription = ({ product }: Props) => {
           <DataList.ItemLabel>Description</DataList.ItemLabel>
           <DataList.ItemValue>{product.description}</DataList.ItemValue>
         </DataList.Item>
-
         {product.vendor && (
           <DataList.Item>
             <DataList.ItemLabel>Vendor</DataList.ItemLabel>
@@ -41,36 +51,9 @@ const ProductDescription = ({ product }: Props) => {
             <DataList.ItemValue>{product.category.name}</DataList.ItemValue>
           </DataList.Item>
         )}
-        {product._count?.variations && (
-          <DataList.Item>
-            <DataList.ItemLabel>Variations</DataList.ItemLabel>
-            <DataList.ItemValue>{product._count.variations}</DataList.ItemValue>
-          </DataList.Item>
-        )}
         <DataList.Item>
           <DataList.ItemLabel>Gender</DataList.ItemLabel>
           <DataList.ItemValue>{product.gender}</DataList.ItemValue>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.ItemLabel>Total stock</DataList.ItemLabel>
-          <DataList.ItemValue>
-            {product.variations.reduce(
-              (total, variation) =>
-                total +
-                variation.teamVariations.reduce(
-                  (variationTotal, teamVariation) =>
-                    variationTotal + teamVariation.quantity,
-                  0,
-                ),
-              0,
-            )}
-          </DataList.ItemValue>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.ItemLabel>Status</DataList.ItemLabel>
-          <DataList.ItemValue>
-            <StatusIndicator status={product.productStatus} />
-          </DataList.ItemValue>
         </DataList.Item>
         {product.sizeType && (
           <DataList.Item>
@@ -97,6 +80,39 @@ const ProductDescription = ({ product }: Props) => {
             </DataList.ItemValue>
           </DataList.Item>
         )}
+      </DataList.Root>
+
+      <Separator />
+
+      <DataList.Root>
+        <DataList.Item>
+          <DataList.ItemLabel>Status</DataList.ItemLabel>
+          <DataList.ItemValue>
+            <StatusIndicator status={product.productStatus} />
+          </DataList.ItemValue>
+        </DataList.Item>
+
+        {product._count?.variations && (
+          <DataList.Item>
+            <DataList.ItemLabel>Variations</DataList.ItemLabel>
+            <DataList.ItemValue>{product._count.variations}</DataList.ItemValue>
+          </DataList.Item>
+        )}
+        <DataList.Item>
+          <DataList.ItemLabel>Total stock</DataList.ItemLabel>
+          <DataList.ItemValue>
+            {product.variations.reduce(
+              (total, variation) =>
+                total +
+                variation.teamVariations.reduce(
+                  (variationTotal, teamVariation) =>
+                    variationTotal + teamVariation.quantity,
+                  0,
+                ),
+              0,
+            )}
+          </DataList.ItemValue>
+        </DataList.Item>
       </DataList.Root>
     </VStack>
   );

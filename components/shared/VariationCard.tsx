@@ -22,8 +22,8 @@ const VariationCard = ({ variation, index }: Props) => {
       </Card.Header>
 
       <Card.Body
-        flexDirection={{ base: "column", md: "row" }}
         justifyContent={"space-between"}
+        flexDirection={{ base: "column", md: "row" }}
       >
         <DataList.Root orientation={"horizontal"}>
           <DataList.Item>

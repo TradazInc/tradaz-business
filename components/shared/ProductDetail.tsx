@@ -35,7 +35,7 @@ const ProductDetail = ({ initialProduct, productId }: Props) => {
         </Box>
       </Stack>
 
-      <VStack gap={{ base: 4, md: 10 }} mt={8}>
+      <VStack gap={{ base: 4, md: 10 }} mt={8} w={"full"}>
         {product.variations.map((v, i) => (
           <VariationCard key={v.id} variation={v} index={i} />
         ))}
