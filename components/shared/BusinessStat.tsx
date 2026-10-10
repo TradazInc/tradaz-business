@@ -2,10 +2,17 @@
 
 import { useBusinesses } from "@/hooks/business";
 import { GetAllBusinessOutputData } from "@/schema/business";
-import { FormatNumber, Stat, StatRootProps } from "@chakra-ui/react";
+import {
+  FormatNumber,
+  HStack,
+  Icon,
+  Stat,
+  StatRootProps,
+} from "@chakra-ui/react";
 import { StatContainer } from "./StatContainer";
 import { useSession } from "@/hooks/session";
 import { format } from "date-fns";
+import { HiBuildingOffice2 } from "react-icons/hi2";
 
 interface Props {
   initialBusinesses: Promise<GetAllBusinessOutputData>;
@@ -23,7 +30,13 @@ export const BusinessStat = ({
 
   return (
     <StatContainer {...props}>
-      <Stat.Label>Businesses</Stat.Label>
+      <HStack justify={"space-between"}>
+        <Stat.Label>Businesses</Stat.Label>
+        <Icon color={"fg.muted"}>
+          <HiBuildingOffice2 />
+        </Icon>
+      </HStack>
+
       <Stat.ValueText>
         <FormatNumber
           value={businesses?.length ?? 0}
@@ -31,6 +44,7 @@ export const BusinessStat = ({
           compactDisplay={"short"}
         />
       </Stat.ValueText>
+
       {session?.user && (
         <Stat.HelpText>
           since {format(session?.user.createdAt, "PPP")}
