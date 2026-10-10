@@ -20,7 +20,7 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <VStack w={"full"} h={"full"}>
         <PageHeader>
-          <BusinessName businessId={businessId} />
+          {<BusinessName businessId={businessId} />} Stores
         </PageHeader>
 
         <HStack w={"full"}>
