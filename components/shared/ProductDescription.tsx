@@ -28,11 +28,7 @@ const ProductDescription = ({ product }: Props) => {
         {capitalizeWords(product.name)}
       </Heading>
 
-      <DataList.Root
-        w={"full"}
-        orientation={"horizontal"}
-        size={{ base: "md", md: "lg" }}
-      >
+      <DataList.Root orientation={"horizontal"} size={{ base: "md", md: "lg" }}>
         <DataList.Item>
           <DataList.ItemLabel>Description</DataList.ItemLabel>
           <DataList.ItemValue>{product.description}</DataList.ItemValue>
@@ -86,7 +82,7 @@ const ProductDescription = ({ product }: Props) => {
         )}
       </DataList.Root>
 
-      <DataList.Root>
+      <DataList.Root orientation={"horizontal"} size={{ base: "md", md: "lg" }}>
         <DataList.Item>
           <DataList.ItemLabel>Status</DataList.ItemLabel>
           <DataList.ItemValue>
