@@ -2,10 +2,11 @@ import ExpenseTable from "@/components/shared/ExpenseTable";
 import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import Search from "@/components/shared/Search";
 import { getExpenses } from "@/server/expense";
 import { computePath } from "@/utilities/computePath";
-import { HStack, Spacer } from "@chakra-ui/react";
+import { Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -22,7 +23,7 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <PageHeader>Expenses</PageHeader>
 
-      <HStack w={"full"}>
+      <PageItemContainer>
         <Suspense>
           <Search
             placeholder={"Search for an expense"}
@@ -36,7 +37,7 @@ export default async function page({ params }: Props) {
             Create Expense
           </NextLink>
         </FormButton>
-      </HStack>
+      </PageItemContainer>
 
       <ExpenseTable initialExpenses={expenses} businessId={businessId} />
     </PageContainer>

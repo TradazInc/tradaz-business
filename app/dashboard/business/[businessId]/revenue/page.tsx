@@ -1,11 +1,12 @@
 import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import RevenueTable from "@/components/shared/RevenueTable";
 import Search from "@/components/shared/Search";
 import { getRevenues } from "@/server/revenue";
 import { computePath } from "@/utilities/computePath";
-import { HStack, Spacer } from "@chakra-ui/react";
+import { Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -22,7 +23,7 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <PageHeader>Revenues</PageHeader>
 
-      <HStack w={"full"}>
+      <PageItemContainer>
         <Suspense>
           <Search placeholder={"Search for a revenue"} searchField={"search"} />
         </Suspense>
@@ -33,7 +34,7 @@ export default async function page({ params }: Props) {
             Create Revenue
           </NextLink>
         </FormButton>
-      </HStack>
+      </PageItemContainer>
 
       <RevenueTable initialRevenues={revenues} businessId={businessId} />
     </PageContainer>

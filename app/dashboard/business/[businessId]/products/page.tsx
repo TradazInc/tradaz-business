@@ -1,11 +1,12 @@
 import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import ProductGrid from "@/components/shared/ProductGrid";
 import Search from "@/components/shared/Search";
 import { getProducts } from "@/server/product";
 import { computePath } from "@/utilities/computePath";
-import { HStack, Spacer } from "@chakra-ui/react";
+import { Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Suspense } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -22,7 +23,7 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <PageHeader>Product Inventory</PageHeader>
 
-      <HStack w={"full"}>
+      <PageItemContainer>
         <Suspense>
           <Search placeholder={"Search for a product"} searchField={"search"} />
         </Suspense>
@@ -34,7 +35,7 @@ export default async function page({ params }: Props) {
           </NextLink>
         </FormButton>
         {/* add dropdown */}
-      </HStack>
+      </PageItemContainer>
 
       <ProductGrid businessId={businessId} initialProducts={products} />
     </PageContainer>

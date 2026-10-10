@@ -1,5 +1,6 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import {
   PosConfigForm,
   PosConfigFormViewport,
@@ -7,7 +8,7 @@ import {
 import PosConfigTable from "@/components/shared/PosConfigTable";
 import Search from "@/components/shared/Search";
 import { getPosConfigs } from "@/server/posConfig";
-import { HStack, Spacer } from "@chakra-ui/react";
+import { Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 interface Props {
@@ -22,7 +23,7 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <PageHeader>POS Configurations</PageHeader>
 
-      <HStack w={"full"}>
+      <PageItemContainer>
         <Suspense>
           <Search
             placeholder={"Search for a configuration"}
@@ -31,7 +32,7 @@ export default async function page({ params }: Props) {
         </Suspense>
         <Spacer />
         <PosConfigForm />
-      </HStack>
+      </PageItemContainer>
 
       <PosConfigTable initialPosConfigs={posConfigs} businessId={businessId} />
       <PosConfigFormViewport />

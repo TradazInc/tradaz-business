@@ -1,9 +1,10 @@
 import OrderTable from "@/components/shared/OrderTable";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import Search from "@/components/shared/Search";
 import { getOrders } from "@/server/order";
-import { HStack, Spacer } from "@chakra-ui/react";
+import { Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 interface Props {
@@ -18,12 +19,12 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <PageHeader>Orders</PageHeader>
 
-      <HStack w={"full"}>
+      <PageItemContainer>
         <Suspense>
           <Search placeholder={"Search for an order"} searchField={"search"} />
         </Suspense>
         <Spacer />
-      </HStack>
+      </PageItemContainer>
 
       <OrderTable initialOrders={orders} businessId={businessId} />
     </PageContainer>

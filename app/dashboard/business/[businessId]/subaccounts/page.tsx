@@ -1,5 +1,6 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
+import { PageItemContainer } from "@/components/shared/PageItemContainer";
 import Search from "@/components/shared/Search";
 import {
   SubaccountForm,
@@ -7,7 +8,7 @@ import {
 } from "@/components/shared/SubaccountForm";
 import SubaccountTable from "@/components/shared/SubaccountTable";
 import { getSubaccounts } from "@/server/subaccount";
-import { HStack, Spacer } from "@chakra-ui/react";
+import { Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 interface Props {
@@ -22,7 +23,7 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <PageHeader>Subaccounts</PageHeader>
 
-      <HStack w={"full"}>
+      <PageItemContainer>
         <Suspense>
           <Search
             placeholder={"Search for a subaccount"}
@@ -31,7 +32,7 @@ export default async function page({ params }: Props) {
         </Suspense>
         <Spacer />
         <SubaccountForm />
-      </HStack>
+      </PageItemContainer>
 
       <SubaccountTable
         initialSubaccounts={Subaccounts}

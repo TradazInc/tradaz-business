@@ -1,10 +1,11 @@
-import { PageContainer } from "@/components/shared/PageContainer";
-import PageHeader from "@/components/shared/PageHeader";
-import Search from "@/components/shared/Search";
 import CartGrid from "@/components/shared/CartGrid";
 import NewCartButton from "@/components/shared/NewCartButton";
+import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
+import { PageItemContainer } from "@/components/shared/PageItemContainer";
+import Search from "@/components/shared/Search";
 import { getCarts } from "@/server/cart";
-import { HStack, Spacer, VStack } from "@chakra-ui/react";
+import { Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 interface Props {
@@ -19,13 +20,13 @@ export default async function page({ params }: Props) {
     <PageContainer>
       <PageHeader>Carts</PageHeader>
 
-      <HStack w={"full"}>
+      <PageItemContainer>
         <Suspense>
           <Search placeholder={"Search for a cart"} searchField={"search"} />
         </Suspense>
         <Spacer />
         <NewCartButton businessId={businessId} storeId={storeId} />
-      </HStack>
+      </PageItemContainer>
 
       <CartGrid
         initialCarts={carts}
