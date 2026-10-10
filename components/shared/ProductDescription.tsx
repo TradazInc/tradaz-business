@@ -1,15 +1,15 @@
 import { InfoTip } from "@/components/ui/toggle-tip";
 import { GetProductOutputData } from "@/schema/product";
+import { capitalizeWords } from "@/utilities/capitalizeWord";
 import {
   DataList,
   Heading,
   HStack,
-  Separator,
   Square,
+  StackSeparator,
   VStack,
 } from "@chakra-ui/react";
 import StatusIndicator from "./StatusIndicator";
-import { capitalizeWords } from "@/utilities/capitalizeWord";
 
 interface Props {
   product: GetProductOutputData;
@@ -17,12 +17,16 @@ interface Props {
 
 const ProductDescription = ({ product }: Props) => {
   return (
-    <VStack w={"full"} mx={"auto"} justifyContent={"flex-start"} gapY={8}>
-      <Heading marginBottom={3} size={{ base: "xl", md: "3xl" }}>
+    <VStack
+      gapY={8}
+      w={"full"}
+      mx={"auto"}
+      separator={<StackSeparator />}
+      align={"flex-start"}
+    >
+      <Heading size={{ base: "xl", md: "3xl" }}>
         {capitalizeWords(product.name)}
       </Heading>
-
-      <Separator />
 
       <DataList.Root
         w={"full"}
@@ -81,8 +85,6 @@ const ProductDescription = ({ product }: Props) => {
           </DataList.Item>
         )}
       </DataList.Root>
-
-      <Separator />
 
       <DataList.Root>
         <DataList.Item>
