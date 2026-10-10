@@ -14,7 +14,7 @@ export const BusinessStat = ({ initialBusinesses }: Props) => {
   });
 
   return (
-    <Stat.Root>
+    <Stat.Root p={4} w={"full"} h={"full"} rounded={"md"} borderWidth={"1px"}>
       <Stat.Label>Businesses</Stat.Label>
       <Stat.ValueText>{businesses?.length ?? 0}</Stat.ValueText>
     </Stat.Root>

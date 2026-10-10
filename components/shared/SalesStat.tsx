@@ -9,7 +9,7 @@ import {
 export const SalesStat = ({ ...props }: StatRootProps) => {
   return (
     <Stat.Root
-      p={8}
+      p={4}
       w={"full"}
       h={"full"}
       rounded={"md"}

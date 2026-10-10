@@ -3,7 +3,7 @@ import { Badge, Stat, StatRootProps } from "@chakra-ui/react";
 export const VisitorsStat = ({ ...props }: StatRootProps) => {
   return (
     <Stat.Root
-      p={8}
+      p={4}
       w={"full"}
       h={"full"}
       rounded={"md"}

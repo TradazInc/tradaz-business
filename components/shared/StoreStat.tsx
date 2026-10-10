@@ -22,7 +22,7 @@ export const StoreStat = ({ initialStores, businessId }: Props) => {
   });
 
   return (
-    <Stat.Root>
+    <Stat.Root p={4} w={"full"} h={"full"} rounded={"md"} borderWidth={"1px"}>
       <Stat.Label>Stores</Stat.Label>
       <Stat.ValueText>{stores?.length ?? 0}</Stat.ValueText>
     </Stat.Root>

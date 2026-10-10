@@ -3,7 +3,7 @@ import { FormatNumber, Progress, Stat, StatRootProps } from "@chakra-ui/react";
 export const RevenueStat = ({ ...props }: StatRootProps) => {
   return (
     <Stat.Root
-      p={8}
+      p={4}
       w={"full"}
       h={"full"}
       rounded={"md"}
