@@ -339,13 +339,14 @@ const ProductForm = ({ product }: Props) => {
                 Click to retry
               </Button>
             )}
+            <Field.HelperText>
+              Create a category, then select one for this product.
+            </Field.HelperText>
             <Field.ErrorText>{errors.categoryId?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root required invalid={!!errors.sizeTypeId}>
-            <Field.Label>
-              Product size type <Field.RequiredIndicator />
-            </Field.Label>
+          <Field.Root invalid={!!errors.sizeTypeId}>
+            <Field.Label>Product size type</Field.Label>
             <Controller
               control={control}
               name={"sizeTypeId"}
@@ -414,6 +415,9 @@ const ProductForm = ({ product }: Props) => {
                 Click to retry
               </Button>
             )}
+            <Field.HelperText>
+              Create a size type if needed, then select one for this product.
+            </Field.HelperText>
             <Field.ErrorText>{errors.sizeTypeId?.message}</Field.ErrorText>
           </Field.Root>
         </FormInputGrid>

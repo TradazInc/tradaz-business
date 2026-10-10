@@ -81,10 +81,8 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
           </HStack>
 
           <FormInputGrid>
-            <Field.Root required invalid={!!errors.variations?.[index]?.sizeId}>
-              <Field.Label>
-                Size <Field.RequiredIndicator />
-              </Field.Label>
+            <Field.Root invalid={!!errors.variations?.[index]?.sizeId}>
+              <Field.Label>Size</Field.Label>
               <Controller
                 control={control}
                 name={`variations.${index}.sizeId`}

@@ -159,7 +159,7 @@ const CreateVariationInputSchema = z.object({
     .number({ error: "price is required" })
     .positive({ error: "price cannot be negative or zero" }),
 
-  sizeId: z.cuid2({ error: "select a size" }),
+  sizeId: z.cuid2({ error: "select a size" }).nullish(),
 
   teamVariations: z
     .array(CreateTeamVariationInputSchema)
@@ -206,7 +206,7 @@ export const CreateProductInputSchema = z.object({
 
   categoryId: z.cuid2({ error: "select a product category" }),
 
-  sizeTypeId: z.cuid2({ error: "select a size type" }),
+  sizeTypeId: z.cuid2({ error: "select a size type" }).nullish(),
 
   variations: z
     .array(CreateVariationInputSchema)
