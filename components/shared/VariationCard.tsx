@@ -1,7 +1,13 @@
 import { GetProductVariationOutputData } from "@/schema/product";
-import { Card, DataList, FormatNumber, HStack, Square } from "@chakra-ui/react";
+import {
+  Card,
+  ColorSwatch,
+  DataList,
+  FormatNumber,
+  HStack,
+  Square,
+} from "@chakra-ui/react";
 import { format } from "date-fns";
-import ProductColorBadge from "./ProductColorBadge";
 
 interface Props {
   variation: GetProductVariationOutputData;
@@ -23,14 +29,14 @@ const VariationCard = ({ variation, index }: Props) => {
             <DataList.Item>
               <DataList.ItemLabel>Color</DataList.ItemLabel>
               <DataList.ItemValue>
-                <ProductColorBadge color={variation.color} />
+                <ColorSwatch value={variation.color} size={"sm"} />
               </DataList.ItemValue>
             </DataList.Item>
             {variation.size && (
               <DataList.Item>
                 <DataList.ItemLabel>Size</DataList.ItemLabel>
                 <DataList.ItemValue>
-                  <Square size={6} bg={"bg.inverted"} color={"fg.inverted"}>
+                  <Square size={"sm"} bg={"bg.inverted"} color={"fg.inverted"}>
                     {variation.size.value}
                   </Square>
                 </DataList.ItemValue>

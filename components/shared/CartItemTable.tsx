@@ -13,6 +13,7 @@ import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Box,
   Button,
+  ColorSwatch,
   For,
   FormatNumber,
   HStack,
@@ -23,7 +24,6 @@ import {
 } from "@chakra-ui/react";
 import { LuMinus, LuPlus } from "react-icons/lu";
 import DeleteIconButton from "./DeleteIconButton";
-import ProductColorBadge from "./ProductColorBadge";
 import ProductSearch from "./ProductSearch";
 
 interface Props {
@@ -111,7 +111,7 @@ const CartItemTable = ({ initialCart, businessId, storeId, cartId }: Props) => {
                 <Table.Cell>{cartItem.variation.product.name}</Table.Cell>
                 <Table.Cell>{cartItem.variation.size?.value}</Table.Cell>
                 <Table.Cell>
-                  <ProductColorBadge color={cartItem.variation.color} />
+                  <ColorSwatch value={cartItem.variation.color} />
                 </Table.Cell>
                 <Table.Cell>
                   <HStack gap={2}>
