@@ -31,7 +31,7 @@ export default async function page({ params }: Props) {
         <FormButton asChild>
           <NextLink href={`${computePath(businessId)}/products/new`}>
             <LuPlus />
-            Create Product
+            New Product
           </NextLink>
         </FormButton>
         {/* add dropdown */}
