@@ -87,17 +87,20 @@ const SignUpForm = () => {
 
         <Field.Root required invalid={!!errors.email}>
           <Field.Label>Email Address</Field.Label>
-          <Input type="email" {...register("email")} />
+          <Input type={"email"} {...register("email")} />
           <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
         </Field.Root>
 
         <Field.Root required invalid={!!errors.password}>
           <Stack gap={3} w={"full"}>
             <Field.Label>Password</Field.Label>
-            <PasswordInput {...register("password")} />
+            <PasswordInput
+              {...register("password")}
+              placeholder={"Minimum 5 characters"}
+            />
             <PasswordStrengthMeter value={strength} />
           </Stack>
-          <Field.HelperText>Minimum 5 characters</Field.HelperText>
+          <Field.HelperText></Field.HelperText>
           <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
         </Field.Root>
       </Fieldset.Content>
