@@ -30,9 +30,7 @@ export const SideMenuList = () => {
       {sideItems.map((item, index) => (
         <Accordion.Item key={index} value={item.label}>
           <Accordion.ItemTrigger p={3} _open={{ bg: "gray.subtle" }}>
-            <Icon fontSize={"lg"} color={"fg.subtle"}>
-              {item.icon}
-            </Icon>
+            <Icon fontSize={"lg"}>{item.icon}</Icon>
             {item.label}
             <Spacer />
             <Accordion.ItemIndicator />
