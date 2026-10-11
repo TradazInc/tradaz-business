@@ -29,14 +29,14 @@ const VariationCard = ({ variation, index }: Props) => {
             <DataList.Item>
               <DataList.ItemLabel>Color</DataList.ItemLabel>
               <DataList.ItemValue>
-                <ColorSwatch value={variation.color} size={"sm"} />
+                <ColorSwatch value={variation.color} />
               </DataList.ItemValue>
             </DataList.Item>
             {variation.size && (
               <DataList.Item>
                 <DataList.ItemLabel>Size</DataList.ItemLabel>
                 <DataList.ItemValue>
-                  <Square size={"sm"} bg={"bg.inverted"} color={"fg.inverted"}>
+                  <Square size={6} bg={"bg.inverted"} color={"fg.inverted"}>
                     {variation.size.value}
                   </Square>
                 </DataList.ItemValue>
