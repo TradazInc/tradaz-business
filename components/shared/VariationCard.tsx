@@ -10,7 +10,7 @@ interface Props {
 
 const VariationCard = ({ variation, index }: Props) => {
   return (
-    <Card.Root size={{ base: "sm", md: "lg" }}>
+    <Card.Root size={{ base: "sm", md: "lg" }} w={"full"}>
       <Card.Body>
         <Card.Title>Variation {index + 1}</Card.Title>
 
