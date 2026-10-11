@@ -2,7 +2,7 @@
 
 import { useProduct } from "@/hooks/product";
 import { GetProductOutputData } from "@/schema/product";
-import { Box, SimpleGrid, Stack, VStack } from "@chakra-ui/react";
+import { Box, SimpleGrid, Stack } from "@chakra-ui/react";
 import EmptyPage from "./EmptyPage";
 import ProductCarousel from "./ProductCarousel";
 import ProductDescription from "./ProductDescription";
