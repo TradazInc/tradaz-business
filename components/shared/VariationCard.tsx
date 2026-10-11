@@ -14,7 +14,7 @@ const VariationCard = ({ variation, index }: Props) => {
       <Card.Body>
         <Card.Title>Variation {index + 1}</Card.Title>
 
-        <HStack>
+        <HStack justify={"space-around"} align={"flex-start"}>
           <DataList.Root>
             <DataList.Item>
               <DataList.ItemLabel>SKU</DataList.ItemLabel>
