@@ -25,7 +25,7 @@ const VariationCard = ({ variation, index }: Props) => {
         justifyContent={"space-around"}
         flexDirection={{ base: "column", md: "row" }}
       >
-        <DataList.Root orientation={"horizontal"}>
+        <DataList.Root orientation={"horizontal"} divideY={"1px"}>
           <DataList.Item pt={4}>
             <DataList.ItemLabel>SKU</DataList.ItemLabel>
             <DataList.ItemValue>{variation.sku}</DataList.ItemValue>
@@ -48,7 +48,7 @@ const VariationCard = ({ variation, index }: Props) => {
           </DataList.Item>
         </DataList.Root>
 
-        <DataList.Root orientation={"horizontal"}>
+        <DataList.Root orientation={"horizontal"} divideY={"1px"}>
           <DataList.Item pt={4}>
             <DataList.ItemLabel>Price</DataList.ItemLabel>
             <DataList.ItemValue>
