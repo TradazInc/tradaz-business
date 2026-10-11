@@ -11,7 +11,7 @@ interface Props {
 const VariationCard = ({ variation, index }: Props) => {
   return (
     <Card.Root size={{ base: "sm", md: "lg" }} w={"full"}>
-      <Card.Body>
+      <Card.Body gapY={2}>
         <Card.Title>Variation {index + 1}</Card.Title>
 
         <HStack justify={"space-between"} align={"flex-start"}>
@@ -19,6 +19,12 @@ const VariationCard = ({ variation, index }: Props) => {
             <DataList.Item>
               <DataList.ItemLabel>SKU</DataList.ItemLabel>
               <DataList.ItemValue>{variation.sku}</DataList.ItemValue>
+            </DataList.Item>
+            <DataList.Item>
+              <DataList.ItemLabel>Color</DataList.ItemLabel>
+              <DataList.ItemValue>
+                <ProductColorBadge color={variation.color} />
+              </DataList.ItemValue>
             </DataList.Item>
             {variation.size && (
               <DataList.Item>
@@ -30,12 +36,6 @@ const VariationCard = ({ variation, index }: Props) => {
                 </DataList.ItemValue>
               </DataList.Item>
             )}
-            <DataList.Item>
-              <DataList.ItemLabel>Color</DataList.ItemLabel>
-              <DataList.ItemValue>
-                <ProductColorBadge color={variation.color} />
-              </DataList.ItemValue>
-            </DataList.Item>
           </DataList.Root>
 
           <DataList.Root>
