@@ -180,10 +180,9 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
       ))}
 
       <Button
-        size="sm"
-        type="button"
-        variant="outline"
-        alignSelf="flex-start"
+        size={"sm"}
+        variant={"outline"}
+        alignSelf={"flex-start"}
         onClick={() => append(emptyTeamVariation)}
       >
         <LuPlus /> Add branch

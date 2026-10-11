@@ -238,8 +238,7 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
 
       <Button
         size={"sm"}
-        type={"button"}
-        variant={"subtle"}
+        variant={"outline"}
         alignSelf={"flex-start"}
         onClick={() => append(emptyVariation)}
       >
