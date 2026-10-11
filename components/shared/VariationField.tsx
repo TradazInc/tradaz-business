@@ -66,6 +66,7 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
           p={4}
           bg={"bg.panel"}
           key={variation.id}
+          borderWidth={"1px"}
           borderRadius={"md"}
         >
           <HStack justify="space-between" mb={4}>
