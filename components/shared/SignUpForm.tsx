@@ -1,17 +1,29 @@
 "use client";
 
-import { PasswordInput } from "@/components/ui/password-input";
+import {
+  PasswordInput,
+  PasswordStrengthMeter,
+} from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { useEmailSignup, useGoogleSignin } from "@/hooks/auth";
 import { EmailSignUpSchema } from "@/schema/auth";
 import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
-import { Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
+import { Button, Field, Fieldset, Input, Stack, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import SeparatorText from "./SeparatorText";
+import { type Options, passwordStrength } from "check-password-strength";
+import { useMemo } from "react";
+import { useForm, useWatch } from "react-hook-form";
+
+const strengthOptions: Options<string> = [
+  { id: 1, value: "weak", minDiversity: 0, minLength: 0 },
+  { id: 2, value: "medium", minDiversity: 2, minLength: 6 },
+  { id: 3, value: "strong", minDiversity: 3, minLength: 8 },
+  { id: 4, value: "very-strong", minDiversity: 4, minLength: 10 },
+];
 
 const SignUpForm = () => {
   const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignup();
@@ -19,10 +31,19 @@ const SignUpForm = () => {
   const { push } = useRouter();
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({ resolver: zodResolver(EmailSignUpSchema) });
+
+  const password = useWatch({ control, name: "password" });
+
+  const strength = useMemo(() => {
+    if (!password) return 0;
+    const result = passwordStrength(password, strengthOptions);
+    return result.id;
+  }, [password]);
 
   const onSubmit = handleSubmit(async (signUpData) => {
     const promise = toaster.promise(emailTrigger({ signUpData }), {
@@ -71,8 +92,12 @@ const SignUpForm = () => {
         </Field.Root>
 
         <Field.Root required invalid={!!errors.password}>
-          <Field.Label>Password</Field.Label>
-          <PasswordInput {...register("password")} />
+          <Stack gap={3}>
+            <Field.Label>Password</Field.Label>
+            <PasswordInput {...register("password")} />
+            <PasswordStrengthMeter value={strength} w={"full"} />
+          </Stack>
+          <Field.HelperText>Minimum 5 characters</Field.HelperText>
           <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
         </Field.Root>
       </Fieldset.Content>

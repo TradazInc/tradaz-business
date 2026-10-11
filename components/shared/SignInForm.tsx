@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  PasswordInput,
-  PasswordStrengthMeter,
-} from "@/components/ui/password-input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { useEmailSignin, useGoogleSignin } from "@/hooks/auth";
 import { EmailSignInSchema } from "@/schema/auth";
@@ -11,20 +8,11 @@ import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type Options, passwordStrength } from "check-password-strength";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import SeparatorText from "./SeparatorText";
-
-const strengthOptions: Options<string> = [
-  { id: 1, value: "weak", minDiversity: 0, minLength: 0 },
-  { id: 2, value: "medium", minDiversity: 2, minLength: 6 },
-  { id: 3, value: "strong", minDiversity: 3, minLength: 8 },
-  { id: 4, value: "very-strong", minDiversity: 4, minLength: 10 },
-];
 
 const SignInForm = () => {
   const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignin();
@@ -32,19 +20,10 @@ const SignInForm = () => {
   const { push } = useRouter();
 
   const {
-    control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({ resolver: zodResolver(EmailSignInSchema) });
-
-  const password = useWatch({ control, name: "password" });
-
-  const strength = useMemo(() => {
-    if (!password) return 0;
-    const result = passwordStrength(password, strengthOptions);
-    return result.id;
-  }, [password]);
 
   const onSubmit = handleSubmit(async (signInData) => {
     const promise = toaster.promise(emailTrigger({ signInData }), {
@@ -89,8 +68,6 @@ const SignInForm = () => {
         <Field.Root required invalid={!!errors.password}>
           <Field.Label>Password</Field.Label>
           <PasswordInput {...register("password")} />
-          <PasswordStrengthMeter value={strength} />
-          <Field.HelperText>Minimum 5 characters</Field.HelperText>
           <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
         </Field.Root>
       </Fieldset.Content>
