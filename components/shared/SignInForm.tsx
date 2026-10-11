@@ -64,14 +64,17 @@ const SignInForm = () => {
           <Input
             type={"email"}
             {...register("email")}
-            placeholder={"name@example.com"}
+            placeholder={"Enter your email"}
           />
           <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
         </Field.Root>
 
         <Field.Root required invalid={!!errors.password}>
           <Field.Label>Password</Field.Label>
-          <PasswordInput {...register("password")} />
+          <PasswordInput
+            {...register("password")}
+            placeholder={"Enter your password"}
+          />
           <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
         </Field.Root>
       </Fieldset.Content>

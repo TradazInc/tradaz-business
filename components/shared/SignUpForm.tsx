@@ -81,7 +81,7 @@ const SignUpForm = () => {
       <Fieldset.Content>
         <Field.Root required invalid={!!errors.name}>
           <Field.Label>Full Name</Field.Label>
-          <Input {...register("name")} placeholder={"John Doe"} />
+          <Input {...register("name")} placeholder={"Enter your full name"} />
           <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
         </Field.Root>
 
@@ -90,7 +90,7 @@ const SignUpForm = () => {
           <Input
             type={"email"}
             {...register("email")}
-            placeholder={"name@example.com"}
+            placeholder={"e.g., example@email.com"}
           />
           <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
         </Field.Root>
