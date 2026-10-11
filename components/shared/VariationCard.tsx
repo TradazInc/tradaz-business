@@ -25,7 +25,7 @@ const VariationCard = ({ variation, index }: Props) => {
         justifyContent={"space-around"}
         flexDirection={{ base: "column", md: "row" }}
       >
-        <DataList.Root orientation={"horizontal"} divideY={"1px"} gapY={3}>
+        <DataList.Root orientation={"horizontal"} gapY={6}>
           <DataList.Item>
             <DataList.ItemLabel>SKU</DataList.ItemLabel>
             <DataList.ItemValue>{variation.sku}</DataList.ItemValue>
@@ -48,7 +48,7 @@ const VariationCard = ({ variation, index }: Props) => {
           </DataList.Item>
         </DataList.Root>
 
-        <DataList.Root orientation={"horizontal"} divideY={"1px"} gapY={3}>
+        <DataList.Root orientation={"horizontal"} gapY={6}>
           <DataList.Item>
             <DataList.ItemLabel>Price</DataList.ItemLabel>
             <DataList.ItemValue>
@@ -77,7 +77,7 @@ const VariationCard = ({ variation, index }: Props) => {
         </DataList.Root>
 
         {variation.teamVariations.length > 0 && (
-          <DataList.Root orientation={"horizontal"} divideY={"1px"} gapY={3}>
+          <DataList.Root orientation={"horizontal"} gapY={6}>
             {variation.teamVariations.map((tv) => (
               <DataList.Item key={tv.id}>
                 <DataList.ItemLabel>{tv.team.address} stock</DataList.ItemLabel>
