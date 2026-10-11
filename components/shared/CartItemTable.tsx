@@ -22,8 +22,9 @@ import {
   Table,
   Text,
 } from "@chakra-ui/react";
-import { LuMinus, LuPlus } from "react-icons/lu";
+import { LuMinus, LuPlus, LuShoppingCart } from "react-icons/lu";
 import DeleteIconButton from "./DeleteIconButton";
+import EmptyPage from "./EmptyPage";
 import ProductSearch from "./ProductSearch";
 
 interface Props {
@@ -102,7 +103,14 @@ const CartItemTable = ({ initialCart, businessId, storeId, cartId }: Props) => {
             each={data?.cartItems}
             fallback={
               <Table.Row>
-                <Table.Cell colSpan={7}>No cart items available</Table.Cell>
+                <Table.Cell colSpan={7}>
+                  <EmptyPage
+                    title="No cart items"
+                    description="Search for a product to add it to the cart"
+                  >
+                    <LuShoppingCart />
+                  </EmptyPage>
+                </Table.Cell>
               </Table.Row>
             }
           >
