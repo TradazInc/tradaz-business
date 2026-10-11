@@ -81,13 +81,17 @@ const SignUpForm = () => {
       <Fieldset.Content>
         <Field.Root required invalid={!!errors.name}>
           <Field.Label>Full Name</Field.Label>
-          <Input {...register("name")} />
+          <Input {...register("name")} placeholder={"John Doe"} />
           <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
         </Field.Root>
 
         <Field.Root required invalid={!!errors.email}>
           <Field.Label>Email Address</Field.Label>
-          <Input type={"email"} {...register("email")} />
+          <Input
+            type={"email"}
+            {...register("email")}
+            placeholder={"name@example.com"}
+          />
           <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
         </Field.Root>
 
