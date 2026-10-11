@@ -144,7 +144,7 @@ const CreateTeamVariationInputSchema = z.object({
   teamId: z.cuid2({ error: "select a team" }),
   quantity: z
     .int({ error: "quantity is required" })
-    .positive({ error: "quantity cannot be negative or zero" }),
+    .nonnegative({ error: "quantity cannot be negative" }),
 });
 export type CreateTeamVariationInputData = z.infer<
   typeof CreateTeamVariationInputSchema

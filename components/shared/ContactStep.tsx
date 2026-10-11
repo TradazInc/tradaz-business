@@ -23,7 +23,7 @@ const ContactStep = ({
         <Field.Label>
           Slug <Field.RequiredIndicator />
         </Field.Label>
-        <InputGroup startAddon="www." endAddon=".tradaz.com">
+        <InputGroup startAddon={"www."} endAddon={".tradaz.com"}>
           <Input placeholder="yoursite" {...register("slug")} />
         </InputGroup>
         <Field.HelperText>Subdomain of business website</Field.HelperText>
