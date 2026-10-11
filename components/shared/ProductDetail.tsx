@@ -35,12 +35,7 @@ const ProductDetail = ({ initialProduct, productId }: Props) => {
         </Box>
       </Stack>
 
-      <SimpleGrid
-        columns={{ base: 1, md: 2, "2xl": 3 }}
-        mt={8}
-        gap={3}
-        w={"full"}
-      >
+      <SimpleGrid columns={{ base: 1, md: 2, "2xl": 3 }} gap={3} w={"full"}>
         {product.variations.map((v, i) => (
           <VariationCard key={v.id} variation={v} index={i} />
         ))}
