@@ -25,13 +25,13 @@ const VariationCard = ({ variation, index }: Props) => {
         justifyContent={"space-around"}
         flexDirection={{ base: "column", md: "row" }}
       >
-        <DataList.Root orientation={"horizontal"} divideY={"1px"}>
-          <DataList.Item pt={4}>
+        <DataList.Root orientation={"horizontal"} divideY={"1px"} gapY={3}>
+          <DataList.Item>
             <DataList.ItemLabel>SKU</DataList.ItemLabel>
             <DataList.ItemValue>{variation.sku}</DataList.ItemValue>
           </DataList.Item>
           {variation.size && (
-            <DataList.Item pt={4}>
+            <DataList.Item>
               <DataList.ItemLabel>Size</DataList.ItemLabel>
               <DataList.ItemValue>
                 <Square size={6} bg={"bg.inverted"} color={"fg.inverted"}>
@@ -40,7 +40,7 @@ const VariationCard = ({ variation, index }: Props) => {
               </DataList.ItemValue>
             </DataList.Item>
           )}
-          <DataList.Item pt={4}>
+          <DataList.Item>
             <DataList.ItemLabel>Color</DataList.ItemLabel>
             <DataList.ItemValue>
               <ProductColorBadge color={variation.color} />
@@ -48,8 +48,8 @@ const VariationCard = ({ variation, index }: Props) => {
           </DataList.Item>
         </DataList.Root>
 
-        <DataList.Root orientation={"horizontal"} divideY={"1px"}>
-          <DataList.Item pt={4}>
+        <DataList.Root orientation={"horizontal"} divideY={"1px"} gapY={3}>
+          <DataList.Item>
             <DataList.ItemLabel>Price</DataList.ItemLabel>
             <DataList.ItemValue>
               <FormatNumber
@@ -59,7 +59,7 @@ const VariationCard = ({ variation, index }: Props) => {
               />
             </DataList.ItemValue>
           </DataList.Item>
-          <DataList.Item pt={4}>
+          <DataList.Item>
             <DataList.ItemLabel>Total stock</DataList.ItemLabel>
             <DataList.ItemValue>
               {variation.teamVariations.reduce(
@@ -68,7 +68,7 @@ const VariationCard = ({ variation, index }: Props) => {
               )}
             </DataList.ItemValue>
           </DataList.Item>
-          <DataList.Item pt={4}>
+          <DataList.Item>
             <DataList.ItemLabel>Created At</DataList.ItemLabel>
             <DataList.ItemValue>
               {format(variation.createdAt, "dd MMM yy").toUpperCase()}
@@ -77,9 +77,9 @@ const VariationCard = ({ variation, index }: Props) => {
         </DataList.Root>
 
         {variation.teamVariations.length > 0 && (
-          <DataList.Root orientation={"horizontal"} divideY={"1px"}>
+          <DataList.Root orientation={"horizontal"} divideY={"1px"} gapY={3}>
             {variation.teamVariations.map((tv) => (
-              <DataList.Item key={tv.id} pt={4}>
+              <DataList.Item key={tv.id}>
                 <DataList.ItemLabel>{tv.team.address} stock</DataList.ItemLabel>
                 <DataList.ItemValue>{tv.quantity}</DataList.ItemValue>
               </DataList.Item>
