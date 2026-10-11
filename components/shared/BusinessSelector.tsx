@@ -94,7 +94,7 @@ export const BusinessSelector = () => {
               <HiBuildingOffice2 />
               <Skeleton height={5} loading={businesses.isLoading}>
                 <HStack>
-                  {activeBusiness ? activeBusiness.name : "Brands"}
+                  {activeBusiness ? activeBusiness.name : "Businesses"}
                   <LuChevronDown />
                 </HStack>
               </Skeleton>

@@ -138,7 +138,7 @@ const ExpenseForm = () => {
             <Field.Label>
               Name <Field.RequiredIndicator />
             </Field.Label>
-            <Input placeholder="e.g., Store rent" {...register("name")} />
+            <Input placeholder="e.g., Branch rent" {...register("name")} />
             <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
           </Field.Root>
 
@@ -179,7 +179,7 @@ const ExpenseForm = () => {
           </Field.Root>
 
           <Field.Root invalid={!!errors.teamId || error}>
-            <Field.Label>Store</Field.Label>
+            <Field.Label>Branch</Field.Label>
             <Controller
               control={control}
               name={"teamId"}
@@ -198,7 +198,7 @@ const ExpenseForm = () => {
                   <Select.HiddenSelect />
                   <Select.Control>
                     <Select.Trigger>
-                      <Select.ValueText placeholder="Select store" />
+                      <Select.ValueText placeholder="Select branch" />
                     </Select.Trigger>
                     <Select.IndicatorGroup>
                       <Select.ClearTrigger />
@@ -233,12 +233,12 @@ const ExpenseForm = () => {
               </Button>
             )}
             <Field.HelperText>
-              Store the expense belongs to. Leave empty for a business wide
+              Branch the expense belongs to. Leave empty for a business wide
               expense
             </Field.HelperText>
             <Field.ErrorText>
               {error
-                ? "Stores unavailable. Retry to continue."
+                ? "Branches unavailable. Retry to continue."
                 : errors.teamId?.message}
             </Field.ErrorText>
           </Field.Root>

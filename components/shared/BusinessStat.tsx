@@ -31,7 +31,7 @@ export const BusinessStat = ({
   return (
     <StatContainer {...props}>
       <HStack justify={"space-between"}>
-        <Stat.Label>Brands</Stat.Label>
+        <Stat.Label>Businesses</Stat.Label>
         <Icon color={"fg.muted"}>
           <HiBuildingOffice2 />
         </Icon>

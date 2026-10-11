@@ -29,7 +29,7 @@ export default async function page({ params }: Props) {
 
       <PageItemContainer>
         <Suspense>
-          <Search placeholder={"Search for a store"} searchField={"search"} />
+          <Search placeholder={"Search for a branch"} searchField={"search"} />
         </Suspense>
         <Spacer />
         <StoreForm />

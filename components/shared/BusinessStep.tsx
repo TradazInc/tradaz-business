@@ -25,7 +25,7 @@ interface Props {
   form: UseFormReturn<CreateBusinessInputData>;
 }
 
-const BrandStep = ({
+const BusinessStep = ({
   form: {
     register,
     control,
@@ -64,7 +64,7 @@ const BrandStep = ({
       <Field.Root>
         <FileUpload.Root disabled gap={1.5} maxFiles={1} accept={["image/png"]}>
           <FileUpload.HiddenInput />
-          <FileUpload.Label>Brand logo</FileUpload.Label>
+          <FileUpload.Label>Business logo</FileUpload.Label>
           <InputGroup
             startElement={<LuFileUp />}
             endElement={
@@ -92,7 +92,7 @@ const BrandStep = ({
 
       <Field.Root required invalid={!!(errors.categoryId || categories.error)}>
         <Field.Label>
-          Brand category <Field.RequiredIndicator />
+          Business category <Field.RequiredIndicator />
         </Field.Label>
         <Controller
           control={control}
@@ -171,4 +171,4 @@ const BrandStep = ({
   );
 };
 
-export default BrandStep;
+export default BusinessStep;

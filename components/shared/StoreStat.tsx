@@ -37,7 +37,7 @@ export const StoreStat = ({
   return (
     <StatContainer {...props}>
       <HStack justify={"space-between"}>
-        <Stat.Label>Stores</Stat.Label>
+        <Stat.Label>Branches</Stat.Label>
         <Icon color={"fg.muted"}>
           <LiaStoreAltSolid />
         </Icon>

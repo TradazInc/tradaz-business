@@ -81,7 +81,7 @@ export default function page() {
 
             <Text fontSize="xl" color="fg.muted">
               A tailored e-commerce platform for business owners. Streamline
-              your operations, manage your brand, track sales and inventory and
+              your operations, manage your business, track sales and inventory and
               scale your growth seamlessly.
             </Text>
           </VStack>
@@ -203,11 +203,11 @@ const steps = [
   {
     id: 2,
     title: "Create Business",
-    description: "Register your brand and set up your business profile.",
+    description: "Register your business and set up its profile.",
   },
   {
     id: 3,
-    title: "Create Store",
+    title: "Create Branch",
     description: "Add your collections and start selling to your customers.",
   },
 ];

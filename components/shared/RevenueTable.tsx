@@ -72,7 +72,7 @@ const RevenueTable = ({ initialRevenues, businessId }: Props) => {
               <Table.ColumnHeader>Description</Table.ColumnHeader>
               <Table.ColumnHeader>Amount</Table.ColumnHeader>
               <Table.ColumnHeader>Created At</Table.ColumnHeader>
-              <Table.ColumnHeader>Store</Table.ColumnHeader>
+              <Table.ColumnHeader>Branch</Table.ColumnHeader>
               <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>

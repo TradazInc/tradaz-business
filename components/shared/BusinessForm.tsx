@@ -27,7 +27,7 @@ import { HiBuildingOffice2 } from "react-icons/hi2";
 import { LuCheck, LuPlus } from "react-icons/lu";
 import { TiContacts } from "react-icons/ti";
 import { z } from "zod";
-import BrandStep from "./BrandStep";
+import BusinessStep from "./BusinessStep";
 import ContactStep from "./ContactStep";
 import FormButton from "./FormButton";
 
@@ -56,10 +56,10 @@ export const businessDialog = createOverlay((props) => {
 
   const onSubmit = form.handleSubmit(async (businessData) => {
     const promise = toaster.promise(trigger(businessData), {
-      loading: { title: "Setting up brand…", description: "Please wait" },
+      loading: { title: "Setting up business…", description: "Please wait" },
       success: (brand) => ({
         title: "Setup successful",
-        description: `${brand.name} brand has been created`,
+        description: `${brand.name} business has been created`,
       }),
       error: errorToastOptions,
     });
@@ -165,7 +165,7 @@ export const BusinessForm = ({ signup }: BusinessFormProps) => {
       }}
     >
       <LuPlus />
-      New Brand
+      New Business
     </FormButton>
   );
 };
@@ -186,10 +186,10 @@ const fieldsOf = (step: StepData) =>
 const stepsData: StepData[] = [
   {
     icon: <HiBuildingOffice2 />,
-    title: "Brand information",
-    description: "Tell us about your brand.",
+    title: "Business information",
+    description: "Tell us about your business.",
     schema: CreateBusinessInputSchema.pick({ name: true, categoryId: true }),
-    render: (form) => <BrandStep form={form} />,
+    render: (form) => <BusinessStep form={form} />,
   },
   {
     icon: <TiContacts />,

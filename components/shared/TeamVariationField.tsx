@@ -70,7 +70,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
             invalid={!!teamVariationErrors?.[index]?.teamId || error}
           >
             <Field.Label>
-              Store <Field.RequiredIndicator />
+              Branch <Field.RequiredIndicator />
             </Field.Label>
             <Controller
               control={control}
@@ -89,7 +89,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
                   <Select.HiddenSelect />
                   <Select.Control>
                     <Select.Trigger>
-                      <Select.ValueText placeholder="Select store" />
+                      <Select.ValueText placeholder="Select branch" />
                     </Select.Trigger>
                     <Select.IndicatorGroup>
                       <Select.ClearTrigger />
@@ -121,10 +121,10 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
                 Click to retry
               </Button>
             )}
-            <Field.HelperText>Store with variation available</Field.HelperText>
+            <Field.HelperText>Branch with variation available</Field.HelperText>
             <Field.ErrorText>
               {error
-                ? "Stores unavailable. Retry to continue."
+                ? "Branches unavailable. Retry to continue."
                 : teamVariationErrors?.[index]?.teamId?.message}
             </Field.ErrorText>
           </Field.Root>
@@ -160,7 +160,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
               )}
             />
             <Field.HelperText>
-              Quantity of variation at the store
+              Quantity of variation at the branch
             </Field.HelperText>
             <Field.ErrorText>
               {teamVariationErrors?.[index]?.quantity?.message}
@@ -186,7 +186,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
         alignSelf="flex-start"
         onClick={() => append(emptyTeamVariation)}
       >
-        <LuPlus /> Add store
+        <LuPlus /> Add branch
       </Button>
 
       <Fieldset.ErrorText>

@@ -32,7 +32,7 @@ export default async function page({ searchParams }: Props) {
 
       <PageItemContainer>
         <Suspense>
-          <Search placeholder={"Search for a brand"} searchField={"search"} />
+          <Search placeholder={"Search for a business"} searchField={"search"} />
         </Suspense>
         <Spacer />
         <BusinessForm signup={signup} />

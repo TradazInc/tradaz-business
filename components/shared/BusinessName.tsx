@@ -17,7 +17,7 @@ const BusinessName = ({ businessId }: Props) => {
       h={isLoading ? 10 : "auto"}
       w={isLoading ? 100 : "auto"}
     >
-      <Text>{business?.name} Stores</Text>
+      <Text>{business?.name} Branches</Text>
     </Skeleton>
   );
 };

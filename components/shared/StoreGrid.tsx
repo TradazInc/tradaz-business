@@ -28,8 +28,8 @@ const StoreGrid = ({ businessId, initialStores }: Props) => {
   if (stores && stores.length === 0) {
     return (
       <EmptyPage
-        title={"No stores found"}
-        description={"Create a new store for your brand"}
+        title={"No branches found"}
+        description={"Create a new branch for your business"}
       />
     );
   }

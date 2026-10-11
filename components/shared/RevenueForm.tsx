@@ -138,7 +138,7 @@ const RevenueForm = () => {
             <Field.Label>
               Name <Field.RequiredIndicator />
             </Field.Label>
-            <Input placeholder="e.g., Store sponsor" {...register("name")} />
+            <Input placeholder="e.g., Branch sponsor" {...register("name")} />
             <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
           </Field.Root>
 
@@ -179,7 +179,7 @@ const RevenueForm = () => {
           </Field.Root>
 
           <Field.Root invalid={!!errors.teamId || error}>
-            <Field.Label>Store</Field.Label>
+            <Field.Label>Branch</Field.Label>
             <Controller
               control={control}
               name={"teamId"}
@@ -198,7 +198,7 @@ const RevenueForm = () => {
                   <Select.HiddenSelect />
                   <Select.Control>
                     <Select.Trigger>
-                      <Select.ValueText placeholder="Select store" />
+                      <Select.ValueText placeholder="Select branch" />
                     </Select.Trigger>
                     <Select.IndicatorGroup>
                       <Select.ClearTrigger />
@@ -233,12 +233,12 @@ const RevenueForm = () => {
               </Button>
             )}
             <Field.HelperText>
-              Store the revenue belongs to. Leave empty for a business wide
+              Branch the revenue belongs to. Leave empty for a business wide
               revenue
             </Field.HelperText>
             <Field.ErrorText>
               {error
-                ? "Stores unavailable. Retry to continue."
+                ? "Branches unavailable. Retry to continue."
                 : errors.teamId?.message}
             </Field.ErrorText>
           </Field.Root>

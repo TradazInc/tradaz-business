@@ -76,7 +76,7 @@ const PosConfigTable = ({ initialPosConfigs, businessId }: Props) => {
               <Table.ColumnHeader>Terminals</Table.ColumnHeader>
               <Table.ColumnHeader>Merchant ID</Table.ColumnHeader>
               <Table.ColumnHeader>Private Key</Table.ColumnHeader>
-              <Table.ColumnHeader>Store</Table.ColumnHeader>
+              <Table.ColumnHeader>Branch</Table.ColumnHeader>
               <Table.ColumnHeader>Created At</Table.ColumnHeader>
               <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
             </Table.Row>

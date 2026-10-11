@@ -38,10 +38,10 @@ export const storeDialog = createOverlay((props) => {
 
   const onSubmit = handleSubmit(async (storeData) => {
     const promise = toaster.promise(trigger(storeData), {
-      loading: { title: "Setting up store...", description: "Please wait" },
+      loading: { title: "Setting up branch...", description: "Please wait" },
       success: (store) => ({
         title: "Setup successful",
-        description: `${store.name} store has been created`,
+        description: `${store.name} branch has been created`,
       }),
       error: errorToastOptions,
     });
@@ -69,9 +69,9 @@ export const storeDialog = createOverlay((props) => {
                 maxW={{ base: "full", md: "2xl", xl: "4xl" }}
               >
                 <Stack>
-                  <Fieldset.Legend>Store details</Fieldset.Legend>
+                  <Fieldset.Legend>Branch details</Fieldset.Legend>
                   <Fieldset.HelperText>
-                    Please provide your store details below.
+                    Please provide your branch details below.
                   </Fieldset.HelperText>
                 </Stack>
 
@@ -85,7 +85,7 @@ export const storeDialog = createOverlay((props) => {
                       {...register("name")}
                     />
                     <Field.HelperText>
-                      Name of the store under selected business
+                      Name of the branch under selected business
                     </Field.HelperText>
                     <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
                   </Field.Root>
@@ -98,7 +98,7 @@ export const storeDialog = createOverlay((props) => {
                       placeholder="e.g., 123 Main St, Lekki, Lagos"
                       {...register("address")}
                     />
-                    <Field.HelperText>Address of store</Field.HelperText>
+                    <Field.HelperText>Address of branch</Field.HelperText>
                     <Field.ErrorText>{errors.address?.message}</Field.ErrorText>
                   </Field.Root>
                 </Fieldset.Content>
@@ -129,7 +129,7 @@ export const StoreForm = () => {
       }}
     >
       <LuPlus />
-      New Store
+      New Branch
     </FormButton>
   );
 };

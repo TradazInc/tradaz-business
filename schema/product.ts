@@ -172,7 +172,7 @@ const CreateVariationInputSchema = z.object({
           ctx.addIssue({
             code: "custom",
             path: [index, "teamId"],
-            message: "store is already selected",
+            message: "branch is already selected",
           });
 
         seen.add(teamId);
