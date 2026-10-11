@@ -1,10 +1,17 @@
 import { authClient } from "@/lib/authClient";
-import { teamSchema } from "better-auth/client";
 import { z } from "zod";
 
 // Get
-export const GetStoreOutputSchema = teamSchema;
 export type GetStoreOutputData = typeof authClient.$Infer.Team;
+
+export const GetStoreOutputSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  organizationId: z.string(),
+  address: z.string(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date().optional(),
+}) satisfies z.ZodType<GetStoreOutputData, unknown>;
 
 // Get All
 export const GetAllStoreOutputSchema = GetStoreOutputSchema.array();

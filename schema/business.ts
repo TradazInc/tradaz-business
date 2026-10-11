@@ -3,24 +3,33 @@ import { authClient } from "@/lib/authClient";
 import { checkBusinessSlug } from "@/server/business";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { z } from "zod";
-import { BusinessCategory } from "./businessCategory";
-import { organizationSchema } from "better-auth/client";
+import {
+  BusinessCategory,
+  GetBusinessCategoryOuputSchema,
+} from "./businessCategory";
 
 // Get
 // organization.list is enriched with the category relation by an after hook on the API
-export const GetBusinessOutputSchema = organizationSchema.extend({
-  categoryId: z.string(),
-  category: z.object({ id: z.string(), name: z.string() }).nullable(),
-});
 export type GetBusinessOutputData = typeof authClient.$Infer.Organization & {
   category: BusinessCategory | null;
 };
+
+export const GetBusinessOutputSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+  logo: z.string().nullish(),
+  metadata: z.record(z.string(), z.unknown()).nullish(),
+  createdAt: z.coerce.date(),
+  categoryId: z.string(),
+  category: GetBusinessCategoryOuputSchema.nullable(),
+}) satisfies z.ZodType<GetBusinessOutputData, unknown>;
+
 export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
 
 // Get All
 export const GetAllBusinessOutputSchema = GetBusinessOutputSchema.array();
 export type GetAllBusinessOutputData = GetBusinessOutputData[];
-
 
 // Create
 export const CreateBusinessInputSchema = z.object({
