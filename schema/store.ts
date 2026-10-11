@@ -3,7 +3,6 @@ import { z } from "zod";
 
 // Get
 export type GetStoreOutputData = typeof authClient.$Infer.Team;
-
 export const GetStoreOutputSchema = z.object({
   id: z.string(),
   name: z.string(),

@@ -9,11 +9,10 @@ import {
 } from "./businessCategory";
 
 // Get
-// organization.list is enriched with the category relation by an after hook on the API
+export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
 export type GetBusinessOutputData = typeof authClient.$Infer.Organization & {
-  category: BusinessCategory | null;
+  category: BusinessCategory | null; // joined in organization.list hook
 };
-
 export const GetBusinessOutputSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -25,7 +24,6 @@ export const GetBusinessOutputSchema = z.object({
   category: GetBusinessCategoryOuputSchema.nullable(),
 }) satisfies z.ZodType<GetBusinessOutputData, unknown>;
 
-export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
 
 // Get All
 export const GetAllBusinessOutputSchema = GetBusinessOutputSchema.array();
