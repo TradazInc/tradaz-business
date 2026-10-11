@@ -2,7 +2,7 @@
 
 import { useProduct } from "@/hooks/product";
 import { GetProductOutputData } from "@/schema/product";
-import { Box, Stack, VStack } from "@chakra-ui/react";
+import { Box, SimpleGrid, Stack, VStack } from "@chakra-ui/react";
 import EmptyPage from "./EmptyPage";
 import ProductCarousel from "./ProductCarousel";
 import ProductDescription from "./ProductDescription";
@@ -35,11 +35,11 @@ const ProductDetail = ({ initialProduct, productId }: Props) => {
         </Box>
       </Stack>
 
-      <VStack gap={{ base: 4, md: 10 }} mt={8} w={"full"}>
+      <SimpleGrid columns={{ base: 1, md: 2, "2xl": 3 }} mt={8}>
         {product.variations.map((v, i) => (
           <VariationCard key={v.id} variation={v} index={i} />
         ))}
-      </VStack>
+      </SimpleGrid>
     </>
   );
 };
