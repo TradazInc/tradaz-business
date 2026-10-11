@@ -1,23 +1,16 @@
+import { GetAllBusinessOutputData } from "@/schema/business";
+import { GetAllStoresOutputData, GetStoreOutputSchema } from "@/schema/store";
 import { computePath } from "@/utilities/computePath";
 import { Menu, Portal } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 
 interface Props {
-  activeBusiness?: string;
   children: React.ReactNode;
-  data?: Array<{ name: string; id: string }> | null;
-  dataType: "business" | "store";
-  handleClick: (id: string) => Promise<unknown>;
+  data?: GetAllStoresOutputData | GetAllBusinessOutputData | null;
 }
 
-export const BusinessSelectorMenu = ({
-  activeBusiness,
-  children,
-  data,
-  dataType,
-  handleClick,
-}: Props) => {
+export const BusinessSelectorMenu = ({ children, data }: Props) => {
   return (
     <Menu.Root>
       <Menu.Trigger asChild>{children}</Menu.Trigger>
@@ -25,23 +18,18 @@ export const BusinessSelectorMenu = ({
         <Menu.Positioner>
           <Menu.Content>
             {data && data.length > 0 ? (
-              data.map((item) => (
-                <Menu.Item
-                  key={item.id}
-                  value={item.id}
-                  onClick={() => handleClick(item.id)}
-                  asChild
-                >
-                  <NextLink
-                    href={computePath(
-                      dataType === "business" ? item.id : activeBusiness,
-                      dataType === "store" ? item.id : undefined,
-                    )}
-                  >
-                    {item.name}
-                  </NextLink>
-                </Menu.Item>
-              ))
+              data.map((item) => {
+                const { data, success } = GetStoreOutputSchema.safeParse(item);
+                const href = success
+                  ? computePath(data.organizationId, data.id)
+                  : computePath(item.id);
+
+                return (
+                  <Menu.Item key={item.id} value={item.id} asChild>
+                    <NextLink href={href}>{item.name}</NextLink>
+                  </Menu.Item>
+                );
+              })
             ) : (
               <Menu.Item value="">Nothing found</Menu.Item>
             )}

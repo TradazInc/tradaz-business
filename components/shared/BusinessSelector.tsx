@@ -9,7 +9,6 @@ import {
 } from "@/hooks/session";
 import { useStores } from "@/hooks/store";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
-import { updateSession } from "@/utilities/updateSession";
 import { Breadcrumb, HStack, Skeleton } from "@chakra-ui/react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -26,29 +25,23 @@ export const BusinessSelector = () => {
   const activeStoreId = session?.session.activeTeamId ?? undefined;
   const sessionLoaded = !!session;
 
-  const { data: businesses, isLoading } = useBusinesses();
-  const { data: stores } = useStores(activeBusinessId);
-  const { trigger: setBusiness } = useSetActiveBusiness();
-  const { trigger: setStore } = useSetActiveStore();
+  const businesses = useBusinesses();
+  const stores = useStores(activeBusinessId);
+  const setActiveBusiness = useSetActiveBusiness();
+  const setActiveStore = useSetActiveStore();
 
   const activeBusiness = useMemo(
-    () => businesses?.find((b) => b.id === activeBusinessId),
-    [businesses, activeBusinessId],
+    () => businesses.data?.find((b) => b.id === activeBusinessId),
+    [businesses.data, activeBusinessId],
   );
   const activeStore = useMemo(
-    () => stores?.find((s) => s.id === activeStoreId),
-    [stores, activeStoreId],
+    () => stores.data?.find((s) => s.id === activeStoreId),
+    [stores.data, activeStoreId],
   );
 
   const handleBusiness = async (businessId?: string) => {
     try {
-      await setBusiness(businessId, {
-        optimisticData: updateSession({
-          activeOrganizationId: businessId ?? null,
-          activeTeamId: null, // switching brand clears the store
-        }),
-        rollbackOnError: true,
-      });
+      await setActiveBusiness.trigger(businessId);
     } catch (e) {
       toaster.error(errorToastOptions(e));
     }
@@ -56,10 +49,7 @@ export const BusinessSelector = () => {
 
   const handleStore = async (storeId?: string) => {
     try {
-      await setStore(storeId, {
-        optimisticData: updateSession({ activeTeamId: storeId ?? null }),
-        rollbackOnError: true,
-      });
+      await setActiveStore.trigger(storeId);
     } catch (e) {
       toaster.error(errorToastOptions(e));
     }
@@ -84,6 +74,7 @@ export const BusinessSelector = () => {
       if (activeStoreId !== storeId) await handleStore(storeId);
     };
     sync();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionLoaded, businessId, storeId]);
 
   return (
@@ -98,14 +89,10 @@ export const BusinessSelector = () => {
         </Breadcrumb.Separator>
 
         <Breadcrumb.Item>
-          <BusinessSelectorMenu
-            data={businesses}
-            dataType={"business"}
-            handleClick={handleBusiness}
-          >
-            <Breadcrumb.Link as="button">
+          <BusinessSelectorMenu data={businesses.data}>
+            <Breadcrumb.Link as={"button"}>
               <HiBuildingOffice2 />
-              <Skeleton height={"5"} loading={isLoading}>
+              <Skeleton height={5} loading={businesses.isLoading}>
                 <HStack>
                   {activeBusiness ? activeBusiness.name : "Brands"}
                   <LuChevronDown />
@@ -122,13 +109,8 @@ export const BusinessSelector = () => {
             </Breadcrumb.Separator>
 
             <Breadcrumb.Item>
-              <BusinessSelectorMenu
-                data={stores}
-                dataType={"store"}
-                handleClick={handleStore}
-                activeBusiness={activeBusinessId}
-              >
-                <Breadcrumb.Link as="button">
+              <BusinessSelectorMenu data={stores.data}>
+                <Breadcrumb.Link as={"button"}>
                   <LiaStoreAltSolid />
                   {activeStore.name}
                   <LuChevronDown />

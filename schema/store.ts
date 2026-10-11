@@ -1,5 +1,14 @@
 import { authClient } from "@/lib/authClient";
+import { teamSchema } from "better-auth/client";
 import { z } from "zod";
+
+// Get
+export const GetStoreOutputSchema = teamSchema;
+export type GetStoreOutputData = typeof authClient.$Infer.Team;
+
+// Get All
+export const GetAllStoreOutputSchema = GetStoreOutputSchema.array();
+export type GetAllStoresOutputData = GetStoreOutputData[];
 
 // Create
 export const CreateStoreInputSchema = z.object({
@@ -12,6 +21,3 @@ export const CreateStoreInputSchema = z.object({
     .min(5, { error: "address must be at least 5 letters long" }),
 });
 export type CreateStoreInputData = z.infer<typeof CreateStoreInputSchema>;
-
-export type GetStoreOutputData = typeof authClient.$Infer.Team;
-export type GetAllStoresOutputData = GetStoreOutputData[];

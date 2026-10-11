@@ -4,6 +4,23 @@ import { checkBusinessSlug } from "@/server/business";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { z } from "zod";
 import { BusinessCategory } from "./businessCategory";
+import { organizationSchema } from "better-auth/client";
+
+// Get
+// organization.list is enriched with the category relation by an after hook on the API
+export const GetBusinessOutputSchema = organizationSchema.extend({
+  categoryId: z.string(),
+  category: z.object({ id: z.string(), name: z.string() }).nullable(),
+});
+export type GetBusinessOutputData = typeof authClient.$Infer.Organization & {
+  category: BusinessCategory | null;
+};
+export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
+
+// Get All
+export const GetAllBusinessOutputSchema = GetBusinessOutputSchema.array();
+export type GetAllBusinessOutputData = GetBusinessOutputData[];
+
 
 // Create
 export const CreateBusinessInputSchema = z.object({
@@ -37,11 +54,3 @@ export const CreateBusinessInputSchema = z.object({
     ),
 });
 export type CreateBusinessInputData = z.infer<typeof CreateBusinessInputSchema>;
-
-// organization.list is enriched with the category relation by an after hook on the API
-export type GetBusinessOutputData = typeof authClient.$Infer.Organization & {
-  category: BusinessCategory | null;
-};
-export type GetAllBusinessOutputData = GetBusinessOutputData[];
-
-export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
