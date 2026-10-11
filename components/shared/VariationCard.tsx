@@ -14,8 +14,8 @@ const VariationCard = ({ variation, index }: Props) => {
       <Card.Body>
         <Card.Title>Variation {index + 1}</Card.Title>
 
-        <HStack justify={"space-around"} align={"flex-start"}>
-          <DataList.Root>
+        <HStack justify={"space-between"} align={"flex-start"}>
+          <DataList.Root orientation={"horizontal"}>
             <DataList.Item>
               <DataList.ItemLabel>SKU</DataList.ItemLabel>
               <DataList.ItemValue>{variation.sku}</DataList.ItemValue>
@@ -38,7 +38,7 @@ const VariationCard = ({ variation, index }: Props) => {
             </DataList.Item>
           </DataList.Root>
 
-          <DataList.Root>
+          <DataList.Root orientation={"horizontal"}>
             <DataList.Item>
               <DataList.ItemLabel>Price</DataList.ItemLabel>
               <DataList.ItemValue>
@@ -67,7 +67,7 @@ const VariationCard = ({ variation, index }: Props) => {
           </DataList.Root>
 
           {variation.teamVariations.length > 0 && (
-            <DataList.Root>
+            <DataList.Root orientation={"horizontal"}>
               {variation.teamVariations.map((tv) => (
                 <DataList.Item key={tv.id}>
                   <DataList.ItemLabel>
