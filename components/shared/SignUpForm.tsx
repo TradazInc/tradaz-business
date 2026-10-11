@@ -92,10 +92,10 @@ const SignUpForm = () => {
         </Field.Root>
 
         <Field.Root required invalid={!!errors.password}>
-          <Stack gap={3}>
+          <Stack gap={3} w={"full"}>
             <Field.Label>Password</Field.Label>
             <PasswordInput {...register("password")} />
-            <PasswordStrengthMeter value={strength} w={"full"} />
+            <PasswordStrengthMeter value={strength} />
           </Stack>
           <Field.HelperText>Minimum 5 characters</Field.HelperText>
           <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
