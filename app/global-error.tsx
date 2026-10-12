@@ -6,22 +6,21 @@ import { Button, Code, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { PiWarningOctagonDuotone } from "react-icons/pi";
 import { TfiReload } from "react-icons/tfi";
-import { inferenceSans, outfit } from "./fonts";
+import { inferenceSans, objectSans } from "./fonts";
 
-export default function GlobalError({
-  error,
-  reset,
-}: {
+interface Props {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}
+
+export default function GlobalError({ error, reset }: Props) {
   useEffect(() => {
     console.error(error);
   }, [error]);
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} ${inferenceSans.variable}`}>
+      <body className={`${objectSans.variable} ${inferenceSans.variable}`}>
         <Provider>
           <StatusPage
             icon={<PiWarningOctagonDuotone />}

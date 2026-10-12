@@ -1,10 +1,30 @@
-import { Outfit } from "next/font/google";
 import localFont from "next/font/local";
 
-export const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
+export const objectSans = localFont({
+  variable: "--font-object-sans",
   display: "swap",
+  src: [
+    {
+      path: "../public/ObjectSans-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/ObjectSans-Slanted.otf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../public/ObjectSans-Heavy.otf",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../public/ObjectSans-HeavySlanted.otf",
+      weight: "800",
+      style: "italic",
+    },
+  ],
 });
 
 export const inferenceSans = localFont({

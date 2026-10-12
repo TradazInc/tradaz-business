@@ -4,9 +4,9 @@ const config = defineConfig({
   theme: {
     tokens: {
       fonts: {
-        body: { value: "var(--font-outfit), system-ui, sans-serif" },
+        body: { value: "var(--font-object-sans), system-ui, sans-serif" },
         heading: { value: "var(--font-inference-sans), system-ui, sans-serif" },
-        mono: { value: "var(--font-outfit), system-ui, sans-serif" },
+        mono: { value: "var(--font-object-sans), system-ui, sans-serif" },
       },
     },
     recipes: {
