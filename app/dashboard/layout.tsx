@@ -16,7 +16,6 @@ export default async function BusinessLayout({
     getSession(),
     getBusinesses().catch(() => undefined),
   ]);
-  if (session.error) console.error("getSession failed", session.error);
   if (!session.data || session.error) unauthorized();
 
   return (

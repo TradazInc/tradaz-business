@@ -5,14 +5,12 @@ import { useSignOut } from "@/hooks/auth";
 import { useSession } from "@/hooks/session";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Menu, Portal } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import { LuLogOut } from "react-icons/lu";
 import { ProfileAvatar } from "./ProfileAvatar";
 
 export const ProfileMenu = () => {
   const { data: session } = useSession();
   const { trigger, isMutating } = useSignOut();
-  const { push, refresh } = useRouter();
 
   const handleLogout = async () => {
     const promise = toaster.promise(trigger(), {
@@ -27,8 +25,7 @@ export const ProfileMenu = () => {
     try {
       const data = await promise.unwrap();
       if (data.success) {
-        push("/signin");
-        refresh();
+        window.location.assign("/signin");
       } else if (promise.id) {
         toaster.update(promise.id, {
           title: "Unable to logout",
@@ -36,9 +33,7 @@ export const ProfileMenu = () => {
           type: "error",
         });
       }
-    } catch {
-      /* Toast handled by the `error` option */
-    }
+    } catch {} /* Toast handled by the `error` option */
   };
 
   if (!session) return <ProfileAvatar />;
