@@ -15,7 +15,7 @@ const BusinessName = ({ businessId }: Props) => {
   return business ? (
     <HeaderText>{`${business.name} Branches`}</HeaderText>
   ) : (
-    <Skeleton h={10} w={300} />
+    <Skeleton h={10} w={250} />
   );
 };
 
