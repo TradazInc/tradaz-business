@@ -5,16 +5,12 @@ import { Skeleton } from "@chakra-ui/react";
 import HeaderText from "./HeaderText";
 
 const UserName = () => {
-  const { data: session, isLoading } = useSession();
+  const { data: session } = useSession();
 
-  return (
-    <Skeleton
-      loading={isLoading}
-      h={isLoading ? 10 : "auto"}
-      w={isLoading ? 300 : "auto"}
-    >
-      <HeaderText>{`Hi ${session?.user.name}`}</HeaderText>
-    </Skeleton>
+  return session?.user ? (
+    <HeaderText>{`Hi ${session?.user.name}`}</HeaderText>
+  ) : (
+    <Skeleton h={10} w={250} />
   );
 };
 

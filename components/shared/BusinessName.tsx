@@ -9,17 +9,13 @@ interface Props {
 }
 
 const BusinessName = ({ businessId }: Props) => {
-  const { data: businesses, isLoading } = useBusinesses();
+  const { data: businesses } = useBusinesses();
   const business = businesses?.find((b) => b.id === businessId);
 
-  return (
-    <Skeleton
-      loading={isLoading}
-      h={isLoading ? 10 : "auto"}
-      w={isLoading ? 300 : "auto"}
-    >
-      <HeaderText>{`${business?.name} Branches`}</HeaderText>
-    </Skeleton>
+  return business ? (
+    <HeaderText>{`${business.name} Branches`}</HeaderText>
+  ) : (
+    <Skeleton h={10} w={300} />
   );
 };
 

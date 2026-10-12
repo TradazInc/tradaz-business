@@ -10,17 +10,13 @@ interface Props {
 }
 
 const StoreName = ({ businessId, storeId }: Props) => {
-  const { data: stores, isLoading } = useStores(businessId);
+  const { data: stores } = useStores(businessId);
   const store = stores?.find((s) => s.id === storeId);
 
-  return (
-    <Skeleton
-      loading={isLoading}
-      h={isLoading ? 10 : "auto"}
-      w={isLoading ? 300 : "auto"}
-    >
-      <HeaderText>{store?.name}</HeaderText>
-    </Skeleton>
+  return store ? (
+    <HeaderText>{store?.name}</HeaderText>
+  ) : (
+    <Skeleton h={10} w={250} />
   );
 };
 
