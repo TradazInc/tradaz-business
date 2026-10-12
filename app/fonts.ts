@@ -1,11 +1,20 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
+import localFont from "next/font/local";
 
-export const geistSans = Geist({
-  variable: "--font-geist-sans",
+export const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  display: "swap",
 });
 
-export const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+export const inferenceSans = localFont({
+  variable: "--font-inference-sans",
+  display: "swap",
+  src: [
+    {
+      path: "../public/InferenceSans-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
 });

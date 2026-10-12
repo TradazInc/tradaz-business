@@ -66,7 +66,7 @@ export default function StatusPage({
               </Text>
             )}
 
-            <Heading as="h1" size="lg" fontWeight="bold">
+            <Heading as="h1" size="lg">
               {title}
             </Heading>
 

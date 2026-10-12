@@ -81,8 +81,8 @@ export default function page() {
 
             <Text fontSize="xl" color="fg.muted">
               A tailored e-commerce platform for business owners. Streamline
-              your operations, manage your business, track sales and inventory and
-              scale your growth seamlessly.
+              your operations, manage your business, track sales and inventory
+              and scale your growth seamlessly.
             </Text>
           </VStack>
 
@@ -99,7 +99,7 @@ export default function page() {
 
         <Box as="section">
           <VStack gap="3" textAlign="center" mb={16}>
-            <Heading as="h2" size="xl" fontWeight="bold">
+            <Heading as="h2" size="xl">
               How to Join
             </Heading>
             <Text color="fg.muted" fontSize="lg">

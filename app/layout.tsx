@@ -2,7 +2,7 @@ import { SWRProvider } from "@/components/shared/SWRProvider";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
-import { geistMono, geistSans } from "./fonts";
+import { inferenceSans, outfit } from "./fonts";
 
 export const metadata: Metadata = {
   title: "tradaz-business",
@@ -15,8 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${outfit.variable} ${inferenceSans.variable}`}
+      suppressHydrationWarning
+    >
+      <body>
         <Provider>
           <SWRProvider>
             {children}

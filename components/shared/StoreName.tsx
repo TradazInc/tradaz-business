@@ -1,7 +1,8 @@
 "use client";
 
 import { useStores } from "@/hooks/store";
-import { Skeleton, Text } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
+import HeaderText from "./HeaderText";
 
 interface Props {
   businessId: string;
@@ -18,7 +19,7 @@ const StoreName = ({ businessId, storeId }: Props) => {
       h={isLoading ? 10 : "auto"}
       w={isLoading ? 100 : "auto"}
     >
-      <Text>{store?.name}</Text>
+      <HeaderText>{store?.name}</HeaderText>
     </Skeleton>
   );
 };

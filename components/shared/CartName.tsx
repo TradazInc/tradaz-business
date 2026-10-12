@@ -1,7 +1,8 @@
 "use client";
 
 import { useCart } from "@/hooks/cart";
-import { Skeleton, Text } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
+import HeaderText from "./HeaderText";
 
 interface Props {
   cartId: string;
@@ -16,7 +17,7 @@ const CartName = ({ cartId }: Props) => {
       h={isLoading ? 10 : "auto"}
       w={isLoading ? 100 : "auto"}
     >
-      <Text>{`Cart ${cart?.id}`}</Text>
+      <HeaderText>{`Cart ${cart?.id}`}</HeaderText>
     </Skeleton>
   );
 };

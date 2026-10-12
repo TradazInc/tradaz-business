@@ -6,7 +6,7 @@ import { Button, Code, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { PiWarningOctagonDuotone } from "react-icons/pi";
 import { TfiReload } from "react-icons/tfi";
-import { geistMono, geistSans } from "./fonts";
+import { inferenceSans, outfit } from "./fonts";
 
 export default function GlobalError({
   error,
@@ -21,7 +21,7 @@ export default function GlobalError({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${outfit.variable} ${inferenceSans.variable}`}>
         <Provider>
           <StatusPage
             icon={<PiWarningOctagonDuotone />}

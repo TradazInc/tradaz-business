@@ -1,7 +1,8 @@
 "use client";
 
 import { useSession } from "@/hooks/session";
-import { Skeleton, Text } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
+import HeaderText from "./HeaderText";
 
 const UserName = () => {
   const { data: session, isLoading } = useSession();
@@ -12,7 +13,7 @@ const UserName = () => {
       h={isLoading ? 10 : "auto"}
       w={isLoading ? 100 : "auto"}
     >
-      <Text>Hi {session?.user.name}</Text>
+      <HeaderText>Hi {session?.user.name}</HeaderText>
     </Skeleton>
   );
 };
