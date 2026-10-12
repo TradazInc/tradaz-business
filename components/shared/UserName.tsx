@@ -11,9 +11,9 @@ const UserName = () => {
     <Skeleton
       loading={isLoading}
       h={isLoading ? 10 : "auto"}
-      w={isLoading ? 100 : "auto"}
+      w={isLoading ? 150 : "auto"}
     >
-      <HeaderText>Hi {session?.user.name}</HeaderText>
+      <HeaderText>{`Hi ${session?.user.name}`}</HeaderText>
     </Skeleton>
   );
 };
