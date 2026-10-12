@@ -27,8 +27,8 @@ export const ProfileMenu = () => {
     try {
       const data = await promise.unwrap();
       if (data.success) {
-        refresh();
         push("/signin");
+        refresh();
       } else if (promise.id) {
         toaster.update(promise.id, {
           title: "Unable to logout",

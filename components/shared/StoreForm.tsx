@@ -22,10 +22,9 @@ import { LuPlus } from "react-icons/lu";
 import FormButton from "./FormButton";
 
 export const storeDialog = createOverlay((props) => {
-  const { signup, ...rest } = props;
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddStore(businessId);
-  const { refresh, push } = useRouter();
+  const { push } = useRouter();
 
   const {
     register,
@@ -48,14 +47,13 @@ export const storeDialog = createOverlay((props) => {
     if (!promise) return;
     try {
       const store = await promise.unwrap();
-      refresh();
       push(computePath(businessId, store.id));
       props.onOpenChange?.({ open: false });
     } catch {} // Error displayed by toaster
   });
 
   return (
-    <Dialog.Root {...rest} size={"lg"} lazyMount>
+    <Dialog.Root {...props} size={"lg"} lazyMount>
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>

@@ -32,7 +32,7 @@ const RevenueForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddRevenue(businessId);
   const { data, isLoading, error, mutate } = useStores(businessId);
-  const { refresh, push } = useRouter();
+  const { push } = useRouter();
 
   const storeCollection = useMemo(
     () =>
@@ -72,7 +72,6 @@ const RevenueForm = () => {
     try {
       await promise.unwrap();
       reset(emptyRevenue);
-      refresh();
       push(`${computePath(businessId)}/revenue`);
     } catch {} // Error displayed by toaster
   });

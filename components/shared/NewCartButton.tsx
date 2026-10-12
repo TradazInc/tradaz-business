@@ -14,7 +14,7 @@ interface Props {
 }
 
 const NewCartButton = ({ businessId, storeId }: Props) => {
-  const { push, refresh } = useRouter();
+  const { push } = useRouter();
   const { trigger } = useAddCart(businessId);
 
   const handleClick = async () => {
@@ -32,7 +32,6 @@ const NewCartButton = ({ businessId, storeId }: Props) => {
     if (!promise) return;
     try {
       const cart = await promise.unwrap();
-      refresh();
       push(`${computePath(businessId, storeId)}/carts/${cart.id}`);
     } catch {} // Error displayed by toaster
   };

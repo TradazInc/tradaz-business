@@ -32,7 +32,7 @@ const ExpenseForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddExpense(businessId);
   const { data, isLoading, error, mutate } = useStores(businessId);
-  const { refresh, push } = useRouter();
+  const { push } = useRouter();
 
   const storeCollection = useMemo(
     () =>
@@ -72,7 +72,6 @@ const ExpenseForm = () => {
     try {
       await promise.unwrap();
       reset(emptyExpense);
-      refresh();
       push(`${computePath(businessId)}/expenses`);
     } catch {} // Error displayed by toaster
   });

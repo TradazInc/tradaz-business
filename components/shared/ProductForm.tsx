@@ -49,7 +49,7 @@ const ProductForm = ({ product }: Props) => {
   const { trigger, isMutating } = useAddProduct(businessId);
   const categories = useProductCategories(businessId);
   const sizeTypes = useSizeTypes(businessId);
-  const { refresh, push } = useRouter();
+  const { push } = useRouter();
   const categoryScrollId = useId();
   const sizetypeScrollId = useId();
 
@@ -125,7 +125,6 @@ const ProductForm = ({ product }: Props) => {
     if (!promise) return;
     try {
       const product = await promise.unwrap();
-      refresh();
       push(`${computePath(businessId)}/products/${product.id}`);
     } catch {} // Error displayed by toaster
   });

@@ -25,7 +25,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useId, useMemo, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
@@ -36,7 +36,6 @@ import FormInputGrid from "./FormInputGrid";
 export const subaccountDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();
   const { trigger, isMutating } = useAddSubaccount(businessId);
-  const { refresh } = useRouter();
   const [country, setCountry] = useState("nigeria");
   const bankScrollId = useId();
 
@@ -114,7 +113,6 @@ export const subaccountDialog = createOverlay((props) => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      refresh();
       props.onOpenChange?.({ open: false });
     } catch {} // Error displayed by toaster
   });

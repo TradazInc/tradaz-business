@@ -37,7 +37,7 @@ interface BusinessFormProps {
 
 export const businessDialog = createOverlay((props) => {
   const { trigger, isMutating } = useAddBusiness();
-  const { refresh, push } = useRouter();
+  const { push } = useRouter();
 
   const form = useForm({
     resolver: standardSchemaResolver(CreateBusinessInputSchema),
@@ -66,7 +66,6 @@ export const businessDialog = createOverlay((props) => {
     if (!promise) return;
     try {
       const business = await promise.unwrap();
-      refresh();
       push(computePath(business.id));
       props.onOpenChange?.({ open: false });
     } catch {} // Error displayed by toaster
