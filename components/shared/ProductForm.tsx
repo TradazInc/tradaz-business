@@ -38,6 +38,7 @@ import { FileUpload } from "./FileUpload";
 import FormInputGrid from "./FormInputGrid";
 import TotalQuantityStat from "./TotalQuantityStat";
 import VariationField from "./VariationField";
+import HeaderText from "./HeaderText";
 
 interface Props {
   product?: GetProductOutputData;
@@ -137,7 +138,9 @@ const ProductForm = ({ product }: Props) => {
       mx={"auto"}
       maxW={{ base: "full", md: "2xl", xl: "4xl" }}
     >
-      <Fieldset.Legend textStyle="2xl">Product details</Fieldset.Legend>
+      <Fieldset.Legend asChild>
+        <HeaderText>Product details</HeaderText>
+      </Fieldset.Legend>
       <Fieldset.HelperText>
         Please provide your product details below.
       </Fieldset.HelperText>

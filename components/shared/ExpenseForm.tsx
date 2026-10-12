@@ -26,6 +26,7 @@ import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FileUpload } from "./FileUpload";
 import FormInputGrid from "./FormInputGrid";
+import HeaderText from "./HeaderText";
 
 const ExpenseForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -85,7 +86,9 @@ const ExpenseForm = () => {
       maxW={{ base: "full", md: "2xl", xl: "4xl" }}
     >
       <Stack>
-        <Fieldset.Legend>Expenses</Fieldset.Legend>
+        <Fieldset.Legend asChild>
+          <HeaderText>Expenses</HeaderText>
+        </Fieldset.Legend>
         <Fieldset.HelperText>
           Please provide the expense details below.
         </Fieldset.HelperText>
