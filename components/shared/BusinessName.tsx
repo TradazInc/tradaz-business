@@ -16,7 +16,7 @@ const BusinessName = ({ businessId }: Props) => {
     <Skeleton
       loading={isLoading}
       h={isLoading ? 10 : "auto"}
-      w={isLoading ? 150 : "auto"}
+      w={isLoading ? 300 : "auto"}
     >
       <HeaderText>{`${business?.name} Branches`}</HeaderText>
     </Skeleton>
