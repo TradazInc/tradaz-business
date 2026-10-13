@@ -35,7 +35,7 @@ const StoreGrid = ({ businessId, initialStores }: Props) => {
   }
 
   return (
-    <GridContainer pb={12}>
+    <GridContainer>
       <For each={stores}>
         {(store) => (
           <StoreCard

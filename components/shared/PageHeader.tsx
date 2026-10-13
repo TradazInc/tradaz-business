@@ -3,8 +3,12 @@ import HeaderText from "./HeaderText";
 
 const PageHeader = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Box w={"full"} my={5}>
-      {typeof children === "string" ? <HeaderText>{children}</HeaderText> : children}
+    <Box w={"full"}>
+      {typeof children === "string" ? (
+        <HeaderText>{children}</HeaderText>
+      ) : (
+        children
+      )}
     </Box>
   );
 };

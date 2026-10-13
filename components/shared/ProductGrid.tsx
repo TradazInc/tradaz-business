@@ -41,7 +41,7 @@ const ProductGrid = ({ businessId, initialProducts }: Props) => {
       hasMore={hasMore && !error}
       loader={<Spinner />}
     >
-      <GridContainer pb={12}>
+      <GridContainer>
         <For each={products}>
           {(product) => (
             <ProductCard

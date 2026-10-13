@@ -7,5 +7,5 @@ interface Props {
 export default async function page({ params }: Props) {
   const { revenueId } = await params;
 
-  return <PageContainer py={10}>Revenue {revenueId}</PageContainer>;
+  return <PageContainer>Revenue {revenueId}</PageContainer>;
 }

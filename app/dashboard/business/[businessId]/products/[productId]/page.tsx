@@ -11,7 +11,7 @@ export default async function page({ params }: Props) {
   const productPromise = getProduct(productId);
 
   return (
-    <PageContainer py={10}>
+    <PageContainer>
       <ProductDetail initialProduct={productPromise} productId={productId} />
     </PageContainer>
   );

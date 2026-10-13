@@ -135,7 +135,6 @@ const ProductForm = ({ product }: Props) => {
 
   return (
     <Fieldset.Root
-      my={14}
       w={"full"}
       size={"lg"}
       mx={"auto"}

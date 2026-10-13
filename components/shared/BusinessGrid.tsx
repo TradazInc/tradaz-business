@@ -27,7 +27,7 @@ const BusinessGrid = ({ initialBusinesses }: Props) => {
   }
 
   return (
-    <GridContainer pb={12}>
+    <GridContainer>
       <For each={businesses}>
         {(business) => (
           <BusinessCard
