@@ -6,6 +6,8 @@ import { getBusinesses } from "@/server/business";
 import { SWRConfig, unstable_serialize } from "swr";
 import { unauthorized } from "next/navigation";
 import { getKey } from "@/utilities/computeKey";
+import { HStack } from "@chakra-ui/react";
+import { SideMenuSectionList } from "@/components/shared/SideMenuSectionList";
 
 export default async function BusinessLayout({
   children,
@@ -29,7 +31,10 @@ export default async function BusinessLayout({
         }}
       >
         <NavBar />
-        {children}
+        <HStack h={"full"} w={"full"}>
+          <SideMenuSectionList />
+          {children}
+        </HStack>
       </SWRConfig>
     </LayoutContainer>
   );

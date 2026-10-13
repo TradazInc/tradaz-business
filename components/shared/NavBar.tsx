@@ -9,10 +9,10 @@ import HelpIconButton from "./HelpIconButton";
 export const NavBar = () => {
   return (
     <HStack px={4} py={2} borderBottomWidth={"1px"}>
-      <HStack gap={"2"}>
+      {/* <HStack gap={"2"}>
         <SideMenuDrawer />
-        <BusinessSelector />
-      </HStack>
+      </HStack> */}
+      <BusinessSelector />
 
       <Spacer />
 

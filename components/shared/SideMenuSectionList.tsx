@@ -26,7 +26,13 @@ export const SideMenuSectionList = () => {
   }, [businessId, storeId]);
 
   return (
-    <VStack p={3} separator={<StackSeparator />} w={"full"}>
+    <VStack
+      p={3}
+      w={"full"}
+      h={"full"}
+      scrollbar={"hidden"}
+      separator={<StackSeparator />}
+    >
       {sideItems.map((item, index) => (
         <SideMenuSection basePath={basePath} menuItems={item} key={index} />
       ))}
