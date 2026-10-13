@@ -27,7 +27,7 @@ export const SideMenuSectionList = () => {
 
   return (
     <VStack
-      p={3}
+      p={5}
       top={0}
       w={"full"}
       h={"100vh"}
