@@ -1,6 +1,7 @@
 import { CloseButton, Drawer, IconButton, Portal } from "@chakra-ui/react";
 import { LuMenu } from "react-icons/lu";
 import { SideMenuList } from "./SideMenuList";
+import { SideMenuSectionList } from "./SideMenuSectionList";
 
 export const SideMenuDrawer = () => {
   return (
@@ -16,6 +17,7 @@ export const SideMenuDrawer = () => {
           <Drawer.Content>
             <Drawer.Body py={20} px={0}>
               <SideMenuList />
+              <SideMenuSectionList />
             </Drawer.Body>
             <Drawer.CloseTrigger asChild>
               <CloseButton size="sm" />

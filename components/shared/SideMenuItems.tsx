@@ -45,7 +45,7 @@ import {
   MdOutlineShoppingCartCheckout,
 } from "react-icons/md";
 
-interface SideMenuItem {
+export interface SideMenuItem {
   label: string;
   icon: React.ReactNode;
   children?: (SideMenuItem & { path: string })[];
