@@ -14,7 +14,7 @@ export const GetStoreOutputSchema = z.object({
 
 // Get All
 export const GetAllStoreOutputSchema = GetStoreOutputSchema.array();
-export type GetAllStoresOutputData = GetStoreOutputData[];
+export type GetAllStoresOutputData = z.infer<typeof GetAllStoreOutputSchema>;
 
 // Create
 export const CreateStoreInputSchema = z.object({

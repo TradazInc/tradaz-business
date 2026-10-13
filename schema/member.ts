@@ -14,6 +14,20 @@ export type GetMemberOutputData = typeof authClient.$Infer.Member & {
 };
 export type GetAllMembersOutputData = FetchResponse<GetMemberOutputData>;
 
+enum FilterOperator {
+  eq = "eq",
+  ne = "ne",
+  lt = "lt",
+  lte = "lte",
+  gt = "gt",
+  gte = "gte",
+  in = "in",
+  notIn = "not_in",
+  constains = "contains",
+  startsWith = "starts_with",
+  endsWith = "ends_with",
+}
+
 export const GetAllMembersQuerySchema = z.object({
   organizationId: z.cuid2().optional(),
   limit: z.number().nonnegative().default(PAGE_SIZE),
@@ -21,21 +35,7 @@ export const GetAllMembersQuerySchema = z.object({
   sortBy: z.string().optional(),
   sortDirection: z.enum(["asc", "desc"]).optional(),
   filterField: z.string(),
-  filterOperator: z
-    .enum([
-      "eq",
-      "ne",
-      "lt",
-      "lte",
-      "gt",
-      "gte",
-      "in",
-      "not_in",
-      "contains",
-      "starts_with",
-      "ends_with",
-    ])
-    .optional(),
+  filterOperator: z.enum(FilterOperator).optional(),
   filterValue: z
     .union([
       z.string(),

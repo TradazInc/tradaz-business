@@ -24,10 +24,11 @@ export const GetBusinessOutputSchema = z.object({
   category: GetBusinessCategoryOuputSchema.nullable(),
 }) satisfies z.ZodType<GetBusinessOutputData, unknown>;
 
-
 // Get All
 export const GetAllBusinessOutputSchema = GetBusinessOutputSchema.array();
-export type GetAllBusinessOutputData = GetBusinessOutputData[];
+export type GetAllBusinessOutputData = z.infer<
+  typeof GetAllBusinessOutputSchema
+>;
 
 // Create
 export const CreateBusinessInputSchema = z.object({
