@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineAccountBook } from "react-icons/ai";
+import { BsCashCoin } from "react-icons/bs";
 import {
   LuCalculator,
   LuCheck,
@@ -40,9 +41,11 @@ import {
 import {
   MdDevices,
   MdOutlinePassword,
+  MdOutlinePayment,
   MdOutlinePointOfSale,
   MdOutlineRoomPreferences,
   MdOutlineShoppingCartCheckout,
+  MdOutlineSubscriptions,
 } from "react-icons/md";
 
 export interface SideMenuItem {
@@ -72,6 +75,14 @@ export const dashboardItems: SideMenuItem[] = [
       },
       { label: "Terms of Service", icon: <LuFileText />, path: "" },
       { label: "Privacy Policies", icon: <LuShield />, path: "" },
+    ],
+  },
+  {
+    label: "Billing and Subscriptions",
+    icon: <BsCashCoin />,
+    children: [
+      { label: "Plan Management", icon: <MdOutlineSubscriptions />, path: "" },
+      { label: "Payment Methods", icon: <MdOutlinePayment />, path: "" },
     ],
   },
 ];
