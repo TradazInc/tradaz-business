@@ -33,7 +33,6 @@ import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { FileUpload } from "./FileUpload";
 import FormInputGrid from "./FormInputGrid";
 import HeaderText from "./HeaderText";
 import {
@@ -42,6 +41,7 @@ import {
 } from "./ProductCategoryForm";
 import { ProductSizeForm, ProductSizeFormViewport } from "./ProductSizeForm";
 import TotalQuantityStat from "./TotalQuantityStat";
+import { UploadDialog } from "./UploadDialog";
 import VariationField from "./VariationField";
 
 interface Props {
@@ -157,7 +157,7 @@ const ProductForm = ({ product }: Props) => {
               <Field.Label>
                 Images <Field.RequiredIndicator />
               </Field.Label>
-              <FileUpload
+              <UploadDialog
                 maxFiles={MAX_FILES}
                 maxFileSize={MAX_FILE_SIZE}
                 slidesPerPage={SLIDES_PER_PAGE}

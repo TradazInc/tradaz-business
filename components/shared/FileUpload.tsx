@@ -50,6 +50,7 @@ export const FileUpload = ({
     <VStack gapY={5} w={"full"}>
       <Carousel.Root
         slideCount={value.length || items.length}
+        maxW={slidesPerPage === 1 ? "xs" : undefined}
         slidesPerPage={slidesPerPage}
         spacing={"8px"}
         w={"full"}

@@ -24,9 +24,9 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { FileUpload } from "./FileUpload";
 import FormInputGrid from "./FormInputGrid";
 import HeaderText from "./HeaderText";
+import { UploadDialog } from "./UploadDialog";
 
 const RevenueForm = () => {
   const { businessId } = useParams<{ businessId?: string }>();
@@ -102,7 +102,7 @@ const RevenueForm = () => {
               <Field.Label>
                 Receipt <Field.RequiredIndicator />
               </Field.Label>
-              <FileUpload
+              <UploadDialog
                 maxFiles={1}
                 slidesPerPage={1}
                 maxFileSize={MAX_FILE_SIZE}
