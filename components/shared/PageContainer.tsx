@@ -4,7 +4,7 @@ export const PageContainer = ({
   children,
   ...props
 }: { children: React.ReactNode } & StackProps) => (
-  <VStack p={4} gapY={4} overflowY={"auto"} scrollbar={"hidden"} {...props}>
+  <VStack p={4} gapY={4} {...props}>
     {children}
   </VStack>
 );

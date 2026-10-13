@@ -34,12 +34,20 @@ export default async function BusinessLayout({
         <Grid
           templateAreas={{ base: `'main'`, lg: ` 'aside main'` }}
           templateColumns={{ base: "1fr", lg: "1fr 5fr" }}
+          templateRows={"minmax(0, 1fr)"}
+          overflow={"hidden"}
         >
-          <GridItem area={"aside"} hideBelow={"lg"}>
+          <GridItem area={"aside"} 
+            hideBelow={"lg"}
+            overflowY={"auto"}
+            scrollbar={"hidden"}
+          >
             <SideMenuSectionList />
           </GridItem>
 
-          <GridItem area={"main"}>{children}</GridItem>
+          <GridItem area={"main"} overflowY={"auto"}>
+            {children}
+          </GridItem>
         </Grid>
       </SWRConfig>
     </LayoutContainer>
