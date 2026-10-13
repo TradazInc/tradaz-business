@@ -28,7 +28,7 @@ export const SideMenuSectionList = () => {
   return (
     <VStack
       p={5}
-      gapY={5}
+      gapY={2}
       w={"full"}
       minH={"full"}
       borderRightWidth={"1px"}
