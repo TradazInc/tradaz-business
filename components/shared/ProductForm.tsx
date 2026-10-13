@@ -1,7 +1,7 @@
 "use client";
 
 import { toaster } from "@/components/ui/toaster";
-import { MAX_FILE_SIZE, MAX_FILES, SLIDES_PER_PAGE } from "@/data/constants";
+import { MAX_FILE_SIZE, MAX_FILES } from "@/data/constants";
 import { useAddProduct } from "@/hooks/product";
 import { useProductCategories } from "@/hooks/productCategory";
 import { useSizeTypes } from "@/hooks/sizeType";
@@ -159,7 +159,6 @@ const ProductForm = ({ product }: Props) => {
               <UploadDialog
                 maxFiles={MAX_FILES}
                 maxFileSize={MAX_FILE_SIZE}
-                slidesPerPage={SLIDES_PER_PAGE}
                 value={field.value.map(({ url }) => url)}
                 onUpload={(url) => {
                   // Read the live form state so earlier uploads are kept

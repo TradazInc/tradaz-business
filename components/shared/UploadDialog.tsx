@@ -35,7 +35,7 @@ interface Props {
   disabled?: boolean;
   maxFiles: number;
   maxFileSize: number;
-  slidesPerPage: number;
+  showCarousel?: boolean;
 }
 
 export const UploadDialog = ({
@@ -43,8 +43,8 @@ export const UploadDialog = ({
   maxFiles,
   maxFileSize,
   onUpload,
-  slidesPerPage,
   value,
+  showCarousel = true,
 }: Props) => {
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -53,69 +53,71 @@ export const UploadDialog = ({
 
   return (
     <VStack gapY={5} w={"full"}>
-      <Carousel.Root
-        slideCount={value.length || items.length}
-        slidesPerPage={slidesPerPage}
-        spacing={"8px"}
-        w={"full"}
-        // A single full-width slide is too large, so cap the width
-        maxW={slidesPerPage === 1 ? "xs" : undefined}
-        mx={"auto"}
-        gap={"4"}
-      >
-        <Carousel.ItemGroup w="full">
-          {value.length > 0
-            ? value.map((url, index) => (
-                <Carousel.Item key={url} index={index}>
-                  <Box rounded="md" asChild>
-                    <CldImage
-                      src={url}
-                      aspectRatio={4 / 3}
-                      crop={"fill"}
-                      alt={`File ${index + 1}`}
-                    />
-                  </Box>
-                </Carousel.Item>
-              ))
-            : items.map((_, index) => (
-                <Carousel.Item key={index} index={index}>
-                  <Center
-                    w="full"
-                    aspectRatio="4/3"
-                    rounded="md"
-                    fontSize="2.5rem"
-                    bg="bg.emphasized"
-                  >
-                    {index + 1}
-                  </Center>
-                </Carousel.Item>
-              ))}
-        </Carousel.ItemGroup>
+      {showCarousel && (
+        <Carousel.Root
+          slideCount={value.length || items.length}
+          slidesPerPage={maxFiles > 2 ? 3.5 : maxFiles}
+          spacing={"8px"}
+          w={"full"}
+          // A single full-width slide is too large, so cap the width
+          maxW={maxFiles < 3 ? "xs" : undefined}
+          mx={"auto"}
+          gap={"4"}
+        >
+          <Carousel.ItemGroup w="full">
+            {value.length > 0
+              ? value.map((url, index) => (
+                  <Carousel.Item key={url} index={index}>
+                    <Box rounded="md" asChild>
+                      <CldImage
+                        src={url}
+                        aspectRatio={4 / 3}
+                        crop={"fill"}
+                        alt={`File ${index + 1}`}
+                      />
+                    </Box>
+                  </Carousel.Item>
+                ))
+              : items.map((_, index) => (
+                  <Carousel.Item key={index} index={index}>
+                    <Center
+                      w="full"
+                      aspectRatio="4/3"
+                      rounded="md"
+                      fontSize="2.5rem"
+                      bg="bg.emphasized"
+                    >
+                      {index + 1}
+                    </Center>
+                  </Carousel.Item>
+                ))}
+          </Carousel.ItemGroup>
 
-        <Carousel.Control justifyContent="center" gap="4">
-          <Carousel.PrevTrigger asChild>
-            <IconButton size="xs" variant="ghost">
-              <LuChevronLeft />
-            </IconButton>
-          </Carousel.PrevTrigger>
+          <Carousel.Control justifyContent="center" gap="4">
+            <Carousel.PrevTrigger asChild>
+              <IconButton size="xs" variant="ghost">
+                <LuChevronLeft />
+              </IconButton>
+            </Carousel.PrevTrigger>
 
-          <Carousel.Indicators />
+            <Carousel.Indicators />
 
-          <Carousel.NextTrigger asChild>
-            <IconButton size="xs" variant="ghost">
-              <LuChevronRight />
-            </IconButton>
-          </Carousel.NextTrigger>
-        </Carousel.Control>
-      </Carousel.Root>
+            <Carousel.NextTrigger asChild>
+              <IconButton size="xs" variant="ghost">
+                <LuChevronRight />
+              </IconButton>
+            </Carousel.NextTrigger>
+          </Carousel.Control>
+        </Carousel.Root>
+      )}
 
       <Button
         w={"full"}
-        variant={"subtle"}
+        variant={"outline"}
         disabled={disabled || remainingFiles <= 0}
         onClick={() => setOpen(true)}
       >
-        <HiUpload /> Upload files
+        <HiUpload /> `Select {maxFiles > 1 ? "file" : "files"}`
       </Button>
 
       <Dialog.Root

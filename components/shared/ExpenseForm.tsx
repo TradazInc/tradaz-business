@@ -104,7 +104,6 @@ const ExpenseForm = () => {
               </Field.Label>
               <UploadDialog
                 maxFiles={1}
-                slidesPerPage={1}
                 maxFileSize={MAX_FILE_SIZE}
                 disabled={field.disabled}
                 value={field.value ? [field.value] : []}
