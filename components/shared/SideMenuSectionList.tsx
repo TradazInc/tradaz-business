@@ -28,9 +28,13 @@ export const SideMenuSectionList = () => {
   return (
     <VStack
       p={3}
+      top={0}
       w={"full"}
-      h={"full"}
+      h={"100vh"}
+      position={"sticky"}
       scrollbar={"hidden"}
+      overflowY={"scroll"}
+      borderLeftWidth={"1px"}
       separator={<StackSeparator />}
     >
       {sideItems.map((item, index) => (
