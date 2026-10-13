@@ -1,9 +1,8 @@
-import { Montserrat_Alternates, Poiret_One } from "next/font/google";
+import { Poiret_One, Raleway } from "next/font/google";
 
-export const montserratAlternates = Montserrat_Alternates({
-  variable: "--font-montserrat-alternates",
+export const raleway = Raleway({
+  variable: "--font-raleway",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
 

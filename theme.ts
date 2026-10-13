@@ -4,9 +4,9 @@ const config = defineConfig({
   theme: {
     tokens: {
       fonts: {
-        body: { value: "var(--font-montserrat-alternates), system-ui, sans-serif" },
+        body: { value: "var(--font-raleway), system-ui, sans-serif" },
         heading: { value: "var(--font-poiret-one), system-ui, sans-serif" },
-        mono: { value: "var(--font-montserrat-alternates), system-ui, sans-serif" },
+        mono: { value: "var(--font-raleway), system-ui, sans-serif" },
       },
     },
     recipes: {
