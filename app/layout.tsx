@@ -2,7 +2,7 @@ import { SWRProvider } from "@/components/shared/SWRProvider";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
-import { inferenceSans, objectSans } from "./fonts";
+import { montserratAlternates, poiretOne } from "./fonts";
 
 export const metadata: Metadata = {
   title: "tradaz-business",
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${objectSans.variable} ${inferenceSans.variable}`}
+      className={`${montserratAlternates.variable} ${poiretOne.variable}`}
       suppressHydrationWarning
     >
       <body>
