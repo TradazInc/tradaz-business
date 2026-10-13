@@ -188,10 +188,7 @@ export const CreateProductInputSchema = z.object({
     .string({ error: "name is required" })
     .min(3, { error: "name must be at least 3 letters long" }),
 
-  brand: z
-    .string({ error: "brand is required" })
-    .min(2, { error: "brand is required" })
-    .optional(),
+  brand: z.string({ error: "brand is required" }).optional(),
 
   gender: z.enum(Gender, { error: "select a gender" }),
 

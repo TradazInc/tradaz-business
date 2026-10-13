@@ -47,7 +47,7 @@ export const CreateBusinessInputSchema = z.object({
     .regex(/^[0-9]+$/, { error: "enter a valid phone number" }), // digits only
 
   slug: z
-    .string({ error: "slug is required" })
+    .string({ error: "subdomain is required" })
     .trim()
     .slugify()
     .refine(
@@ -57,7 +57,7 @@ export const CreateBusinessInputSchema = z.object({
         if (error) toaster.create(errorToastOptions(error));
         return data?.status;
       },
-      { error: "Slug is taken" },
+      { error: "subdomain is taken" },
     ),
 });
 export type CreateBusinessInputData = z.infer<typeof CreateBusinessInputSchema>;

@@ -16,7 +16,6 @@ import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
-  Box,
   Button,
   createListCollection,
   Field,
@@ -36,9 +35,11 @@ import { LuPlus } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FileUpload } from "./FileUpload";
 import FormInputGrid from "./FormInputGrid";
+import HeaderText from "./HeaderText";
+import { ProductCategoryForm } from "./ProductCategoryForm";
+import { ProductSizeForm } from "./ProductSizeForm";
 import TotalQuantityStat from "./TotalQuantityStat";
 import VariationField from "./VariationField";
-import HeaderText from "./HeaderText";
 
 interface Props {
   product?: GetProductOutputData;
@@ -320,7 +321,7 @@ const ProductForm = ({ product }: Props) => {
                               </Select.Item>
                             ))
                           ) : (
-                            <Box>No product categories found</Box>
+                            <ProductCategoryForm w={"full"} />
                           )}
                         </InfiniteScroll>
                       </Select.Content>
@@ -396,7 +397,7 @@ const ProductForm = ({ product }: Props) => {
                               </Select.Item>
                             ))
                           ) : (
-                            <Box>No size types found</Box>
+                            <ProductSizeForm w={"full"} />
                           )}
                         </InfiniteScroll>
                       </Select.Content>

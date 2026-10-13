@@ -10,6 +10,7 @@ import {
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
+  ButtonProps,
   createOverlay,
   Dialog,
   Field,
@@ -166,9 +167,10 @@ export const productSizeDialog = createOverlay((props) => {
   );
 });
 
-export const ProductSizeForm = () => {
+export const ProductSizeForm = (props: ButtonProps) => {
   return (
     <FormButton
+      {...props}
       onClick={() => {
         productSizeDialog.open("product-size-form", {});
       }}

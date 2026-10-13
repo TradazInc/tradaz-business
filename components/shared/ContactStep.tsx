@@ -21,7 +21,7 @@ const ContactStep = ({
     <Fieldset.Root>
       <Field.Root required invalid={!!errors.slug}>
         <Field.Label>
-          Slug <Field.RequiredIndicator />
+          Subdomain <Field.RequiredIndicator />
         </Field.Label>
         <InputGroup startAddon={"www."} endAddon={".tradaz.com"}>
           <Input placeholder="yoursite" {...register("slug")} />

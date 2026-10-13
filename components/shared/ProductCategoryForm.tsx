@@ -6,6 +6,7 @@ import { useAddProductCategory } from "@/hooks/productCategory";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
+  ButtonProps,
   createOverlay,
   Dialog,
   Field,
@@ -101,9 +102,10 @@ export const productCategoryDialog = createOverlay((props) => {
   );
 });
 
-export const ProductCategoryForm = () => {
+export const ProductCategoryForm = (props: ButtonProps) => {
   return (
     <FormButton
+      {...props}
       onClick={() => {
         productCategoryDialog.open("product-category-form", {});
       }}
