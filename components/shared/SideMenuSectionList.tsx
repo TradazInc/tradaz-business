@@ -34,7 +34,7 @@ export const SideMenuSectionList = () => {
       position={"sticky"}
       scrollbar={"hidden"}
       overflowY={"scroll"}
-      borderLeftWidth={"1px"}
+      borderRightWidth={"1px"}
       separator={<StackSeparator />}
     >
       {sideItems.map((item, index) => (
