@@ -23,7 +23,7 @@ enum FilterOperator {
   gte = "gte",
   in = "in",
   notIn = "not_in",
-  constains = "contains",
+  contains = "contains",
   startsWith = "starts_with",
   endsWith = "ends_with",
 }
