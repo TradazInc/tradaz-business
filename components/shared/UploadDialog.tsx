@@ -14,6 +14,7 @@ import {
   Dialog,
   IconButton,
   Portal,
+  Spinner,
   VStack,
 } from "@chakra-ui/react";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
@@ -271,7 +272,7 @@ const InlineContainer = ({ id, isLoading, open }: InlineContainerProps) => {
       scrollbar={"hidden"}
       h={{ base: "60vh", md: "500px" }}
     >
-      {isLoading && <Box color={"fg.muted"}>Loading uploader...</Box>}
+      {isLoading && <Spinner size={"xl"} />}
     </Center>
   );
 };
