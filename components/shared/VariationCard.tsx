@@ -5,9 +5,9 @@ import {
   DataList,
   FormatNumber,
   HStack,
-  Square,
 } from "@chakra-ui/react";
 import { format } from "date-fns";
+import ProductSizeSquare from "./ProductSizeSquare";
 
 interface Props {
   variation: GetProductVariationOutputData;
@@ -36,9 +36,7 @@ const VariationCard = ({ variation, index }: Props) => {
               <DataList.Item>
                 <DataList.ItemLabel>Size</DataList.ItemLabel>
                 <DataList.ItemValue>
-                  <Square size={6} bg={"bg.inverted"} color={"fg.inverted"}>
-                    {variation.size.value}
-                  </Square>
+                  <ProductSizeSquare value={variation.size.value} size={6} />
                 </DataList.ItemValue>
               </DataList.Item>
             )}

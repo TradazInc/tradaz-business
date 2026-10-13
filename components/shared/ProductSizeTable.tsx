@@ -1,8 +1,9 @@
 "use client";
 
+import EmptyPage from "@/components/shared/EmptyPage";
 import { toaster } from "@/components/ui/toaster";
-import { GetAllSizeTypeOutputData } from "@/schema/sizeType";
 import { useRemoveSizeType, useSizeTypes } from "@/hooks/sizeType";
+import { GetAllSizeTypeOutputData } from "@/schema/sizeType";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
@@ -13,7 +14,6 @@ import {
   HStack,
   IconButton,
   Spinner,
-  Square,
   Table,
   Text,
 } from "@chakra-ui/react";
@@ -21,7 +21,7 @@ import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
-import EmptyPage from "@/components/shared/EmptyPage";
+import ProductSizeSquare from "./ProductSizeSquare";
 
 interface Props {
   initialSizeTypes: Promise<GetAllSizeTypeOutputData[]>;
@@ -51,10 +51,7 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
 
   if (data && sizeTypes.length === 0) {
     return (
-      <EmptyPage
-        title="No sizes found"
-        description="Create a product size"
-      />
+      <EmptyPage title="No sizes found" description="Create a product size" />
     );
   }
 
@@ -90,14 +87,7 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
                   <Table.Cell>
                     <HStack gapX={2}>
                       {sizeType.sizes?.map((size) => (
-                        <Square
-                          key={size.id}
-                          size={8}
-                          bg={"bg.inverted"}
-                          color={"fg.inverted"}
-                        >
-                          {size.value}
-                        </Square>
+                        <ProductSizeSquare value={size.value} />
                       ))}
                     </HStack>
                   </Table.Cell>

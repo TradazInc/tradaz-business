@@ -5,10 +5,10 @@ import {
   DataList,
   Heading,
   HStack,
-  Square,
   StackSeparator,
   VStack,
 } from "@chakra-ui/react";
+import ProductSizeSquare from "./ProductSizeSquare";
 import StatusIndicator from "./StatusIndicator";
 
 interface Props {
@@ -67,14 +67,7 @@ const ProductDescription = ({ product }: Props) => {
             <DataList.ItemValue>
               <HStack gapX={2}>
                 {product.sizeType.sizes.map((s) => (
-                  <Square
-                    key={s.id}
-                    size={8}
-                    bg={"bg.inverted"}
-                    color={"fg.inverted"}
-                  >
-                    {s.value}
-                  </Square>
+                  <ProductSizeSquare key={s.id} value={s.value} />
                 ))}
               </HStack>
             </DataList.ItemValue>

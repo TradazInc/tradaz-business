@@ -26,6 +26,7 @@ import { LuMinus, LuPlus, LuShoppingCart } from "react-icons/lu";
 import DeleteIconButton from "./DeleteIconButton";
 import EmptyPage from "./EmptyPage";
 import ProductSearch from "./ProductSearch";
+import ProductSizeSquare from "./ProductSizeSquare";
 
 interface Props {
   initialCart: Promise<GetCartOutputData>;
@@ -117,7 +118,9 @@ const CartItemTable = ({ initialCart, businessId, storeId, cartId }: Props) => {
             {(cartItem) => (
               <Table.Row key={cartItem.id} w={"full"}>
                 <Table.Cell>{cartItem.variation.product.name}</Table.Cell>
-                <Table.Cell>{cartItem.variation.size?.value}</Table.Cell>
+                <Table.Cell>
+                  <ProductSizeSquare value={cartItem.variation.size?.value} />
+                </Table.Cell>
                 <Table.Cell>
                   <ColorSwatch value={cartItem.variation.color} />
                 </Table.Cell>
