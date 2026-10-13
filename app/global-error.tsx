@@ -6,7 +6,7 @@ import { Button, Code, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { PiWarningOctagonDuotone } from "react-icons/pi";
 import { TfiReload } from "react-icons/tfi";
-import { poiretOne, raleway } from "./fonts";
+import { raleway, spaceGrotesk } from "./fonts";
 
 interface Props {
   error: Error & { digest?: string };
@@ -20,7 +20,7 @@ export default function GlobalError({ error, reset }: Props) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${raleway.variable} ${poiretOne.variable}`}>
+      <body className={`${raleway.variable} ${spaceGrotesk.variable}`}>
         <Provider>
           <StatusPage
             icon={<PiWarningOctagonDuotone />}

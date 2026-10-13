@@ -5,12 +5,11 @@ const config = defineConfig({
     tokens: {
       fonts: {
         body: { value: "var(--font-raleway), system-ui, sans-serif" },
-        heading: { value: "var(--font-poiret-one), system-ui, sans-serif" },
+        heading: { value: "var(--font-space-grotesk), system-ui, sans-serif" },
         mono: { value: "var(--font-raleway), system-ui, sans-serif" },
       },
     },
     recipes: {
-      /* Poiret One only ships a regular (400) weight */
       heading: {
         base: {
           fontWeight: "normal",

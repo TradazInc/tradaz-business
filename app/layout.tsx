@@ -2,7 +2,7 @@ import { SWRProvider } from "@/components/shared/SWRProvider";
 import { Provider } from "@/components/ui/provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
-import { poiretOne, raleway } from "./fonts";
+import { raleway, spaceGrotesk } from "./fonts";
 
 export const metadata: Metadata = {
   title: "tradaz-business",
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${raleway.variable} ${poiretOne.variable}`}
+      className={`${raleway.variable} ${spaceGrotesk.variable}`}
       suppressHydrationWarning
     >
       <body>

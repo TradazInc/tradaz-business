@@ -1,4 +1,4 @@
-import { Poiret_One, Raleway } from "next/font/google";
+import { Raleway, Space_Grotesk } from "next/font/google";
 
 export const raleway = Raleway({
   variable: "--font-raleway",
@@ -6,8 +6,7 @@ export const raleway = Raleway({
   style: ["normal", "italic"],
 });
 
-export const poiretOne = Poiret_One({
-  variable: "--font-poiret-one",
+export const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
-  weight: "400",
 });
