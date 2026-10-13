@@ -36,8 +36,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { FileUpload } from "./FileUpload";
 import FormInputGrid from "./FormInputGrid";
 import HeaderText from "./HeaderText";
-import { ProductCategoryForm } from "./ProductCategoryForm";
-import { ProductSizeForm } from "./ProductSizeForm";
+import {
+  ProductCategoryForm,
+  ProductCategoryFormViewport,
+} from "./ProductCategoryForm";
+import { ProductSizeForm, ProductSizeFormViewport } from "./ProductSizeForm";
 import TotalQuantityStat from "./TotalQuantityStat";
 import VariationField from "./VariationField";
 
@@ -313,16 +316,13 @@ const ProductForm = ({ product }: Props) => {
                           loader={<Spinner size={"xs"} />}
                           scrollableTarget={categoryScrollId}
                         >
-                          {categoryCollection.size > 0 ? (
-                            categoryCollection.items.map((category) => (
-                              <Select.Item item={category} key={category.id}>
-                                {category.name}
-                                <Select.ItemIndicator />
-                              </Select.Item>
-                            ))
-                          ) : (
-                            <ProductCategoryForm w={"full"} />
-                          )}
+                          {categoryCollection.items.map((category) => (
+                            <Select.Item item={category} key={category.id}>
+                              {category.name}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))}
+                          <ProductCategoryForm w={"full"} variant={"subtle"} />
                         </InfiniteScroll>
                       </Select.Content>
                     </Select.Positioner>
@@ -389,16 +389,13 @@ const ProductForm = ({ product }: Props) => {
                           loader={<Spinner size={"xs"} />}
                           scrollableTarget={sizetypeScrollId}
                         >
-                          {sizeTypeCollection.size > 0 ? (
-                            sizeTypeCollection.items.map((sizeType) => (
-                              <Select.Item item={sizeType} key={sizeType.id}>
-                                {sizeType.name}
-                                <Select.ItemIndicator />
-                              </Select.Item>
-                            ))
-                          ) : (
-                            <ProductSizeForm w={"full"} />
-                          )}
+                          {sizeTypeCollection.items.map((sizeType) => (
+                            <Select.Item item={sizeType} key={sizeType.id}>
+                              {sizeType.name}
+                              <Select.ItemIndicator />
+                            </Select.Item>
+                          ))}
+                          <ProductSizeForm w={"full"} variant={"subtle"} />
                         </InfiniteScroll>
                       </Select.Content>
                     </Select.Positioner>
@@ -449,6 +446,9 @@ const ProductForm = ({ product }: Props) => {
       <Fieldset.ErrorText>
         Some fields are invalid. Please check them.
       </Fieldset.ErrorText>
+
+      <ProductCategoryFormViewport />
+      <ProductSizeFormViewport />
     </Fieldset.Root>
   );
 };
