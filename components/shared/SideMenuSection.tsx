@@ -10,7 +10,7 @@ interface Props {
 export const SideMenuSection = ({ menuItems, basePath }: Props) => {
   return (
     <VStack w={"full"} align={"stretch"}>
-      <Text fontWeight={"semibold"} textStyle={"xs"}>
+      <Text fontWeight={"semibold"} textStyle={"sm"}>
         {menuItems.label}
       </Text>
       <List.Root gap={2} variant={"plain"} align={"center"}>
