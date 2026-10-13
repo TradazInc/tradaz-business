@@ -56,7 +56,7 @@ export const UploadDialog = ({
       {showCarousel && (
         <Carousel.Root
           slideCount={value.length || items.length}
-          slidesPerPage={maxFiles > 2 ? 3.5 : maxFiles}
+          slidesPerPage={maxFiles > 3 ? 3.5 : maxFiles}
           spacing={"8px"}
           w={"full"}
           // A single full-width slide is too large, so cap the width
