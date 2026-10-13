@@ -13,7 +13,7 @@ export const SideMenuSection = ({ menuItems, basePath }: Props) => {
       <Text fontWeight={"semibold"} textStyle={"sm"}>
         {menuItems.label}
       </Text>
-      <List.Root gap={0} variant={"plain"} align={"center"}>
+      <List.Root gap={2} variant={"plain"} align={"center"}>
         {menuItems.children?.map((item, index) => (
           <List.Item
             key={index}
