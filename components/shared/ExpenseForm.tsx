@@ -108,8 +108,8 @@ const ExpenseForm = () => {
                 maxFileSize={MAX_FILE_SIZE}
                 disabled={field.disabled}
                 value={field.value ? [field.value] : []}
-                onValueChange={(urls) => {
-                  field.onChange(urls.at(-1) ?? "");
+                onUpload={(url) => {
+                  field.onChange(url);
                   field.onBlur();
                 }}
               />

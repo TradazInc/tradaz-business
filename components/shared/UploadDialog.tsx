@@ -19,7 +19,6 @@ import { CldImage, CldUploadWidget } from "next-cloudinary";
 import {
   Dispatch,
   SetStateAction,
-  useCallback,
   useEffect,
   useId,
   useRef,
@@ -30,7 +29,8 @@ import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 interface Props {
   value: string[];
-  onValueChange: (images: string[]) => void;
+  // Called with each uploaded URL, the form adds it to its own state
+  onUpload: (url: string) => void;
   disabled?: boolean;
   maxFiles: number;
   maxFileSize: number;
@@ -41,7 +41,7 @@ export const UploadDialog = ({
   disabled,
   maxFiles,
   maxFileSize,
-  onValueChange,
+  onUpload,
   slidesPerPage,
   value,
 }: Props) => {
@@ -49,20 +49,6 @@ export const UploadDialog = ({
   const [uploading, setUploading] = useState(false);
   const items = Array.from({ length: maxFiles });
   const remainingFiles = maxFiles - value.length;
-
-  // The widget keeps the callbacks it was created with, so read the latest
-  // props through a ref instead of closing over them
-  const latest = useRef({ value, onValueChange });
-  useEffect(() => {
-    latest.current = { value, onValueChange };
-  }, [value, onValueChange]);
-
-  const addFileURL = useCallback((url: string) => {
-    // Accumulate locally so back-to-back uploads don't overwrite each other
-    const images = [...latest.current.value, url];
-    latest.current.value = images;
-    latest.current.onValueChange(images);
-  }, []);
 
   return (
     <VStack gapY={5} w={"full"}>
@@ -152,7 +138,7 @@ export const UploadDialog = ({
                 <InlineUploadWidget
                   maxFiles={remainingFiles}
                   maxFileSize={maxFileSize}
-                  onFileUploaded={addFileURL}
+                  onUpload={onUpload}
                   setUploading={setUploading}
                   onClose={() => setOpen(false)}
                 />
@@ -171,17 +157,15 @@ export const UploadDialog = ({
 interface InlineUploadWidgetProps {
   maxFiles: number;
   maxFileSize: number;
-  onFileUploaded: (url: string) => void;
+  onUpload: (url: string) => void;
   setUploading: Dispatch<SetStateAction<boolean>>;
   onClose: () => void;
 }
 
-// The widget captures its callbacks when it is created, so they must only
-// use stable references (state setters, toaster) to avoid stale closures.
 const InlineUploadWidget = ({
   maxFiles,
   maxFileSize,
-  onFileUploaded,
+  onUpload,
   setUploading,
   onClose,
 }: InlineUploadWidgetProps) => {
@@ -203,7 +187,7 @@ const InlineUploadWidget = ({
       onSuccess={(result) => {
         const info = result.info;
         if (!info || typeof info === "string") return;
-        onFileUploaded(info.secure_url);
+        onUpload(info.secure_url);
       }}
       onClose={() => onClose()}
       onQueuesStart={() => {
@@ -216,6 +200,7 @@ const InlineUploadWidget = ({
       }}
       onQueuesEnd={() => {
         setUploading(false);
+        onClose();
         toaster.success({
           id: toastId,
           title: "Upload successful",
@@ -253,40 +238,40 @@ const InlineUploadWidget = ({
       }}
     >
       {({ open, isLoading }) => (
-        <>
-          <OpenWhenReady isLoading={isLoading} open={open} />
-          <Center
-            id={containerId}
-            w={"full"}
-            h={{ base: "60vh", md: "500px" }}
-            rounded={"md"}
-            overflow={"hidden"}
-          >
-            {isLoading && <Box color={"fg.muted"}>Loading uploader...</Box>}
-          </Center>
-        </>
+        <InlineContainer id={containerId} isLoading={isLoading} open={open} />
       )}
     </CldUploadWidget>
   );
 };
 
-// Inline widgets render nothing until opened, so open once the script loads
-const OpenWhenReady = ({
-  isLoading,
-  open,
-}: {
+interface InlineContainerProps {
+  id: string;
   isLoading?: boolean;
   open: () => void;
-}) => {
+}
+
+const InlineContainer = ({ id, isLoading, open }: InlineContainerProps) => {
   const opened = useRef(false);
 
+  // Open widget after it is loaded
   useEffect(() => {
     if (isLoading || opened.current) return;
     opened.current = true;
     open();
   }, [isLoading, open]);
 
-  return null;
+  return (
+    <Center
+      id={id}
+      w={"full"}
+      rounded={"md"}
+      overflow={"scroll"}
+      scrollbar={"hidden"}
+      h={{ base: "60vh", md: "500px" }}
+    >
+      {isLoading && <Box color={"fg.muted"}>Loading uploader...</Box>}
+    </Center>
+  );
 };
 
 const lightModePalette = {

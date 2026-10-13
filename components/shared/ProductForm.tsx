@@ -161,8 +161,9 @@ const ProductForm = ({ product }: Props) => {
                 maxFileSize={MAX_FILE_SIZE}
                 slidesPerPage={SLIDES_PER_PAGE}
                 value={field.value.map(({ url }) => url)}
-                onValueChange={(urls) => {
-                  field.onChange(urls.map((url) => ({ url })));
+                onUpload={(url) => {
+                  // Read the live form state so earlier uploads are kept
+                  field.onChange([...getValues("images"), { url }]);
                   field.onBlur();
                 }}
               />
