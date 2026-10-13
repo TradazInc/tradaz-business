@@ -185,7 +185,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
         alignSelf={"flex-start"}
         onClick={() => append(emptyTeamVariation)}
       >
-        <LuPlus /> Add branch
+        <LuPlus /> Add Branch
       </Button>
 
       <Fieldset.ErrorText>

@@ -242,7 +242,7 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
         alignSelf={"flex-start"}
         onClick={() => append(emptyVariation)}
       >
-        <LuPlus /> Add variation
+        <LuPlus /> Add Variation
       </Button>
 
       <Fieldset.ErrorText>
