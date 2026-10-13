@@ -4,6 +4,7 @@ import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
 import { system } from "@/theme";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
+import { selectorSafeId } from "@/utilities/selectorSafeId";
 import {
   Box,
   Button,
@@ -171,8 +172,8 @@ const InlineUploadWidget = ({
 }: InlineUploadWidgetProps) => {
   const palette = useColorModeValue(lightModePalette, darkModePalette);
   const toastId = useId();
-  // CSS Selector-safe id, the container must exist before the widget is created
-  const containerId = `cld-inline-${useId().replace(/[^\w-]/g, "")}`;
+  const id = useId();
+  const containerId = selectorSafeId(id);
 
   return (
     <CldUploadWidget
