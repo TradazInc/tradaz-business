@@ -117,7 +117,7 @@ export const UploadDialog = ({
         disabled={disabled || remainingFiles <= 0}
         onClick={() => setOpen(true)}
       >
-        <HiUpload /> {`Select ${maxFiles > 1 ? "file" : "files"}`}
+        <HiUpload /> {`Select ${maxFiles > 1 ? "files" : "file"}`}
       </Button>
 
       <Dialog.Root
