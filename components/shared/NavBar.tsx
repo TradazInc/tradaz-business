@@ -7,7 +7,15 @@ import { ProfileMenu } from "./ProfileMenu";
 
 export const NavBar = () => {
   return (
-    <HStack px={4} py={2} borderBottomWidth={"1px"} top={0} position={"sticky"}>
+    <HStack
+      px={4}
+      py={2}
+      top={0}
+      bg={"bg"}
+      zIndex={"sticky"}
+      position={"sticky"}
+      borderBottomWidth={"1px"}
+    >
       <BusinessSelector />
 
       <Spacer />
