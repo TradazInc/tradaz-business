@@ -158,8 +158,6 @@ export const businessItems: SideMenuItem[] = [
       { label: "Logistics & Shipping", icon: <LuTruck />, path: "" },
       { label: "VAT Settings", icon: <LuPercent />, path: "" },
       { label: "UI Configuration", icon: <LuPalette />, path: "" },
-      { label: "Terms", icon: <LuFileText />, path: "" },
-      { label: "Conditions & Policies", icon: <LuShield />, path: "" },
     ],
   },
 ];
@@ -196,12 +194,6 @@ export const storeItems: SideMenuItem[] = [
   {
     label: "Configuration",
     icon: <LuSettings />,
-    children: [
-      { label: "Logistics & Shipping", icon: <LuTruck />, path: "" },
-      { label: "VAT Settings", icon: <LuPercent />, path: "" },
-      { label: "UI Configuration", icon: <LuPalette />, path: "" },
-      { label: "Terms", icon: <LuFileText />, path: "" },
-      { label: "Conditions & Policies", icon: <LuShield />, path: "" },
-    ],
+    children: [{ label: "VAT Settings", icon: <LuPercent />, path: "" }],
   },
 ];
