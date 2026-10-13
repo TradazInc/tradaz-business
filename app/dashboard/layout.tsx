@@ -32,14 +32,8 @@ export default async function BusinessLayout({
       >
         <NavBar />
         <Grid
-          templateAreas={{
-            base: `'main'`,
-            lg: ` 'aside main'`,
-          }}
-          templateColumns={{
-            base: "1fr",
-            lg: "1fr 5fr",
-          }}
+          templateAreas={{ base: `'main'`, lg: ` 'aside main'` }}
+          templateColumns={{ base: "1fr", lg: "1fr 5fr" }}
         >
           <GridItem area={"aside"} hideBelow={"lg"}>
             <SideMenuSectionList />

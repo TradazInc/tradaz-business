@@ -10,13 +10,14 @@ interface Props {
 export const SideMenuSection = ({ menuItems, basePath }: Props) => {
   return (
     <VStack w={"full"} align={"stretch"}>
-      <Text fontWeight={"semibold"} textStyle={"sm"}>
+      <Text fontWeight={"semibold"} textStyle={"xs"}>
         {menuItems.label}
       </Text>
       <List.Root gap={2} variant={"plain"} align={"center"}>
         {menuItems.children?.map((item, index) => (
           <List.Item
             key={index}
+            textStyle={"sm"}
             cursor={"pointer"}
             color={"fg.muted"}
             _hover={{ color: "fg" }}

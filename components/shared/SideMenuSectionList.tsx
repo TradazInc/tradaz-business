@@ -31,9 +31,9 @@ export const SideMenuSectionList = () => {
       top={0}
       w={"full"}
       h={"100vh"}
+      overflowY={"auto"}
       position={"sticky"}
       scrollbar={"hidden"}
-      overflowY={"scroll"}
       borderRightWidth={"1px"}
       separator={<StackSeparator />}
     >
