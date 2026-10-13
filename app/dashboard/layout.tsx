@@ -1,13 +1,13 @@
-import { NavBar } from "@/components/shared/NavBar";
 import { LayoutContainer } from "@/components/shared/LayoutContainer";
+import { NavBar } from "@/components/shared/NavBar";
+import { SideMenuSectionList } from "@/components/shared/SideMenuSectionList";
 import { BUSINESS_KEY, SESSION_KEY } from "@/data/cacheKeys";
 import { getSession } from "@/server/auth";
 import { getBusinesses } from "@/server/business";
-import { SWRConfig, unstable_serialize } from "swr";
-import { unauthorized } from "next/navigation";
 import { getKey } from "@/utilities/computeKey";
-import { HStack } from "@chakra-ui/react";
-import { SideMenuSectionList } from "@/components/shared/SideMenuSectionList";
+import { Grid, GridItem } from "@chakra-ui/react";
+import { unauthorized } from "next/navigation";
+import { SWRConfig, unstable_serialize } from "swr";
 
 export default async function BusinessLayout({
   children,
@@ -31,10 +31,22 @@ export default async function BusinessLayout({
         }}
       >
         <NavBar />
-        <HStack h={"full"} w={"full"}>
-          <SideMenuSectionList />
-          {children}
-        </HStack>
+        <Grid
+          templateAreas={{
+            base: `'main'`,
+            lg: ` 'aside main'`,
+          }}
+          templateColumns={{
+            base: "1fr",
+            lg: "1fr 5fr",
+          }}
+        >
+          <GridItem area={"aside"} hideBelow={"lg"}>
+            <SideMenuSectionList />
+          </GridItem>
+
+          <GridItem area={"main"}>{children}</GridItem>
+        </Grid>
       </SWRConfig>
     </LayoutContainer>
   );
