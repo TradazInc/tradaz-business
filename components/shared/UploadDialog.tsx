@@ -132,8 +132,8 @@ export const UploadDialog = ({
       >
         <Portal>
           <Dialog.Backdrop />
-          <Dialog.Positioner>
-            <Dialog.Content>
+          <Dialog.Positioner scrollbar={"hidden"}>
+            <Dialog.Content scrollbar={"hidden"}>
               <Dialog.Header>
                 <Dialog.Title>Upload files</Dialog.Title>
               </Dialog.Header>
