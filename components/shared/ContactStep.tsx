@@ -26,7 +26,7 @@ const ContactStep = ({
         <InputGroup startAddon={"www."} endAddon={".tradaz.com"}>
           <Input placeholder="yoursite" {...register("slug")} />
         </InputGroup>
-        <Field.HelperText>Subdomain of business website</Field.HelperText>
+        <Field.HelperText>Pick a subdomain for your business website</Field.HelperText>
         <Field.ErrorText>
           <Field.ErrorIcon />
           {errors.slug?.message}
