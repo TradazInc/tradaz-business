@@ -1,6 +1,5 @@
 import { InfoTip } from "@/components/ui/toggle-tip";
 import { GetProductOutputData } from "@/schema/product";
-import { capitalizeWords } from "@/utilities/capitalizeWord";
 import {
   DataList,
   Heading,
@@ -24,9 +23,7 @@ const ProductDescription = ({ product }: Props) => {
       separator={<StackSeparator />}
       align={"flex-start"}
     >
-      <Heading size={{ base: "xl", md: "3xl" }}>
-        {capitalizeWords(product.name)}
-      </Heading>
+      <Heading size={{ base: "xl", md: "3xl" }}>{product.name}</Heading>
 
       <DataList.Root orientation={"horizontal"} size={{ base: "md", md: "lg" }}>
         <DataList.Item>
