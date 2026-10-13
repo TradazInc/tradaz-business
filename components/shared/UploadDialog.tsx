@@ -55,14 +55,13 @@ export const UploadDialog = ({
     <VStack gapY={5} w={"full"}>
       {showCarousel && (
         <Carousel.Root
+          gap={"4"}
+          w={"full"}
+          mx={"auto"}
+          spacing={"8px"}
+          maxW={maxFiles <= 3 ? "xs" : undefined}
           slideCount={value.length || items.length}
           slidesPerPage={maxFiles > 3 ? 3.5 : maxFiles}
-          spacing={"8px"}
-          w={"full"}
-          // A single full-width slide is too large, so cap the width
-          maxW={maxFiles < 3 ? "xs" : undefined}
-          mx={"auto"}
-          gap={"4"}
         >
           <Carousel.ItemGroup w="full">
             {value.length > 0
