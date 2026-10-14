@@ -33,6 +33,7 @@ export default async function page({ params }: Props) {
           <CartForm
             initialCart={cartPromise}
             businessId={businessId}
+            storeId={storeId}
             cartId={cartId}
           />
         </GridItem>

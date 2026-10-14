@@ -19,12 +19,13 @@ import { useSearchQuery } from "./searchQuery";
 
 export const useCarts = (
   organizationId: string | undefined,
+  teamId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllCartsOutputData, Error>,
 ) => {
   const query = useSearchQuery(GetAllCartsQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(CART_KEY, { ...query, organizationId }),
+    getCursorKey(CART_KEY, { ...query, organizationId, teamId }),
     ([key, query]) => apiClient("@get/api/cart", { query, ...apiConfig }),
     config,
   );
@@ -42,19 +43,25 @@ export const useCart = (
   );
 };
 
-export const useAddCart = (organizationId: string | undefined) => {
+export const useAddCart = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: BaseCreateCartInputData }) =>
       apiClient("@post/api/cart", { body: arg, ...apiConfig }),
   );
 };
 
-export const useUpdateCart = (organizationId: string | undefined) => {
+export const useUpdateCart = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: { id: string; data: UpdateCartInputData } }) =>
       apiClient("@put/api/cart/:id", {
         params: { id: arg.id },
@@ -67,11 +74,14 @@ export const useUpdateCart = (organizationId: string | undefined) => {
   );
 };
 
-export const useRemoveCart = (organizationId: string | undefined) => {
+export const useRemoveCart = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/cart/:id", {
         params: { id: arg },
@@ -83,11 +93,14 @@ export const useRemoveCart = (organizationId: string | undefined) => {
   );
 };
 
-export const useAddCartItem = (organizationId: string | undefined) => {
+export const useAddCartItem = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: CreateCartItemInputData }) =>
       apiClient("@post/api/cart/item", { body: arg, ...apiConfig }),
     {
@@ -96,11 +109,14 @@ export const useAddCartItem = (organizationId: string | undefined) => {
   );
 };
 
-export const useIncrementCartItem = (organizationId: string | undefined) => {
+export const useIncrementCartItem = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@post/api/cart/item/increment", {
         body: { id: arg },
@@ -112,11 +128,14 @@ export const useIncrementCartItem = (organizationId: string | undefined) => {
   );
 };
 
-export const useDecrementCartItem = (organizationId: string | undefined) => {
+export const useDecrementCartItem = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@post/api/cart/item/decrement", {
         body: { id: arg },
@@ -128,11 +147,14 @@ export const useDecrementCartItem = (organizationId: string | undefined) => {
   );
 };
 
-export const useRemoveCartItem = (organizationId: string | undefined) => {
+export const useRemoveCartItem = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId })),
+    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/cart/item/:id", {
         params: { id: arg },

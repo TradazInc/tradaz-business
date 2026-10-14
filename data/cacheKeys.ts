@@ -42,4 +42,4 @@ export const EXPENSES_KEY = "expenses";
 
 export const FINANCE_KEY = "finanace";
 
-export const CART_KEY = "finanace";
+export const CART_KEY = "carts";

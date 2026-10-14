@@ -32,8 +32,11 @@ import FormButton from "./FormButton";
 import FormInputGrid from "./FormInputGrid";
 
 export const posConfigDialog = createOverlay((props) => {
-  const { businessId } = useParams<{ businessId?: string }>();
-  const { trigger, isMutating } = useAddPosConfig(businessId);
+  const { businessId, storeId } = useParams<{
+    businessId?: string;
+    storeId?: string;
+  }>();
+  const { trigger, isMutating } = useAddPosConfig(businessId, storeId);
 
   const gatewayCollection = useMemo(
     () =>

@@ -17,31 +17,42 @@ import { useSearchQuery } from "./searchQuery";
 
 export const usePosConfigs = (
   organizationId: string | undefined,
+  teamId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllPosConfigOutputData, Error>,
 ) => {
   const query = useSearchQuery(GetAllPosConfigQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(POS_CONFIG_KEY, { ...query, organizationId }),
+    getCursorKey(POS_CONFIG_KEY, { ...query, organizationId, teamId }),
     ([key, query]) =>
       apiClient("@get/api/pos-configs", { query, ...apiConfig }),
     config,
   );
 };
 
-export const useAddPosConfig = (organizationId: string | undefined) => {
+export const useAddPosConfig = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(POS_CONFIG_KEY, { organizationId })),
+    unstable_serialize(
+      getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
+    ),
     (key, { arg }: { arg: CreatePosConfigInputData }) =>
       apiClient("@post/api/pos-configs", { body: arg, ...apiConfig }),
   );
 };
 
-export const useUpdatePosConfig = (organizationId: string | undefined) => {
+export const useUpdatePosConfig = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(POS_CONFIG_KEY, { organizationId })),
+    unstable_serialize(
+      getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
+    ),
     (key, { arg }: { arg: { id: string; data: UpdatePosConfigInputData } }) =>
       apiClient("@put/api/pos-configs/:id", {
         params: { id: arg.id },
@@ -54,9 +65,14 @@ export const useUpdatePosConfig = (organizationId: string | undefined) => {
   );
 };
 
-export const useRemovePosConfig = (organizationId: string | undefined) => {
+export const useRemovePosConfig = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(POS_CONFIG_KEY, { organizationId })),
+    unstable_serialize(
+      getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
+    ),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/pos-configs/:id", {
         params: { id: arg },
@@ -65,9 +81,14 @@ export const useRemovePosConfig = (organizationId: string | undefined) => {
   );
 };
 
-export const useRemoveTerminalConfig = (organizationId: string | undefined) => {
+export const useRemoveTerminalConfig = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(POS_CONFIG_KEY, { organizationId })),
+    unstable_serialize(
+      getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
+    ),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/pos-configs/terminal-configs/:id", {
         params: { id: arg },

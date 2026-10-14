@@ -15,7 +15,7 @@ interface Props {
 
 const NewCartButton = ({ businessId, storeId }: Props) => {
   const { push } = useRouter();
-  const { trigger } = useAddCart(businessId);
+  const { trigger } = useAddCart(businessId, storeId);
 
   const handleClick = async () => {
     const promise = toaster.promise(trigger({}), {

@@ -34,7 +34,11 @@ export default async function page({ params }: Props) {
         <PosConfigForm />
       </PageItemContainer>
 
-      <PosConfigTable initialPosConfigs={posConfigs} businessId={businessId} />
+      <PosConfigTable
+        initialPosConfigs={posConfigs}
+        businessId={businessId}
+        storeId={storeId}
+      />
       <PosConfigFormViewport />
     </PageContainer>
   );

@@ -39,9 +39,10 @@ interface Props {
   initialCart?: Promise<GetCartOutputData>;
   cartId: string;
   businessId: string | undefined;
+  storeId: string | undefined;
 }
 
-const CartForm = ({ initialCart, businessId, cartId }: Props) => {
+const CartForm = ({ initialCart, businessId, storeId, cartId }: Props) => {
   const {
     data: cart,
     error,
@@ -50,10 +51,10 @@ const CartForm = ({ initialCart, businessId, cartId }: Props) => {
   } = useCart(cartId, {
     fallbackData: initialCart,
   });
-  const addCart = useAddCart(businessId);
-  const updateCart = useUpdateCart(businessId);
+  const addCart = useAddCart(businessId, storeId);
+  const updateCart = useUpdateCart(businessId, storeId);
   const subaccounts = useSubaccounts(businessId);
-  const posConfigs = usePosConfigs(businessId);
+  const posConfigs = usePosConfigs(businessId, storeId);
   const webCheckout = useWebCheckout(businessId);
   const posCheckout = usePosCheckout(businessId);
   const { push } = useRouter();

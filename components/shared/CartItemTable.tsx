@@ -39,10 +39,10 @@ const CartItemTable = ({ initialCart, businessId, storeId, cartId }: Props) => {
   const { data, error, mutate } = useCart(cartId, {
     fallbackData: initialCart,
   });
-  const addToCart = useAddCartItem(businessId);
-  const removeFromCart = useRemoveCartItem(businessId);
-  const incrementItem = useIncrementCartItem(businessId);
-  const decrementItem = useDecrementCartItem(businessId);
+  const addToCart = useAddCartItem(businessId, storeId);
+  const removeFromCart = useRemoveCartItem(businessId, storeId);
+  const incrementItem = useIncrementCartItem(businessId, storeId);
+  const decrementItem = useDecrementCartItem(businessId, storeId);
 
   const handleDeleteItem = async (id: string) => {
     toaster.promise(removeFromCart.trigger(id), {

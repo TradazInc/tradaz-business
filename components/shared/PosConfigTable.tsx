@@ -27,18 +27,19 @@ import EditIconButton from "./EditIconButton";
 interface Props {
   initialPosConfigs: Promise<GetAllPosConfigOutputData[]>;
   businessId: string | undefined;
+  storeId: string | undefined;
 }
 
-const PosConfigTable = ({ initialPosConfigs, businessId }: Props) => {
+const PosConfigTable = ({ initialPosConfigs, businessId, storeId }: Props) => {
   const { data: stores } = useStores(businessId);
-  const { data, error, mutate, setSize, size } = usePosConfigs(businessId, {
+  const { data, error, mutate, setSize, size } = usePosConfigs(businessId, storeId, {
     fallbackData: initialPosConfigs,
   });
   const { flatData: posConfigs, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
   );
-  const { trigger, isMutating } = useRemovePosConfig(businessId);
+  const { trigger, isMutating } = useRemovePosConfig(businessId, storeId);
 
   const handleDelete = async (id: string) => {
     toaster.promise(trigger(id), {

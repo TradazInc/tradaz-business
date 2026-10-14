@@ -23,6 +23,7 @@ interface Props {
 const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
   const { data, error, mutate, setSize, size, isLoading } = useCarts(
     businessId,
+    storeId,
     {
       fallbackData: initialCarts,
     },
@@ -32,7 +33,7 @@ const CartGrid = ({ initialCarts, businessId, storeId }: Props) => {
     [data],
   );
 
-  const { trigger } = useRemoveCart(businessId);
+  const { trigger } = useRemoveCart(businessId, storeId);
 
   const handleDelete = async (id: string) => {
     toaster.promise(trigger(id), {
