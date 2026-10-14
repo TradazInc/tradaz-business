@@ -37,7 +37,8 @@ export default async function BusinessLayout({
           templateRows={"minmax(0, 1fr)"}
           overflow={"hidden"}
         >
-          <GridItem area={"aside"} 
+          <GridItem
+            area={"aside"}
             hideBelow={"lg"}
             overflowY={"auto"}
             scrollbar={"hidden"}
