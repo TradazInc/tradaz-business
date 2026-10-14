@@ -438,7 +438,6 @@ const ProductForm = ({ product }: Props) => {
         loading={isSubmitting || isMutating}
         disabled={!isValid || isSubmitting || isMutating}
       >
-        <LuPlus />
         {product ? "Update Product" : "Create Product"}
       </Button>
 
