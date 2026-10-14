@@ -28,7 +28,7 @@ export const SideMenuSection = ({ menuItem, basePath }: Props) => {
               textStyle={"sm"}
               color={"fg.muted"}
               _hover={{ color: "fg" }}
-              _currentPage={{ color: "fg", fontWeight: "bold" }}
+              _currentPage={{ color: "fg", fontWeight: "medium" }}
               asChild
             >
               <NextLink
