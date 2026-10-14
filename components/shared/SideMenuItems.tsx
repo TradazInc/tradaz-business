@@ -48,6 +48,7 @@ import {
   MdOutlineShoppingCartCheckout,
   MdOutlineSubscriptions,
 } from "react-icons/md";
+import { RxDashboard } from "react-icons/rx";
 
 export interface SideMenuItem {
   label: string;
@@ -59,7 +60,7 @@ export const dashboardItems: SideMenuItem[] = [
   {
     label: "Dashboard",
     icon: <LuUser />,
-    children: [{ label: "Overview", icon: <MdOutlineDashboard />, path: "/" }],
+    children: [{ label: "Overview", icon: <RxDashboard />, path: "/" }],
   },
   {
     label: "Account & Security",
@@ -113,7 +114,7 @@ export const businessItems: SideMenuItem[] = [
   {
     label: "Dashboard",
     icon: <LuUser />,
-    children: [{ label: "Overview", icon: <MdOutlineDashboard />, path: "/" }],
+    children: [{ label: "Overview", icon: <RxDashboard />, path: "/" }],
   },
   {
     label: "Catalog & Inventory",
@@ -205,7 +206,7 @@ export const storeItems: SideMenuItem[] = [
   {
     label: "Dashboard",
     icon: <LuUser />,
-    children: [{ label: "Overview", icon: <MdOutlineDashboard />, path: "/" }],
+    children: [{ label: "Overview", icon: <RxDashboard />, path: "/" }],
   },
   {
     label: "Point of Sale",
