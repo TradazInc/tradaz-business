@@ -40,6 +40,7 @@ import {
 } from "react-icons/lu";
 import {
   MdDevices,
+  MdOutlineDashboard,
   MdOutlinePassword,
   MdOutlinePayment,
   MdOutlinePointOfSale,
@@ -55,6 +56,11 @@ export interface SideMenuItem {
 }
 
 export const dashboardItems: SideMenuItem[] = [
+  {
+    label: "Dashboard",
+    icon: <LuUser />,
+    children: [{ label: "Overview", icon: <MdOutlineDashboard />, path: "/" }],
+  },
   {
     label: "Account & Security",
     icon: <LuUser />,
@@ -104,6 +110,11 @@ export const dashboardItems: SideMenuItem[] = [
 ];
 
 export const businessItems: SideMenuItem[] = [
+  {
+    label: "Dashboard",
+    icon: <LuUser />,
+    children: [{ label: "Overview", icon: <MdOutlineDashboard />, path: "/" }],
+  },
   {
     label: "Catalog & Inventory",
     icon: <LuShoppingBag />,
@@ -191,6 +202,11 @@ export const businessItems: SideMenuItem[] = [
 ];
 
 export const storeItems: SideMenuItem[] = [
+  {
+    label: "Dashboard",
+    icon: <LuUser />,
+    children: [{ label: "Overview", icon: <MdOutlineDashboard />, path: "/" }],
+  },
   {
     label: "Point of Sale",
     icon: <LuScanLine />,
