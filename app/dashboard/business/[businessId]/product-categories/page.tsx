@@ -6,8 +6,10 @@ import {
   ProductCategoryFormViewport,
 } from "@/components/shared/ProductCategoryForm";
 import ProductCategoryTable from "@/components/shared/ProductCategoryTable";
+import Search from "@/components/shared/Search";
 import { getProductCategories } from "@/server/productCategory";
 import { Spacer } from "@chakra-ui/react";
+import { Suspense } from "react";
 
 interface Props {
   params: Promise<{ businessId?: string }>;
@@ -22,6 +24,12 @@ export default async function page({ params }: Props) {
       <PageHeader>Product Categories</PageHeader>
 
       <PageItemContainer>
+        <Suspense>
+          <Search
+            placeholder={"Search for a category"}
+            searchField={"search"}
+          />
+        </Suspense>
         <Spacer />
         <ProductCategoryForm />
       </PageItemContainer>
