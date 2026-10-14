@@ -35,7 +35,7 @@ export const SideMenuSectionList = () => {
       separator={<StackSeparator />}
     >
       {sideItems.map((item, index) => (
-        <SideMenuSection basePath={basePath} menuItems={item} key={index} />
+        <SideMenuSection basePath={basePath} menuItem={item} key={index} />
       ))}
     </VStack>
   );
