@@ -13,16 +13,18 @@ export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
 export type GetBusinessOutputData = typeof authClient.$Infer.Organization & {
   category: BusinessCategory | null; // joined in organization.list hook
 };
-export const GetBusinessOutputSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  slug: z.string(),
-  logo: z.string().nullish(),
-  metadata: z.record(z.string(), z.unknown()).nullish(),
-  createdAt: z.coerce.date(),
-  categoryId: z.string(),
-  category: GetBusinessCategoryOuputSchema.nullable(),
-}) satisfies z.ZodType<GetBusinessOutputData, unknown>;
+const GetBusinessOutputSchema = z.toZod<GetBusinessOutputData>()(
+  z.object({
+    id: z.string(),
+    name: z.string(),
+    slug: z.string(),
+    logo: z.string().nullish(),
+    metadata: z.any().nullish(),
+    createdAt: z.coerce.date(),
+    categoryId: z.string(),
+    category: GetBusinessCategoryOuputSchema.nullable(),
+  }),
+);
 
 // Get All
 export const GetAllBusinessOutputSchema = GetBusinessOutputSchema.array();

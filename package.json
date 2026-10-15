@@ -28,7 +28,7 @@
     "swr": "^2.5.1",
     "use-debounce": "^10.1.1",
     "use-mask-input": "^3.10.3",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^20",

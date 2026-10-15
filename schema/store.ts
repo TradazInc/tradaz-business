@@ -3,14 +3,16 @@ import { z } from "zod";
 
 // Get
 export type GetStoreOutputData = typeof authClient.$Infer.Team;
-export const GetStoreOutputSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  organizationId: z.string(),
-  address: z.string(),
-  createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date().optional(),
-}) satisfies z.ZodType<GetStoreOutputData, unknown>;
+const GetStoreOutputSchema = z.toZod<GetStoreOutputData>()(
+  z.object({
+    id: z.string(),
+    name: z.string(),
+    organizationId: z.string(),
+    address: z.string(),
+    createdAt: z.coerce.date(),
+    updatedAt: z.coerce.date().optional(),
+  }),
+);
 
 // Get All
 export const GetAllStoreOutputSchema = GetStoreOutputSchema.array();
