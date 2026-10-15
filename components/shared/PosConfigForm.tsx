@@ -6,8 +6,8 @@ import { useAddPosConfig } from "@/hooks/posConfig";
 import { Gateway } from "@/schema/enums";
 import {
   PosCredentialsData,
-  PosCredentialsSchemas,
-} from "@/schema/gatewayCredentials";
+  PosCredentialsSchemaMap,
+} from "@/schema/posCredentials";
 import {
   CreatePosConfigInputData,
   CreatePosConfigInputSchema,
@@ -70,7 +70,7 @@ export const posConfigDialog = createOverlay((props) => {
 
   // Only the selected gateway's credential fields are shown
   const hasField = (name: keyof PosCredentialsData) =>
-    !!gateway && !!PosCredentialsSchemas[gateway]?.shape[name];
+    !!gateway && !!PosCredentialsSchemaMap[gateway]?.shape[name];
 
   const registerCredential = (name: keyof PosCredentialsData) =>
     register(`credentials.${name}`, {

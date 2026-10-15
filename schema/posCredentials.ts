@@ -28,7 +28,7 @@ const OpayPosCredentialsSchema = z.object({
 });
 
 // Map Gateway to Schema
-export const PosCredentialsSchemas: Partial<Record<Gateway, z.ZodObject>> = {
+export const PosCredentialsSchemaMap: Partial<Record<Gateway, z.ZodObject>> = {
   [Gateway.opay]: OpayPosCredentialsSchema,
   [Gateway.moniepoint]: MoniepointPosCredentialsSchema,
 };
