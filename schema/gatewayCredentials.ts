@@ -2,16 +2,13 @@ import { z } from "zod";
 import { Gateway } from "./enums";
 
 // Gateway Credentials
-export const MoniepointPosCredentialsSchema = z.object({
+const MoniepointPosCredentialsSchema = z.object({
   apiKey: z
     .string({ error: "api key is required" })
     .min(1, { error: "api key is required" }),
 });
-export type MoniepointPosCredentialsData = z.infer<
-  typeof MoniepointPosCredentialsSchema
->;
 
-export const OpayPosCredentialsSchema = z.object({
+const OpayPosCredentialsSchema = z.object({
   apiKey: z
     .string({ error: "client auth key is required" })
     .min(1, { error: "client auth key is required" }),
@@ -29,7 +26,6 @@ export const OpayPosCredentialsSchema = z.object({
     .string({ error: "gateway public key is required" })
     .min(1, { error: "gateway public key is required" }),
 });
-export type OpayPosCredentialsData = z.infer<typeof OpayPosCredentialsSchema>;
 
 // Map Gateway to Schema
 export const PosCredentialsSchemas: Partial<Record<Gateway, z.ZodObject>> = {
