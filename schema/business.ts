@@ -13,7 +13,7 @@ export type ActiveBusiness = typeof authClient.$Infer.ActiveOrganization;
 export type GetBusinessOutputData = typeof authClient.$Infer.Organization & {
   category: BusinessCategory | null; // joined in organization.list hook
 };
-const GetBusinessOutputSchema = z.toZod<GetBusinessOutputData>()(
+export const GetBusinessOutputSchema = z.toZod<GetBusinessOutputData>()(
   z.object({
     id: z.string(),
     name: z.string(),
