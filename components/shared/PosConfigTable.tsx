@@ -32,9 +32,11 @@ interface Props {
 
 const PosConfigTable = ({ initialPosConfigs, businessId, storeId }: Props) => {
   const { data: stores } = useStores(businessId);
-  const { data, error, mutate, setSize, size } = usePosConfigs(businessId, storeId, {
-    fallbackData: initialPosConfigs,
-  });
+  const { data, error, mutate, setSize, size } = usePosConfigs(
+    businessId,
+    storeId,
+    { fallbackData: initialPosConfigs },
+  );
   const { flatData: posConfigs, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
@@ -76,7 +78,7 @@ const PosConfigTable = ({ initialPosConfigs, businessId, storeId }: Props) => {
               <Table.ColumnHeader>Gateway</Table.ColumnHeader>
               <Table.ColumnHeader>Terminals</Table.ColumnHeader>
               <Table.ColumnHeader>Merchant ID</Table.ColumnHeader>
-              <Table.ColumnHeader>Private Key</Table.ColumnHeader>
+              <Table.ColumnHeader>API Key</Table.ColumnHeader>
               <Table.ColumnHeader>Branch</Table.ColumnHeader>
               <Table.ColumnHeader>Created At</Table.ColumnHeader>
               <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
@@ -114,8 +116,16 @@ const PosConfigTable = ({ initialPosConfigs, businessId, storeId }: Props) => {
                       </Portal>
                     </Menu.Root>
                   </Table.Cell>
-                  <Table.Cell>{posConfig.merchantId ?? "-"}</Table.Cell>
-                  <Table.Cell>{posConfig.privateKey}</Table.Cell>
+                  <Table.Cell>
+                    {posConfig.credentials.merchantId ??
+                      posConfig.credentials.headMerchantId ??
+                      "-"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {posConfig.credentials.apiKey
+                      ? `••••${posConfig.credentials.apiKey.slice(-4)}`
+                      : "-"}
+                  </Table.Cell>
                   <Table.Cell>
                     {stores?.find((s) => s.id === posConfig.teamId)?.name ??
                       "-"}

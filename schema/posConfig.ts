@@ -1,6 +1,12 @@
+import type { DefaultValues } from "react-hook-form";
 import { z } from "zod";
 import { createFetchResponseSchema } from "../utilities/fetchResponse";
 import { Gateway } from "./enums";
+import {
+  PosCredentialsData,
+  PosCredentialsSchema,
+  PosCredentialsSchemas,
+} from "./gatewayCredentials";
 
 // Get
 const GetTerminalConfigOutputSchema = z.object({
@@ -14,8 +20,7 @@ const GetTerminalConfigOutputSchema = z.object({
 export const GetPosConfigOutputSchema = z.object({
   id: z.cuid2(),
   gateway: z.enum(Gateway),
-  merchantId: z.string().nullable(),
-  privateKey: z.string(),
+  credentials: z.record(z.string(), z.string()),
   createdAt: z.iso.datetime(),
   teamId: z.cuid2(),
   terminalConfigs: z.array(GetTerminalConfigOutputSchema),
@@ -49,27 +54,42 @@ export type CreateTerminalConfigInputData = z.input<
   typeof CreateTerminalConfigInputSchema
 >;
 
+// Checks credentials against the selected gateway's schema
+const refinePosCredentials = (
+  gateway: Gateway,
+  credentials: PosCredentialsData,
+  ctx: z.RefinementCtx,
+) => {
+  const schema = PosCredentialsSchemas[gateway];
+  if (!schema)
+    return ctx.addIssue({
+      code: "custom",
+      path: ["gateway"],
+      message: `${gateway} does not support pos`,
+    });
+
+  const result = schema.safeParse(credentials);
+  for (const issue of result.error?.issues ?? [])
+    ctx.addIssue({
+      code: "custom",
+      message: issue.message,
+      path: ["credentials", ...issue.path],
+    });
+};
+
 const BasePosConfigInputSchema = z.object({
-  gateway: z.enum(Gateway, { error: "select a gateway" }),
-
-  merchantId: z
-    .string()
-    .min(10, { error: "merchant id must be at least 10 characters" })
-    .optional()
-    .or(z.literal("")),
-
-  privateKey: z
-    .string({ error: "private key is required" })
-    .min(1, { error: "private key is required" }),
-
+  gateway: z.enum([Gateway.opay, Gateway.moniepoint], {
+    error: "select a gateway",
+  }),
+  credentials: PosCredentialsSchema,
   terminalConfigs: z
     .array(CreateTerminalConfigInputSchema)
     .min(1, { error: "add at least one terminal" }),
 });
 
-export const CreatePosConfigInputSchema = BasePosConfigInputSchema.refine(
-  (data) => data.gateway !== Gateway.opay || !!data.merchantId,
-  { error: "Opay Merchant ID is required", path: ["merchantId"] },
+export const CreatePosConfigInputSchema = BasePosConfigInputSchema.superRefine(
+  (posConfig, ctx) =>
+    refinePosCredentials(posConfig.gateway, posConfig.credentials, ctx),
 );
 export type CreatePosConfigInputData = z.input<
   typeof CreatePosConfigInputSchema
@@ -85,7 +105,20 @@ export const UpdatePosConfigInputSchema = BasePosConfigInputSchema.extend({
   terminalConfigs: z
     .array(CreateTerminalConfigInputSchema.extend({ id: z.cuid2().optional() }))
     .min(1, { error: "add at least one terminal" }),
-}).partial();
+})
+  .partial()
+  .superRefine(({ gateway, credentials }, ctx) => {
+    if (gateway && credentials)
+      return refinePosCredentials(gateway, credentials, ctx);
+
+    // otherwise only terminals are being updated
+    if (gateway || credentials)
+      ctx.addIssue({
+        code: "custom",
+        path: [gateway ? "credentials" : "gateway"],
+        message: "gateway and credentials must be updated together",
+      });
+  });
 export type UpdatePosConfigInputData = z.input<
   typeof UpdatePosConfigInputSchema
 >;
@@ -112,9 +145,8 @@ export const emptyTerminalConfig: CreateTerminalConfigInputData = {
   serialNumber: "",
 };
 
-export const emptyPosConfig: CreatePosConfigInputData = {
-  gateway: Gateway.paystack,
-  merchantId: "",
-  privateKey: "",
+// No gateway by default, so every credential field starts disabled
+export const emptyPosConfig: DefaultValues<CreatePosConfigInputData> = {
+  credentials: {}, // blank credentials stay undefined, so they aren't sent
   terminalConfigs: [emptyTerminalConfig],
 };
