@@ -14,8 +14,7 @@ const GetTerminalConfigOutputSchema = z.object({
 export const GetPosConfigOutputSchema = z.object({
   id: z.cuid2(),
   gateway: z.enum(Gateway),
-  merchantId: z.string().nullable(),
-  privateKey: z.string(),
+  credentials: z.record(z.string(), z.string()),
   createdAt: z.iso.datetime(),
   teamId: z.cuid2(),
   terminalConfigs: z.array(GetTerminalConfigOutputSchema),
