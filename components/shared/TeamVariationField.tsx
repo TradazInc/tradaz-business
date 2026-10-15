@@ -169,8 +169,7 @@ const TeamVariationField = ({ control, errors, variationIndex }: Props) => {
 
           <IconButton
             size="sm"
-            type="button"
-            variant="subtle"
+            variant="outline"
             alignSelf={"center"}
             onClick={() => remove(index)}
           >
