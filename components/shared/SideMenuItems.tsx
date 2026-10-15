@@ -40,7 +40,7 @@ import {
 } from "react-icons/lu";
 import {
   MdDevices,
-  MdOutlineDashboard,
+  MdOutlineAnalytics,
   MdOutlinePassword,
   MdOutlinePayment,
   MdOutlinePointOfSale,
@@ -114,7 +114,10 @@ export const businessItems: SideMenuItem[] = [
   {
     label: "Dashboard",
     icon: <LuUser />,
-    children: [{ label: "Overview", icon: <RxDashboard />, path: "/" }],
+    children: [
+      { label: "Overview", icon: <RxDashboard />, path: "/" },
+      { label: "Analytics", icon: <MdOutlineAnalytics />, path: "/analytics" },
+    ],
   },
   {
     label: "Catalog & Inventory",
@@ -206,17 +209,15 @@ export const storeItems: SideMenuItem[] = [
   {
     label: "Dashboard",
     icon: <LuUser />,
-    children: [{ label: "Overview", icon: <RxDashboard />, path: "/" }],
+    children: [
+      { label: "Overview", icon: <RxDashboard />, path: "/" },
+      { label: "Analytics", icon: <MdOutlineAnalytics />, path: "/analytics" },
+    ],
   },
   {
     label: "Point of Sale",
     icon: <LuScanLine />,
     children: [
-      {
-        label: "Terminal (POS)",
-        icon: <MdOutlinePointOfSale />,
-        path: "/point-of-sale",
-      },
       {
         label: "Cart Checkout",
         icon: <MdOutlineShoppingCartCheckout />,
@@ -239,6 +240,13 @@ export const storeItems: SideMenuItem[] = [
   {
     label: "Configuration",
     icon: <LuSettings />,
-    children: [{ label: "VAT Settings", icon: <LuPercent />, path: "/vat" }],
+    children: [
+      {
+        label: "Terminal (POS)",
+        icon: <MdOutlinePointOfSale />,
+        path: "/point-of-sale",
+      },
+      { label: "VAT Settings", icon: <LuPercent />, path: "/vat" },
+    ],
   },
 ];
