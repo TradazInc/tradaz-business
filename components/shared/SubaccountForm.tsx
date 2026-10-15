@@ -71,7 +71,6 @@ export const subaccountDialog = createOverlay((props) => {
         items: [
           { label: "Paystack", value: Gateway.paystack },
           { label: "Moniepoint", value: Gateway.moniepoint },
-          { label: "Opay", value: Gateway.opay },
         ],
       }),
     [],

@@ -5,6 +5,11 @@ import { toaster } from "@/components/ui/toaster";
 import { useAddPosConfig } from "@/hooks/posConfig";
 import { Gateway } from "@/schema/enums";
 import {
+  PosCredentialsData,
+  PosCredentialsSchemas,
+} from "@/schema/gatewayCredentials";
+import {
+  CreatePosConfigInputData,
   CreatePosConfigInputSchema,
   emptyPosConfig,
   emptyTerminalConfig,
@@ -42,7 +47,6 @@ export const posConfigDialog = createOverlay((props) => {
     () =>
       createListCollection({
         items: [
-          { label: "Paystack", value: Gateway.paystack },
           { label: "Moniepoint", value: Gateway.moniepoint },
           { label: "Opay", value: Gateway.opay },
         ],
@@ -53,16 +57,25 @@ export const posConfigDialog = createOverlay((props) => {
   const {
     control,
     register,
+    clearErrors,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm({
+  } = useForm<CreatePosConfigInputData>({
     resolver: standardSchemaResolver(CreatePosConfigInputSchema),
     defaultValues: emptyPosConfig,
     mode: "onBlur",
   });
 
   const gateway = useWatch({ control, name: "gateway" });
-  const isOpay = gateway === Gateway.opay;
+
+  // All credentials are disabled until a gateway is selected,
+  const isDisabled = (name: keyof PosCredentialsData) =>
+    !gateway || !PosCredentialsSchemas[gateway]?.shape[name];
+
+  const registerCredential = (name: keyof PosCredentialsData) =>
+    register(`credentials.${name}`, {
+      setValueAs: (value) => value || undefined, // blanks aren't sent
+    });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -118,10 +131,12 @@ export const posConfigDialog = createOverlay((props) => {
                         render={({ field }) => (
                           <Select.Root
                             name={field.name}
-                            value={[field.value]}
+                            disabled={field.disabled}
+                            value={field.value ? [field.value] : []}
                             onValueChange={({ value }) => {
                               field.onChange(value[0]);
                               field.onBlur();
+                              clearErrors("credentials"); // fields may now be disabled
                             }}
                             onInteractOutside={() => field.onBlur()}
                             collection={gatewayCollection}
@@ -162,35 +177,119 @@ export const posConfigDialog = createOverlay((props) => {
 
                     <Field.Root
                       required
-                      disabled={!isOpay}
-                      invalid={!!errors.merchantId}
+                      disabled={isDisabled("apiKey")}
+                      invalid={!!errors.credentials?.apiKey}
                     >
                       <Field.Label>
-                        Merchant ID <Field.RequiredIndicator />
+                        API key <Field.RequiredIndicator />
+                      </Field.Label>
+                      <PasswordInput
+                        placeholder="e.g., sk_live_xxxxxxxx"
+                        {...registerCredential("apiKey")}
+                      />
+                      <Field.HelperText>
+                        Opay calls this the client auth key. Kept secret.
+                      </Field.HelperText>
+                      <Field.ErrorText>
+                        {errors.credentials?.apiKey?.message}
+                      </Field.ErrorText>
+                    </Field.Root>
+
+                    <Field.Root
+                      required
+                      disabled={isDisabled("headMerchantId")}
+                      invalid={!!errors.credentials?.headMerchantId}
+                    >
+                      <Field.Label>
+                        Head merchant ID <Field.RequiredIndicator />
                       </Field.Label>
                       <Input
-                        placeholder="e.g., MER_123456"
-                        {...register("merchantId")}
+                        placeholder="e.g., 256612345678901"
+                        {...registerCredential("headMerchantId")}
                       />
+                      <Field.HelperText>
+                        Opay head office merchant
+                      </Field.HelperText>
                       <Field.ErrorText>
-                        {errors.merchantId?.message}
+                        {errors.credentials?.headMerchantId?.message}
+                      </Field.ErrorText>
+                    </Field.Root>
+
+                    <Field.Root
+                      disabled={isDisabled("merchantId")}
+                      invalid={!!errors.credentials?.merchantId}
+                    >
+                      <Field.Label>Branch merchant ID</Field.Label>
+                      <Input
+                        placeholder="e.g., 256612345678902"
+                        {...registerCredential("merchantId")}
+                      />
+                      <Field.HelperText>
+                        Defaults to the head merchant ID
+                      </Field.HelperText>
+                      <Field.ErrorText>
+                        {errors.credentials?.merchantId?.message}
+                      </Field.ErrorText>
+                    </Field.Root>
+
+                    <Field.Root
+                      required
+                      disabled={isDisabled("subSceneEnum")}
+                      invalid={!!errors.credentials?.subSceneEnum}
+                    >
+                      <Field.Label>
+                        Sub scene <Field.RequiredIndicator />
+                      </Field.Label>
+                      <Input
+                        placeholder="e.g., POS"
+                        {...registerCredential("subSceneEnum")}
+                      />
+                      <Field.HelperText>
+                        Opay sub scene assigned to your account
+                      </Field.HelperText>
+                      <Field.ErrorText>
+                        {errors.credentials?.subSceneEnum?.message}
                       </Field.ErrorText>
                     </Field.Root>
                   </FormInputGrid>
 
-                  <Field.Root required invalid={!!errors.privateKey}>
+                  <Field.Root
+                    required
+                    disabled={isDisabled("merchantPrivateKey")}
+                    invalid={!!errors.credentials?.merchantPrivateKey}
+                  >
                     <Field.Label>
-                      Private key <Field.RequiredIndicator />
+                      Merchant private key <Field.RequiredIndicator />
                     </Field.Label>
                     <PasswordInput
-                      placeholder="e.g., sk_live_xxxxxxxx"
-                      {...register("privateKey")}
+                      placeholder="e.g., MIIEvQIBADANBgkqhkiG9w0BAQEFAASC..."
+                      {...registerCredential("merchantPrivateKey")}
                     />
                     <Field.HelperText>
-                      Issued by your payment gateway. Kept secret.
+                      Signs requests sent to Opay. Kept secret.
                     </Field.HelperText>
                     <Field.ErrorText>
-                      {errors.privateKey?.message}
+                      {errors.credentials?.merchantPrivateKey?.message}
+                    </Field.ErrorText>
+                  </Field.Root>
+
+                  <Field.Root
+                    required
+                    disabled={isDisabled("gatewayPublicKey")}
+                    invalid={!!errors.credentials?.gatewayPublicKey}
+                  >
+                    <Field.Label>
+                      Gateway public key <Field.RequiredIndicator />
+                    </Field.Label>
+                    <Input
+                      placeholder="e.g., MIIBIjANBgkqhkiG9w0BAQEFAAOC..."
+                      {...registerCredential("gatewayPublicKey")}
+                    />
+                    <Field.HelperText>
+                      Verifies responses from Opay
+                    </Field.HelperText>
+                    <Field.ErrorText>
+                      {errors.credentials?.gatewayPublicKey?.message}
                     </Field.ErrorText>
                   </Field.Root>
                 </Fieldset.Content>
