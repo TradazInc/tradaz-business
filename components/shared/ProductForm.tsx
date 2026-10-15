@@ -31,7 +31,6 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { useParams, useRouter } from "next/navigation";
 import { useId, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { LuPlus } from "react-icons/lu";
 import InfiniteScroll from "react-infinite-scroll-component";
 import FormInputGrid from "./FormInputGrid";
 import HeaderText from "./HeaderText";
