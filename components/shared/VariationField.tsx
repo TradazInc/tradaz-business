@@ -1,10 +1,11 @@
 "use client";
 
-import { emptyVariation, CreateProductInputData } from "@/schema/product";
+import { CreateProductInputData, emptyVariation } from "@/schema/product";
 import { GetAllSizeTypeOutputData } from "@/schema/sizeType";
 import {
   Box,
   Button,
+  ButtonGroup,
   ColorPicker,
   createListCollection,
   Field,
@@ -25,24 +26,36 @@ import {
   Controller,
   FieldErrors,
   useFieldArray,
+  UseFormGetValues,
   useWatch,
 } from "react-hook-form";
-import { LuPlus, LuTrash2 } from "react-icons/lu";
+import { LuCopy, LuPlus, LuTrash2 } from "react-icons/lu";
 import FormInputGrid from "./FormInputGrid";
 import TeamVariationField from "./TeamVariationField";
 
 interface Props {
   control: Control<CreateProductInputData>;
   errors: FieldErrors<CreateProductInputData>;
+  getValues: UseFormGetValues<CreateProductInputData>;
   sizeTypes: GetAllSizeTypeOutputData["data"];
   isLoading: boolean;
 }
 
-const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
-  const { fields, append, remove } = useFieldArray({
+const VariationField = ({
+  control,
+  errors,
+  getValues,
+  sizeTypes,
+  isLoading,
+}: Props) => {
+  const { fields, append, insert, remove } = useFieldArray({
     control,
     name: "variations",
   });
+
+  // Insert a deep copy of the variation's current values directly below it
+  const duplicate = (index: number) =>
+    insert(index + 1, structuredClone(getValues(`variations.${index}`)));
 
   // Recompute size collection when size type changes
   const selectedSizeTypeId = useWatch({ control, name: "sizeTypeId" });
@@ -71,14 +84,20 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
         >
           <HStack justify="space-between" mb={4}>
             <Text fontWeight="medium">Variation {index + 1}</Text>
-            <IconButton
-              size="sm"
-              type="button"
-              variant="subtle"
-              onClick={() => remove(index)}
-            >
-              <LuTrash2 />
-            </IconButton>
+            <ButtonGroup size={"sm"} variant={"outline"}>
+              <IconButton
+                aria-label="Duplicate variation"
+                onClick={() => duplicate(index)}
+              >
+                <LuCopy />
+              </IconButton>
+              <IconButton
+                aria-label="Remove variation"
+                onClick={() => remove(index)}
+              >
+                <LuTrash2 />
+              </IconButton>
+            </ButtonGroup>
           </HStack>
 
           <FormInputGrid>
@@ -205,8 +224,9 @@ const VariationField = ({ control, errors, sizeTypes, isLoading }: Props) => {
                       formatOptions={{
                         style: "currency",
                         currency: "NGN",
-                        currencyDisplay: "symbol",
+                        currencyDisplay: "narrowSymbol",
                         currencySign: "accounting",
+                        minimumFractionDigits: 0,
                         maximumFractionDigits: 2,
                       }}
                       value={
