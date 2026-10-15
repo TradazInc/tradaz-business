@@ -246,7 +246,6 @@ export const storeItems: SideMenuItem[] = [
         icon: <MdOutlinePointOfSale />,
         path: "/point-of-sale",
       },
-      { label: "VAT Settings", icon: <LuPercent />, path: "/vat" },
     ],
   },
 ];

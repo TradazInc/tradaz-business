@@ -160,8 +160,9 @@ const RevenueForm = () => {
                   formatOptions={{
                     style: "currency",
                     currency: "NGN",
-                    currencyDisplay: "symbol",
+                    currencyDisplay: "narrowSymbol",
                     currencySign: "accounting",
+                    minimumFractionDigits: 0,
                     maximumFractionDigits: 2,
                   }}
                   value={
