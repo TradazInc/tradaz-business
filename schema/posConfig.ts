@@ -5,8 +5,8 @@ import { Gateway } from "./enums";
 import {
   PosCredentialsData,
   PosCredentialsSchema,
-  PosCredentialsSchemas,
-} from "./gatewayCredentials";
+  PosCredentialsSchemaMap,
+} from "./posCredentials";
 
 // Get
 const GetTerminalConfigOutputSchema = z.object({
@@ -60,7 +60,7 @@ const refinePosCredentials = (
   credentials: PosCredentialsData,
   ctx: z.RefinementCtx,
 ) => {
-  const schema = PosCredentialsSchemas[gateway];
+  const schema = PosCredentialsSchemaMap[gateway];
   if (!schema)
     return ctx.addIssue({
       code: "custom",
