@@ -282,7 +282,7 @@ export const posConfigDialog = createOverlay((props) => {
                         Sub scene <Field.RequiredIndicator />
                       </Field.Label>
                       <Input
-                        placeholder="e.g., POS"
+                        placeholder="e.g., FASHION_ACCESSORIES"
                         {...registerCredential("subSceneEnum")}
                       />
                       <Field.HelperText>
