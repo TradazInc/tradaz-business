@@ -121,11 +121,7 @@ const PosConfigTable = ({ initialPosConfigs, businessId, storeId }: Props) => {
                       posConfig.credentials.headMerchantId ??
                       "-"}
                   </Table.Cell>
-                  <Table.Cell>
-                    {posConfig.credentials.apiKey
-                      ? `••••${posConfig.credentials.apiKey.slice(-4)}`
-                      : "-"}
-                  </Table.Cell>
+                  <Table.Cell>{posConfig.credentials.apiKey ?? "-"}</Table.Cell>
                   <Table.Cell>
                     {stores?.find((s) => s.id === posConfig.teamId)?.name ??
                       "-"}
