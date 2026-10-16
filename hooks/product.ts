@@ -1,4 +1,4 @@
-import { PRODUCT_KEY } from "@/data/cacheKeys";
+import { APPROVED_PRODUCT_KEY, PRODUCT_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
 import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
@@ -6,6 +6,8 @@ import {
   GetAllProductOutputData,
   GetAllProductQuerySchema,
   GetProductOutputData,
+  GetApprovedProductOutputData,
+  GetApprovedProductQueryData,
   UpdateProductInputData,
   UpdateProductStatusInputData,
 } from "@/schema/product";
@@ -20,7 +22,7 @@ import { useSearchQuery } from "./searchQuery";
 
 export const useProducts = (
   organizationId: string | undefined,
-  teamId: string | undefined, 
+  teamId: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllProductOutputData, Error>,
 ) => {
   const query = useSearchQuery(GetAllProductQuerySchema);
@@ -32,14 +34,33 @@ export const useProducts = (
   );
 };
 
+// Public: approved products only, optionally scoped to a business by id or slug
+export const useApprovedProduct = (
+  id: string | undefined,
+  query: GetApprovedProductQueryData = {},
+  config?: SWRConfiguration<GetApprovedProductOutputData, Error>,
+) => {
+  return useSWR(
+    getScopedKey(APPROVED_PRODUCT_KEY, id),
+    ([key, id]) =>
+      apiClient("@get/api/products/:id/approved", {
+        params: { id },
+        query,
+        ...apiConfig,
+      }),
+    config,
+  );
+};
+
+// Business members: any status, with store and vendor details
 export const useProduct = (
-  id: string,
+  id: string | undefined,
   organizationId: string | undefined,
   config?: SWRConfiguration<GetProductOutputData, Error>,
 ) => {
   return useSWR(
     getScopedKey(PRODUCT_KEY, id),
-    ([key, query]) =>
+    ([key, id]) =>
       apiClient("@get/api/products/:id", {
         params: { id },
         headers: scopeHeaders(organizationId),

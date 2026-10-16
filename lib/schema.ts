@@ -103,6 +103,9 @@ import {
   GetAllProductQuerySchema,
   GetProductOutputSchema,
   GetProductParamSchema,
+  GetApprovedProductOutputSchema,
+  GetApprovedProductParamSchema,
+  GetApprovedProductQuerySchema,
   UpdateProductInputSchema,
   UpdateProductOutputSchema,
   UpdateProductParamSchema,
@@ -302,6 +305,11 @@ export const schema = createSchema(
     "@get/api/products": {
       query: GetAllProductQuerySchema.optional(),
       output: GetAllProductOutputSchema,
+    },
+    "@get/api/products/:id/approved": {
+      params: GetApprovedProductParamSchema,
+      query: GetApprovedProductQuerySchema.optional(),
+      output: GetApprovedProductOutputSchema,
     },
     "@get/api/products/:id": {
       params: GetProductParamSchema,

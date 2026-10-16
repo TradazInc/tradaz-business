@@ -60,18 +60,24 @@ const VendorOutputSchema = z
 
 const ProductCountSchema = z.object({ variations: z.number() });
 
-// Get
-export const GetProductParamSchema = z.object({
+// Get Approved (public, approved products only)
+export const GetApprovedProductParamSchema = z.object({
   id: z.cuid2(),
 });
 
-export const GetProductOutputSchema = ProductOutputBaseSchema.extend({
+export const GetApprovedProductQuerySchema = z.object({
+  organizationId: z.cuid2().optional(),
+  organizationSlug: z.string().optional(),
+});
+export type GetApprovedProductQueryData = z.infer<
+  typeof GetApprovedProductQuerySchema
+>;
+
+export const GetApprovedProductOutputSchema = ProductOutputBaseSchema.extend({
   images: z.array(ProductImageOutputSchema),
   variations: z.array(
     VariationOutputSchema.extend({
-      teamVariations: z.array(
-        TeamVariationOutputSchema.extend({ team: TeamOutputSchema }),
-      ),
+      teamVariations: z.array(TeamVariationOutputSchema),
       size: SizeOutputSchema.nullable(),
     }),
   ),
@@ -80,6 +86,25 @@ export const GetProductOutputSchema = ProductOutputBaseSchema.extend({
     .object({ id: z.cuid2(), sizes: z.array(SizeOutputSchema) })
     .nullable(),
   _count: ProductCountSchema,
+});
+export type GetApprovedProductOutputData = z.infer<
+  typeof GetApprovedProductOutputSchema
+>;
+export type GetApprovedProductVariationOutputData =
+  GetApprovedProductOutputData["variations"][number];
+
+// Get (business members, any status, with store and vendor details)
+export const GetProductParamSchema = GetApprovedProductParamSchema;
+
+export const GetProductOutputSchema = GetApprovedProductOutputSchema.extend({
+  variations: z.array(
+    VariationOutputSchema.extend({
+      teamVariations: z.array(
+        TeamVariationOutputSchema.extend({ team: TeamOutputSchema }),
+      ),
+      size: SizeOutputSchema.nullable(),
+    }),
+  ),
   vendor: VendorOutputSchema,
 });
 export type GetProductOutputData = z.infer<typeof GetProductOutputSchema>;

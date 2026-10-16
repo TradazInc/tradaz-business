@@ -6,6 +6,8 @@ export const BUSINESS_CATEGORY_KEY = "business-categories";
 
 export const PRODUCT_KEY = "products";
 
+export const APPROVED_PRODUCT_KEY = "approved-products";
+
 export const STORE_KEY = "stores";
 
 export const PRODUCT_CATEGORY_KEY = "product-categories";
