@@ -3,6 +3,8 @@ import { apiClient, apiConfig } from "@/lib/apiClient";
 import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateProductInputData,
+  GetAllApprovedProductOutputData,
+  GetAllApprovedProductQuerySchema,
   GetAllProductOutputData,
   GetAllProductQuerySchema,
   GetProductOutputData,
@@ -20,6 +22,21 @@ import useSWRInfinite, {
 import useSWRMutation from "swr/mutation";
 import { useSearchQuery } from "./searchQuery";
 
+export const useApprovedProducts = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+  config?: SWRInfiniteConfiguration<GetAllApprovedProductOutputData, Error>,
+) => {
+  const query = useSearchQuery(GetAllApprovedProductQuerySchema);
+
+  return useSWRInfinite(
+    getCursorKey(APPROVED_PRODUCT_KEY, { ...query, organizationId, teamId }),
+    ([key, query]) =>
+      apiClient("@get/api/products/approved", { query, ...apiConfig }),
+    config,
+  );
+};
+
 export const useProducts = (
   organizationId: string | undefined,
   teamId: string | undefined,
@@ -29,7 +46,12 @@ export const useProducts = (
 
   return useSWRInfinite(
     getCursorKey(PRODUCT_KEY, { ...query, organizationId, teamId }),
-    ([key, query]) => apiClient("@get/api/products", { query, ...apiConfig }),
+    ([key, { organizationId, ...query }]) =>
+      apiClient("@get/api/products", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -51,7 +73,6 @@ export const useApprovedProduct = (
   );
 };
 
-// Business members: any status, with store and vendor details
 export const useProduct = (
   id: string | undefined,
   organizationId: string | undefined,

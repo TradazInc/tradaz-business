@@ -111,8 +111,8 @@ export type GetProductOutputData = z.infer<typeof GetProductOutputSchema>;
 export type GetProductVariationOutputData =
   GetProductOutputData["variations"][number];
 
-// Get All
-export const GetAllProductQuerySchema = z.object({
+// Get All Approved (public, approved products only)
+export const GetAllApprovedProductQuerySchema = z.object({
   search: z.string().optional(),
   categoryId: z.cuid2().optional(),
   teamId: z.cuid2().optional(),
@@ -122,7 +122,7 @@ export const GetAllProductQuerySchema = z.object({
   pageSize: z.number().positive().optional(),
 });
 
-export const GetAllProductOutputSchema = createFetchResponseSchema(
+export const GetAllApprovedProductOutputSchema = createFetchResponseSchema(
   ProductOutputBaseSchema.pick({
     id: true,
     name: true,
@@ -150,6 +150,21 @@ export const GetAllProductOutputSchema = createFetchResponseSchema(
     _count: ProductCountSchema,
   }),
 );
+export type GetAllApprovedProductOutputData = z.infer<
+  typeof GetAllApprovedProductOutputSchema
+>;
+
+// Get All (business members, any status; filter with productStatus)
+export const GetAllProductQuerySchema = z.object({
+  search: z.string().optional(),
+  categoryId: z.cuid2().optional(),
+  productStatus: z.enum(ProductStatus).optional(),
+  teamId: z.cuid2().optional(),
+  cursor: z.cuid2().optional(),
+  pageSize: z.number().positive().optional(),
+});
+
+export const GetAllProductOutputSchema = GetAllApprovedProductOutputSchema;
 export type GetAllProductOutputData = z.infer<typeof GetAllProductOutputSchema>;
 export type GetAllProductOutputItemData =
   GetAllProductOutputData["data"][number];

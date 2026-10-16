@@ -1,6 +1,6 @@
 "use client";
 
-import { useProducts } from "@/hooks/product";
+import { useApprovedProducts } from "@/hooks/product";
 import { GetAllProductOutputVariationData } from "@/schema/product";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
@@ -48,7 +48,7 @@ const ProductSearch = ({
     replace(`${pathname}?${params.toString()}`);
   }, 200);
 
-  const { data, error, isLoading, setSize, size, mutate } = useProducts(
+  const { data, error, isLoading, setSize, size, mutate } = useApprovedProducts(
     businessId,
     storeId,
     { keepPreviousData: true },

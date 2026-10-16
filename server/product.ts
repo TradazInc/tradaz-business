@@ -25,9 +25,10 @@ export async function getProduct(
   });
 }
 
-export async function getProducts(organizationId?: string) {
+export async function getProducts(organizationId: string | undefined) {
   return apiClient("@get/api/products", {
-    query: { pageSize: PAGE_SIZE, organizationId },
+    query: { pageSize: PAGE_SIZE },
+    headers: scopeHeaders(organizationId),
     ...apiConfig,
   });
 }

@@ -99,6 +99,8 @@ import {
   DeleteProductParamSchema,
   DeleteTeamVariationParamSchema,
   DeleteVariationParamSchema,
+  GetAllApprovedProductOutputSchema,
+  GetAllApprovedProductQuerySchema,
   GetAllProductOutputSchema,
   GetAllProductQuerySchema,
   GetProductOutputSchema,
@@ -302,6 +304,10 @@ export const schema = createSchema(
     },
 
     // Products
+    "@get/api/products/approved": {
+      query: GetAllApprovedProductQuerySchema.optional(),
+      output: GetAllApprovedProductOutputSchema,
+    },
     "@get/api/products": {
       query: GetAllProductQuerySchema.optional(),
       output: GetAllProductOutputSchema,
