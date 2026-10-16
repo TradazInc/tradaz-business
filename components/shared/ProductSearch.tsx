@@ -23,6 +23,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 interface Props {
   businessId: string | undefined;
+  storeId: string | undefined;
   placeholder: string;
   searchField: string;
   onSelect?: (variation: GetAllProductOutputVariationData) => void;
@@ -30,6 +31,7 @@ interface Props {
 
 const ProductSearch = ({
   businessId,
+  storeId,
   placeholder,
   searchField,
   onSelect,
@@ -48,6 +50,7 @@ const ProductSearch = ({
 
   const { data, error, isLoading, setSize, size, mutate } = useProducts(
     businessId,
+    storeId,
     { keepPreviousData: true },
   );
   const { flatData: products, hasMore } = useMemo(

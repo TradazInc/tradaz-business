@@ -1,5 +1,6 @@
 import { POINTS_CONFIG_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreatePointsConfigInputData,
   GetAllPointsConfigOutputData,
@@ -24,7 +25,11 @@ export const usePointsConfigs = (
   return useSWRInfinite(
     getCursorKey(POINTS_CONFIG_KEY, { ...query, organizationId }),
     ([key, query]) =>
-      apiClient("@get/api/points-config", { query, ...apiConfig }),
+      apiClient("@get/api/points-config", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -33,7 +38,11 @@ export const useAddPointsConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(POINTS_CONFIG_KEY, { organizationId })),
     (key, { arg }: { arg: CreatePointsConfigInputData }) =>
-      apiClient("@post/api/points-config", { body: arg, ...apiConfig }),
+      apiClient("@post/api/points-config", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -49,6 +58,7 @@ export const useUpdatePointsConfig = (organizationId: string | undefined) => {
       apiClient("@put/api/points-config/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {

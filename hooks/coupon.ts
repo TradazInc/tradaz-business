@@ -1,5 +1,6 @@
 import { COUPON_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateCouponInputData,
   GetAllCouponOutputData,
@@ -23,7 +24,12 @@ export const useCoupons = (
 
   return useSWRInfinite(
     getCursorKey(COUPON_KEY, { ...query, organizationId }),
-    ([key, query]) => apiClient("@get/api/coupons", { query, ...apiConfig }),
+    ([key, query]) =>
+      apiClient("@get/api/coupons", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -32,7 +38,11 @@ export const useAddCoupon = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
     (key, { arg }: { arg: CreateCouponInputData }) =>
-      apiClient("@post/api/coupons", { body: arg, ...apiConfig }),
+      apiClient("@post/api/coupons", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -45,6 +55,7 @@ export const useUpdateCoupon = (organizationId: string | undefined) => {
       apiClient("@put/api/coupons/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {
@@ -59,6 +70,7 @@ export const useRemoveCoupon = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/coupons/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );

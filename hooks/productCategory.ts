@@ -1,5 +1,6 @@
 import { PRODUCT_CATEGORY_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateProductCategoryInputData,
   GetAllProductCategoryOutputData,
@@ -31,7 +32,11 @@ export const useAddProductCategory = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(PRODUCT_CATEGORY_KEY, { organizationId })),
     (key, { arg }: { arg: CreateProductCategoryInputData }) =>
-      apiClient("@post/api/product-categories", { body: arg, ...apiConfig }),
+      apiClient("@post/api/product-categories", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -43,6 +48,7 @@ export const useRemoveProductCategory = (
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/product-categories/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );

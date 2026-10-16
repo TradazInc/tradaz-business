@@ -1,5 +1,6 @@
 import { EXPENSES_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateExpenseInputData,
   GetAllExpenseOutputData,
@@ -23,7 +24,12 @@ export const useExpenses = (
 
   return useSWRInfinite(
     getCursorKey(EXPENSES_KEY, { ...query, organizationId }),
-    ([key, query]) => apiClient("@get/api/expense", { query, ...apiConfig }),
+    ([key, query]) =>
+      apiClient("@get/api/expense", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -32,7 +38,11 @@ export const useAddExpense = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
     (key, { arg }: { arg: CreateExpenseInputData }) =>
-      apiClient("@post/api/expense", { body: arg, ...apiConfig }),
+      apiClient("@post/api/expense", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -45,6 +55,7 @@ export const useUpdateExpense = (organizationId: string | undefined) => {
       apiClient("@put/api/expense/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {
@@ -59,6 +70,7 @@ export const useRemoveExpense = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/expense/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );

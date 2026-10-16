@@ -17,7 +17,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const sizeTypes = getSizeTypes().then((d) => [d]);
+  const sizeTypes = getSizeTypes(businessId).then((d) => [d]);
 
   return (
     <PageContainer>

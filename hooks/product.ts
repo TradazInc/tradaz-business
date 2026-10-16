@@ -1,5 +1,6 @@
 import { PRODUCT_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateProductInputData,
   GetAllProductOutputData,
@@ -19,12 +20,13 @@ import { useSearchQuery } from "./searchQuery";
 
 export const useProducts = (
   organizationId: string | undefined,
+  teamId: string | undefined, 
   config?: SWRInfiniteConfiguration<GetAllProductOutputData, Error>,
 ) => {
   const query = useSearchQuery(GetAllProductQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(PRODUCT_KEY, { ...query, organizationId }),
+    getCursorKey(PRODUCT_KEY, { ...query, organizationId, teamId }),
     ([key, query]) => apiClient("@get/api/products", { query, ...apiConfig }),
     config,
   );
@@ -32,12 +34,17 @@ export const useProducts = (
 
 export const useProduct = (
   id: string,
+  organizationId: string | undefined,
   config?: SWRConfiguration<GetProductOutputData, Error>,
 ) => {
   return useSWR(
     getScopedKey(PRODUCT_KEY, id),
     ([key, query]) =>
-      apiClient("@get/api/products/:id", { params: { id }, ...apiConfig }),
+      apiClient("@get/api/products/:id", {
+        params: { id },
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -46,7 +53,11 @@ export const useAddProduct = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
     (key, { arg }: { arg: CreateProductInputData }) =>
-      apiClient("@post/api/products", { body: arg, ...apiConfig }),
+      apiClient("@post/api/products", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -59,6 +70,7 @@ export const useUpdateProduct = (organizationId: string | undefined) => {
       apiClient("@put/api/products/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {
@@ -79,6 +91,7 @@ export const useUpdateProductStatus = (organizationId: string | undefined) => {
       apiClient("@patch/api/products/:id/status", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {
@@ -93,6 +106,7 @@ export const useRemoveProduct = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/products/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );
@@ -104,17 +118,22 @@ export const useRemoveVariation = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/products/variations/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );
 };
 
-export const useRemoveStoreVariation = (organizationId: string | undefined) => {
+export const useRemoveStoreVariation = (
+  organizationId: string | undefined,
+  teamId: string | undefined,
+) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(PRODUCT_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/products/team-variations/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
   );

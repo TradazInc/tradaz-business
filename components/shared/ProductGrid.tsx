@@ -17,9 +17,11 @@ interface Props {
 }
 
 const ProductGrid = ({ businessId, initialProducts }: Props) => {
-  const { data, size, setSize, error, mutate } = useProducts(businessId, {
-    fallbackData: initialProducts,
-  });
+  const { data, size, setSize, error, mutate } = useProducts(
+    businessId,
+    undefined, // business-level page, all stores
+    { fallbackData: initialProducts },
+  );
   const { flatData: products, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],

@@ -3,16 +3,20 @@ import ProductDetail from "@/components/shared/ProductDetail";
 import { getProduct } from "@/server/product";
 
 interface Props {
-  params: Promise<{ productId: string }>;
+  params: Promise<{ businessId?: string; productId: string }>;
 }
 
 export default async function page({ params }: Props) {
-  const { productId } = await params;
-  const productPromise = getProduct(productId);
+  const { businessId, productId } = await params;
+  const productPromise = getProduct(productId, businessId);
 
   return (
     <PageContainer>
-      <ProductDetail initialProduct={productPromise} productId={productId} />
+      <ProductDetail
+        initialProduct={productPromise}
+        productId={productId}
+        businessId={businessId}
+      />
     </PageContainer>
   );
 }

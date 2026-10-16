@@ -1,5 +1,6 @@
 import { ORDER_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   GetAllOrderOutputData,
   GetAllOrderQuerySchema,
@@ -22,14 +23,23 @@ export const useOrders = (
 
   return useSWRInfinite(
     getCursorKey(ORDER_KEY, { ...query, organizationId }),
-    ([key, query]) => apiClient("@get/api/orders", { query, ...apiConfig }),
+    ([key, query]) =>
+      apiClient("@get/api/orders", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
 
-export const useOrder = (id: string) => {
+export const useOrder = (id: string, organizationId: string | undefined) => {
   return useSWR(getScopedKey(ORDER_KEY, id), ([key, id]) =>
-    apiClient("@get/api/orders/:id", { params: { id }, ...apiConfig }),
+    apiClient("@get/api/orders/:id", {
+      params: { id },
+      headers: scopeHeaders(organizationId),
+      ...apiConfig,
+    }),
   );
 };
 
@@ -42,6 +52,7 @@ export const useUpdateOrderStatus = (organizationId: string | undefined) => {
       apiClient("@patch/api/orders/:id/status", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {
