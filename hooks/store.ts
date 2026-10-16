@@ -21,7 +21,7 @@ export const useStores = (
 };
 
 export const useAddStore = (organizationId: string | undefined) => {
-  return useSWRMutation(
+  const mutation = useSWRMutation(
     getScopedKey(STORE_KEY, organizationId),
     (key, { arg }: { arg: CreateStoreInputData }) =>
       authClient.organization.createTeam({
@@ -31,6 +31,16 @@ export const useAddStore = (organizationId: string | undefined) => {
       }),
     { populateCache: true, revalidate: true },
   );
+
+  const trigger = (data: CreateStoreInputData) =>
+    mutation.trigger<GetAllStoresOutputData>(data, {
+      populateCache: (created, current = []) => [
+        ...current,
+        { ...created, category: null },
+      ],
+    });
+
+  return { ...mutation, trigger };
 };
 
 export const useRemoveStore = (organizationId: string | undefined) => {
