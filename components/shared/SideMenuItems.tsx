@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineAccountBook } from "react-icons/ai";
 import { BsCashCoin } from "react-icons/bs";
+import { CgWebsite } from "react-icons/cg";
 import {
   LuCalculator,
   LuCheck,
@@ -200,7 +201,7 @@ export const businessItems: SideMenuItem[] = [
     children: [
       { label: "Logistics & Shipping", icon: <LuTruck />, path: "/shipping" },
       { label: "VAT Settings", icon: <LuPercent />, path: "/vat" },
-      { label: "UI Configuration", icon: <LuPalette />, path: "/ui-config" },
+      { label: "Subdomain", icon: <CgWebsite />, path: "/subdomain" },
     ],
   },
 ];
