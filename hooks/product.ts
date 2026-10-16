@@ -34,7 +34,6 @@ export const useProducts = (
   );
 };
 
-// Public: approved products only, optionally scoped to a business by id or slug
 export const useApprovedProduct = (
   id: string | undefined,
   query: GetApprovedProductQueryData = {},
