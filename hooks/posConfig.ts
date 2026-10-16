@@ -25,7 +25,6 @@ export const usePosConfigs = (
 
   return useSWRInfinite(
     getCursorKey(POS_CONFIG_KEY, { ...query, organizationId, teamId }),
-    // scope is read from the key so the request always matches its cache entry
     ([key, { organizationId, teamId, ...query }]) =>
       apiClient("@get/api/pos-configs", {
         query,
