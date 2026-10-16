@@ -29,6 +29,7 @@ export const useAddStore = (organizationId: string | undefined) => {
         organizationId,
         fetchOptions: authConfig,
       }),
+    { populateCache: true, revalidate: true },
   );
 };
 

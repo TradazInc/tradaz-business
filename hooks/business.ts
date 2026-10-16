@@ -42,6 +42,7 @@ export const useAddBusiness = () => {
         keepCurrentActiveOrganization: false,
         fetchOptions: authConfig,
       }),
+    { populateCache: true, revalidate: true },
   );
 };
 
