@@ -5,5 +5,6 @@ import { scopeHeaders } from "@/utilities/scopeHeaders";
 export async function getShippingConfigs(organizationId: string | undefined) {
   return apiClient("@get/api/shipping-configs", {
     query: { pageSize: PAGE_SIZE },
+    headers: scopeHeaders(organizationId),
   });
 }
