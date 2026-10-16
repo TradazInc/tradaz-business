@@ -48,7 +48,11 @@ export const useAddBusiness = () => {
     mutation.trigger<GetAllBusinessOutputData>(data, {
       populateCache: (created, current = []) => [
         ...current,
-        { ...created, category: null },
+        {
+          ...created,
+          metadata: JSON.stringify(created.metadata),
+          category: null,
+        },
       ],
     });
 
