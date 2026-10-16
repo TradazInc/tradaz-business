@@ -1,5 +1,6 @@
 import { ORDER_KEY, TRANSACTION_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateTransactionInputData,
   GetTransactionOutputData,
@@ -10,13 +11,19 @@ import { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
 export const useTransaction = (
-  id?: string,
+  id: string | undefined,
+  organizationId: string | undefined,
+  teamId: string | undefined,
   config?: SWRConfiguration<GetTransactionOutputData, Error>,
 ) => {
   return useSWR(
     getScopedKey(TRANSACTION_KEY, id),
     ([key, id]) =>
-      apiClient("@get/api/transactions/:id", { params: { id }, ...apiConfig }),
+      apiClient("@get/api/transactions/:id", {
+        params: { id },
+        headers: scopeHeaders(organizationId, teamId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -27,7 +34,11 @@ export const useAddTransaction = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(ORDER_KEY, { organizationId })),
     (key, { arg }: { arg: CreateTransactionInputData }) =>
-      apiClient("@post/api/transactions", { body: arg, ...apiConfig }),
+      apiClient("@post/api/transactions", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     {
       onSuccess: (data) => mutate(getScopedKey(ORDER_KEY, data.id)),
     },

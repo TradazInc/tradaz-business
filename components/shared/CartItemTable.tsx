@@ -36,7 +36,7 @@ interface Props {
 }
 
 const CartItemTable = ({ initialCart, businessId, storeId, cartId }: Props) => {
-  const { data, error, mutate } = useCart(cartId, {
+  const { data, error, mutate } = useCart(cartId, businessId, storeId, {
     fallbackData: initialCart,
   });
   const addToCart = useAddCartItem(businessId, storeId);
@@ -81,6 +81,7 @@ const CartItemTable = ({ initialCart, businessId, storeId, cartId }: Props) => {
         <ProductSearch
           searchField={"search"}
           businessId={businessId}
+          storeId={storeId}
           placeholder={"Search for a product"}
           onSelect={(item) => handleAddItem(item.id)}
         />

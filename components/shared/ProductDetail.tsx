@@ -11,10 +11,11 @@ import VariationCard from "./VariationCard";
 interface Props {
   initialProduct: Promise<GetProductOutputData>;
   productId: string;
+  businessId: string | undefined;
 }
 
-const ProductDetail = ({ initialProduct, productId }: Props) => {
-  const { data: product, error } = useProduct(productId, {
+const ProductDetail = ({ initialProduct, productId, businessId }: Props) => {
+  const { data: product, error } = useProduct(productId, businessId, {
     fallbackData: initialProduct,
   });
 

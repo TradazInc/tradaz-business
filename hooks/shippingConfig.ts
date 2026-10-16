@@ -1,5 +1,6 @@
 import { SHIPPING_CONFIG_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateShippingConfigInputData,
   GetAllShippingConfigOutputData,
@@ -24,7 +25,11 @@ export const useShippingConfigs = (
   return useSWRInfinite(
     getCursorKey(SHIPPING_CONFIG_KEY, { ...query, organizationId }),
     ([key, query]) =>
-      apiClient("@get/api/shipping-configs", { query, ...apiConfig }),
+      apiClient("@get/api/shipping-configs", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -33,7 +38,11 @@ export const useAddShippingConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
     (key, { arg }: { arg: CreateShippingConfigInputData }) =>
-      apiClient("@post/api/shipping-configs", { body: arg, ...apiConfig }),
+      apiClient("@post/api/shipping-configs", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -49,6 +58,7 @@ export const useUpdateShippingConfig = (organizationId: string | undefined) => {
       apiClient("@put/api/shipping-configs/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {
@@ -63,6 +73,7 @@ export const useRemoveShippingConfig = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/shipping-configs/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );
@@ -74,6 +85,7 @@ export const useRemoveShippingMethod = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/shipping-configs/shipping-methods/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );

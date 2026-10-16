@@ -48,15 +48,15 @@ const CartForm = ({ initialCart, businessId, storeId, cartId }: Props) => {
     error,
     isLoading,
     mutate,
-  } = useCart(cartId, {
+  } = useCart(cartId, businessId, storeId, {
     fallbackData: initialCart,
   });
   const addCart = useAddCart(businessId, storeId);
   const updateCart = useUpdateCart(businessId, storeId);
   const subaccounts = useSubaccounts(businessId);
   const posConfigs = usePosConfigs(businessId, storeId);
-  const webCheckout = useWebCheckout(businessId);
-  const posCheckout = usePosCheckout(businessId);
+  const webCheckout = useWebCheckout(businessId, storeId);
+  const posCheckout = usePosCheckout(businessId, storeId);
   const { push } = useRouter();
 
   const parsedSubaccounts = useMemo(

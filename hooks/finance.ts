@@ -1,5 +1,6 @@
 import { FINANCE_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import { GetFinanceSummaryQuerySchema } from "@/schema/finance";
 import { getScopedKey } from "@/utilities/computeKey";
 import useSWR from "swr";
@@ -11,6 +12,7 @@ export const useFinanceSummary = (organizationId: string | undefined) => {
   return useSWR(getScopedKey(FINANCE_KEY, organizationId), ([key, id]) =>
     apiClient("@get/api/finance/summary", {
       query: { ...query, organizationId },
+      headers: scopeHeaders(organizationId),
       ...apiConfig,
     }),
   );

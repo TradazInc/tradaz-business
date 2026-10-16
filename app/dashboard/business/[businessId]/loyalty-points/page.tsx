@@ -17,7 +17,7 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const pointsConfigs = getPointsConfigs().then((d) => [d]);
+  const pointsConfigs = getPointsConfigs(businessId).then((d) => [d]);
 
   return (
     <PageContainer>

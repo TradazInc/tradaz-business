@@ -1,6 +1,6 @@
 "use client";
 
-import { useProducts } from "@/hooks/product";
+import { useApprovedProducts } from "@/hooks/product";
 import { GetAllProductOutputVariationData } from "@/schema/product";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
@@ -23,6 +23,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 interface Props {
   businessId: string | undefined;
+  storeId: string | undefined;
   placeholder: string;
   searchField: string;
   onSelect?: (variation: GetAllProductOutputVariationData) => void;
@@ -30,6 +31,7 @@ interface Props {
 
 const ProductSearch = ({
   businessId,
+  storeId,
   placeholder,
   searchField,
   onSelect,
@@ -46,8 +48,9 @@ const ProductSearch = ({
     replace(`${pathname}?${params.toString()}`);
   }, 200);
 
-  const { data, error, isLoading, setSize, size, mutate } = useProducts(
+  const { data, error, isLoading, setSize, size, mutate } = useApprovedProducts(
     businessId,
+    storeId,
     { keepPreviousData: true },
   );
   const { flatData: products, hasMore } = useMemo(

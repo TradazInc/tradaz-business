@@ -1,5 +1,6 @@
 import { REVENUE_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateRevenueInputData,
   GetAllRevenueOutputData,
@@ -23,7 +24,12 @@ export const useRevenues = (
 
   return useSWRInfinite(
     getCursorKey(REVENUE_KEY, { ...query, organizationId }),
-    ([key, query]) => apiClient("@get/api/revenue", { query, ...apiConfig }),
+    ([key, query]) =>
+      apiClient("@get/api/revenue", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -32,7 +38,11 @@ export const useAddRevenue = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
     (key, { arg }: { arg: CreateRevenueInputData }) =>
-      apiClient("@post/api/revenue", { body: arg, ...apiConfig }),
+      apiClient("@post/api/revenue", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -45,6 +55,7 @@ export const useUpdateRevenue = (organizationId: string | undefined) => {
       apiClient("@put/api/revenue/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {
@@ -59,6 +70,7 @@ export const useRemoveRevenue = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/revenue/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );

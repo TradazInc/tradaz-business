@@ -1,5 +1,6 @@
 import { SUBACCOUNT_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateSubaccountInputData,
   GetAllSubaccountOutputData,
@@ -24,7 +25,11 @@ export const useSubaccounts = (
   return useSWRInfinite(
     getCursorKey(SUBACCOUNT_KEY, { ...query, organizationId }),
     ([key, query]) =>
-      apiClient("@get/api/subaccounts", { query, ...apiConfig }),
+      apiClient("@get/api/subaccounts", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -33,7 +38,11 @@ export const useAddSubaccount = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(SUBACCOUNT_KEY, { organizationId })),
     (key, { arg }: { arg: CreateSubaccountInputData }) =>
-      apiClient("@post/api/subaccounts", { body: arg, ...apiConfig }),
+      apiClient("@post/api/subaccounts", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -43,7 +52,11 @@ export const useUpdateSubaccount = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(SUBACCOUNT_KEY, { organizationId })),
     (key, { arg }: { arg: UpdateSubaccountInputData }) =>
-      apiClient("@put/api/subaccounts", { body: arg, ...apiConfig }),
+      apiClient("@put/api/subaccounts", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     {
       onSuccess: () => mutate(getScopedKey(SUBACCOUNT_KEY, organizationId)),
     },

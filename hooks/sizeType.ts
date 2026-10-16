@@ -1,5 +1,6 @@
 import { SIZE_TYPE_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   CreateSizeTypeInputData,
   GetAllSizeTypeOutputData,
@@ -23,7 +24,12 @@ export const useSizeTypes = (
 
   return useSWRInfinite(
     getCursorKey(SIZE_TYPE_KEY, { ...query, organizationId }),
-    ([key, query]) => apiClient("@get/api/size-types", { query, ...apiConfig }),
+    ([key, query]) =>
+      apiClient("@get/api/size-types", {
+        query,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -32,7 +38,11 @@ export const useAddSizeTypes = (organizationId: string | undefined) => {
   return useSWRMutation(
     unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
     (key, { arg }: { arg: CreateSizeTypeInputData }) =>
-      apiClient("@post/api/size-types", { body: arg, ...apiConfig }),
+      apiClient("@post/api/size-types", {
+        body: arg,
+        headers: scopeHeaders(organizationId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -45,6 +55,7 @@ export const useUpdateSizeType = (organizationId: string | undefined) => {
       apiClient("@put/api/size-types/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
     {
@@ -59,6 +70,7 @@ export const useRemoveSizeType = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/size-types/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );
@@ -70,6 +82,7 @@ export const useRemoveSize = (organizationId: string | undefined) => {
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/size-types/sizes/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId),
         ...apiConfig,
       }),
   );
