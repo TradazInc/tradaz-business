@@ -31,7 +31,7 @@ export const useBusiness = (organizationId: string | undefined) => {
 };
 
 export const useAddBusiness = () => {
-  return useSWRMutation(
+  const mutation = useSWRMutation(
     getKey(BUSINESS_KEY),
     (key, { arg }: { arg: CreateBusinessInputData }) =>
       authClient.organization.create({
@@ -42,8 +42,17 @@ export const useAddBusiness = () => {
         keepCurrentActiveOrganization: false,
         fetchOptions: authConfig,
       }),
-    { populateCache: true, revalidate: true },
   );
+
+  const trigger = (data: CreateBusinessInputData) =>
+    mutation.trigger<GetAllBusinessOutputData>(data, {
+      populateCache: (created, current = []) => [
+        ...current,
+        { ...created, category: null },
+      ],
+    });
+
+  return { ...mutation, trigger };
 };
 
 export const useRemoveBusiness = () => {
