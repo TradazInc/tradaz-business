@@ -7,6 +7,7 @@ import {
   UpdatePosConfigInputData,
 } from "@/schema/posConfig";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -24,8 +25,13 @@ export const usePosConfigs = (
 
   return useSWRInfinite(
     getCursorKey(POS_CONFIG_KEY, { ...query, organizationId, teamId }),
-    ([key, query]) =>
-      apiClient("@get/api/pos-configs", { query, ...apiConfig }),
+    // scope is read from the key so the request always matches its cache entry
+    ([key, { organizationId, teamId, ...query }]) =>
+      apiClient("@get/api/pos-configs", {
+        query,
+        headers: scopeHeaders(organizationId, teamId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -39,7 +45,11 @@ export const useAddPosConfig = (
       getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
     ),
     (key, { arg }: { arg: CreatePosConfigInputData }) =>
-      apiClient("@post/api/pos-configs", { body: arg, ...apiConfig }),
+      apiClient("@post/api/pos-configs", {
+        body: arg,
+        headers: scopeHeaders(organizationId, teamId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -57,6 +67,7 @@ export const useUpdatePosConfig = (
       apiClient("@put/api/pos-configs/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
     {
@@ -76,6 +87,7 @@ export const useRemovePosConfig = (
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/pos-configs/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
   );
@@ -92,6 +104,7 @@ export const useRemoveTerminalConfig = (
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/pos-configs/terminal-configs/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
   );

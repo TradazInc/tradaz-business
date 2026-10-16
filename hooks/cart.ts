@@ -9,6 +9,7 @@ import {
   UpdateCartInputData,
 } from "@/schema/cart";
 import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import useSWR, { SWRConfiguration, useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -26,19 +27,30 @@ export const useCarts = (
 
   return useSWRInfinite(
     getCursorKey(CART_KEY, { ...query, organizationId, teamId }),
-    ([key, query]) => apiClient("@get/api/cart", { query, ...apiConfig }),
+    ([key, { organizationId, teamId, ...query }]) =>
+      apiClient("@get/api/cart", {
+        query,
+        headers: scopeHeaders(organizationId, teamId),
+        ...apiConfig,
+      }),
     config,
   );
 };
 
 export const useCart = (
-  id?: string,
+  id: string | undefined,
+  organizationId: string | undefined,
+  teamId: string | undefined,
   config?: SWRConfiguration<GetCartOutputData, Error>,
 ) => {
   return useSWR(
     getScopedKey(CART_KEY, id),
     ([key, id]) =>
-      apiClient("@get/api/cart/:id", { params: { id }, ...apiConfig }),
+      apiClient("@get/api/cart/:id", {
+        params: { id },
+        headers: scopeHeaders(organizationId, teamId),
+        ...apiConfig,
+      }),
     config,
   );
 };
@@ -50,7 +62,11 @@ export const useAddCart = (
   return useSWRMutation(
     unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: BaseCreateCartInputData }) =>
-      apiClient("@post/api/cart", { body: arg, ...apiConfig }),
+      apiClient("@post/api/cart", {
+        body: arg,
+        headers: scopeHeaders(organizationId, teamId),
+        ...apiConfig,
+      }),
   );
 };
 
@@ -66,6 +82,7 @@ export const useUpdateCart = (
       apiClient("@put/api/cart/:id", {
         params: { id: arg.id },
         body: arg.data,
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
     {
@@ -85,6 +102,7 @@ export const useRemoveCart = (
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/cart/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
     {
@@ -102,7 +120,11 @@ export const useAddCartItem = (
   return useSWRMutation(
     unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: CreateCartItemInputData }) =>
-      apiClient("@post/api/cart/item", { body: arg, ...apiConfig }),
+      apiClient("@post/api/cart/item", {
+        body: arg,
+        headers: scopeHeaders(organizationId, teamId),
+        ...apiConfig,
+      }),
     {
       onSuccess: (data) => mutate(getScopedKey(CART_KEY, data.cartId)),
     },
@@ -120,6 +142,7 @@ export const useIncrementCartItem = (
     (key, { arg }: { arg: string }) =>
       apiClient("@post/api/cart/item/increment", {
         body: { id: arg },
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
     {
@@ -139,6 +162,7 @@ export const useDecrementCartItem = (
     (key, { arg }: { arg: string }) =>
       apiClient("@post/api/cart/item/decrement", {
         body: { id: arg },
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
     {
@@ -158,6 +182,7 @@ export const useRemoveCartItem = (
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/cart/item/:id", {
         params: { id: arg },
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
     {

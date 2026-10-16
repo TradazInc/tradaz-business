@@ -6,10 +6,12 @@ import HeaderText from "./HeaderText";
 
 interface Props {
   cartId: string;
+  businessId: string | undefined;
+  storeId: string | undefined;
 }
 
-const CartName = ({ cartId }: Props) => {
-  const { data: cart } = useCart(cartId);
+const CartName = ({ cartId, businessId, storeId }: Props) => {
+  const { data: cart } = useCart(cartId, businessId, storeId);
 
   return cart ? (
     <HeaderText>{`Cart ${cart.id}`}</HeaderText>

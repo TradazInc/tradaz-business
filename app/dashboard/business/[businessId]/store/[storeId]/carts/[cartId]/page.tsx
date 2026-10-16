@@ -12,12 +12,12 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId, storeId, cartId } = await params;
-  const cartPromise = getCart(cartId);
+  const cartPromise = getCart(cartId, businessId, storeId);
 
   return (
     <PageContainer>
       <PageHeader>
-        <CartName cartId={cartId} />
+        <CartName cartId={cartId} businessId={businessId} storeId={storeId} />
       </PageHeader>
 
       <SimpleGrid columns={{ base: 1, md: 4 }} gap={3}>

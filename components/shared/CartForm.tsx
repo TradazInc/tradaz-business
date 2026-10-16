@@ -48,7 +48,7 @@ const CartForm = ({ initialCart, businessId, storeId, cartId }: Props) => {
     error,
     isLoading,
     mutate,
-  } = useCart(cartId, {
+  } = useCart(cartId, businessId, storeId, {
     fallbackData: initialCart,
   });
   const addCart = useAddCart(businessId, storeId);
