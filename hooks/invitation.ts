@@ -4,7 +4,7 @@ import {
   CreateInvitationInputData,
   GetAllInvitationOutputData,
 } from "@/schema/invitation";
-import { getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWR, { SWRConfiguration } from "swr";
 import useSWRMutation from "swr/mutation";
 
@@ -13,7 +13,7 @@ export const useInvitations = (
   config?: SWRConfiguration<GetAllInvitationOutputData, Error>,
 ) => {
   return useSWR(
-    getScopedKey(INVITATION_KEY, organizationId),
+    cache.scopedKey(INVITATION_KEY, organizationId),
     ([key, query]) =>
       authClient.organization.listInvitations({
         query: { organizationId },
@@ -24,7 +24,7 @@ export const useInvitations = (
 };
 
 export const useInvitation = (id: string) => {
-  return useSWR(getScopedKey(INVITATION_KEY, id), () =>
+  return useSWR(cache.scopedKey(INVITATION_KEY, id), () =>
     authClient.organization.getInvitation({
       query: { id },
       fetchOptions: authConfig,
@@ -34,7 +34,7 @@ export const useInvitation = (id: string) => {
 
 export const useCancelInvitation = (organizationId: string | undefined) => {
   return useSWRMutation(
-    getScopedKey(INVITATION_KEY, organizationId),
+    cache.scopedKey(INVITATION_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
       authClient.organization.cancelInvitation({
         invitationId: arg,
@@ -45,7 +45,7 @@ export const useCancelInvitation = (organizationId: string | undefined) => {
 
 export const useSendInvitation = (organizationId: string | undefined) => {
   return useSWRMutation(
-    getScopedKey(INVITATION_KEY, organizationId),
+    cache.scopedKey(INVITATION_KEY, organizationId),
     (key, { arg }: { arg: CreateInvitationInputData }) =>
       authClient.organization.inviteMember({
         ...arg,

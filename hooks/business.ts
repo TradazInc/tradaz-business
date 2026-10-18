@@ -4,7 +4,7 @@ import {
   CreateBusinessInputData,
   GetAllBusinessOutputData,
 } from "@/schema/business";
-import { getKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWR, { SWRConfiguration } from "swr";
 import useSWRMutation from "swr/mutation";
 
@@ -12,7 +12,7 @@ export const useBusinesses = (
   config?: SWRConfiguration<GetAllBusinessOutputData, Error>,
 ) => {
   return useSWR(
-    getKey(BUSINESS_KEY),
+    cache.key(BUSINESS_KEY),
     () =>
       authClient.organization.list({
         fetchOptions: authConfig,
@@ -22,7 +22,7 @@ export const useBusinesses = (
 };
 
 export const useBusiness = (organizationId: string | undefined) => {
-  return useSWR(getScopedKey(BUSINESS_KEY, organizationId), () =>
+  return useSWR(cache.scopedKey(BUSINESS_KEY, organizationId), () =>
     authClient.organization.getFullOrganization({
       query: { organizationId, membersLimit: 100 },
       fetchOptions: authConfig,
@@ -32,7 +32,7 @@ export const useBusiness = (organizationId: string | undefined) => {
 
 export const useAddBusiness = () => {
   const mutation = useSWRMutation(
-    getKey(BUSINESS_KEY),
+    cache.key(BUSINESS_KEY),
     (key, { arg }: { arg: CreateBusinessInputData }) =>
       authClient.organization.create({
         name: arg.name,
@@ -60,10 +60,12 @@ export const useAddBusiness = () => {
 };
 
 export const useRemoveBusiness = () => {
-  return useSWRMutation(getKey(BUSINESS_KEY), (key, { arg }: { arg: string }) =>
-    authClient.organization.delete({
-      organizationId: arg,
-      fetchOptions: authConfig,
-    }),
+  return useSWRMutation(
+    cache.key(BUSINESS_KEY),
+    (key, { arg }: { arg: string }) =>
+      authClient.organization.delete({
+        organizationId: arg,
+        fetchOptions: authConfig,
+      }),
   );
 };

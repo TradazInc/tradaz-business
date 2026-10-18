@@ -7,7 +7,7 @@ import {
   GetAllSizeTypeQuerySchema,
   UpdateSizeTypeInputData,
 } from "@/schema/sizeType";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -23,7 +23,7 @@ export const useSizeTypes = (
   const query = useSearchQuery(GetAllSizeTypeQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(SIZE_TYPE_KEY, { ...query, organizationId }),
+    cache.cursorKey(SIZE_TYPE_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/size-types", {
         query,
@@ -36,7 +36,7 @@ export const useSizeTypes = (
 
 export const useAddSizeTypes = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(SIZE_TYPE_KEY, { organizationId })),
     (key, { arg }: { arg: CreateSizeTypeInputData }) =>
       apiClient("@post/api/size-types", {
         body: arg,
@@ -50,7 +50,7 @@ export const useUpdateSizeType = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(SIZE_TYPE_KEY, { organizationId })),
     (key, { arg }: { arg: { id: string; data: UpdateSizeTypeInputData } }) =>
       apiClient("@put/api/size-types/:id", {
         params: { id: arg.id },
@@ -59,14 +59,14 @@ export const useUpdateSizeType = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(SIZE_TYPE_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(SIZE_TYPE_KEY, data.id)),
     },
   );
 };
 
 export const useRemoveSizeType = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(SIZE_TYPE_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/size-types/:id", {
         params: { id: arg },
@@ -78,7 +78,7 @@ export const useRemoveSizeType = (organizationId: string | undefined) => {
 
 export const useRemoveSize = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SIZE_TYPE_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(SIZE_TYPE_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/size-types/sizes/:id", {
         params: { id: arg },

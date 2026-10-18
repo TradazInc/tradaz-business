@@ -6,7 +6,7 @@ import {
   GetAllPosConfigQuerySchema,
   UpdatePosConfigInputData,
 } from "@/schema/posConfig";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { scopeHeaders } from "@/utilities/scopeHeaders";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -24,7 +24,7 @@ export const usePosConfigs = (
   const query = useSearchQuery(GetAllPosConfigQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(POS_CONFIG_KEY, { ...query, organizationId, teamId }),
+    cache.cursorKey(POS_CONFIG_KEY, { ...query, organizationId, teamId }),
     ([key, { organizationId, teamId, ...query }]) =>
       apiClient("@get/api/pos-configs", {
         query,
@@ -41,7 +41,7 @@ export const useAddPosConfig = (
 ) => {
   return useSWRMutation(
     unstable_serialize(
-      getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
+      cache.cursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
     ),
     (key, { arg }: { arg: CreatePosConfigInputData }) =>
       apiClient("@post/api/pos-configs", {
@@ -60,7 +60,7 @@ export const useUpdatePosConfig = (
 
   return useSWRMutation(
     unstable_serialize(
-      getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
+      cache.cursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
     ),
     (key, { arg }: { arg: { id: string; data: UpdatePosConfigInputData } }) =>
       apiClient("@put/api/pos-configs/:id", {
@@ -70,7 +70,7 @@ export const useUpdatePosConfig = (
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(POS_CONFIG_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(POS_CONFIG_KEY, data.id)),
     },
   );
 };
@@ -81,7 +81,7 @@ export const useRemovePosConfig = (
 ) => {
   return useSWRMutation(
     unstable_serialize(
-      getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
+      cache.cursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
     ),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/pos-configs/:id", {
@@ -98,7 +98,7 @@ export const useRemoveTerminalConfig = (
 ) => {
   return useSWRMutation(
     unstable_serialize(
-      getCursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
+      cache.cursorKey(POS_CONFIG_KEY, { organizationId, teamId }),
     ),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/pos-configs/terminal-configs/:id", {

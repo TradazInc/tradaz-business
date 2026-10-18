@@ -1,7 +1,7 @@
 import { STORE_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
 import { CreateStoreInputData, GetAllStoresOutputData } from "@/schema/store";
-import { getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWR, { SWRConfiguration } from "swr";
 import useSWRMutation from "swr/mutation";
 
@@ -10,7 +10,7 @@ export const useStores = (
   config?: SWRConfiguration<GetAllStoresOutputData, Error>,
 ) => {
   return useSWR(
-    getScopedKey(STORE_KEY, organizationId),
+    cache.scopedKey(STORE_KEY, organizationId),
     () =>
       authClient.organization.listTeams({
         query: { organizationId },
@@ -22,7 +22,7 @@ export const useStores = (
 
 export const useAddStore = (organizationId: string | undefined) => {
   const mutation = useSWRMutation(
-    getScopedKey(STORE_KEY, organizationId),
+    cache.scopedKey(STORE_KEY, organizationId),
     (key, { arg }: { arg: CreateStoreInputData }) =>
       authClient.organization.createTeam({
         ...arg,
@@ -45,7 +45,7 @@ export const useAddStore = (organizationId: string | undefined) => {
 
 export const useRemoveStore = (organizationId: string | undefined) => {
   return useSWRMutation(
-    getScopedKey(STORE_KEY, organizationId),
+    cache.scopedKey(STORE_KEY, organizationId),
     (key, { arg }: { arg: string }) =>
       authClient.organization.removeTeam({
         teamId: arg,

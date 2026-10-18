@@ -4,7 +4,7 @@ import {
   GetAllMembersOutputData,
   GetAllMembersQuerySchema,
 } from "@/schema/member";
-import { getIndexKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -20,7 +20,7 @@ export const useMembers = (
   const query = useSearchQuery(GetAllMembersQuerySchema);
 
   return useSWRInfinite(
-    getIndexKey(MEMBER_KEY, { ...query, organizationId }),
+    cache.indexKey(MEMBER_KEY, { ...query, organizationId }),
     async ([key, query]): Promise<GetAllMembersOutputData> => {
       const res = await authClient.organization.listMembers({
         query: {
@@ -40,7 +40,7 @@ export const useRemoveMember = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getIndexKey(MEMBER_KEY, { organizationId })),
+    unstable_serialize(cache.indexKey(MEMBER_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       authClient.organization.removeMember({
         memberIdOrEmail: arg,
@@ -48,7 +48,7 @@ export const useRemoveMember = (organizationId: string | undefined) => {
         fetchOptions: authConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(MEMBER_KEY, data.member.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(MEMBER_KEY, data.member.id)),
     },
   );
 };

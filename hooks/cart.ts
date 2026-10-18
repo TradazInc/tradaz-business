@@ -8,7 +8,7 @@ import {
   GetCartOutputData,
   UpdateCartInputData,
 } from "@/schema/cart";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { scopeHeaders } from "@/utilities/scopeHeaders";
 import useSWR, { SWRConfiguration, useSWRConfig } from "swr";
 import useSWRInfinite, {
@@ -26,7 +26,7 @@ export const useCarts = (
   const query = useSearchQuery(GetAllCartsQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(CART_KEY, { ...query, organizationId, teamId }),
+    cache.cursorKey(CART_KEY, { ...query, organizationId, teamId }),
     ([key, { organizationId, teamId, ...query }]) =>
       apiClient("@get/api/cart", {
         query,
@@ -44,7 +44,7 @@ export const useCart = (
   config?: SWRConfiguration<GetCartOutputData, Error>,
 ) => {
   return useSWR(
-    getScopedKey(CART_KEY, id),
+    cache.scopedKey(CART_KEY, id),
     ([key, id]) =>
       apiClient("@get/api/cart/:id", {
         params: { id },
@@ -60,7 +60,7 @@ export const useAddCart = (
   teamId: string | undefined,
 ) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
+    unstable_serialize(cache.cursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: BaseCreateCartInputData }) =>
       apiClient("@post/api/cart", {
         body: arg,
@@ -77,7 +77,7 @@ export const useUpdateCart = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
+    unstable_serialize(cache.cursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: { id: string; data: UpdateCartInputData } }) =>
       apiClient("@put/api/cart/:id", {
         params: { id: arg.id },
@@ -86,7 +86,7 @@ export const useUpdateCart = (
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(CART_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(CART_KEY, data.id)),
     },
   );
 };
@@ -98,7 +98,7 @@ export const useRemoveCart = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
+    unstable_serialize(cache.cursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/cart/:id", {
         params: { id: arg },
@@ -106,7 +106,7 @@ export const useRemoveCart = (
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(CART_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(CART_KEY, data.id)),
     },
   );
 };
@@ -118,7 +118,7 @@ export const useAddCartItem = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
+    unstable_serialize(cache.cursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: CreateCartItemInputData }) =>
       apiClient("@post/api/cart/item", {
         body: arg,
@@ -126,7 +126,7 @@ export const useAddCartItem = (
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(CART_KEY, data.cartId)),
+      onSuccess: (data) => mutate(cache.scopedKey(CART_KEY, data.cartId)),
     },
   );
 };
@@ -138,7 +138,7 @@ export const useIncrementCartItem = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
+    unstable_serialize(cache.cursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@post/api/cart/item/increment", {
         body: { id: arg },
@@ -146,7 +146,7 @@ export const useIncrementCartItem = (
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(CART_KEY, data.cartId)),
+      onSuccess: (data) => mutate(cache.scopedKey(CART_KEY, data.cartId)),
     },
   );
 };
@@ -158,7 +158,7 @@ export const useDecrementCartItem = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
+    unstable_serialize(cache.cursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@post/api/cart/item/decrement", {
         body: { id: arg },
@@ -166,7 +166,7 @@ export const useDecrementCartItem = (
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(CART_KEY, data.cartId)),
+      onSuccess: (data) => mutate(cache.scopedKey(CART_KEY, data.cartId)),
     },
   );
 };
@@ -178,7 +178,7 @@ export const useRemoveCartItem = (
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(CART_KEY, { organizationId, teamId })),
+    unstable_serialize(cache.cursorKey(CART_KEY, { organizationId, teamId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/cart/item/:id", {
         params: { id: arg },
@@ -186,7 +186,7 @@ export const useRemoveCartItem = (
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(CART_KEY, data.cartId)),
+      onSuccess: (data) => mutate(cache.scopedKey(CART_KEY, data.cartId)),
     },
   );
 };

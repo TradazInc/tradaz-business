@@ -6,7 +6,7 @@ import {
   GetAllProductCategoryOutputData,
   GetAllProductCategoryQuerySchema,
 } from "@/schema/productCategory";
-import { getCursorKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
   unstable_serialize,
@@ -21,7 +21,7 @@ export const useProductCategories = (
   const query = useSearchQuery(GetAllProductCategoryQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(PRODUCT_CATEGORY_KEY, { ...query, organizationId }),
+    cache.cursorKey(PRODUCT_CATEGORY_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/product-categories", { query, ...apiConfig }),
     config,
@@ -30,7 +30,9 @@ export const useProductCategories = (
 
 export const useAddProductCategory = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(PRODUCT_CATEGORY_KEY, { organizationId })),
+    unstable_serialize(
+      cache.cursorKey(PRODUCT_CATEGORY_KEY, { organizationId }),
+    ),
     (key, { arg }: { arg: CreateProductCategoryInputData }) =>
       apiClient("@post/api/product-categories", {
         body: arg,
@@ -44,7 +46,9 @@ export const useRemoveProductCategory = (
   organizationId: string | undefined,
 ) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(PRODUCT_CATEGORY_KEY, { organizationId })),
+    unstable_serialize(
+      cache.cursorKey(PRODUCT_CATEGORY_KEY, { organizationId }),
+    ),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/product-categories/:id", {
         params: { id: arg },

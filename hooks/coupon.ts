@@ -7,7 +7,7 @@ import {
   GetAllCouponQuerySchema,
   UpdateCouponInputData,
 } from "@/schema/coupon";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -23,7 +23,7 @@ export const useCoupons = (
   const query = useSearchQuery(GetAllCouponQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(COUPON_KEY, { ...query, organizationId }),
+    cache.cursorKey(COUPON_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/coupons", {
         query,
@@ -36,7 +36,7 @@ export const useCoupons = (
 
 export const useAddCoupon = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(COUPON_KEY, { organizationId })),
     (key, { arg }: { arg: CreateCouponInputData }) =>
       apiClient("@post/api/coupons", {
         body: arg,
@@ -50,7 +50,7 @@ export const useUpdateCoupon = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(COUPON_KEY, { organizationId })),
     (key, { arg }: { arg: { id: string; data: UpdateCouponInputData } }) =>
       apiClient("@put/api/coupons/:id", {
         params: { id: arg.id },
@@ -59,14 +59,14 @@ export const useUpdateCoupon = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(COUPON_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(COUPON_KEY, data.id)),
     },
   );
 };
 
 export const useRemoveCoupon = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(COUPON_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(COUPON_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/coupons/:id", {
         params: { id: arg },

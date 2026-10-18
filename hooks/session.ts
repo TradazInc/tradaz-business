@@ -1,20 +1,20 @@
 import { SESSION_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
 import { CustomSession } from "@/schema/session";
-import { getKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { updateSession } from "@/utilities/updateSession";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 export const useSession = () => {
-  return useSWR(getKey(SESSION_KEY), () =>
+  return useSWR(cache.key(SESSION_KEY), () =>
     authClient.getSession({ fetchOptions: authConfig }),
   );
 };
 
 export const useSetActiveBusiness = () => {
   const mutation = useSWRMutation(
-    getKey(SESSION_KEY),
+    cache.key(SESSION_KEY),
     (key, { arg }: { arg?: string }) =>
       authClient.organization.setActive({
         organizationId: arg ?? null,
@@ -36,7 +36,7 @@ export const useSetActiveBusiness = () => {
 
 export const useSetActiveStore = () => {
   const mutation = useSWRMutation(
-    getKey(SESSION_KEY),
+    cache.key(SESSION_KEY),
     (key, { arg }: { arg?: string }) =>
       authClient.organization.setActiveTeam({
         teamId: arg ?? null,

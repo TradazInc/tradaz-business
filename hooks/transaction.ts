@@ -5,7 +5,7 @@ import {
   CreateTransactionInputData,
   GetTransactionOutputData,
 } from "@/schema/transaction";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWR, { SWRConfiguration, useSWRConfig } from "swr";
 import { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
@@ -17,7 +17,7 @@ export const useTransaction = (
   config?: SWRConfiguration<GetTransactionOutputData, Error>,
 ) => {
   return useSWR(
-    getScopedKey(TRANSACTION_KEY, id),
+    cache.scopedKey(TRANSACTION_KEY, id),
     ([key, id]) =>
       apiClient("@get/api/transactions/:id", {
         params: { id },
@@ -32,7 +32,7 @@ export const useAddTransaction = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(ORDER_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(ORDER_KEY, { organizationId })),
     (key, { arg }: { arg: CreateTransactionInputData }) =>
       apiClient("@post/api/transactions", {
         body: arg,
@@ -40,7 +40,7 @@ export const useAddTransaction = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(ORDER_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(ORDER_KEY, data.id)),
     },
   );
 };

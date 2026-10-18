@@ -7,7 +7,7 @@ import {
   GetAllPointsConfigQuerySchema,
   UpdatePointsConfigInputData,
 } from "@/schema/pointsConfig";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -23,7 +23,7 @@ export const usePointsConfigs = (
   const query = useSearchQuery(GetAllPointsConfigQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(POINTS_CONFIG_KEY, { ...query, organizationId }),
+    cache.cursorKey(POINTS_CONFIG_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/points-config", {
         query,
@@ -36,7 +36,7 @@ export const usePointsConfigs = (
 
 export const useAddPointsConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(POINTS_CONFIG_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(POINTS_CONFIG_KEY, { organizationId })),
     (key, { arg }: { arg: CreatePointsConfigInputData }) =>
       apiClient("@post/api/points-config", {
         body: arg,
@@ -50,7 +50,7 @@ export const useUpdatePointsConfig = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(POINTS_CONFIG_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(POINTS_CONFIG_KEY, { organizationId })),
     (
       key,
       { arg }: { arg: { id: string; data: UpdatePointsConfigInputData } },
@@ -62,7 +62,7 @@ export const useUpdatePointsConfig = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(POINTS_CONFIG_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(POINTS_CONFIG_KEY, data.id)),
     },
   );
 };

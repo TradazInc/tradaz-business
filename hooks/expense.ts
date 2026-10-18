@@ -7,7 +7,7 @@ import {
   GetAllExpenseQuerySchema,
   UpdateExpenseInputData,
 } from "@/schema/expense";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -23,7 +23,7 @@ export const useExpenses = (
   const query = useSearchQuery(GetAllExpenseQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(EXPENSES_KEY, { ...query, organizationId }),
+    cache.cursorKey(EXPENSES_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/expense", {
         query,
@@ -36,7 +36,7 @@ export const useExpenses = (
 
 export const useAddExpense = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(EXPENSES_KEY, { organizationId })),
     (key, { arg }: { arg: CreateExpenseInputData }) =>
       apiClient("@post/api/expense", {
         body: arg,
@@ -50,7 +50,7 @@ export const useUpdateExpense = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(EXPENSES_KEY, { organizationId })),
     (key, { arg }: { arg: { id: string; data: UpdateExpenseInputData } }) =>
       apiClient("@put/api/expense/:id", {
         params: { id: arg.id },
@@ -59,14 +59,14 @@ export const useUpdateExpense = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(EXPENSES_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(EXPENSES_KEY, data.id)),
     },
   );
 };
 
 export const useRemoveExpense = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(EXPENSES_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(EXPENSES_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/expense/:id", {
         params: { id: arg },

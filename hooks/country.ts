@@ -4,7 +4,7 @@ import {
   GetAllCountriesOutputData,
   GetAllCountriesQueryData,
 } from "@/schema/country";
-import { getCursorKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWRInfinite, { SWRInfiniteConfiguration } from "swr/infinite";
 
 export const useCountries = (
@@ -14,7 +14,7 @@ export const useCountries = (
   return useSWRInfinite(
     (pageIndex, previousPageData: GetAllCountriesOutputData | null) =>
       query
-        ? getCursorKey(COUNTRY_KEY, query)(pageIndex, previousPageData)
+        ? cache.cursorKey(COUNTRY_KEY, query)(pageIndex, previousPageData)
         : null,
     ([key, query]) => apiClient("@get/api/country", { query, ...apiConfig }),
     config,
