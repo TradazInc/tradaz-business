@@ -8,11 +8,11 @@ import { Spacer } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 interface Props {
-  params: Promise<{ businessId?: string }>;
+  params: Promise<{ businessId?: string; storeId?: string }>;
 }
 
 export default async function page({ params }: Props) {
-  const { businessId } = await params;
+  const { businessId, storeId } = await params;
   const orders = getOrders(businessId).then((d) => [d]);
 
   return (
@@ -26,7 +26,7 @@ export default async function page({ params }: Props) {
         <Spacer />
       </PageItemContainer>
 
-      <OrderTable initialOrders={orders} businessId={businessId} />
+      <OrderTable initialOrders={orders} businessId={businessId} storeId={storeId} />
     </PageContainer>
   );
 }

@@ -30,12 +30,17 @@ import ViewIconButton from "./ViewIconButton";
 interface Props {
   initialOrders: Promise<GetAllOrderOutputData[]>;
   businessId: string | undefined;
+  storeId?: string | undefined;
 }
 
-const OrderTable = ({ initialOrders, businessId }: Props) => {
-  const { data, error, mutate, setSize, size } = useOrders(businessId, {
-    fallbackData: initialOrders,
-  });
+const OrderTable = ({ initialOrders, businessId, storeId }: Props) => {
+  const { data, error, mutate, setSize, size } = useOrders(
+    businessId,
+    storeId,
+    {
+      fallbackData: initialOrders,
+    },
+  );
   const { flatData: orders, hasMore } = useMemo(
     () => parseCursorData(data),
     [data],
