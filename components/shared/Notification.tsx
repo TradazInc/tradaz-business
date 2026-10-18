@@ -1,4 +1,3 @@
-import { notifications } from "@/data/notifications";
 import {
   Circle,
   DataList,
@@ -50,3 +49,21 @@ const Notification = () => {
 };
 
 export default Notification;
+
+const notifications = [
+  {
+    id: "ertyuioiuhg",
+    title: " New order received!",
+    createdAt: "10m",
+  },
+  {
+    id: "ertylkmnbvciuhg",
+    title: " New order received!",
+    createdAt: "10m",
+  },
+  {
+    id: "errtyuhniuhg",
+    title: " New order received!",
+    createdAt: "10m",
+  },
+];
