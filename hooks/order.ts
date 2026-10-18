@@ -1,12 +1,12 @@
 import { ORDER_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
-import { scopeHeaders } from "@/utilities/scopeHeaders";
 import {
   GetAllOrderOutputData,
   GetAllOrderQuerySchema,
   UpdateOrderStatusInputData,
 } from "@/schema/order";
 import { cache } from "@/utilities/cacheKey";
+import { scopeHeaders } from "@/utilities/scopeHeaders";
 import useSWR, { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -17,16 +17,17 @@ import { useSearchQuery } from "./searchQuery";
 
 export const useOrders = (
   organizationId: string | undefined,
+  teamId?: string | undefined,
   config?: SWRInfiniteConfiguration<GetAllOrderOutputData, Error>,
 ) => {
   const query = useSearchQuery(GetAllOrderQuerySchema);
 
   return useSWRInfinite(
-    cache.cursorKey(ORDER_KEY, { ...query, organizationId }),
+    cache.cursorKey(ORDER_KEY, { ...query, organizationId, teamId }),
     ([key, query]) =>
       apiClient("@get/api/orders", {
         query,
-        headers: scopeHeaders(organizationId),
+        headers: scopeHeaders(organizationId, teamId),
         ...apiConfig,
       }),
     config,
