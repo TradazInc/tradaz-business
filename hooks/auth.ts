@@ -1,12 +1,12 @@
 import { SESSION_KEY } from "@/data/cacheKeys";
 import { authClient, authConfig } from "@/lib/authClient";
 import { EmailSignInData, EmailSignUpData } from "@/schema/auth";
-import { getKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWRMutation from "swr/mutation";
 
 export const useEmailSignup = () => {
   return useSWRMutation(
-    getKey(SESSION_KEY),
+    cache.key(SESSION_KEY),
     (
       key,
       { arg }: { arg: { signUpData: EmailSignUpData; callbackURL?: string } },
@@ -21,7 +21,7 @@ export const useEmailSignup = () => {
 
 export const useEmailSignin = () => {
   return useSWRMutation(
-    getKey(SESSION_KEY),
+    cache.key(SESSION_KEY),
     (
       key,
       { arg }: { arg: { signInData: EmailSignInData; callbackURL?: string } },
@@ -35,17 +35,21 @@ export const useEmailSignin = () => {
 };
 
 export const useGoogleSignin = () => {
-  return useSWRMutation(getKey(SESSION_KEY), (key, { arg }: { arg?: string }) =>
-    authClient.signIn.social({
-      provider: "google",
-      callbackURL: arg,
-      fetchOptions: authConfig,
-    }),
+  return useSWRMutation(
+    cache.key(SESSION_KEY),
+    (key, { arg }: { arg?: string }) =>
+      authClient.signIn.social({
+        provider: "google",
+        callbackURL: arg,
+        fetchOptions: authConfig,
+      }),
   );
 };
 
 export const useSignOut = () => {
-  return useSWRMutation(getKey(SESSION_KEY), (key, { arg }: { arg?: null }) =>
-    authClient.signOut({ fetchOptions: authConfig }),
+  return useSWRMutation(
+    cache.key(SESSION_KEY),
+    (key, { arg }: { arg?: null }) =>
+      authClient.signOut({ fetchOptions: authConfig }),
   );
 };

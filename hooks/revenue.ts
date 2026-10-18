@@ -7,7 +7,7 @@ import {
   GetAllRevenueQuerySchema,
   UpdateRevenueInputData,
 } from "@/schema/revenue";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -23,7 +23,7 @@ export const useRevenues = (
   const query = useSearchQuery(GetAllRevenueQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(REVENUE_KEY, { ...query, organizationId }),
+    cache.cursorKey(REVENUE_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/revenue", {
         query,
@@ -36,7 +36,7 @@ export const useRevenues = (
 
 export const useAddRevenue = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(REVENUE_KEY, { organizationId })),
     (key, { arg }: { arg: CreateRevenueInputData }) =>
       apiClient("@post/api/revenue", {
         body: arg,
@@ -50,7 +50,7 @@ export const useUpdateRevenue = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(REVENUE_KEY, { organizationId })),
     (key, { arg }: { arg: { id: string; data: UpdateRevenueInputData } }) =>
       apiClient("@put/api/revenue/:id", {
         params: { id: arg.id },
@@ -59,14 +59,14 @@ export const useUpdateRevenue = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(REVENUE_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(REVENUE_KEY, data.id)),
     },
   );
 };
 
 export const useRemoveRevenue = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(REVENUE_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(REVENUE_KEY, { organizationId })),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/revenue/:id", {
         params: { id: arg },

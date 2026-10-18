@@ -2,7 +2,7 @@ import { ORDER_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
 import { scopeHeaders } from "@/utilities/scopeHeaders";
 import { CreateCheckoutInputData } from "@/schema/checkout";
-import { getCursorKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { unstable_serialize } from "swr/infinite";
 import useSWRMutation from "swr/mutation";
 
@@ -11,7 +11,7 @@ export const useWebCheckout = (
   teamId: string | undefined,
 ) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(ORDER_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(ORDER_KEY, { organizationId })),
     (key, { arg }: { arg: CreateCheckoutInputData }) =>
       apiClient("@post/api/checkout/web", {
         body: arg,
@@ -26,7 +26,7 @@ export const usePosCheckout = (
   teamId: string | undefined,
 ) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(ORDER_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(ORDER_KEY, { organizationId })),
     (key, { arg }: { arg: CreateCheckoutInputData }) =>
       apiClient("@post/api/checkout/pos", {
         body: arg,

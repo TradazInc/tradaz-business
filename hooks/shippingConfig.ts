@@ -7,7 +7,7 @@ import {
   GetAllShippingConfigQuerySchema,
   UpdateShippingConfigInputData,
 } from "@/schema/shippingConfig";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -23,7 +23,7 @@ export const useShippingConfigs = (
   const query = useSearchQuery(GetAllShippingConfigQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(SHIPPING_CONFIG_KEY, { ...query, organizationId }),
+    cache.cursorKey(SHIPPING_CONFIG_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/shipping-configs", {
         query,
@@ -36,7 +36,9 @@ export const useShippingConfigs = (
 
 export const useAddShippingConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
+    unstable_serialize(
+      cache.cursorKey(SHIPPING_CONFIG_KEY, { organizationId }),
+    ),
     (key, { arg }: { arg: CreateShippingConfigInputData }) =>
       apiClient("@post/api/shipping-configs", {
         body: arg,
@@ -50,7 +52,9 @@ export const useUpdateShippingConfig = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
+    unstable_serialize(
+      cache.cursorKey(SHIPPING_CONFIG_KEY, { organizationId }),
+    ),
     (
       key,
       { arg }: { arg: { id: string; data: UpdateShippingConfigInputData } },
@@ -62,14 +66,17 @@ export const useUpdateShippingConfig = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(SHIPPING_CONFIG_KEY, data.id)),
+      onSuccess: (data) =>
+        mutate(cache.scopedKey(SHIPPING_CONFIG_KEY, data.id)),
     },
   );
 };
 
 export const useRemoveShippingConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
+    unstable_serialize(
+      cache.cursorKey(SHIPPING_CONFIG_KEY, { organizationId }),
+    ),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/shipping-configs/:id", {
         params: { id: arg },
@@ -81,7 +88,9 @@ export const useRemoveShippingConfig = (organizationId: string | undefined) => {
 
 export const useRemoveShippingMethod = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SHIPPING_CONFIG_KEY, { organizationId })),
+    unstable_serialize(
+      cache.cursorKey(SHIPPING_CONFIG_KEY, { organizationId }),
+    ),
     (key, { arg }: { arg: string }) =>
       apiClient("@delete/api/shipping-configs/shipping-methods/:id", {
         params: { id: arg },

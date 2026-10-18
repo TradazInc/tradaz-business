@@ -6,7 +6,7 @@ import {
   GetAllOrderQuerySchema,
   UpdateOrderStatusInputData,
 } from "@/schema/order";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWR, { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -22,7 +22,7 @@ export const useOrders = (
   const query = useSearchQuery(GetAllOrderQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(ORDER_KEY, { ...query, organizationId }),
+    cache.cursorKey(ORDER_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/orders", {
         query,
@@ -34,7 +34,7 @@ export const useOrders = (
 };
 
 export const useOrder = (id: string, organizationId: string | undefined) => {
-  return useSWR(getScopedKey(ORDER_KEY, id), ([key, id]) =>
+  return useSWR(cache.scopedKey(ORDER_KEY, id), ([key, id]) =>
     apiClient("@get/api/orders/:id", {
       params: { id },
       headers: scopeHeaders(organizationId),
@@ -47,7 +47,7 @@ export const useUpdateOrderStatus = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(ORDER_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(ORDER_KEY, { organizationId })),
     (key, { arg }: { arg: { id: string; data: UpdateOrderStatusInputData } }) =>
       apiClient("@patch/api/orders/:id/status", {
         params: { id: arg.id },
@@ -56,7 +56,7 @@ export const useUpdateOrderStatus = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: (data) => mutate(getScopedKey(ORDER_KEY, data.id)),
+      onSuccess: (data) => mutate(cache.scopedKey(ORDER_KEY, data.id)),
     },
   );
 };

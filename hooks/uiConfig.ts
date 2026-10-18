@@ -2,12 +2,12 @@ import { UI_CONFIG_KEY } from "@/data/cacheKeys";
 import { apiClient, apiConfig } from "@/lib/apiClient";
 import { scopeHeaders } from "@/utilities/scopeHeaders";
 import { CreateUIConfigInputData } from "@/schema/uiConfig";
-import { getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 export const useUIConfig = (organizationId: string | undefined) => {
-  return useSWR(getScopedKey(UI_CONFIG_KEY, organizationId), () =>
+  return useSWR(cache.scopedKey(UI_CONFIG_KEY, organizationId), () =>
     apiClient("@get/api/ui-configs", {
       headers: scopeHeaders(organizationId),
       ...apiConfig,
@@ -17,7 +17,7 @@ export const useUIConfig = (organizationId: string | undefined) => {
 
 export const useAddUIConfig = (organizationId: string | undefined) => {
   return useSWRMutation(
-    getScopedKey(UI_CONFIG_KEY, organizationId),
+    cache.scopedKey(UI_CONFIG_KEY, organizationId),
     (key, { arg }: { arg: CreateUIConfigInputData }) =>
       apiClient("@post/api/ui-configs", {
         body: arg,
@@ -28,7 +28,7 @@ export const useAddUIConfig = (organizationId: string | undefined) => {
 };
 
 export const useRemoveUIConfig = (organizationId: string | undefined) => {
-  return useSWRMutation(getScopedKey(UI_CONFIG_KEY, organizationId), () =>
+  return useSWRMutation(cache.scopedKey(UI_CONFIG_KEY, organizationId), () =>
     apiClient("@delete/api/ui-configs", {
       headers: scopeHeaders(organizationId),
       ...apiConfig,

@@ -7,7 +7,7 @@ import {
   GetAllSubaccountQuerySchema,
   UpdateSubaccountInputData,
 } from "@/schema/subaccount";
-import { getCursorKey, getScopedKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { useSWRConfig } from "swr";
 import useSWRInfinite, {
   SWRInfiniteConfiguration,
@@ -23,7 +23,7 @@ export const useSubaccounts = (
   const query = useSearchQuery(GetAllSubaccountQuerySchema);
 
   return useSWRInfinite(
-    getCursorKey(SUBACCOUNT_KEY, { ...query, organizationId }),
+    cache.cursorKey(SUBACCOUNT_KEY, { ...query, organizationId }),
     ([key, query]) =>
       apiClient("@get/api/subaccounts", {
         query,
@@ -36,7 +36,7 @@ export const useSubaccounts = (
 
 export const useAddSubaccount = (organizationId: string | undefined) => {
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SUBACCOUNT_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(SUBACCOUNT_KEY, { organizationId })),
     (key, { arg }: { arg: CreateSubaccountInputData }) =>
       apiClient("@post/api/subaccounts", {
         body: arg,
@@ -50,7 +50,7 @@ export const useUpdateSubaccount = (organizationId: string | undefined) => {
   const { mutate } = useSWRConfig();
 
   return useSWRMutation(
-    unstable_serialize(getCursorKey(SUBACCOUNT_KEY, { organizationId })),
+    unstable_serialize(cache.cursorKey(SUBACCOUNT_KEY, { organizationId })),
     (key, { arg }: { arg: UpdateSubaccountInputData }) =>
       apiClient("@put/api/subaccounts", {
         body: arg,
@@ -58,7 +58,7 @@ export const useUpdateSubaccount = (organizationId: string | undefined) => {
         ...apiConfig,
       }),
     {
-      onSuccess: () => mutate(getScopedKey(SUBACCOUNT_KEY, organizationId)),
+      onSuccess: () => mutate(cache.scopedKey(SUBACCOUNT_KEY, organizationId)),
     },
   );
 };

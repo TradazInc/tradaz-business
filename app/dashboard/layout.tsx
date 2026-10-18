@@ -4,7 +4,7 @@ import { SideMenuSectionList } from "@/components/shared/SideMenuSectionList";
 import { BUSINESS_KEY, SESSION_KEY } from "@/data/cacheKeys";
 import { getSession } from "@/server/auth";
 import { getBusinesses } from "@/server/business";
-import { getKey } from "@/utilities/computeKey";
+import { cache } from "@/utilities/cacheKey";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { unauthorized } from "next/navigation";
 import { SWRConfig, unstable_serialize } from "swr";
@@ -25,8 +25,8 @@ export default async function BusinessLayout({
       <SWRConfig
         value={{
           fallback: {
-            [unstable_serialize(getKey(SESSION_KEY))]: session.data,
-            [unstable_serialize(getKey(BUSINESS_KEY))]: businesses,
+            [unstable_serialize(cache.key(SESSION_KEY))]: session.data,
+            [unstable_serialize(cache.key(BUSINESS_KEY))]: businesses,
           },
         }}
       >
