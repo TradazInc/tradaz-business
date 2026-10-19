@@ -24,7 +24,7 @@ export default async function page({ params }: Props) {
   return (
     <PageContainer>
       <PageHeader>
-        <BusinessName businessId={businessId} />
+        <BusinessName businessId={businessId} suffix={"Branches"} />
       </PageHeader>
 
       <PageItemContainer>

@@ -21,17 +21,19 @@ export default async function page({ params }: Props) {
   return (
     <PageContainer>
       <PageHeader>
-        <BusinessName businessId={businessId} />
+        <BusinessName businessId={businessId} suffix={"Analytics"} />
       </PageHeader>
 
-      <PageItemContainer>
-        <StoreStat initialStores={stores} businessId={businessId} />
-        <VisitorsStat />
-        <SalesStat />
-        <RevenueStat />
-      </PageItemContainer>
-
-      <ShowMore>
+      <ShowMore
+        initial={
+          <PageItemContainer>
+            <StoreStat initialStores={stores} businessId={businessId} />
+            <VisitorsStat />
+            <SalesStat />
+            <RevenueStat />
+          </PageItemContainer>
+        }
+      >
         <SimpleGrid columns={4}>
           <StoreStat initialStores={stores} businessId={businessId} />
           <VisitorsStat />
