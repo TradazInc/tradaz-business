@@ -39,6 +39,13 @@ export default async function page({ params }: Props) {
           <SalesStat />
           <RevenueStat />
         </PageItemContainer>
+
+        <PageItemContainer>
+          <StoreStat initialStores={stores} businessId={businessId} />
+          <VisitorsStat />
+          <SalesStat />
+          <RevenueStat />
+        </PageItemContainer>
       </ShowMore>
     </PageContainer>
   );

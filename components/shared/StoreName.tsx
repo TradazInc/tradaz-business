@@ -10,7 +10,7 @@ interface Props {
   suffix?: string;
 }
 
-const StoreName = ({ businessId, storeId, suffix }: Props) => {
+const StoreName = ({ businessId, storeId, suffix = "" }: Props) => {
   const { data: stores } = useStores(businessId);
   const store = stores?.find((s) => s.id === storeId);
 
