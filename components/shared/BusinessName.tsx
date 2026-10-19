@@ -6,14 +6,15 @@ import HeaderText from "./HeaderText";
 
 interface Props {
   businessId: string;
+  suffix?: string;
 }
 
-const BusinessName = ({ businessId }: Props) => {
+const BusinessName = ({ businessId, suffix }: Props) => {
   const { data: businesses } = useBusinesses();
   const business = businesses?.find((b) => b.id === businessId);
 
   return business ? (
-    <HeaderText>{`${business.name} Branches`}</HeaderText>
+    <HeaderText>{`${business.name} ${suffix}`}</HeaderText>
   ) : (
     <Skeleton h={10} w={250} />
   );

@@ -4,16 +4,17 @@ import { Button, Presence, Stack, useDisclosure } from "@chakra-ui/react";
 import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 
 interface Props {
+  initial?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const ShowMore = ({ children }: Props) => {
+export const ShowMore = ({ children, initial }: Props) => {
   const { open, onToggle } = useDisclosure();
 
   return (
-    <Stack gap={4}>
+    <Stack gap={4} w={"full"}>
       <Button
-        size={"sm"}
+        size={"xs"}
         variant={"outline"}
         alignSelf={"flex-end"}
         onClick={onToggle}
@@ -21,6 +22,7 @@ export const ShowMore = ({ children }: Props) => {
         {open ? <LuChevronUp /> : <LuChevronDown />}
         {open ? "Show less" : "Show more"}
       </Button>
+      {initial}
       <Presence
         w={"full"}
         present={open}
