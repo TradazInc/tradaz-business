@@ -1,5 +1,44 @@
+import BusinessName from "@/components/shared/BusinessName";
 import { PageContainer } from "@/components/shared/PageContainer";
+import PageHeader from "@/components/shared/PageHeader";
+import { PageItemContainer } from "@/components/shared/PageItemContainer";
+import { RevenueStat } from "@/components/shared/RevenueStat";
+import { SalesStat } from "@/components/shared/SalesStat";
+import { ShowMore } from "@/components/shared/ShowMore";
+import { StoreStat } from "@/components/shared/StoreStat";
+import { VisitorsStat } from "@/components/shared/VisitorsStat";
+import { getStores } from "@/server/store";
+import { SimpleGrid } from "@chakra-ui/react";
 
-export default function page() {
-  return <PageContainer>analytics page</PageContainer>;
+interface Props {
+  params: Promise<{ businessId: string }>;
+}
+
+export default async function page({ params }: Props) {
+  const { businessId } = await params;
+  const stores = getStores(businessId);
+
+  return (
+    <PageContainer>
+      <PageHeader>
+        <BusinessName businessId={businessId} />
+      </PageHeader>
+
+      <PageItemContainer>
+        <StoreStat initialStores={stores} businessId={businessId} />
+        <VisitorsStat />
+        <SalesStat />
+        <RevenueStat />
+      </PageItemContainer>
+
+      <ShowMore>
+        <SimpleGrid columns={4}>
+          <StoreStat initialStores={stores} businessId={businessId} />
+          <VisitorsStat />
+          <SalesStat />
+          <RevenueStat />
+        </SimpleGrid>
+      </ShowMore>
+    </PageContainer>
+  );
 }
