@@ -8,7 +8,6 @@ import { ShowMore } from "@/components/shared/ShowMore";
 import { StoreStat } from "@/components/shared/StoreStat";
 import { VisitorsStat } from "@/components/shared/VisitorsStat";
 import { getStores } from "@/server/store";
-import { SimpleGrid } from "@chakra-ui/react";
 
 interface Props {
   params: Promise<{ businessId: string }>;
@@ -34,12 +33,12 @@ export default async function page({ params }: Props) {
           </PageItemContainer>
         }
       >
-        <SimpleGrid columns={4}>
+        <PageItemContainer>
           <StoreStat initialStores={stores} businessId={businessId} />
           <VisitorsStat />
           <SalesStat />
           <RevenueStat />
-        </SimpleGrid>
+        </PageItemContainer>
       </ShowMore>
     </PageContainer>
   );
