@@ -10,6 +10,7 @@ import {
   Text,
   Wrap,
 } from "@chakra-ui/react";
+import { useId } from "react";
 
 type Statements = Record<string, readonly string[]>;
 export type Permission<S extends Statements> = Partial<
@@ -34,6 +35,14 @@ export const PermissionPicker = <S extends Statements>({
   disabled,
   invalid,
 }: PermissionPickerProps<S>) => {
+  // A surrounding Field.Root hands every checkbox the same input and label id,
+  // so each one needs its own or every label click toggles the first checkbox.
+  const id = useId();
+  const idsFor = (...parts: string[]) => {
+    const key = [id, ...parts].join("-");
+    return { hiddenInput: `${key}-input`, label: `${key}-label` };
+  };
+
   const setResource = (resource: keyof S, actions: string[]) => {
     const next = { ...value };
     if (actions.length) next[resource] = actions;
@@ -60,6 +69,7 @@ export const PermissionPicker = <S extends Statements>({
           >
             <Stack gap={2}>
               <Checkbox.Root
+                ids={idsFor(resource)}
                 size={"sm"}
                 variant={"subtle"}
                 disabled={disabled}
@@ -83,7 +93,12 @@ export const PermissionPicker = <S extends Statements>({
               >
                 <Wrap gap={3} ps={6}>
                   {actions.map((action) => (
-                    <Checkbox.Root key={action} value={action} size={"sm"}>
+                    <Checkbox.Root
+                      key={action}
+                      ids={idsFor(resource, action)}
+                      value={action}
+                      size={"sm"}
+                    >
                       <Checkbox.HiddenInput />
                       <Checkbox.Control />
                       <Checkbox.Label>{humanizeText(action)}</Checkbox.Label>
