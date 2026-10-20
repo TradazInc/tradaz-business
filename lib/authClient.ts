@@ -24,6 +24,7 @@ export const authClient = createAuthClient({
     adminClient(),
     organizationClient({
       teams: { enabled: true },
+      dynamicAccessControl: { enabled: true },
       schema: inferOrgAdditionalFields({
         organization: {
           additionalFields: {
