@@ -1,3 +1,4 @@
+import { admin, orgAc, platformAc, user } from "@/lib/accessControl";
 import { CustomSession } from "@/schema/session";
 import { setServerCookie } from "@/utilities/setServerCookie";
 import { logger } from "@better-fetch/logger";
@@ -21,9 +22,11 @@ export const authClient = createAuthClient({
     customSessionClient<{
       options: { plugins: [ReturnType<typeof customSession<CustomSession>>] };
     }>(),
-    adminClient(),
+    adminClient({ ac: platformAc, roles: { admin, user } }),
     organizationClient({
+      ac: orgAc,
       teams: { enabled: true },
+      dynamicAccessControl: { enabled: true },
       schema: inferOrgAdditionalFields({
         organization: {
           additionalFields: {
