@@ -2,11 +2,7 @@
 
 import { toaster } from "@/components/ui/toaster";
 import { useAddRole } from "@/hooks/role";
-import {
-  CreateRoleInputSchema,
-  emptyRole,
-  roleStatements,
-} from "@/schema/role";
+import { CreateRoleInputSchema, emptyRole } from "@/schema/role";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Button,
@@ -24,6 +20,7 @@ import { Controller, useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 import FormButton from "./FormButton";
 import { PermissionPicker } from "./PermissionPicker";
+import { roleStatements } from "@/lib/accessControl";
 
 export const roleDialog = createOverlay((props) => {
   const { businessId } = useParams<{ businessId?: string }>();

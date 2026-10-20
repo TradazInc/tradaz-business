@@ -67,4 +67,19 @@ const organizationStatement = {
 } as const;
 
 export const orgAc = createAccessControl(organizationStatement);
-orgAc.statements.cart
+
+// Resources a business can grant to a custom role.
+// `ac` (managing roles themselves) is deliberately not grantable from the UI.
+const { ac: _ac, ...grantable } = orgAc.statements;
+export const roleStatements = grantable;
+
+export type RoleStatements = typeof roleStatements;
+export type RoleResource = keyof RoleStatements;
+export type RoleAction<R extends RoleResource = RoleResource> =
+  RoleStatements[R][number];
+export type RolePermission = { [R in RoleResource]?: RoleAction<R>[] };
+
+export const resources = Object.keys(roleStatements) as [
+  RoleResource,
+  ...RoleResource[],
+];

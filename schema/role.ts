@@ -1,21 +1,10 @@
-import { orgAc } from "@/lib/accessControl";
+import { resources, RoleResource, roleStatements } from "@/lib/accessControl";
+import { getRoles } from "@/server/role";
 import { z } from "zod";
 
-// Resources a business can grant to a custom role.
-// `ac` (managing roles themselves) is deliberately not grantable from the UI.
-const { ac: _ac, ...grantable } = orgAc.statements;
-export const roleStatements = grantable;
-
-export type RoleStatements = typeof roleStatements;
-export type RoleResource = keyof RoleStatements;
-export type RoleAction<R extends RoleResource = RoleResource> =
-  RoleStatements[R][number];
-export type RolePermission = { [R in RoleResource]?: RoleAction<R>[] };
-
-const resources = Object.keys(roleStatements) as [
-  RoleResource,
-  ...RoleResource[],
-];
+// Get All
+export type GetAllRolesOutputData = Awaited<ReturnType<typeof getRoles>>;
+export type GetRoleOutputData = GetAllRolesOutputData[number];
 
 // Create
 export const CreateRoleInputSchema = z.object({

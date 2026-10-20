@@ -201,6 +201,7 @@ export const businessItems: SideMenuItem[] = [
     children: [
       { label: "Logistics & Shipping", icon: <LuTruck />, path: "/shipping" },
       { label: "VAT Settings", icon: <LuPercent />, path: "/vat" },
+      { label: "Staff Roles", icon: <LuShield />, path: "/roles" },
       { label: "Subdomain", icon: <CgWebsite />, path: "/subdomain" },
     ],
   },
