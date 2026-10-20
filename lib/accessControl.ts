@@ -67,3 +67,4 @@ const organizationStatement = {
 } as const;
 
 export const orgAc = createAccessControl(organizationStatement);
+orgAc.statements.cart
