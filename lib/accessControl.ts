@@ -33,7 +33,7 @@ export const user = platformAc.newRole({
 const organizationStatement = {
   ...organizationStatements,
   // Product related
-  products: ["create", "read", "update", "update-status", "delete", "share"],
+  products: ["create", "read", "update", "update-status", "delete"],
   productCategories: ["create", "delete"],
   productEdits: ["create", "read", "update", "approve", "reject", "delete"],
   sizeTypes: ["create", "read", "update", "delete"],
@@ -87,7 +87,7 @@ export const customer = orgAc.newRole({
 });
 
 export const vendor = orgAc.newRole({
-  products: ["create", "read", "update", "share"],
+  products: ["create", "read"],
   productEdits: ["create", "read", "update", "delete"],
   sizeTypes: ["read"],
   vendors: ["read"],
