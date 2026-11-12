@@ -1,15 +1,19 @@
 import { createAccessControl } from "better-auth/plugins/access";
 import {
-  adminAc,
-  defaultStatements as adminStatements,
+  adminAc as platformAdminAc,
+  defaultStatements as platformStatements,
   userAc,
 } from "better-auth/plugins/admin/access";
-import { defaultStatements as organizationStatements } from "better-auth/plugins/organization/access";
+import {
+  memberAc,
+  adminAc as orgAdminAc,
+  defaultStatements as organizationStatements,
+  ownerAc,
+} from "better-auth/plugins/organization/access";
 
 /* Platform-level Resources */
 const platformStatement = {
-  ...adminStatements,
-
+  ...platformStatements,
   businessCategories: ["create", "read", "delete"],
   banks: ["read"],
   country: ["read"],
@@ -18,12 +22,13 @@ const platformStatement = {
 
 export const platformAc = createAccessControl(platformStatement);
 
+/* Platform-level Roles */
 export const admin = platformAc.newRole({
   businessCategories: ["create", "read", "delete"],
   banks: ["read"],
   country: ["read"],
   media: ["upload"],
-  ...adminAc.statements,
+  ...platformAdminAc.statements,
 });
 
 export const user = platformAc.newRole({
@@ -34,10 +39,9 @@ export const user = platformAc.newRole({
   ...userAc.statements,
 });
 
-/* Organization-scoped Resources */
+/* Organization-level Resources */
 const organizationStatement = {
   ...organizationStatements,
-
   // Product related
   products: ["create", "read", "update", "update-status", "delete", "share"],
   productCategories: ["create", "delete"],
@@ -65,8 +69,13 @@ const organizationStatement = {
   revenue: ["create", "read", "update", "delete"],
   vendors: ["read"],
 } as const;
-
 export const orgAc = createAccessControl(organizationStatement);
+
+/* Organization-level Roles */
+export const owner = orgAc.newRole({ ...ownerAc.statements });
+export const manager = orgAc.newRole({ ...orgAdminAc.statements });
+export const staff = orgAc.newRole({ ...memberAc.statements });
+export const customer = orgAc.newRole({ ...memberAc.statements });
 
 // Resources a business can grant to a custom role.
 // `ac` (managing roles themselves) is deliberately not grantable from the UI.
