@@ -4,12 +4,7 @@ import {
   defaultStatements as platformStatements,
   userAc,
 } from "better-auth/plugins/admin/access";
-import {
-  memberAc,
-  adminAc as orgAdminAc,
-  defaultStatements as organizationStatements,
-  ownerAc,
-} from "better-auth/plugins/organization/access";
+import { defaultStatements as organizationStatements } from "better-auth/plugins/organization/access";
 
 /* Platform-level Resources */
 const platformStatement = {
@@ -24,19 +19,14 @@ export const platformAc = createAccessControl(platformStatement);
 
 /* Platform-level Roles */
 export const admin = platformAc.newRole({
-  businessCategories: ["create", "read", "delete"],
-  banks: ["read"],
-  country: ["read"],
-  media: ["upload"],
+  ...platformAc.statements,
   ...platformAdminAc.statements,
 });
 
 export const user = platformAc.newRole({
-  businessCategories: ["read"],
-  banks: ["read"],
-  country: ["read"],
-  media: ["upload"],
+  ...platformAc.statements,
   ...userAc.statements,
+  businessCategories: ["read"],
 });
 
 /* Organization-level Resources */
@@ -72,10 +62,37 @@ const organizationStatement = {
 export const orgAc = createAccessControl(organizationStatement);
 
 /* Organization-level Roles */
-export const owner = orgAc.newRole({ ...ownerAc.statements });
-export const manager = orgAc.newRole({ ...orgAdminAc.statements });
-export const staff = orgAc.newRole({ ...memberAc.statements });
-export const customer = orgAc.newRole({ ...memberAc.statements });
+export const owner = orgAc.newRole({ ...orgAc.statements });
+
+export const manager = orgAc.newRole({
+  ...orgAc.statements,
+  ac: ["read"],
+  organization: ["update"],
+  subaccounts: ["read"],
+});
+
+export const staff = orgAc.newRole({
+  checkout: ["pos"],
+  products: ["read"],
+  sizeTypes: ["read"],
+  orders: ["read"],
+  supportChats: ["create", "update", "auth"],
+});
+
+export const customer = orgAc.newRole({
+  cart: ["create", "read", "update", "delete"],
+  checkout: ["web"],
+  orders: ["read"],
+  supportChats: ["create", "auth"],
+});
+
+export const vendor = orgAc.newRole({
+  products: ["create", "read", "update", "share"],
+  productEdits: ["create", "read", "update", "delete"],
+  sizeTypes: ["read"],
+  vendors: ["read"],
+  supportChats: ["create", "auth"],
+});
 
 // Resources a business can grant to a custom role.
 // `ac` (managing roles themselves) is deliberately not grantable from the UI.
