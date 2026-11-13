@@ -1,4 +1,4 @@
-import { rootDomain } from "@/lib/configs";
+import { rootDomain } from "@/ini/configs";
 import { NextRequest } from "next/server";
 
 export function extractSubdomain(request: NextRequest): string | null {
