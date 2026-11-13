@@ -1,4 +1,4 @@
-import { Badge, HStack } from "@chakra-ui/react";
+import { Badge, Wrap } from "@chakra-ui/react";
 
 interface Props {
   items: (string | undefined)[];
@@ -6,11 +6,11 @@ interface Props {
 
 const BadgeList = ({ items }: Props) => {
   return (
-    <HStack>
+    <Wrap>
       {items.filter(Boolean).map((item) => (
         <Badge>{item}</Badge>
       ))}
-    </HStack>
+    </Wrap>
   );
 };
 

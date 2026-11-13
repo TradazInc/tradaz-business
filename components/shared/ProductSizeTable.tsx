@@ -11,11 +11,11 @@ import {
   Button,
   ButtonGroup,
   For,
-  HStack,
   IconButton,
   Spinner,
   Table,
   Text,
+  Wrap,
 } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -85,11 +85,11 @@ const ProductSizeTable = ({ initialSizeTypes, businessId }: Props) => {
                 <Table.Row key={sizeType.id} w={"full"}>
                   <Table.Cell>{sizeType.name}</Table.Cell>
                   <Table.Cell>
-                    <HStack gapX={2}>
+                    <Wrap>
                       {sizeType.sizes?.map((size) => (
-                        <ProductSizeSquare value={size.value} />
+                        <ProductSizeSquare key={size.id} value={size.value} />
                       ))}
-                    </HStack>
+                    </Wrap>
                   </Table.Cell>
                   <Table.Cell textAlign="end">
                     <ButtonGroup size="sm" variant="outline">
