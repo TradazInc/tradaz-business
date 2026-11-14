@@ -2,7 +2,7 @@ import SignInForm from "@/components/shared/SignInForm";
 import TradazLogo from "@/components/shared/TradazLogo";
 import { Center, Heading, VStack } from "@chakra-ui/react";
 
-const PortalSigninPage = () => {
+const StaffSigninPage = () => {
   return (
     <Center h={"dvh"} w={"full"}>
       <VStack gap={8} w={"lg"}>
@@ -14,4 +14,4 @@ const PortalSigninPage = () => {
   );
 };
 
-export default PortalSigninPage;
+export default StaffSigninPage;

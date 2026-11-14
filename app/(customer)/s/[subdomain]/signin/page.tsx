@@ -6,7 +6,7 @@ import { IoCreateOutline } from "react-icons/io5";
 
 // Customers sign in on the storefront host (shop.root.com/signin → /s/shop/signin),
 // so "/" is the storefront home on that same host.
-const StorefrontSigninPage = async ({
+const CustomerSigninPage = async ({
   params,
 }: {
   params: Promise<{ subdomain: string }>;
@@ -52,4 +52,4 @@ const StorefrontSigninPage = async ({
   );
 };
 
-export default StorefrontSigninPage;
+export default CustomerSigninPage;
