@@ -40,14 +40,24 @@ export default function page() {
             <ColorModeButton rounded="full" />
 
             <HStack gap="2">
-              <Link href="/signin">
+              <Link href="/dashboard/signin">
                 <Button
                   variant="ghost"
                   colorScheme="blue"
                   size="sm"
                   rounded="full"
                 >
-                  Login
+                  Business
+                </Button>
+              </Link>
+              <Link href="/portal/signin">
+                <Button
+                  variant="ghost"
+                  colorScheme="blue"
+                  size="sm"
+                  rounded="full"
+                >
+                  Staff
                 </Button>
               </Link>
             </HStack>
