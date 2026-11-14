@@ -7,11 +7,9 @@ import {
 import { toaster } from "@/components/ui/toaster";
 import { useEmailSignup, useGoogleSignin } from "@/hooks/auth";
 import { EmailSignUpSchema } from "@/schema/auth";
-import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Stack, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import SeparatorText from "./SeparatorText";
 import { type Options, passwordStrength } from "check-password-strength";
@@ -25,10 +23,13 @@ const strengthOptions: Options<string> = [
   { id: 4, value: "very-strong", minDiversity: 4, minLength: 10 },
 ];
 
-const SignUpForm = () => {
+interface Props {
+  redirectTo?: string;
+}
+
+const SignUpForm = ({ redirectTo = "/dashboard?signup=true" }: Props) => {
   const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignup();
   const { trigger, isMutating } = useGoogleSignin();
-  const { push } = useRouter();
 
   const {
     control,
@@ -57,12 +58,14 @@ const SignUpForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      push(`${computePath()}?signup=true`); // review after emailVerification
+      // full load so the section layout's guard reads the new session cookie
+      window.location.assign(redirectTo); // review after emailVerification
     } catch {} // Error displayed by toaster
   });
 
   const handleGoogleSignup = async () => {
-    const promise = toaster.promise(trigger(`${computePath()}?signup=true`), {
+    const callbackURL = `${window.location.origin}${redirectTo}`;
+    const promise = toaster.promise(trigger(callbackURL), {
       loading: { title: "Redirecting…", description: "Please wait" },
       success: {
         title: "Redirect successful",

@@ -4,20 +4,22 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { useEmailSignin, useGoogleSignin } from "@/hooks/auth";
 import { EmailSignInSchema } from "@/schema/auth";
-import { computePath } from "@/utilities/computePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import SeparatorText from "./SeparatorText";
+import { destination } from "@/utilities/destination";
 
-const SignInForm = () => {
+interface Props {
+  redirectTo?: string;
+}
+
+const SignInForm = ({ redirectTo = "/dashboard" }: Props) => {
   const { trigger: emailTrigger, isMutating: emailMutating } = useEmailSignin();
   const { trigger, isMutating } = useGoogleSignin();
-  const { push } = useRouter();
 
   const {
     register,
@@ -37,12 +39,14 @@ const SignInForm = () => {
     if (!promise) return;
     try {
       await promise.unwrap();
-      push(computePath());
+      // full load so the section layout's guard reads the new session cookie
+      window.location.assign(destination(redirectTo));
     } catch {} // Error displayed by toaster
   });
 
   const handleGoogleSignIn = async () => {
-    const promise = toaster.promise(trigger(computePath()), {
+    const callbackURL = `${window.location.origin}${destination(redirectTo)}`;
+    const promise = toaster.promise(trigger(callbackURL), {
       loading: { title: "Redirecting…", description: "Please wait" },
       success: {
         title: "Redirect successful",
