@@ -1,24 +1,30 @@
 import { LayoutContainer } from "@/components/shared/LayoutContainer";
 import { SESSION_KEY } from "@/data/cacheKeys";
-import { getSession } from "@/server/auth";
+import { requireRole } from "@/server/auth";
 import { cache } from "@/utilities/cacheKey";
-import { unauthorized } from "next/navigation";
+import { hasRole } from "@/utilities/hasRole";
 import { SWRConfig, unstable_serialize } from "swr";
 
 export default async function CustomerLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ subdomain: string }>;
 }>) {
-  const session = await getSession();
-  if (!session.data || session.error) unauthorized();
+  const { subdomain } = await params;
+
+  const { session } = await requireRole(
+    { organizationSlug: subdomain },
+    (role) => hasRole(role, "customer"),
+  );
 
   return (
     <LayoutContainer>
       <SWRConfig
         value={{
           fallback: {
-            [unstable_serialize(cache.key(SESSION_KEY))]: session.data,
+            [unstable_serialize(cache.key(SESSION_KEY))]: session,
           },
         }}
       >
