@@ -4,6 +4,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster";
 import { useEmailSignin, useGoogleSignin } from "@/hooks/auth";
 import { EmailSignInSchema } from "@/schema/auth";
+import { destination } from "@/utilities/destination";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +12,6 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import SeparatorText from "./SeparatorText";
-import { destination } from "@/utilities/destination";
 
 interface Props {
   redirectTo?: string;

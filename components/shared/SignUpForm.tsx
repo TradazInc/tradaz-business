@@ -10,11 +10,11 @@ import { EmailSignUpSchema } from "@/schema/auth";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Button, Field, Fieldset, Input, Stack, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FcGoogle } from "react-icons/fc";
-import SeparatorText from "./SeparatorText";
 import { type Options, passwordStrength } from "check-password-strength";
 import { useMemo } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
+import SeparatorText from "./SeparatorText";
 
 const strengthOptions: Options<string> = [
   { id: 1, value: "weak", minDiversity: 0, minLength: 0 },
