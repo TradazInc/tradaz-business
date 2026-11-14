@@ -1,19 +1,30 @@
 import { extractSubdomain } from "@/utilities/extractSubdomain";
 import { NextRequest, NextResponse } from "next/server";
+import { protocol, rootDomain } from "../ini/configs";
+
+const ROOT_ONLY = ["/overwatch", "/dashboard", "/portal", "/signin", "/auth"];
 
 export function subdomainRedirect(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
   const subdomain = extractSubdomain(request);
 
   if (subdomain) {
-    // Block access to admin page from subdomains
-    if (pathname.startsWith("/admin")) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+    // Redirect to admin/business/staff page from subdomains (eg shop.root.com/signin reaches the real sign-in page)
+    if (ROOT_ONLY.some((p) => pathname.startsWith(p)))
+      return NextResponse.redirect(
+        `${protocol}://${rootDomain}${pathname}${search}`,
+      );
 
-    // For the root path on a subdomain, rewrite to the subdomain page
-    if (pathname === "/") {
-      return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
-    }
+    // Rewrite every storefront path; slug.root.com/{path} → /s/{slug}/{path};
+    const headers = new Headers(request.headers);
+    headers.set("x-url", request.url);
+
+    // Omit the root slash so the storefront root becomes /s/{subdomain}, while nested paths are preserved.
+    const path = pathname === "/" ? "" : pathname;
+
+    return NextResponse.rewrite(
+      new URL(`/s/${subdomain}${path}${search}`, request.url),
+      { request: { headers } },
+    );
   }
 }

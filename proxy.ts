@@ -1,16 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { verifySession } from "./middleware/session";
+import { subdomainRedirect } from "./middleware/subdomain";
 
 export async function proxy(request: NextRequest) {
-  return verifySession(request) ?? NextResponse.next();
+  return subdomainRedirect(request) ?? verifySession(request);
 }
 
-// Only run the proxy on protected route groups
-export const config = {
-  matcher: [
-    "/overwatch/:path*",
-    "/dashboard/:path*",
-    "/portal/:path*",
-    "/s/:path*",
-  ],
-};
+/*
+ * Match all paths except for:
+ * 1. /api routes
+ * 2. /_next (Next.js internals)
+ * 3. all root files inside /public (e.g. /favicon.ico)
+ */
+export const config = { matcher: ["/((?!api|_next|[\\w-]+\\.\\w+).*)"] };
