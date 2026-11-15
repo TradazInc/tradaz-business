@@ -1,3 +1,4 @@
+import { serverUrl } from "@/ini/configs";
 import {
   admin,
   customer,
@@ -22,7 +23,7 @@ import { customSession } from "better-auth/plugins";
 import { BetterFetchOption, createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  baseURL: serverUrl,
   fetchOptions: {
     credentials: "include",
     onRequest: async (context) => setServerCookie(context),

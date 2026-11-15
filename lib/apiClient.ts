@@ -2,10 +2,11 @@ import { setServerCookie } from "@/utilities/setServerCookie";
 import { BetterFetchOption, createFetch } from "@better-fetch/fetch";
 import { logger } from "@better-fetch/logger";
 import { schema } from "./schema";
+import { serverUrl } from "@/ini/configs";
 
 export const apiClient = createFetch({
   schema,
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  baseURL: serverUrl,
   credentials: "include",
   onRequest: async (context) => setServerCookie(context),
   plugins: [logger()],
