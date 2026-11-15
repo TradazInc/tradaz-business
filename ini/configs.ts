@@ -1,6 +1,6 @@
-export const protocol =
-  process.env.NODE_ENV === "production" ? "https" : "http";
+const client = new URL(
+  process.env.NEXT_PUBLIC_CLIENT_URL || "http://localhost:3000",
+);
+export const protocol = client.protocol.replace(":", "");
+export const rootDomain = client.host; // "localhost:3000" | "tradaz.com"
 
-export const rootDomain = new URL(
-  process.env.NEXT_PUBLIC_BASE_URL || "localhost:3000",
-).host;

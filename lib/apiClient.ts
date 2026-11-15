@@ -5,7 +5,7 @@ import { schema } from "./schema";
 
 export const apiClient = createFetch({
   schema,
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   credentials: "include",
   onRequest: async (context) => setServerCookie(context),
   plugins: [logger()],
