@@ -64,6 +64,7 @@ import {
   GetFinanceSummaryOutputSchema,
   GetFinanceSummaryQuerySchema,
 } from "@/schema/finance";
+import { GetUploadSignatureOutputSchema } from "@/schema/media";
 import {
   GetAllOrderOutputSchema,
   GetAllOrderQuerySchema,
@@ -237,6 +238,11 @@ export const schema = createSchema(
     "@get/api/finance/summary": {
       query: GetFinanceSummaryQuerySchema.optional(),
       output: GetFinanceSummaryOutputSchema,
+    },
+
+    // Media
+    "@post/api/media/upload-signature": {
+      output: GetUploadSignatureOutputSchema,
     },
 
     // Orders

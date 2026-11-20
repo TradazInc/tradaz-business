@@ -2,6 +2,7 @@
 
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
+import { apiClient, apiConfig } from "@/lib/apiClient";
 import { system } from "@/theme";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { selectorSafeId } from "@/utilities/selectorSafeId";
@@ -179,13 +180,23 @@ const InlineUploadWidget = ({
 
   return (
     <CldUploadWidget
-      signatureEndpoint={"/api/media/upload-signature"}
       options={{
         cropping: true,
         maxFileSize,
         maxFiles,
         inlineContainer: `#${containerId}`,
         styles: { palette },
+        uploadSignature: (
+          callback: (signature: string | null, error?: unknown) => void,
+          paramsToSign: Record<string, unknown>,
+        ) => {
+          apiClient("@post/api/media/upload-signature", {
+            body: { paramsToSign },
+            ...apiConfig,
+          })
+            .then(({ signature }) => callback(signature))
+            .catch((error) => callback(null, error));
+        },
       }}
       onSuccess={(result) => {
         const info = result.info;
