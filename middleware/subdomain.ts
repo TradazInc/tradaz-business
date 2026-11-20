@@ -2,7 +2,7 @@ import { extractSubdomain } from "@/utilities/extractSubdomain";
 import { NextRequest, NextResponse } from "next/server";
 import { protocol, rootDomain } from "../ini/configs";
 
-const ROOT_ONLY = ["/overwatch", "/dashboard", "/portal"];
+const ROOT_ONLY = ["/overwatch", "/merchant", "/staff"];
 
 export function subdomainRedirect(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
