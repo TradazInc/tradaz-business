@@ -1,4 +1,4 @@
-export type AppBase = "dashboard" | "portal";
+export type AppBase = "merchant" | "staff";
 
 export function computePath<B extends AppBase>(
   base: B,

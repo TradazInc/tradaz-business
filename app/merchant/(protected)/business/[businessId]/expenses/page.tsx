@@ -1,10 +1,10 @@
+import ExpenseTable from "@/components/shared/ExpenseTable";
 import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { PageItemContainer } from "@/components/shared/PageItemContainer";
-import RevenueTable from "@/components/shared/RevenueTable";
 import Search from "@/components/shared/Search";
-import { getRevenues } from "@/server/revenue";
+import { getExpenses } from "@/server/expense";
 import { computePath } from "@/utilities/computePath";
 import { Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -17,26 +17,29 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const revenues = getRevenues(businessId).then((d) => [d]);
+  const expenses = getExpenses(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
-      <PageHeader>Revenues</PageHeader>
+      <PageHeader>Expenses</PageHeader>
 
       <PageItemContainer>
         <Suspense>
-          <Search placeholder={"Search for a revenue"} searchField={"search"} />
+          <Search
+            placeholder={"Search for an expense"}
+            searchField={"search"}
+          />
         </Suspense>
         <Spacer />
         <FormButton asChild>
-          <NextLink href={`${computePath("portal", businessId)}/revenue/new`}>
+          <NextLink href={`${computePath("merchant", businessId)}/expenses/new`}>
             <LuPlus />
-            Create Revenue
+            Create Expense
           </NextLink>
         </FormButton>
       </PageItemContainer>
 
-      <RevenueTable initialRevenues={revenues} businessId={businessId} />
+      <ExpenseTable initialExpenses={expenses} businessId={businessId} />
     </PageContainer>
   );
 }

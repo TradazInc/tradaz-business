@@ -2,9 +2,9 @@ import FormButton from "@/components/shared/FormButton";
 import { PageContainer } from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { PageItemContainer } from "@/components/shared/PageItemContainer";
-import ProductGrid from "@/components/shared/ProductGrid";
+import RevenueTable from "@/components/shared/RevenueTable";
 import Search from "@/components/shared/Search";
-import { getProducts } from "@/server/product";
+import { getRevenues } from "@/server/revenue";
 import { computePath } from "@/utilities/computePath";
 import { Spacer } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -17,27 +17,26 @@ interface Props {
 
 export default async function page({ params }: Props) {
   const { businessId } = await params;
-  const products = getProducts(businessId).then((d) => [d]);
+  const revenues = getRevenues(businessId).then((d) => [d]);
 
   return (
     <PageContainer>
-      <PageHeader>Product Inventory</PageHeader>
+      <PageHeader>Revenues</PageHeader>
 
       <PageItemContainer>
         <Suspense>
-          <Search placeholder={"Search for a product"} searchField={"search"} />
+          <Search placeholder={"Search for a revenue"} searchField={"search"} />
         </Suspense>
         <Spacer />
         <FormButton asChild>
-          <NextLink href={`${computePath("portal", businessId)}/products/new`}>
+          <NextLink href={`${computePath("staff", businessId)}/revenue/new`}>
             <LuPlus />
-            New Product
+            Create Revenue
           </NextLink>
         </FormButton>
-        {/* add dropdown */}
       </PageItemContainer>
 
-      <ProductGrid businessId={businessId} initialProducts={products} />
+      <RevenueTable initialRevenues={revenues} businessId={businessId} />
     </PageContainer>
   );
 }

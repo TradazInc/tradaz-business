@@ -19,7 +19,7 @@ export function subdomainRedirect(request: NextRequest) {
     const path = pathname === "/" ? "" : pathname;
 
     return NextResponse.rewrite(
-      new URL(`/s/${subdomain}${path}${search}`, request.url),
+      new URL(`/storefront/${subdomain}${path}${search}`, request.url),
     );
   }
 }

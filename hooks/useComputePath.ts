@@ -6,7 +6,7 @@ import { useCallback } from "react";
 
 /** "portal" on the staff portal, "dashboard" on the merchant dashboard. */
 export function useAppBase(): AppBase {
-  return usePathname().startsWith("/portal") ? "portal" : "dashboard";
+  return usePathname().startsWith("/portal") ? "staff" : "merchant";
 }
 
 export function useComputePath() {
