@@ -15,7 +15,7 @@ export function subdomainRedirect(request: NextRequest) {
         `${protocol}://${rootDomain}${pathname}${search}`,
       );
 
-    // Omit the root slash so the storefront root becomes /s/{subdomain}, while nested paths are preserved.
+    // Omit the root slash so the storefront root becomes /storefront/{subdomain}, while nested paths are preserved.
     const path = pathname === "/" ? "" : pathname;
 
     return NextResponse.rewrite(
