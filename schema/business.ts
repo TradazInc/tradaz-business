@@ -2,6 +2,7 @@ import { toaster } from "@/components/ui/toaster";
 import { authClient } from "@/lib/authClient";
 import { checkBusinessSlug } from "@/server/business";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
+import { isReservedSlug } from "@/utilities/reservedSlugs";
 import { z } from "zod";
 import {
   BusinessCategory,
@@ -53,6 +54,11 @@ export const CreateBusinessInputSchema = z.object({
     .string({ error: "subdomain is required" })
     .trim()
     .slugify()
+    // abort: skip the availability request for reserved subdomains
+    .refine((slug) => !isReservedSlug(slug), {
+      error: "subdomain is reserved",
+      abort: true,
+    })
     .refine(
       async (slug) => {
         if (!slug) return true;
