@@ -3,6 +3,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { useSignOut } from "@/hooks/auth";
 import { useSession } from "@/hooks/session";
+import { useAppBase } from "@/hooks/useComputePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { Menu, Portal } from "@chakra-ui/react";
 import { LuLogOut } from "react-icons/lu";
@@ -11,6 +12,7 @@ import { ProfileAvatar } from "./ProfileAvatar";
 export const ProfileMenu = () => {
   const { data: session } = useSession();
   const { trigger, isMutating } = useSignOut();
+  const basePath = useAppBase();
 
   const handleLogout = async () => {
     const promise = toaster.promise(trigger(), {
@@ -25,7 +27,7 @@ export const ProfileMenu = () => {
     try {
       const data = await promise.unwrap();
       if (data.success) {
-        window.location.assign("/signin");
+        window.location.assign(`/${basePath}/signin`);
       } else if (promise.id) {
         toaster.update(promise.id, {
           title: "Unable to logout",
