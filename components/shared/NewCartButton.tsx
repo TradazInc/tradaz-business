@@ -1,7 +1,7 @@
 "use client";
 
 import { useAddCart } from "@/hooks/cart";
-import { computePath } from "@/utilities/computePath";
+import { useComputePath } from "@/hooks/useComputePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { useRouter } from "next/navigation";
 import { LuPlus } from "react-icons/lu";
@@ -15,6 +15,7 @@ interface Props {
 
 const NewCartButton = ({ businessId, storeId }: Props) => {
   const { push } = useRouter();
+  const computePath = useComputePath();
   const { trigger } = useAddCart(businessId, storeId);
 
   const handleClick = async () => {

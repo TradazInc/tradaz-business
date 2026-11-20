@@ -32,7 +32,7 @@ export default async function page({ params }: Props) {
         </Suspense>
         <Spacer />
         <FormButton asChild>
-          <NextLink href={`${computePath(businessId)}/expenses/new`}>
+          <NextLink href={`${computePath("dashboard", businessId)}/expenses/new`}>
             <LuPlus />
             Create Expense
           </NextLink>

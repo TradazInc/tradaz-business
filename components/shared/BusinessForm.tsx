@@ -6,7 +6,7 @@ import {
   CreateBusinessInputData,
   CreateBusinessInputSchema,
 } from "@/schema/business";
-import { computePath } from "@/utilities/computePath";
+import { useComputePath } from "@/hooks/useComputePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import {
   Box,
@@ -38,6 +38,7 @@ interface BusinessFormProps {
 export const businessDialog = createOverlay((props) => {
   const { trigger, isMutating } = useAddBusiness();
   const { push } = useRouter();
+  const computePath = useComputePath();
 
   const form = useForm({
     resolver: standardSchemaResolver(CreateBusinessInputSchema),

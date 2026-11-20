@@ -1,6 +1,6 @@
 "use client";
 
-import { computePath } from "@/utilities/computePath";
+import { useComputePath } from "@/hooks/useComputePath";
 import { StackSeparator, VStack } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
@@ -8,6 +8,7 @@ import { businessItems, dashboardItems, storeItems } from "./SideMenuItems";
 import { SideMenuSection } from "./SideMenuSection";
 
 export const SideMenuSectionList = () => {
+  const computePath = useComputePath();
   // Tracks url changes
   const { businessId, storeId } = useParams<{
     businessId?: string;
@@ -16,7 +17,7 @@ export const SideMenuSectionList = () => {
 
   const basePath = useMemo(
     () => computePath(businessId, storeId),
-    [businessId, storeId],
+    [computePath, businessId, storeId],
   );
 
   const sideItems = useMemo(() => {

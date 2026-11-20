@@ -12,7 +12,7 @@ import {
   GetCartOutputData,
   UpdateCartInputSchema,
 } from "@/schema/cart";
-import { computePath } from "@/utilities/computePath";
+import { useComputePath } from "@/hooks/useComputePath";
 import { errorToastOptions } from "@/utilities/errorToastOptions";
 import { parseCursorData } from "@/utilities/parsePageData";
 import {
@@ -58,6 +58,7 @@ const CartForm = ({ initialCart, businessId, storeId, cartId }: Props) => {
   const webCheckout = useWebCheckout(businessId, storeId);
   const posCheckout = usePosCheckout(businessId, storeId);
   const { push } = useRouter();
+  const computePath = useComputePath();
 
   const parsedSubaccounts = useMemo(
     () => parseCursorData(subaccounts.data),

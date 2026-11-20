@@ -1,6 +1,6 @@
 import { GetAllBusinessOutputData } from "@/schema/business";
 import { GetAllStoresOutputData, GetStoreOutputSchema } from "@/schema/store";
-import { computePath } from "@/utilities/computePath";
+import { useComputePath } from "@/hooks/useComputePath";
 import { Menu, Portal } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
@@ -11,6 +11,7 @@ interface Props {
 }
 
 export const BusinessSelectorMenu = ({ children, data }: Props) => {
+  const computePath = useComputePath();
   return (
     <Menu.Root>
       <Menu.Trigger asChild>{children}</Menu.Trigger>

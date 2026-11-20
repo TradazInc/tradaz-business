@@ -3,7 +3,7 @@
 import { useBusinesses } from "@/hooks/business";
 import { useStores } from "@/hooks/store";
 import { GetAllStoresOutputData } from "@/schema/store";
-import { computePath } from "@/utilities/computePath";
+import { useComputePath } from "@/hooks/useComputePath";
 import { For } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 import EmptyPage from "./EmptyPage";
@@ -16,6 +16,7 @@ interface Props {
 }
 
 const StoreGrid = ({ businessId, initialStores }: Props) => {
+  const computePath = useComputePath();
   const { data: businesses } = useBusinesses();
   const business = businesses?.find((b) => b.id === businessId);
 
